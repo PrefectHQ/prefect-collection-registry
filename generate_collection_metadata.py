@@ -49,13 +49,14 @@ def discover_block_subclasses(module: ModuleType) -> List[Type[Block]]:
 
 
 def generate_full_metadata(collection_slug: str):
+    # group is only available for Python 3.10+
     collections = safe_load_entrypoints(entry_points(group="prefect.collections"))
     output_dict = {}
     for ep_name, module in collections.items():
         if isinstance(module, Exception):
             logging.warning(f"Error loading collection entrypoint {ep_name} - skipping")
             continue
-        discovered_collection_slug = module.__name__.split(".")[0].replace("_", "-")
+        discovered_collection_slug = module.__name__.split(".")[0]
         if collection_slug != discovered_collection_slug:
             continue
 
@@ -69,6 +70,10 @@ def generate_full_metadata(collection_slug: str):
 def write_collection_metadata(
     collection_metadata: Dict[str, Any], collection_slug: str
 ):
+    if "-" in collection_slug:
+        raise ValueError(
+            f"Slugs can only contain underscores, not dashes, got: {collection_slug!r}"
+        )
     with open(f"{collection_slug}.json", "w") as f:
         json.dump(collection_metadata, f, indent=2)
 
