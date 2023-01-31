@@ -36,15 +36,15 @@
             }
           },
           "required": [
-            "consumer_key",
-            "consumer_secret",
             "access_token",
-            "access_token_secret"
+            "access_token_secret",
+            "consumer_key",
+            "consumer_secret"
           ],
           "block_type_slug": "twitter-credentials",
           "secret_fields": [
-            "consumer_secret",
-            "access_token_secret"
+            "access_token_secret",
+            "consumer_secret"
           ],
           "block_schema_references": {}
         },
