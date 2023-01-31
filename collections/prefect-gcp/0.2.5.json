@@ -187,9 +187,9 @@
             }
           },
           "required": [
+            "credentials",
             "image",
-            "region",
-            "credentials"
+            "region"
           ],
           "block_type_slug": "cloud-run-job",
           "secret_fields": [
@@ -437,10 +437,10 @@
           }
         },
         "capabilities": [
-          "put-directory",
-          "write-path",
           "get-directory",
-          "read-path"
+          "put-directory",
+          "read-path",
+          "write-path"
         ],
         "version": "0.2.5"
       }
@@ -560,8 +560,8 @@
             }
           },
           "required": [
-            "region",
-            "image"
+            "image",
+            "region"
           ],
           "block_type_slug": "vertex-ai-custom-training-job",
           "secret_fields": [
