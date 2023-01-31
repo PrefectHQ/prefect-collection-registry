@@ -90,9 +90,9 @@
             }
           },
           "required": [
-            "username",
             "password",
-            "registry_url"
+            "registry_url",
+            "username"
           ],
           "block_type_slug": "docker-registry-credentials",
           "secret_fields": [
