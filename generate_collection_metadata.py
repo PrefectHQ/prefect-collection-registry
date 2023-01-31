@@ -19,9 +19,14 @@ def sort_values(schema: Dict[str, Any]) -> Dict[str, Any]:
     Loop through each dict in the block schema and sort if the value is a list
     to prevent false positives of changes in the schema.
     """
+    # TypeError: '<' not supported between instances of 'dict' and 'dict'
+    # when sorting a list of dicts
     for key, value in schema.items():
         if isinstance(value, list):
-            schema[key] = sorted(value)
+            try:
+                schema[key] = sorted(value)
+            except TypeError:
+                schema[key] = value
         elif isinstance(value, dict):
             schema[key] = sort_values(value)
     return schema
