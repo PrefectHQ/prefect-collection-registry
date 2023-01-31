@@ -1,0 +1,51 @@
+{
+  "block_types": {
+    "monte-carlo-credentials": {
+      "name": "Monte Carlo Credentials",
+      "slug": "monte-carlo-credentials",
+      "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5OqrPNRdLMvqZzxo9f6Z25/f920dff0f1201fc014b0b083a6d2fdb1/image.png?h=250",
+      "documentation_url": null,
+      "description": "Block used to manage Monte Carlo authentication.",
+      "code_example": "Load stored Monte Carlo credentials:\n```python\nfrom prefect_monte_carlo.credentials import MonteCarloCredentials\nmontecarlo_credentials_block = MonteCarloCredentials.load(\"BLOCK_NAME\")\n```",
+      "block_schema": {
+        "checksum": "sha256:f70c3146fd0e2dad64c8b2e89fa562c4e63d16268b61c4ba4917a88f14085df2",
+        "fields": {
+          "title": "MonteCarloCredentials",
+          "description": "Block used to manage Monte Carlo authentication.",
+          "type": "object",
+          "properties": {
+            "api_key": {
+              "title": "API Key",
+              "description": "The token to authenticate with Monte Carlo's GraphQL API.",
+              "type": "string",
+              "writeOnly": true,
+              "format": "password"
+            },
+            "api_key_id": {
+              "title": "API Key ID",
+              "description": "The ID associated with the Monte Carlo API token.",
+              "type": "string"
+            },
+            "catalog_url": {
+              "title": "Monte Carlo catalog URL",
+              "description": "The URL of the Monte Carlo catalog.",
+              "default": "https://getmontecarlo.com/catalog",
+              "type": "string"
+            }
+          },
+          "required": [
+            "api_key",
+            "api_key_id"
+          ],
+          "block_type_slug": "monte-carlo-credentials",
+          "secret_fields": [
+            "api_key"
+          ],
+          "block_schema_references": {}
+        },
+        "capabilities": [],
+        "version": "0.1.0"
+      }
+    }
+  }
+}
