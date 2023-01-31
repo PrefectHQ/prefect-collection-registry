@@ -64,12 +64,12 @@
               "title": "SMTPServer",
               "description": "Server used to send email.",
               "enum": [
-                "smtp.aol.com",
-                "smtp.mail.att.net",
-                "smtp.comcast.net",
-                "smtp.mail.me.com",
-                "smtp.gmail.com",
                 "smtp-mail.outlook.com",
+                "smtp.aol.com",
+                "smtp.comcast.net",
+                "smtp.gmail.com",
+                "smtp.mail.att.net",
+                "smtp.mail.me.com",
                 "smtp.mail.yahoo.com"
               ]
             },
@@ -77,9 +77,9 @@
               "title": "SMTPType",
               "description": "Protocols used to secure email transmissions.",
               "enum": [
+                25,
                 465,
-                587,
-                25
+                587
               ]
             }
           }
