@@ -14,24 +14,6 @@ from prefect.blocks.core import Block
 from prefect.plugins import safe_load_entrypoints
 
 
-def sort_values(schema: Dict[str, Any]) -> Dict[str, Any]:
-    """
-    Loop through each dict in the block schema and sort if the value is a list
-    to prevent false positives of changes in the schema.
-    """
-    # TypeError: '<' not supported between instances of 'dict' and 'dict'
-    # when sorting a list of dicts
-    for key, value in schema.items():
-        if isinstance(value, list):
-            try:
-                schema[key] = sorted(value)
-            except TypeError:
-                schema[key] = value
-        elif isinstance(value, dict):
-            schema[key] = sort_values(value)
-    return schema
-
-
 def generate_block_metadata(block_subcls: Type[Block]) -> Dict[str, Any]:
     """
     Takes a block subclass and returns a JSON dict representation of
@@ -46,7 +28,11 @@ def generate_block_metadata(block_subcls: Type[Block]) -> Dict[str, Any]:
         exclude={"id", "created", "updated", "block_type_id", "block_type"},
         json_compatible=True,
     )
-    block_type_dict["block_schema"] = sort_values(block_type_dict["block_schema"])
+
+    # make it deterministic to prevent false positives of changes
+    block_type_dict["block_schema"]["capabilities"] = sorted(
+        block_type_dict["block_schema"]["capabilities"]
+    )
     return block_type_dict
 
 
