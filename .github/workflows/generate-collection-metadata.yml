@@ -16,7 +16,6 @@ jobs:
           - "prefect-gcp"
           - "prefect-aws"
           - "prefect-azure"
-      fail-fast: false
 
     steps:
       - uses: actions/checkout@v3
