@@ -63,12 +63,12 @@ jobs:
       - name: Submit PR
         uses: peter-evans/create-pull-request@v4
         with:
-          commit-message: Updating Collection metadata
-          branch: update-collection-metadata
+          commit-message: Updating ${{ matrix.collection-name }} metadata
+          branch: update-${{ matrix.collection-name }}-metadata
           delete-branch: true
           title: Update ${{ matrix.collection-name }} metadata with new releases
           body: |
-            Automated PR created to update Collection metadata.
+            Automated PR created to update ${{ matrix.collection-name }} metadata.
             Feel free to make any necessary changes to this PR before merging.
           labels: |
             template sync
