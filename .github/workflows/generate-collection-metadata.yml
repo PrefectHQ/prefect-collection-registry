@@ -13,9 +13,35 @@ jobs:
     strategy:
       matrix:
         collection-name:
-          - "prefect-gcp"
+          - "prefect-airbyte"
           - "prefect-aws"
           - "prefect-azure"
+          - "prefect-bitbucket"
+          - "prefect-census"
+          - "prefect-dask"
+          - "prefect-databricks"
+          - "prefect-dbt"
+          - "prefect-docker"
+          - "prefect-email"
+          - "prefect-firebolt"
+          - "prefect-gcp"
+          - "prefect-github"
+          - "prefect-gitlab"
+          - "prefect-great-expectations"
+          - "prefect-hex"
+          - "prefect-hightouch"
+          - "prefect-jupyter"
+          - "prefect-kubernetes"
+          - "prefect-monday"
+          - "prefect-monte-carlo"
+          - "prefect-openai"
+          - "prefect-openmetadata"
+          - "prefect-ray"
+          - "prefect-shell"
+          - "prefect-slack"
+          - "prefect-snowflake"
+          - "prefect-sqlalchemy"
+          - "prefect-twitter"
 
     steps:
       - uses: actions/checkout@v3
