@@ -79,33 +79,33 @@
               "title": "AsyncDriver",
               "description": "Known dialects with their corresponding async drivers.\n\nAttributes:\n    POSTGRESQL_ASYNCPG (Enum): [postgresql+asyncpg](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.asyncpg)\n\n    SQLITE_AIOSQLITE (Enum): [sqlite+aiosqlite](https://docs.sqlalchemy.org/en/14/dialects/sqlite.html#module-sqlalchemy.dialects.sqlite.aiosqlite)\n\n    MYSQL_ASYNCMY (Enum): [mysql+asyncmy](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.asyncmy)\n    MYSQL_AIOMYSQL (Enum): [mysql+aiomysql](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.aiomysql)",
               "enum": [
-                "postgresql+asyncpg",
-                "sqlite+aiosqlite",
+                "mysql+aiomysql",
                 "mysql+asyncmy",
-                "mysql+aiomysql"
+                "postgresql+asyncpg",
+                "sqlite+aiosqlite"
               ]
             },
             "SyncDriver": {
               "title": "SyncDriver",
               "description": "Known dialects with their corresponding sync drivers.\n\nAttributes:\n    POSTGRESQL_PSYCOPG2 (Enum): [postgresql+psycopg2](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.psycopg2)\n    POSTGRESQL_PG8000 (Enum): [postgresql+pg8000](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.pg8000)\n    POSTGRESQL_PSYCOPG2CFFI (Enum): [postgresql+psycopg2cffi](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.psycopg2cffi)\n    POSTGRESQL_PYPOSTGRESQL (Enum): [postgresql+pypostgresql](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.pypostgresql)\n    POSTGRESQL_PYGRESQL (Enum): [postgresql+pygresql](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.pygresql)\n\n    MYSQL_MYSQLDB (Enum): [mysql+mysqldb](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.mysqldb)\n    MYSQL_PYMYSQL (Enum): [mysql+pymysql](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.pymysql)\n    MYSQL_MYSQLCONNECTOR (Enum): [mysql+mysqlconnector](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.mysqlconnector)\n    MYSQL_CYMYSQL (Enum): [mysql+cymysql](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.cymysql)\n    MYSQL_OURSQL (Enum): [mysql+oursql](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.oursql)\n    MYSQL_PYODBC (Enum): [mysql+pyodbc](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.pyodbc)\n\n    SQLITE_PYSQLITE (Enum): [sqlite+pysqlite](https://docs.sqlalchemy.org/en/14/dialects/sqlite.html#module-sqlalchemy.dialects.sqlite.pysqlite)\n    SQLITE_PYSQLCIPHER (Enum): [sqlite+pysqlcipher](https://docs.sqlalchemy.org/en/14/dialects/sqlite.html#module-sqlalchemy.dialects.sqlite.pysqlcipher)\n\n    ORACLE_CX_ORACLE (Enum): [oracle+cx_oracle](https://docs.sqlalchemy.org/en/14/dialects/oracle.html#module-sqlalchemy.dialects.oracle.cx_oracle)\n\n    MSSQL_PYODBC (Enum): [mssql+pyodbc](https://docs.sqlalchemy.org/en/14/dialects/mssql.html#module-sqlalchemy.dialects.mssql.pyodbc)\n    MSSQL_MXODBC (Enum): [mssql+mxodbc](https://docs.sqlalchemy.org/en/14/dialects/mssql.html#module-sqlalchemy.dialects.mssql.mxodbc)\n    MSSQL_PYMSSQL (Enum): [mssql+pymssql](https://docs.sqlalchemy.org/en/14/dialects/mssql.html#module-sqlalchemy.dialects.mssql.pymssql)",
               "enum": [
-                "postgresql+psycopg2",
-                "postgresql+pg8000",
-                "postgresql+psycopg2cffi",
-                "postgresql+pypostgresql",
-                "postgresql+pygresql",
-                "mysql+mysqldb",
-                "mysql+pymysql",
-                "mysql+mysqlconnector",
-                "mysql+cymysql",
-                "mysql+oursql",
-                "mysql+pyodbc",
-                "sqlite+pysqlite",
-                "sqlite+pysqlcipher",
-                "oracle+cx_oracle",
-                "mssql+pyodbc",
                 "mssql+mxodbc",
-                "mssql+pymssql"
+                "mssql+pymssql",
+                "mssql+pyodbc",
+                "mysql+cymysql",
+                "mysql+mysqlconnector",
+                "mysql+mysqldb",
+                "mysql+oursql",
+                "mysql+pymysql",
+                "mysql+pyodbc",
+                "oracle+cx_oracle",
+                "postgresql+pg8000",
+                "postgresql+psycopg2",
+                "postgresql+psycopg2cffi",
+                "postgresql+pygresql",
+                "postgresql+pypostgresql",
+                "sqlite+pysqlcipher",
+                "sqlite+pysqlite"
               ]
             }
           }
@@ -168,33 +168,33 @@
               "title": "AsyncDriver",
               "description": "Known dialects with their corresponding async drivers.\n\nAttributes:\n    POSTGRESQL_ASYNCPG (Enum): [postgresql+asyncpg](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.asyncpg)\n\n    SQLITE_AIOSQLITE (Enum): [sqlite+aiosqlite](https://docs.sqlalchemy.org/en/14/dialects/sqlite.html#module-sqlalchemy.dialects.sqlite.aiosqlite)\n\n    MYSQL_ASYNCMY (Enum): [mysql+asyncmy](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.asyncmy)\n    MYSQL_AIOMYSQL (Enum): [mysql+aiomysql](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.aiomysql)",
               "enum": [
-                "postgresql+asyncpg",
-                "sqlite+aiosqlite",
+                "mysql+aiomysql",
                 "mysql+asyncmy",
-                "mysql+aiomysql"
+                "postgresql+asyncpg",
+                "sqlite+aiosqlite"
               ]
             },
             "SyncDriver": {
               "title": "SyncDriver",
               "description": "Known dialects with their corresponding sync drivers.\n\nAttributes:\n    POSTGRESQL_PSYCOPG2 (Enum): [postgresql+psycopg2](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.psycopg2)\n    POSTGRESQL_PG8000 (Enum): [postgresql+pg8000](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.pg8000)\n    POSTGRESQL_PSYCOPG2CFFI (Enum): [postgresql+psycopg2cffi](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.psycopg2cffi)\n    POSTGRESQL_PYPOSTGRESQL (Enum): [postgresql+pypostgresql](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.pypostgresql)\n    POSTGRESQL_PYGRESQL (Enum): [postgresql+pygresql](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.pygresql)\n\n    MYSQL_MYSQLDB (Enum): [mysql+mysqldb](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.mysqldb)\n    MYSQL_PYMYSQL (Enum): [mysql+pymysql](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.pymysql)\n    MYSQL_MYSQLCONNECTOR (Enum): [mysql+mysqlconnector](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.mysqlconnector)\n    MYSQL_CYMYSQL (Enum): [mysql+cymysql](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.cymysql)\n    MYSQL_OURSQL (Enum): [mysql+oursql](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.oursql)\n    MYSQL_PYODBC (Enum): [mysql+pyodbc](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.pyodbc)\n\n    SQLITE_PYSQLITE (Enum): [sqlite+pysqlite](https://docs.sqlalchemy.org/en/14/dialects/sqlite.html#module-sqlalchemy.dialects.sqlite.pysqlite)\n    SQLITE_PYSQLCIPHER (Enum): [sqlite+pysqlcipher](https://docs.sqlalchemy.org/en/14/dialects/sqlite.html#module-sqlalchemy.dialects.sqlite.pysqlcipher)\n\n    ORACLE_CX_ORACLE (Enum): [oracle+cx_oracle](https://docs.sqlalchemy.org/en/14/dialects/oracle.html#module-sqlalchemy.dialects.oracle.cx_oracle)\n\n    MSSQL_PYODBC (Enum): [mssql+pyodbc](https://docs.sqlalchemy.org/en/14/dialects/mssql.html#module-sqlalchemy.dialects.mssql.pyodbc)\n    MSSQL_MXODBC (Enum): [mssql+mxodbc](https://docs.sqlalchemy.org/en/14/dialects/mssql.html#module-sqlalchemy.dialects.mssql.mxodbc)\n    MSSQL_PYMSSQL (Enum): [mssql+pymssql](https://docs.sqlalchemy.org/en/14/dialects/mssql.html#module-sqlalchemy.dialects.mssql.pymssql)",
               "enum": [
-                "postgresql+psycopg2",
-                "postgresql+pg8000",
-                "postgresql+psycopg2cffi",
-                "postgresql+pypostgresql",
-                "postgresql+pygresql",
-                "mysql+mysqldb",
-                "mysql+pymysql",
-                "mysql+mysqlconnector",
-                "mysql+cymysql",
-                "mysql+oursql",
-                "mysql+pyodbc",
-                "sqlite+pysqlite",
-                "sqlite+pysqlcipher",
-                "oracle+cx_oracle",
-                "mssql+pyodbc",
                 "mssql+mxodbc",
-                "mssql+pymssql"
+                "mssql+pymssql",
+                "mssql+pyodbc",
+                "mysql+cymysql",
+                "mysql+mysqlconnector",
+                "mysql+mysqldb",
+                "mysql+oursql",
+                "mysql+pymysql",
+                "mysql+pyodbc",
+                "oracle+cx_oracle",
+                "postgresql+pg8000",
+                "postgresql+psycopg2",
+                "postgresql+psycopg2cffi",
+                "postgresql+pygresql",
+                "postgresql+pypostgresql",
+                "sqlite+pysqlcipher",
+                "sqlite+pysqlite"
               ]
             },
             "ConnectionComponents": {
@@ -254,8 +254,8 @@
                 }
               },
               "required": [
-                "driver",
-                "database"
+                "database",
+                "driver"
               ]
             }
           }
