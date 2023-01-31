@@ -40,7 +40,7 @@ jobs:
           commit-message: Updating Collection metadata
           branch: update-collection-metadata
           delete-branch: true
-          title: Update Collection metadata with new releases
+          title: Update ${{ matrix.collection-name }} metadata with new releases
           body: |
             Automated PR created to update Collection metadata.
             Feel free to make any necessary changes to this PR before merging.
