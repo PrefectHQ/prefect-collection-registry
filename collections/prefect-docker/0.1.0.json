@@ -1,0 +1,108 @@
+{
+  "block_types": {
+    "docker-host": {
+      "name": "Docker Host",
+      "slug": "docker-host",
+      "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/2IfXXfMq66mrzJBDFFCHTp/6d8f320d9e4fc4393f045673d61ab612/Moby-logo.png?h=250",
+      "documentation_url": null,
+      "description": "Store settings for interacting with a Docker host.",
+      "code_example": "Get a Docker Host client.\n```python\nfrom prefect_docker import DockerHost\n\ndocker_host = DockerHost(\nbase_url=\"tcp://127.0.0.1:1234\",\n    max_pool_size=4\n)\nwith docker_host.get_client() as client:\n    ... # Use the client for Docker operations\n```",
+      "block_schema": {
+        "checksum": "sha256:bf0961e9f2d88fd81bca2c7b78c025bd289776ad84ae8ef22d8f3db8b9561478",
+        "fields": {
+          "title": "DockerHost",
+          "description": "Store settings for interacting with a Docker host.",
+          "type": "object",
+          "properties": {
+            "base_url": {
+              "title": "Base URL",
+              "description": "URL to the Docker host.",
+              "example": "unix:///var/run/docker.sock",
+              "type": "string"
+            },
+            "version": {
+              "title": "Version",
+              "description": "The version of the API to use",
+              "default": "auto",
+              "type": "string"
+            },
+            "timeout": {
+              "title": "Timeout",
+              "description": "Default timeout for API calls, in seconds.",
+              "type": "integer"
+            },
+            "max_pool_size": {
+              "title": "Max Pool Size",
+              "description": "The maximum number of connections to save in the pool.",
+              "type": "integer"
+            },
+            "client_kwargs": {
+              "title": "Additional Configuration",
+              "description": "Additional keyword arguments to pass to `docker.from_env()` or `DockerClient`.",
+              "type": "object"
+            }
+          },
+          "block_type_slug": "docker-host",
+          "secret_fields": [],
+          "block_schema_references": {}
+        },
+        "capabilities": [],
+        "version": "0.1.0"
+      }
+    },
+    "docker-registry-credentials": {
+      "name": "Docker Registry Credentials",
+      "slug": "docker-registry-credentials",
+      "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/2IfXXfMq66mrzJBDFFCHTp/6d8f320d9e4fc4393f045673d61ab612/Moby-logo.png?h=250",
+      "documentation_url": null,
+      "description": "Store credentials for interacting with a Docker Registry.",
+      "code_example": "Log into Docker Registry.\n```python\nfrom prefect_docker import DockerHost, DockerRegistryCredentials\n\ndocker_host = DockerHost()\ndocker_registry_credentials = DockerRegistryCredentials(\n    username=\"my_username\",\n    password=\"my_password\",\n    registry_url=\"registry.hub.docker.com\",\n)\nwith docker_host.get_client() as client:\n    docker_registry_credentials.login(client)\n```",
+      "block_schema": {
+        "checksum": "sha256:79c2e94bef9297ccd49000f66e7919ee915c97495720b41fba8420786dbf2c58",
+        "fields": {
+          "title": "DockerRegistryCredentials",
+          "description": "Store credentials for interacting with a Docker Registry.",
+          "type": "object",
+          "properties": {
+            "username": {
+              "title": "Username",
+              "description": "The username to log into the registry with.",
+              "type": "string"
+            },
+            "password": {
+              "title": "Password",
+              "description": "The password to log into the registry with.",
+              "type": "string",
+              "writeOnly": true,
+              "format": "password"
+            },
+            "registry_url": {
+              "title": "Registry Url",
+              "description": "The URL to the registry. Generally, \"http\" or \"https\" can be omitted.",
+              "example": "registry.hub.docker.com",
+              "type": "string"
+            },
+            "reauth": {
+              "title": "Reauth",
+              "description": "Whether or not to reauthenticate on each interaction.",
+              "default": true,
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "username",
+            "password",
+            "registry_url"
+          ],
+          "block_type_slug": "docker-registry-credentials",
+          "secret_fields": [
+            "password"
+          ],
+          "block_schema_references": {}
+        },
+        "capabilities": [],
+        "version": "0.1.0"
+      }
+    }
+  }
+}
