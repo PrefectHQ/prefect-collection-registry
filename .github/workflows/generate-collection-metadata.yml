@@ -10,11 +10,13 @@ on:
 jobs:
   submit-pr:
     runs-on: ubuntu-latest
-    matrix:
-      collection-name:
-        - "prefect-gcp"
-        - "prefect-aws"
-        - "prefect-azure"
+    strategy:
+      matrix:
+        collection-name:
+          - "prefect-gcp"
+          - "prefect-aws"
+          - "prefect-azure"
+      fail-fast: false
 
     steps:
       - uses: actions/checkout@v3
