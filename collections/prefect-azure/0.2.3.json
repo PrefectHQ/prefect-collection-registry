@@ -68,8 +68,8 @@
             }
           },
           "required": [
-            "tenant_id",
-            "client_secret"
+            "client_secret",
+            "tenant_id"
           ],
           "block_type_slug": "azure-container-instance-credentials",
           "secret_fields": [
@@ -234,8 +234,8 @@
           "block_type_slug": "azure-container-instance-job",
           "secret_fields": [
             "aci_credentials.client_secret",
-            "subscription_id",
-            "image_registry.password"
+            "image_registry.password",
+            "subscription_id"
           ],
           "block_schema_references": {
             "aci_credentials": {
@@ -273,8 +273,8 @@
                 }
               },
               "required": [
-                "tenant_id",
-                "client_secret"
+                "client_secret",
+                "tenant_id"
               ],
               "block_type_slug": "azure-container-instance-credentials",
               "secret_fields": [
@@ -312,9 +312,9 @@
                 }
               },
               "required": [
-                "username",
                 "password",
-                "registry_url"
+                "registry_url",
+                "username"
               ],
               "block_type_slug": "docker-registry",
               "secret_fields": [
@@ -406,11 +406,11 @@
             }
           },
           "required": [
-            "tenant_id",
+            "resource_group",
             "service_principal_id",
             "service_principal_password",
             "subscription_id",
-            "resource_group",
+            "tenant_id",
             "workspace_name"
           ],
           "block_type_slug": "azureml-credentials",
