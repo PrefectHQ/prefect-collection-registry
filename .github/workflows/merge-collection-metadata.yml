@@ -1,4 +1,4 @@
-name: Submit Collection Metadata to Registry
+name: Merge Collection Metadata to Registry
 
 on:
   workflow_dispatch:
