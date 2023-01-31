@@ -437,10 +437,10 @@
           }
         },
         "capabilities": [
-          "read-path",
-          "write-path",
+          "get-directory",
           "put-directory",
-          "get-directory"
+          "read-path",
+          "write-path"
         ],
         "version": "0.2.5"
       }

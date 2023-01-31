@@ -29,6 +29,10 @@ def generate_block_metadata(block_subcls: Type[Block]) -> Dict[str, Any]:
         json_compatible=True,
     )
 
+    # make it deterministic to prevent false positives of changes
+    block_type_dict["block_schema"]["capabilities"] = sorted(
+        block_type_dict["block_schema"]["capabilities"]
+    )
     return block_type_dict
 
 

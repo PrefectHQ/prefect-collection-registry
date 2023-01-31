@@ -1,20 +1,44 @@
 name: Submit Collection Metadata to Registry
 
-# cron
-# list of collections somewhere listed
-# loop through each, check if folder exists, if not create PR
-
 on:
-  workflow_dispatch
+  workflow_dispatch:
+  schedule:
+    - cron: "*/10 * * * *"
 
 jobs:
   submit-pr:
     runs-on: ubuntu-latest
-    matrix:
-      collection-name:
-        - "prefect-gcp"
-        - "prefect-aws"
-        - "prefect-azure"
+    strategy:
+      fail-fast: false
+      matrix:
+        collection-name:
+          - "prefect-airbyte"
+          - "prefect-aws"
+          - "prefect-azure"
+          - "prefect-bitbucket"
+          - "prefect-census"
+          - "prefect-databricks"
+          - "prefect-dbt"
+          - "prefect-docker"
+          - "prefect-email"
+          - "prefect-firebolt"
+          - "prefect-gcp"
+          - "prefect-github"
+          - "prefect-gitlab"
+          - "prefect-great-expectations"
+          - "prefect-hex"
+          - "prefect-hightouch"
+          - "prefect-jupyter"
+          - "prefect-kubernetes"
+          - "prefect-monday"
+          - "prefect-monte-carlo"
+          - "prefect-openai"
+          - "prefect-openmetadata"
+          - "prefect-shell"
+          - "prefect-slack"
+          - "prefect-snowflake"
+          - "prefect-sqlalchemy"
+          - "prefect-twitter"
 
     steps:
       - uses: actions/checkout@v3
@@ -22,7 +46,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.10
+          python-version: "3.10"
 
       - name: Install ${{ matrix.collection-name }}
         run: |
@@ -36,13 +60,13 @@ jobs:
       - name: Submit PR
         uses: peter-evans/create-pull-request@v4
         with:
-          commit-message: Updating Collection metadata
-          branch: update-collection-metadata
+          commit-message: Updating ${{ matrix.collection-name }} metadata
+          branch: update-${{ matrix.collection-name }}-metadata
           delete-branch: true
-          title: Update Collection metadata with new releases
+          title: Update ${{ matrix.collection-name }} metadata with new releases
           body: |
-            Automated PR created to update Collection metadata.
+            Automated PR created to update ${{ matrix.collection-name }} metadata.
             Feel free to make any necessary changes to this PR before merging.
           labels: |
-            template sync
+            update metadata
             automated pr
