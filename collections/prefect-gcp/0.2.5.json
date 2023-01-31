@@ -187,9 +187,9 @@
             }
           },
           "required": [
-            "credentials",
             "image",
-            "region"
+            "region",
+            "credentials"
           ],
           "block_type_slug": "cloud-run-job",
           "secret_fields": [
@@ -560,8 +560,8 @@
             }
           },
           "required": [
-            "image",
-            "region"
+            "region",
+            "image"
           ],
           "block_type_slug": "vertex-ai-custom-training-job",
           "secret_fields": [
