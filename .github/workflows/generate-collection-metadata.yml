@@ -1,11 +1,9 @@
 name: Submit Collection Metadata to Registry
 
-# cron
-# list of collections somewhere listed
-# loop through each, check if folder exists, if not create PR
-
 on:
-  workflow_dispatch
+  workflow_dispatch:
+  schedule:
+    - cron: "*/10 * * * *"
 
 jobs:
   submit-pr:
@@ -70,5 +68,5 @@ jobs:
             Automated PR created to update ${{ matrix.collection-name }} metadata.
             Feel free to make any necessary changes to this PR before merging.
           labels: |
-            template sync
+            update metadata
             automated pr
