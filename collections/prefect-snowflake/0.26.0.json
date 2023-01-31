@@ -54,8 +54,8 @@
           "required": [
             "credentials",
             "database",
-            "warehouse",
-            "schema"
+            "schema",
+            "warehouse"
           ],
           "block_type_slug": "snowflake-connector",
           "secret_fields": [
@@ -119,11 +119,11 @@
                   "description": "The type of authenticator to use for initializing connection.",
                   "default": "snowflake",
                   "enum": [
+                    "externalbrowser",
+                    "oauth",
+                    "okta_endpoint",
                     "snowflake",
                     "snowflake_jwt",
-                    "externalbrowser",
-                    "okta_endpoint",
-                    "oauth",
                     "username_password_mfa"
                   ],
                   "type": "string"
@@ -227,11 +227,11 @@
               "description": "The type of authenticator to use for initializing connection.",
               "default": "snowflake",
               "enum": [
+                "externalbrowser",
+                "oauth",
+                "okta_endpoint",
                 "snowflake",
                 "snowflake_jwt",
-                "externalbrowser",
-                "okta_endpoint",
-                "oauth",
                 "username_password_mfa"
               ],
               "type": "string"
