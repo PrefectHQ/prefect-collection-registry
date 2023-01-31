@@ -118,8 +118,8 @@
             }
           },
           "required": [
-            "v1_job",
-            "credentials"
+            "credentials",
+            "v1_job"
           ],
           "block_type_slug": "k8s-job",
           "secret_fields": [],
