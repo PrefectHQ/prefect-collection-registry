@@ -11,6 +11,7 @@ jobs:
   submit-pr:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         collection-name:
           - "prefect-airbyte"
@@ -18,7 +19,6 @@ jobs:
           - "prefect-azure"
           - "prefect-bitbucket"
           - "prefect-census"
-          - "prefect-dask"
           - "prefect-databricks"
           - "prefect-dbt"
           - "prefect-docker"
@@ -36,7 +36,6 @@ jobs:
           - "prefect-monte-carlo"
           - "prefect-openai"
           - "prefect-openmetadata"
-          - "prefect-ray"
           - "prefect-shell"
           - "prefect-slack"
           - "prefect-snowflake"
