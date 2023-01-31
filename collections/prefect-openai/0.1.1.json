@@ -146,9 +146,9 @@
               "description": "The size of the image to generate.",
               "default": "256x256",
               "enum": [
+                "1024x1024",
                 "256x256",
-                "512x512",
-                "1024x1024"
+                "512x512"
               ],
               "type": "string"
             },
@@ -163,8 +163,8 @@
               "description": "The format of the image to generate.",
               "default": "url",
               "enum": [
-                "url",
-                "b64_json"
+                "b64_json",
+                "url"
               ],
               "type": "string"
             }
