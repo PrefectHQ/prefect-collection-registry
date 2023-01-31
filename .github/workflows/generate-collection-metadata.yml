@@ -1,0 +1,48 @@
+name: Submit Collection Metadata to Registry
+
+# cron
+# list of collections somewhere listed
+# loop through each, check if folder exists, if not create PR
+
+on:
+  workflow_dispatch
+
+jobs:
+  submit-pr:
+    runs-on: ubuntu-latest
+    matrix:
+      collection-name:
+        - "prefect-gcp"
+        - "prefect-aws"
+        - "prefect-azure"
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.10
+
+      - name: Install ${{ matrix.collection-name }}
+        run: |
+          python -m pip install --upgrade pip build
+          python -m pip install --upgrade --upgrade-strategy eager "${{ matrix.collection-name }}[all_extras]"
+
+      - name: Generate collection metadata
+        run: |
+          python generate_collection_metadata.py ${{ matrix.collection-name }}
+
+      - name: Submit PR
+        uses: peter-evans/create-pull-request@v4
+        with:
+          commit-message: Updating Collection metadata
+          branch: update-collection-metadata
+          delete-branch: true
+          title: Update Collection metadata with new releases
+          body: |
+            Automated PR created to update Collection metadata.
+            Feel free to make any necessary changes to this PR before merging.
+          labels: |
+            template sync
+            automated pr

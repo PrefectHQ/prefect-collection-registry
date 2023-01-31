@@ -1,6 +1,8 @@
 import inspect
+import importlib
 import json
 import logging
+from pathlib import Path
 from abc import ABC
 from importlib.metadata import entry_points
 from sys import argv
@@ -48,15 +50,16 @@ def discover_block_subclasses(module: ModuleType) -> List[Type[Block]]:
     ]
 
 
-def generate_full_metadata(collection_slug: str):
+def generate_full_metadata(collection_name: str):
+    # group is only available for Python 3.10+
     collections = safe_load_entrypoints(entry_points(group="prefect.collections"))
     output_dict = {}
     for ep_name, module in collections.items():
         if isinstance(module, Exception):
             logging.warning(f"Error loading collection entrypoint {ep_name} - skipping")
             continue
-        discovered_collection_slug = module.__name__.split(".")[0].replace("_", "-")
-        if collection_slug != discovered_collection_slug:
+        discovered_collection_name = module.__name__.split(".")[0].replace("_", "-")
+        if collection_name != discovered_collection_name:
             continue
 
         output_dict["block_types"] = {
@@ -67,13 +70,24 @@ def generate_full_metadata(collection_slug: str):
 
 
 def write_collection_metadata(
-    collection_metadata: Dict[str, Any], collection_slug: str
+    collection_metadata: Dict[str, Any], collection_name: str
 ):
-    with open(f"{collection_slug}.json", "w") as f:
+    if "_" in collection_name:
+        raise ValueError(
+            f"Names can only contain dashes, not underscores, got: {collection_name!r}"
+        )
+
+    collection_slug = collection_name.replace("-", "_")
+    collection_version = importlib.import_module(collection_slug).__version__
+    collection_metadata_path = (
+        Path("collections") / collection_name / f"{collection_version}.json"
+    )
+    collection_metadata_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(collection_metadata_path, "w") as f:
         json.dump(collection_metadata, f, indent=2)
 
 
 if __name__ == "__main__":
-    collection_slug = argv[1]
-    collection_metadata = generate_full_metadata(collection_slug)
-    write_collection_metadata(collection_metadata, collection_slug)
+    collection_name = argv[1]
+    collection_metadata = generate_full_metadata(collection_name)
+    write_collection_metadata(collection_metadata, collection_name)
