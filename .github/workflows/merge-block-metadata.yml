@@ -20,7 +20,7 @@ jobs:
 
       - name: Merge collection metadata
         run: |
-          python merge_collection_metadata.py
+          python merge_block_metadata.py
 
       - name: Submit PR
         uses: peter-evans/create-pull-request@v4

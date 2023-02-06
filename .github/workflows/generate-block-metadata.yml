@@ -1,4 +1,4 @@
-name: Submit Collection Metadata to Registry
+name: Submit Collection Block Metadata to Registry
 
 on:
   workflow_dispatch:
@@ -55,7 +55,7 @@ jobs:
 
       - name: Generate collection metadata
         run: |
-          python generate_collection_metadata.py ${{ matrix.collection-name }}
+          python generate_block_metadata.py ${{ matrix.collection-name }}
 
       - name: Submit PR
         uses: peter-evans/create-pull-request@v4
