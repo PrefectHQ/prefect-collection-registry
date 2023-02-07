@@ -140,7 +140,7 @@ def submit_updates(collection_flow_metadata: dict):
 
 @flow
 def update_collections_flow_metadata():
-    for collection_name in ["prefect-airbyte"]:#get_collection_names():
+    for collection_name in get_collection_names():
         collection_flow_metadata = generate_flow_metadata(collection_name)        
         submit_updates(collection_flow_metadata)
 
