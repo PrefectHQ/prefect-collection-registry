@@ -96,4 +96,4 @@ def submit_updates(
         branch=BRANCH_NAME,
     )
 
-    print(f"Updated {variety} metadata for {collection_name} {latest_release}!")
+    print(f"Updated aggregate {variety} metadata for {collection_name} {latest_release}!")
