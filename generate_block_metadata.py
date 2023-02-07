@@ -2,9 +2,10 @@ import inspect
 import importlib
 import json
 import logging
-from pathlib import Path
 from abc import ABC
 from importlib.metadata import entry_points
+from pathlib import Path
+from prefect import flow, task
 from sys import argv
 from types import ModuleType
 from typing import Any, Dict, List, Type
@@ -12,7 +13,7 @@ from uuid import uuid4
 
 from prefect.blocks.core import Block
 from prefect.plugins import safe_load_entrypoints
-
+from utils import submit_updates
 
 def generate_block_metadata(block_subcls: Type[Block]) -> Dict[str, Any]:
     """
@@ -61,7 +62,7 @@ def discover_block_subclasses(module: ModuleType) -> List[Type[Block]]:
     ]
 
 
-def generate_full_metadata(collection_name: str):
+def generate_block_metadata(collection_name: str) -> Dict[str, Any]:
     # group is only available for Python 3.10+
     collections = safe_load_entrypoints(entry_points(group="prefect.collections"))
     collections_plus_core = {
@@ -104,8 +105,7 @@ def write_collection_metadata(
         json.dump(collection_metadata, f, indent=2)
 
 
-if __name__ == "__main__":
-    
-    collection_name = argv[1]
-    collection_metadata = generate_full_metadata(collection_name)
-    write_collection_metadata(collection_metadata, collection_name)
+@flow
+def update_block_metadata_for_collection(collection_name: str):
+    collection_block_metadata = generate_block_metadata(collection_name)
+    submit_updates(collection_block_metadata, "blocks")

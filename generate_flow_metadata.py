@@ -4,9 +4,10 @@ from griffe.dataclasses import Docstring
 from griffe.docstrings.parsers import Parser, parse
 from pkgutil import iter_modules
 from prefect import Flow, flow, task
+from prefect.blocks.system import Secret
 from prefect.utilities.importtools import load_module
 from typing import Any, Dict, Generator
-from utils import get_collection_names, skip_parsing
+from utils import skip_parsing, submit_updates
 
 skip_sections = {"parameters", "raises"}
 
@@ -76,7 +77,7 @@ def find_flows_in_module(
 
 
 @task(log_prints=True)
-def generate_flow_metadata(collection_name: str):
+def generate_flow_metadata(collection_name: str) -> Dict[str, Any]:
     """
     Generates a JSON file containing metadata about all flows in a given collection.
 
@@ -97,58 +98,10 @@ def generate_flow_metadata(collection_name: str):
         }
     }
 
-@task
-def submit_updates(collection_flow_metadata: dict):
-
-    collection_name = list(collection_flow_metadata.keys())[0]
-    flow_metadata_file = "views/aggregate-flow-metadata.json"
-    REPO_NAME = "prefect-collection-registry"
-    BRANCH_NAME = "flow-metadata"
-
-    # read the existing flow metadata from existing JSON file
-    gh = github3.login(token=os.getenv("GITHUB_TOKEN"))
-    repo = gh.repository("PrefectHQ", REPO_NAME)
-
-    existing_flow_metadata_raw = repo.file_contents(
-        flow_metadata_file, ref=BRANCH_NAME
-    ).decoded.decode()
-
-    flow_metadata_dict = json.loads(existing_flow_metadata_raw)
-    
-    collection_repo = gh.repository("PrefectHQ", f"{collection_name}")
-    latest_release = collection_repo.latest_release().tag_name
-    
-    flow_metadata_dict.update(collection_flow_metadata)
-        
-    # create a new commit adding the collection version metadata
-    try:
-        repo.create_file(
-            path=f"flows/{collection_name}/{latest_release}.json",
-            message=f"Add {collection_name} {latest_release} to flow records",
-            content=json.dumps(collection_flow_metadata, indent=4).encode("utf-8"),
-            branch=BRANCH_NAME,
-        )
-    except github3.exceptions.UnprocessableEntity as e:
-        # file already exists so nothing to do
-        if "\"sha\" wasn't supplied" in str(e):
-            print(f"Flow metadata for {collection_name} {latest_release} already exists!")
-            return
-        raise
-    
-    # create a new commit updating the aggregate flow metadata file
-    repo.file_contents(flow_metadata_file, ref=BRANCH_NAME).update(
-        message=f"Update aggregate flow metadata with {collection_name} {latest_release}",
-        content=json.dumps(flow_metadata_dict, indent=4).encode("utf-8"),
-        branch=BRANCH_NAME,
-    )
-
-    print(f"Updated flow metadata for {collection_name} {latest_release}!")
-
 @flow(log_prints=True)
 def update_flow_metadata_for_collection(collection_name: str):
     collection_flow_metadata = generate_flow_metadata(collection_name)        
-    submit_updates(collection_flow_metadata)
-
+    submit_updates(collection_flow_metadata, "flows")
+    
 if __name__ == "__main__":
-    for collection_name in get_collection_names():
-        update_flow_metadata_for_collection(collection_name)
+    update_flow_metadata_for_collection("prefect-airbyte")

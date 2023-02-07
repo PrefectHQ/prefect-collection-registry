@@ -1,8 +1,11 @@
-import httpx
+import github3, httpx, json
 from bs4 import BeautifulSoup
+from prefect import task
+from prefect.blocks.system import Secret
 from prefect.utilities.importtools import to_qualified_name
 from types import ModuleType
-from typing import Callable, Union
+from typing import Any, Callable, Dict, Union
+from typing_extensions import Literal
 
 exclude_collections = {
     "prefect-ray"
@@ -38,3 +41,55 @@ def skip_parsing(name: str, obj: Union[ModuleType, Callable], module_nesting: st
     except AttributeError:
         wrong_module = False
     return obj.__doc__ is None or name.startswith("_") or wrong_module
+
+
+@task
+def submit_updates(
+    collection_metadata: Dict[str, Any],
+    variety: Literal["blocks", "flows", "collections"],
+):
+
+    collection_name = list(collection_metadata.keys())[0]
+    flow_metadata_file = f"views/aggregate-{variety}-metadata.json"
+    REPO_NAME = "prefect-collection-registry"
+    BRANCH_NAME = "update-metadata"
+
+    # read the existing flow metadata from existing JSON file
+    github_token = Secret.load("github-token")
+    gh = github3.login(token=github_token.get())
+    repo = gh.repository("PrefectHQ", REPO_NAME)
+
+    existing_metadata_raw = repo.file_contents(
+        flow_metadata_file, ref=BRANCH_NAME
+    ).decoded.decode()
+
+    metadata_dict = json.loads(existing_metadata_raw)
+    
+    collection_repo = gh.repository("PrefectHQ", f"{collection_name}")
+    latest_release = collection_repo.latest_release().tag_name
+    
+    metadata_dict.update(collection_metadata)
+        
+    # create a new commit adding the collection version metadata
+    try:
+        repo.create_file(
+            path=f"{variety}/{collection_name}/{latest_release}.json",
+            message=f"Add {collection_name} {latest_release} to {variety} records",
+            content=json.dumps(collection_metadata, indent=4).encode("utf-8"),
+            branch=BRANCH_NAME,
+        )
+    except github3.exceptions.UnprocessableEntity as e:
+        if "\"sha\" wasn't supplied" in str(e):
+            # file already exists so nothing to do
+            print(f"{variety} metadata for {collection_name} {latest_release} already exists!")
+            return
+        raise
+    
+    # create a new commit updating the aggregate flow metadata file
+    repo.file_contents(flow_metadata_file, ref=BRANCH_NAME).update(
+        message=f"Update aggregate {variety} metadata with {collection_name} {latest_release}",
+        content=json.dumps(metadata_dict, indent=4).encode("utf-8"),
+        branch=BRANCH_NAME,
+    )
+
+    print(f"Updated {variety} metadata for {collection_name} {latest_release}!")
