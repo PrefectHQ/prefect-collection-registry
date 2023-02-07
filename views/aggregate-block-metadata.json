@@ -2733,5 +2733,8 @@
                 }
             }
         }
+    },
+    "prefect-dask": {
+        "block_types": {}
     }
 }
