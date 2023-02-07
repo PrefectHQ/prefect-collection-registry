@@ -83,7 +83,9 @@ def generate_all_block_metadata(collection_name: str) -> Dict[str, Any]:
             **output_dict.get("block_types", {}),
             **generate_block_metadata_for_module(module),
         }
-    return output_dict
+    return {
+        collection_name: output_dict,
+    }
 
 
 def write_collection_metadata(
@@ -110,10 +112,5 @@ def update_block_metadata_for_collection(collection_name: str):
     submit_updates(collection_block_metadata, "block")
 
 if __name__ == "__main__":
-    # collection_name = argv[1]
-    # update_block_metadata_for_collection(collection_name)
-
-    write_collection_metadata(
-        generate_all_block_metadata("prefect"),
-        "prefect",
-    )
+    collection_name = argv[1]
+    update_block_metadata_for_collection(collection_name)
