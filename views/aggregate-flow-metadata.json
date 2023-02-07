@@ -2591,5 +2591,12 @@
                 "summary": "Triggers a Census sync run and waits for thetriggered run to complete."
             }
         }
-    }
+    },
+    "prefect-aws": {},
+    "prefect-azure": {},
+    "prefect-slack": {},
+    "prefect-email": {},
+    "prefect-shell": {},
+    "prefect-gcp": {},
+    "prefect-twitter": {}
 }
