@@ -110,5 +110,10 @@ def update_block_metadata_for_collection(collection_name: str):
     submit_updates(collection_block_metadata, "block")
 
 if __name__ == "__main__":
-    collection_name = argv[1]
-    update_block_metadata_for_collection(collection_name)
+    # collection_name = argv[1]
+    # update_block_metadata_for_collection(collection_name)
+
+    write_collection_metadata(
+        generate_all_block_metadata("prefect"),
+        "prefect",
+    )

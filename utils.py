@@ -65,6 +65,8 @@ def submit_updates(
 
     metadata_dict = json.loads(existing_metadata_raw)
 
+    print(collection_name)
+
     collection_repo = gh.repository("PrefectHQ", collection_name)
     
     
