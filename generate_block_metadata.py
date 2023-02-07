@@ -45,6 +45,13 @@ def generate_block_metadata_for_module(module: ModuleType):
 
 
 def discover_block_subclasses(module: ModuleType) -> List[Type[Block]]:
+    if module.__name__ == "prefect":
+        block_subclasses = []
+        for _, submodule in inspect.getmembers(module, inspect.ismodule):
+            if submodule.__name__ in {"prefect.blocks", "prefect.infrastructure"}:
+                block_subclasses.extend(discover_block_subclasses(submodule))
+        return block_subclasses
+    
     return [
         cls
         for _, cls in inspect.getmembers(module)
@@ -57,12 +64,18 @@ def discover_block_subclasses(module: ModuleType) -> List[Type[Block]]:
 def generate_full_metadata(collection_name: str):
     # group is only available for Python 3.10+
     collections = safe_load_entrypoints(entry_points(group="prefect.collections"))
+    collections_plus_core = {
+        "prefect": importlib.import_module("prefect"),
+        **collections,
+    }
+    
     output_dict = {}
-    for ep_name, module in collections.items():
+    for ep_name, module in collections_plus_core.items():
         if isinstance(module, Exception):
             logging.warning(f"Error loading collection entrypoint {ep_name} - skipping")
             continue
         discovered_collection_name = module.__name__.split(".")[0].replace("_", "-")
+        print(discovered_collection_name)
         if collection_name != discovered_collection_name:
             continue
 
@@ -84,7 +97,7 @@ def write_collection_metadata(
     collection_slug = collection_name.replace("-", "_")
     collection_version = importlib.import_module(collection_slug).__version__
     collection_metadata_path = (
-        Path("collections") / collection_name / f"{collection_version}.json"
+        Path("blocks") / collection_name / f"v{collection_version}.json"
     )
     collection_metadata_path.parent.mkdir(parents=True, exist_ok=True)
     with open(collection_metadata_path, "w") as f:
@@ -92,6 +105,7 @@ def write_collection_metadata(
 
 
 if __name__ == "__main__":
+    
     collection_name = argv[1]
     collection_metadata = generate_full_metadata(collection_name)
     write_collection_metadata(collection_metadata, collection_name)

@@ -1,9 +1,10 @@
 import httpx, os, re
 
-
+from prefect.blocks.core import Block
 from prefect.utilities.importtools import to_qualified_name
+from pydantic import Field
 from types import ModuleType
-from typing import Callable, Union
+from typing import Callable, Dict, Union
 
 headers = {
     "Accept": "application/vnd.github.v3+json",
@@ -15,6 +16,7 @@ collection_pattern = re.compile(r"^prefect-[\w\d]+$")
 exclude_repos = {
     "prefect-design",
     "prefect-helm",
+    "prefect-ray"
 }
 
 
@@ -47,7 +49,7 @@ def get_collection_names():
         for repo in repos:
             if is_not_collection_repo(repo["name"]):
                 continue
-            yield repo["name"].replace("-", "_")
+            yield repo["name"]
         repos_url = response.links.get("next", {}).get("url")
 
 
@@ -63,3 +65,9 @@ def skip_parsing(name: str, obj: Union[ModuleType, Callable], module_nesting: st
     except AttributeError:
         wrong_module = False
     return obj.__doc__ is None or name.startswith("_") or wrong_module
+
+
+class LatestCollectionReleases(Block):
+    releases: Dict[str, str] = Field(
+        default_factory=dict,
+    )

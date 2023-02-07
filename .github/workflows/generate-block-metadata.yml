@@ -53,7 +53,7 @@ jobs:
           python -m pip install --upgrade pip build
           python -m pip install --upgrade --upgrade-strategy eager "${{ matrix.collection-name }}[all_extras]"
 
-      - name: Generate collection metadata
+      - name: Generate collection block metadata
         run: |
           python generate_block_metadata.py ${{ matrix.collection-name }}
 
