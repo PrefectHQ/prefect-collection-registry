@@ -86,8 +86,8 @@ def submit_updates(
         if "\"sha\" wasn't supplied" in str(e):
             # file already exists so nothing to do
             print(f"{variety} metadata for {collection_name} {latest_release} already exists!")
-            return
-        raise
+        else:
+            raise
     
     # create a new commit updating the aggregate flow metadata file
     repo.file_contents(metadata_file, ref=BRANCH_NAME).update(

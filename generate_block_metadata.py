@@ -46,13 +46,30 @@ def generate_block_metadata_for_module(module: ModuleType):
 
 
 def discover_block_subclasses(module: ModuleType) -> List[Type[Block]]:
+    print(f"Discovering block subclasses in {module.__name__}...")
+
     if module.__name__ == "prefect":
-        block_subclasses = []
-        for _, submodule in inspect.getmembers(module, inspect.ismodule):
-            if submodule.__name__ in {"prefect.blocks", "prefect.infrastructure"}:
-                block_subclasses.extend(discover_block_subclasses(submodule))
-        return block_subclasses
-    
+        # special case for core        
+        block_submodules = [
+            module.blocks.kubernetes,
+            module.blocks.notifications,
+            module.blocks.system,
+        ]
+        
+        infrastructure_submodules = [
+            module.infrastructure.docker,
+            module.infrastructure.kubernetes,
+            module.infrastructure.process,
+        ]
+        
+        subclasses_for_each_submodule = [
+            discover_block_subclasses(submodule)
+            for submodule in block_submodules + infrastructure_submodules
+        ]
+        
+        return [subcls for sublist in subclasses_for_each_submodule for subcls in sublist]
+        
+        
     return [
         cls
         for _, cls in inspect.getmembers(module)
@@ -103,7 +120,7 @@ def write_collection_metadata(
     )
     collection_metadata_path.parent.mkdir(parents=True, exist_ok=True)
     with open(collection_metadata_path, "w") as f:
-        json.dump({collection_name: collection_metadata}, f, indent=2)
+        json.dump(collection_metadata, f, indent=2)
 
 
 @flow
