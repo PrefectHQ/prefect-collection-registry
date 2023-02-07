@@ -140,11 +140,11 @@ def generate_flow_metadata(collection_name: str):
         f.write(flow_metadata_content)
 
     # create a new commit with the updated flow metadata
-    # registry_repo.file_contents(flow_metadata_file, ref=BRANCH_NAME).update(
-    #     message=f"Update flow metadata for {collection_name} {latest_release}",
-    #     content=json.dumps(flow_metadata, indent=4).encode("utf-8"),
-    #     branch=BRANCH_NAME,
-    # )
+    registry_repo.file_contents(flow_metadata_file, ref=BRANCH_NAME).update(
+        message=f"Update flow metadata for {collection_name} {latest_release}",
+        content=json.dumps(flow_metadata, indent=4).encode("utf-8"),
+        branch=BRANCH_NAME,
+    )
 
     print(f"Updated flow metadata for {collection_name} {latest_release}!")
 
