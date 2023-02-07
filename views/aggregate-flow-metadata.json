@@ -2593,5 +2593,6 @@
         }
     },
     "prefect-aws": {},
-    "prefect-azure": {}
+    "prefect-azure": {},
+    "prefect-slack": {}
 }
