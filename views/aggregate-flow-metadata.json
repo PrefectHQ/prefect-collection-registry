@@ -2749,5 +2749,6 @@
     },
     "prefect-openai": {},
     "prefect-openmetadata": {},
-    "prefect-snowflake": {}
+    "prefect-snowflake": {},
+    "prefect-sqlalchemy": {}
 }
