@@ -2603,5 +2603,6 @@
     "prefect-dask": {},
     "prefect-docker": {},
     "prefect-firebolt": {},
-    "prefect-github": {}
+    "prefect-github": {},
+    "prefect-gitlab": {}
 }
