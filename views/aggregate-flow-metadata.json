@@ -2597,5 +2597,6 @@
     "prefect-slack": {},
     "prefect-email": {},
     "prefect-shell": {},
-    "prefect-gcp": {}
+    "prefect-gcp": {},
+    "prefect-twitter": {}
 }
