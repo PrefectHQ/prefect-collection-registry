@@ -2746,5 +2746,6 @@
                 "summary": "Create or update a `source` node, `destination` node, and the edge that connects them."
             }
         }
-    }
+    },
+    "prefect-openai": {}
 }
