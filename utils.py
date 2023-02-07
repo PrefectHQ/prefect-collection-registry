@@ -1,56 +1,29 @@
-import httpx, os, re
-
-from prefect.blocks.core import Block
+import httpx
+from bs4 import BeautifulSoup
 from prefect.utilities.importtools import to_qualified_name
-from pydantic import Field
 from types import ModuleType
-from typing import Callable, Dict, Union
+from typing import Callable, Union
 
-headers = {
-    "Accept": "application/vnd.github.v3+json",
-    "Authorization": f"token {os.environ['GITHUB_TOKEN']}",
-}
-
-collection_pattern = re.compile(r"^prefect-[\w\d]+$")
-
-exclude_repos = {
-    "prefect-design",
-    "prefect-helm",
+exclude_collections = {
     "prefect-ray"
 }
 
-
-def has_release(repo_name) -> bool:
-    releases_url = f"https://api.github.com/repos/PrefectHQ/{repo_name}/releases"
-    response = httpx.get(releases_url, headers=headers)
-    response.raise_for_status()
-    return bool(response.json())
-
-
-def is_not_collection_repo(repo_name):
-    return not all(
-        [
-            collection_pattern.match(repo_name),
-            repo_name not in exclude_repos,
-            has_release(repo_name),
-        ]
-    )
-
-
 def get_collection_names():
-
-    repos_url = "https://api.github.com/orgs/PrefectHQ/repos"
-
-    while repos_url:
-        print(f"Fetching {repos_url}")
-        response = httpx.get(repos_url, headers=headers)
-        response.raise_for_status()
-        repos = response.json()
-        for repo in repos:
-            if is_not_collection_repo(repo["name"]):
-                continue
-            yield repo["name"]
-        repos_url = response.links.get("next", {}).get("url")
+    catalog_resp = httpx.get("https://docs.prefect.io/collections/catalog/")
+    catalog_soup = BeautifulSoup(catalog_resp.text, "html.parser")
+    repo_api_urls = sorted({
+        url["href"]
+        .replace("https://", "https://api.github.com/repos/")
+        .replace(".github.io", "")
+        .rstrip("/")
+        for url in catalog_soup.find_all("a", href=True)
+        if ".io/prefect-" in url["href"]
+    })
+    return [
+        i.split("/")[-1] for i in repo_api_urls
+        if i.split("/")[-2] == "prefecthq"
+        and i.split("/")[-1] not in exclude_collections
+    ]
 
 
 def skip_parsing(name: str, obj: Union[ModuleType, Callable], module_nesting: str):

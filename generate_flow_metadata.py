@@ -2,7 +2,6 @@ import github3, inspect, json, os, subprocess
 from collections import defaultdict
 from griffe.dataclasses import Docstring
 from griffe.docstrings.parsers import Parser, parse
-from pathlib import Path
 from pkgutil import iter_modules
 from prefect import Flow, flow, task
 from prefect.utilities.importtools import load_module
@@ -120,29 +119,36 @@ def submit_updates(collection_flow_metadata: dict):
     latest_release = collection_repo.latest_release().tag_name
     
     flow_metadata_dict.update(collection_flow_metadata)
-    
+        
     # create a new commit adding the collection version metadata
-    repo.create_file(
-        path=f"flows/{collection_name}/{latest_release}.json",
-        message=f"Add {collection_name} {latest_release} to flow metadata",
-        content=json.dumps(collection_flow_metadata, indent=4).encode("utf-8"),
-        branch=BRANCH_NAME,
-    )
+    try:
+        repo.create_file(
+            path=f"flows/{collection_name}/{latest_release}.json",
+            message=f"Add {collection_name} {latest_release} to flow records",
+            content=json.dumps(collection_flow_metadata, indent=4).encode("utf-8"),
+            branch=BRANCH_NAME,
+        )
+    except github3.exceptions.UnprocessableEntity as e:
+        # file already exists so nothing to do
+        if "\"sha\" wasn't supplied" in str(e):
+            print(f"Flow metadata for {collection_name} {latest_release} already exists!")
+            return
+        raise
     
     # create a new commit updating the aggregate flow metadata file
     repo.file_contents(flow_metadata_file, ref=BRANCH_NAME).update(
-        message=f"Update flow metadata for {collection_name} {latest_release}",
+        message=f"Update aggregate flow metadata with {collection_name} {latest_release}",
         content=json.dumps(flow_metadata_dict, indent=4).encode("utf-8"),
         branch=BRANCH_NAME,
     )
 
     print(f"Updated flow metadata for {collection_name} {latest_release}!")
 
-@flow
-def update_collections_flow_metadata():
-    for collection_name in get_collection_names():
-        collection_flow_metadata = generate_flow_metadata(collection_name)        
-        submit_updates(collection_flow_metadata)
+@flow(log_prints=True)
+def update_flow_metadata_for_collection(collection_name: str):
+    collection_flow_metadata = generate_flow_metadata(collection_name)        
+    submit_updates(collection_flow_metadata)
 
 if __name__ == "__main__":
-    update_collections_flow_metadata()
+    for collection_name in get_collection_names():
+        update_flow_metadata_for_collection(collection_name)
