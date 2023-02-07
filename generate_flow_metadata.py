@@ -1,4 +1,4 @@
-import github3, inspect, json, os
+import github3, inspect, json, os, subprocess, sys
 from collections import defaultdict
 from griffe.dataclasses import Docstring
 from griffe.docstrings.parsers import Parser, parse
@@ -57,20 +57,14 @@ def find_flows_in_module(
     """
     module = load_module(module_name)
 
-    first = True
-
-    if first:
-        first = False
-        collection_name = module.__name__
-
     for _, name, ispkg in iter_modules(module.__path__):
         if ispkg:
 
-            yield from find_flows_in_module(f"{module_name}.{name}", collection_name)
+            yield from find_flows_in_module(f"{module_name}.{name}")
         else:
             try:
                 submodule = load_module(f"{module_name}.{name}")
-                print(f"\tLoaded submodule {module_name}.{name}...")
+                print(f"\t\tLoaded submodule {module_name}.{name}...")
             except ModuleNotFoundError:
                 continue
 
@@ -81,54 +75,80 @@ def find_flows_in_module(
                     yield obj
 
 
-# @flow
+@flow(log_prints=True)
 def generate_flow_metadata(collection_name: str):
     """
     Generates a JSON file containing metadata about all flows in a given collection.
 
     Creates or updates a PR with a commit containing the updated JSON file.
     """
+    subprocess.run(["pip", "install", collection_name])
+    
     collection_slug = collection_name.replace("-", "_")
     flow_metadata_file = "flows/collection_flows_metadata.json"
-    BRANCH_NAME = "flow-metadata"
+    BRANCH_NAME = "testing-flow-metadata"
 
     # read the existing flow metadata from existing JSON file
-    # within the collection repo
     gh = github3.login(token=os.getenv("GITHUB_TOKEN"))
 
-    prefect_core_repo = gh.repository("PrefectHQ", "prefect")
+    # prefect_core_repo = gh.repository("PrefectHQ", "prefect") for later
     registry_repo = gh.repository("PrefectHQ", "prefect-collection-registry")
     collection_repo = gh.repository("PrefectHQ", f"{collection_name}")
+    
     latest_release = collection_repo.latest_release().tag_name
 
-    print(f"found {collection_repo} {latest_release}")
+    try:
+        existing_flow_metadata_raw = registry_repo.file_contents(
+            flow_metadata_file, ref=BRANCH_NAME
+        ).decoded.decode()
+    except github3.exceptions.NotFoundError:
+        existing_flow_metadata_raw = "{}"
+        
+        registry_repo.create_ref(
+            f"refs/heads/{BRANCH_NAME}",
+            registry_repo.branch("main").commit.sha,
+        )
+        
+        registry_repo.create_file(
+            path=flow_metadata_file,
+            message=f"Create initial flow metadata file",
+            content=existing_flow_metadata_raw.encode("utf-8"),
+            branch=BRANCH_NAME,
+        )
+        
 
-    flow_metadata_raw = registry_repo.file_contents(
-        flow_metadata_file, ref="flow-metadata"
-    ).decoded.decode()
-
-    # make a dict of the existing flow metadata
-    flow_metadata = json.loads(flow_metadata_raw)
+    flow_metadata = json.loads(existing_flow_metadata_raw)
 
     collection_module = load_module(collection_slug)
-
     print(f"Loaded collection {collection_module.__name__}...")
 
     collection_flow_metadata = {
         flow.name: summarize_flow(flow, collection_slug)
         for flow in find_flows_in_module(collection_slug)
     }
-    if collection_flow_metadata:
-        flow_metadata.update({collection_name: collection_flow_metadata})
     
-        # create a new commit with the updated flow metadata
-        registry_repo.file_contents(
-            flow_metadata_file, ref=BRANCH_NAME
-        ).update(
-            message=f"Update flow metadata for {collection_name} {latest_release}",
-            content=json.dumps(flow_metadata, indent=4).encode("utf-8"),
-            branch=BRANCH_NAME,
-        )
+    update_required = (
+        collection_flow_metadata 
+        and collection_flow_metadata != flow_metadata.get(collection_name, None)
+    )
+    
+    if not update_required:
+        print(f"No new flows found in {collection_name}!")
+        return
+    
+    flow_metadata.update({collection_name: collection_flow_metadata})
 
-if __name__ == "__main__":
-    generate_flow_metadata("prefect-kubernetes")
+    # create a new commit with the updated flow metadata
+    registry_repo.file_contents(
+        flow_metadata_file, ref=BRANCH_NAME
+    ).update(
+        message=f"Update flow metadata for {collection_name} {latest_release}",
+        content=json.dumps(flow_metadata, indent=4).encode("utf-8"),
+        branch=BRANCH_NAME,
+    )
+    
+    print(f"Updated flow metadata for {collection_name} {latest_release}!")
+
+# if __name__ == "__main__":
+#     collection_name = sys.argv[1]
+#     generate_flow_metadata(collection_name)
