@@ -5475,6 +5475,501 @@
         }
     },
     "prefect": {
-        "block_types": {}
+        "block_types": {
+            "docker-container": {
+                "name": "Docker Container",
+                "slug": "docker-container",
+                "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/2IfXXfMq66mrzJBDFFCHTp/6d8f320d9e4fc4393f045673d61ab612/Moby-logo.png?h=250",
+                "documentation_url": "https://docs.prefect.io/api-ref/prefect/infrastructure/#prefect.infrastructure.DockerContainer",
+                "description": "Runs a command in a container.\n\nRequires a Docker Engine to be connectable. Docker settings will be retrieved from\nthe environment.\n\nClick [here](https://docs.prefect.io/tutorials/docker/) to see a tutorial.",
+                "code_example": "```python\nfrom prefect.infrastructure.docker import DockerContainer\n\ndocker_container_block = DockerContainer.load(\"BLOCK_NAME\")\n```",
+                "block_schema": {
+                    "checksum": "sha256:78f682fc53eeb9a7c4917f621b9afccc039842c432701f07abaef3ba5f1ff752",
+                    "fields": {
+                        "title": "DockerContainer",
+                        "description": "Runs a command in a container.\n\nRequires a Docker Engine to be connectable. Docker settings will be retrieved from\nthe environment.\n\nClick [here](https://docs.prefect.io/tutorials/docker/) to see a tutorial.",
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "title": "Type",
+                                "description": "The type of infrastructure.",
+                                "default": "docker-container",
+                                "enum": [
+                                    "docker-container"
+                                ],
+                                "type": "string"
+                            },
+                            "env": {
+                                "title": "Environment",
+                                "description": "Environment variables to set in the configured infrastructure.",
+                                "type": "object",
+                                "additionalProperties": {
+                                    "type": "string"
+                                }
+                            },
+                            "labels": {
+                                "title": "Labels",
+                                "description": "Labels applied to the infrastructure for metadata purposes.",
+                                "type": "object",
+                                "additionalProperties": {
+                                    "type": "string"
+                                }
+                            },
+                            "name": {
+                                "title": "Name",
+                                "description": "Name applied to the infrastructure for identification.",
+                                "type": "string"
+                            },
+                            "command": {
+                                "title": "Command",
+                                "description": "The command to run in the infrastructure.",
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "image": {
+                                "title": "Image",
+                                "description": "Tag of a Docker image to use. Defaults to the Prefect image.",
+                                "type": "string"
+                            },
+                            "image_pull_policy": {
+                                "description": "Specifies if the image should be pulled.",
+                                "allOf": [
+                                    {
+                                        "$ref": "#/definitions/ImagePullPolicy"
+                                    }
+                                ]
+                            },
+                            "image_registry": {
+                                "$ref": "#/definitions/DockerRegistry"
+                            },
+                            "networks": {
+                                "title": "Networks",
+                                "description": "A list of strings specifying Docker networks to connect the container to.",
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "network_mode": {
+                                "title": "Network Mode",
+                                "description": "The network mode for the created container (e.g. host, bridge). If 'networks' is set, this cannot be set.",
+                                "type": "string"
+                            },
+                            "auto_remove": {
+                                "title": "Auto Remove",
+                                "description": "If set, the container will be removed on completion.",
+                                "default": false,
+                                "type": "boolean"
+                            },
+                            "volumes": {
+                                "title": "Volumes",
+                                "description": "A list of volume mount strings in the format of \"local_path:container_path\".",
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "stream_output": {
+                                "title": "Stream Output",
+                                "description": "If set, the output will be streamed from the container to local standard output.",
+                                "default": true,
+                                "type": "boolean"
+                            },
+                            "memswap_limit": {
+                                "title": "Memswap Limit",
+                                "description": "Total memory (memory + swap), -1 to disable swap. Should only be set if `mem_limit` is also set. If `mem_limit` is set, this defaults toallowing the container to use as much swap as memory. For example, if `mem_limit` is 300m and `memswap_limit` is not set, the container can use 600m in total of memory and swap.",
+                                "anyOf": [
+                                    {
+                                        "type": "integer"
+                                    },
+                                    {
+                                        "type": "string"
+                                    }
+                                ]
+                            },
+                            "mem_limit": {
+                                "title": "Mem Limit",
+                                "description": "Memory limit of the created container. Accepts float values to enforce a limit in bytes or a string with a unit e.g. 100000b, 1000k, 128m, 1g. If a string is given without a unit, bytes are assumed.",
+                                "anyOf": [
+                                    {
+                                        "type": "number"
+                                    },
+                                    {
+                                        "type": "string"
+                                    }
+                                ]
+                            },
+                            "privileged": {
+                                "title": "Privileged",
+                                "description": "Give extended privileges to this container.",
+                                "default": false,
+                                "type": "boolean"
+                            }
+                        },
+                        "block_type_slug": "docker-container",
+                        "secret_fields": [
+                            "image_registry.password"
+                        ],
+                        "block_schema_references": {
+                            "image_registry": {
+                                "block_type_slug": "docker-registry",
+                                "block_schema_checksum": "sha256:6db1457676eee0b54ca2834b06f80a80f7c90112e64f1bdd26afb2e62fcceed9"
+                            }
+                        },
+                        "definitions": {
+                            "ImagePullPolicy": {
+                                "title": "ImagePullPolicy",
+                                "description": "An enumeration.",
+                                "enum": [
+                                    "IF_NOT_PRESENT",
+                                    "ALWAYS",
+                                    "NEVER"
+                                ],
+                                "type": "string"
+                            },
+                            "DockerRegistry": {
+                                "title": "DockerRegistry",
+                                "description": "Connects to a Docker registry.\n\nRequires a Docker Engine to be connectable.",
+                                "type": "object",
+                                "properties": {
+                                    "username": {
+                                        "title": "Username",
+                                        "description": "The username to log into the registry with.",
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "title": "Password",
+                                        "description": "The password to log into the registry with.",
+                                        "type": "string",
+                                        "writeOnly": true,
+                                        "format": "password"
+                                    },
+                                    "registry_url": {
+                                        "title": "Registry Url",
+                                        "description": "The URL to the registry. Generally, \"http\" or \"https\" can be omitted.",
+                                        "type": "string"
+                                    },
+                                    "reauth": {
+                                        "title": "Reauth",
+                                        "description": "Whether or not to reauthenticate on each interaction.",
+                                        "default": true,
+                                        "type": "boolean"
+                                    }
+                                },
+                                "required": [
+                                    "username",
+                                    "password",
+                                    "registry_url"
+                                ],
+                                "block_type_slug": "docker-registry",
+                                "secret_fields": [
+                                    "password"
+                                ],
+                                "block_schema_references": {}
+                            }
+                        }
+                    },
+                    "capabilities": [
+                        "run-infrastructure"
+                    ],
+                    "version": "2.7.12"
+                }
+            },
+            "kubernetes-cluster-config": {
+                "name": "Kubernetes Cluster Config",
+                "slug": "kubernetes-cluster-config",
+                "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/1zrSeY8DZ1MJZs2BAyyyGk/20445025358491b8b72600b8f996125b/Kubernetes_logo_without_workmark.svg.png?h=250",
+                "documentation_url": "https://docs.prefect.io/api-ref/prefect/blocks/kubernetes/#prefect.blocks.kubernetes.KubernetesClusterConfig",
+                "description": "Stores configuration for interaction with Kubernetes clusters.\n\nSee `from_file` for creation.",
+                "code_example": "Load a saved Kubernetes cluster config:\n```python\nfrom prefect.blocks.kubernetes import KubernetesClusterConfig\n\ncluster_config_block = KubernetesClusterConfig.load(\"BLOCK_NAME\")\n```",
+                "block_schema": {
+                    "checksum": "sha256:90d421e948bfbe4cdc98b124995f0edd0f84b0837549ad1390423bad8e31cf3b",
+                    "fields": {
+                        "title": "KubernetesClusterConfig",
+                        "description": "Stores configuration for interaction with Kubernetes clusters.\n\nSee `from_file` for creation.",
+                        "type": "object",
+                        "properties": {
+                            "config": {
+                                "title": "Config",
+                                "description": "The entire contents of a kubectl config file.",
+                                "type": "object"
+                            },
+                            "context_name": {
+                                "title": "Context Name",
+                                "description": "The name of the kubectl context to use.",
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "config",
+                            "context_name"
+                        ],
+                        "block_type_slug": "kubernetes-cluster-config",
+                        "secret_fields": [],
+                        "block_schema_references": {}
+                    },
+                    "capabilities": [],
+                    "version": "2.7.12"
+                }
+            },
+            "kubernetes-job": {
+                "name": "Kubernetes Job",
+                "slug": "kubernetes-job",
+                "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/1zrSeY8DZ1MJZs2BAyyyGk/20445025358491b8b72600b8f996125b/Kubernetes_logo_without_workmark.svg.png?h=250",
+                "documentation_url": "https://docs.prefect.io/api-ref/prefect/infrastructure/#prefect.infrastructure.KubernetesJob",
+                "description": "Runs a command as a Kubernetes Job.\n\nClick [here](https://medium.com/the-prefect-blog/how-to-use-kubernetes-with-prefect-419b2e8b8cb2/) to see a tutorial.",
+                "code_example": "```python\nfrom prefect.infrastructure.kubernetes import KubernetesJob\n\nkubernetes_job_block = KubernetesJob.load(\"BLOCK_NAME\")\n```",
+                "block_schema": {
+                    "checksum": "sha256:1a553852c1bcc9cd95645917bdbaaae9e28cbcc1270ff5b43b45bbd87564f5cc",
+                    "fields": {
+                        "title": "KubernetesJob",
+                        "description": "Runs a command as a Kubernetes Job.\n\nClick [here](https://medium.com/the-prefect-blog/how-to-use-kubernetes-with-prefect-419b2e8b8cb2/) to see a tutorial.",
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "title": "Type",
+                                "description": "The type of infrastructure.",
+                                "default": "kubernetes-job",
+                                "enum": [
+                                    "kubernetes-job"
+                                ],
+                                "type": "string"
+                            },
+                            "env": {
+                                "title": "Environment",
+                                "description": "Environment variables to set in the configured infrastructure.",
+                                "type": "object",
+                                "additionalProperties": {
+                                    "type": "string"
+                                }
+                            },
+                            "labels": {
+                                "title": "Labels",
+                                "description": "Labels applied to the infrastructure for metadata purposes.",
+                                "type": "object",
+                                "additionalProperties": {
+                                    "type": "string"
+                                }
+                            },
+                            "name": {
+                                "title": "Name",
+                                "description": "Name applied to the infrastructure for identification.",
+                                "type": "string"
+                            },
+                            "command": {
+                                "title": "Command",
+                                "description": "The command to run in the infrastructure.",
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "image": {
+                                "title": "Image",
+                                "description": "The image reference of a container image to use for the job, for example, `docker.io/prefecthq/prefect:2-latest`.The behavior is as described in the Kubernetes documentation and uses the latest version of Prefect by default, unless an image is already present in a provided job manifest.",
+                                "type": "string"
+                            },
+                            "namespace": {
+                                "title": "Namespace",
+                                "description": "The Kubernetes namespace to use for this job. Defaults to 'default' unless a namespace is already present in a provided job manifest.",
+                                "type": "string"
+                            },
+                            "service_account_name": {
+                                "title": "Service Account Name",
+                                "description": "The Kubernetes service account to use for this job.",
+                                "type": "string"
+                            },
+                            "image_pull_policy": {
+                                "description": "The Kubernetes image pull policy to use for job containers.",
+                                "allOf": [
+                                    {
+                                        "$ref": "#/definitions/KubernetesImagePullPolicy"
+                                    }
+                                ]
+                            },
+                            "cluster_config": {
+                                "title": "Cluster Config",
+                                "description": "The Kubernetes cluster config to use for this job.",
+                                "allOf": [
+                                    {
+                                        "$ref": "#/definitions/KubernetesClusterConfig"
+                                    }
+                                ]
+                            },
+                            "job": {
+                                "title": "Base Job Manifest",
+                                "description": "The base manifest for the Kubernetes Job.",
+                                "type": "object"
+                            },
+                            "customizations": {
+                                "title": "Customizations",
+                                "description": "A list of JSON 6902 patches to apply to the base Job manifest.",
+                                "type": "array",
+                                "format": "rfc6902",
+                                "items": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "job_watch_timeout_seconds": {
+                                "title": "Job Watch Timeout Seconds",
+                                "description": "Number of seconds to wait for each event emitted by the job before timing out. Defaults to `None`, which means no timeout will be enforced while waiting for each event in the job lifecycle.",
+                                "type": "integer"
+                            },
+                            "pod_watch_timeout_seconds": {
+                                "title": "Pod Watch Timeout Seconds",
+                                "description": "Number of seconds to watch for pod creation before timing out.",
+                                "default": 60,
+                                "type": "integer"
+                            },
+                            "stream_output": {
+                                "title": "Stream Output",
+                                "description": "If set, output will be streamed from the job to local standard output.",
+                                "default": true,
+                                "type": "boolean"
+                            },
+                            "finished_job_ttl": {
+                                "title": "Finished Job Ttl",
+                                "description": "The number of seconds to retain jobs after completion. If set, finished jobs will be cleaned up by Kubernetes after the given delay. If None (default), jobs will need to be manually removed.",
+                                "type": "integer"
+                            }
+                        },
+                        "block_type_slug": "kubernetes-job",
+                        "secret_fields": [],
+                        "block_schema_references": {
+                            "cluster_config": {
+                                "block_type_slug": "kubernetes-cluster-config",
+                                "block_schema_checksum": "sha256:90d421e948bfbe4cdc98b124995f0edd0f84b0837549ad1390423bad8e31cf3b"
+                            }
+                        },
+                        "definitions": {
+                            "KubernetesImagePullPolicy": {
+                                "title": "KubernetesImagePullPolicy",
+                                "description": "An enumeration.",
+                                "enum": [
+                                    "IfNotPresent",
+                                    "Always",
+                                    "Never"
+                                ]
+                            },
+                            "KubernetesClusterConfig": {
+                                "title": "KubernetesClusterConfig",
+                                "description": "Stores configuration for interaction with Kubernetes clusters.\n\nSee `from_file` for creation.",
+                                "type": "object",
+                                "properties": {
+                                    "config": {
+                                        "title": "Config",
+                                        "description": "The entire contents of a kubectl config file.",
+                                        "type": "object"
+                                    },
+                                    "context_name": {
+                                        "title": "Context Name",
+                                        "description": "The name of the kubectl context to use.",
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "config",
+                                    "context_name"
+                                ],
+                                "block_type_slug": "kubernetes-cluster-config",
+                                "secret_fields": [],
+                                "block_schema_references": {}
+                            }
+                        }
+                    },
+                    "capabilities": [
+                        "run-infrastructure"
+                    ],
+                    "version": "2.7.12"
+                }
+            },
+            "process": {
+                "name": "Process",
+                "slug": "process",
+                "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/39WQhVu4JK40rZWltGqhuC/d15be6189a0cb95949a6b43df00dcb9b/image5.png?h=250",
+                "documentation_url": "https://docs.prefect.io/concepts/infrastructure/#process",
+                "description": "Run a command in a new process.\n\nCurrent environment variables and Prefect settings will be included in the created\nprocess. Configured environment variables will override any current environment\nvariables.",
+                "code_example": "```python\nfrom prefect.infrastructure.process import Process\n\nprocess_block = Process.load(\"BLOCK_NAME\")\n```",
+                "block_schema": {
+                    "checksum": "sha256:47c4ac364708f4a6f27fb10b18086ad92c0a53fbbdd9ba07c030467067979f84",
+                    "fields": {
+                        "title": "Process",
+                        "description": "Run a command in a new process.\n\nCurrent environment variables and Prefect settings will be included in the created\nprocess. Configured environment variables will override any current environment\nvariables.",
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "title": "Type",
+                                "description": "The type of infrastructure.",
+                                "default": "process",
+                                "enum": [
+                                    "process"
+                                ],
+                                "type": "string"
+                            },
+                            "env": {
+                                "title": "Environment",
+                                "description": "Environment variables to set in the configured infrastructure.",
+                                "type": "object",
+                                "additionalProperties": {
+                                    "type": "string"
+                                }
+                            },
+                            "labels": {
+                                "title": "Labels",
+                                "description": "Labels applied to the infrastructure for metadata purposes.",
+                                "type": "object",
+                                "additionalProperties": {
+                                    "type": "string"
+                                }
+                            },
+                            "name": {
+                                "title": "Name",
+                                "description": "Name applied to the infrastructure for identification.",
+                                "type": "string"
+                            },
+                            "command": {
+                                "title": "Command",
+                                "description": "The command to run in the infrastructure.",
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "stream_output": {
+                                "title": "Stream Output",
+                                "description": "If set, output will be streamed from the process to local standard output.",
+                                "default": true,
+                                "type": "boolean"
+                            },
+                            "working_dir": {
+                                "title": "Working Dir",
+                                "description": "If set, the process will open within the specified path as the working directory. Otherwise, a temporary directory will be created.",
+                                "anyOf": [
+                                    {
+                                        "type": "string"
+                                    },
+                                    {
+                                        "type": "string",
+                                        "format": "path"
+                                    }
+                                ]
+                            }
+                        },
+                        "block_type_slug": "process",
+                        "secret_fields": [],
+                        "block_schema_references": {}
+                    },
+                    "capabilities": [
+                        "run-infrastructure"
+                    ],
+                    "version": "2.7.12"
+                }
+            }
+        }
     }
 }
