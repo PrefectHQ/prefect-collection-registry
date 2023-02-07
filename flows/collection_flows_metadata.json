@@ -532,5 +532,403 @@
                 "summary": "Triggers a Census sync run and waits for thetriggered run to complete."
             }
         }
+    },
+    "prefect-dbt": {
+        "Retry subset of dbt Cloud job run and wait for completion": {
+            "name": "Retry subset of dbt Cloud job run and wait for completion",
+            "parameters": {
+                "title": "Parameters",
+                "type": "object",
+                "properties": {
+                    "dbt_cloud_credentials": {
+                        "title": "dbt_cloud_credentials",
+                        "description": "Credentials for authenticating with dbt Cloud.",
+                        "position": 0,
+                        "allOf": [
+                            {
+                                "$ref": "#/definitions/DbtCloudCredentials"
+                            }
+                        ]
+                    },
+                    "run_id": {
+                        "title": "run_id",
+                        "description": "The ID of the job run to retry.",
+                        "position": 1,
+                        "type": "integer"
+                    },
+                    "trigger_job_run_options": {
+                        "title": "trigger_job_run_options",
+                        "description": "An optional TriggerJobRunOptions instance to\nspecify overrides for the triggered job run.",
+                        "position": 2,
+                        "allOf": [
+                            {
+                                "$ref": "#/definitions/TriggerJobRunOptions"
+                            }
+                        ]
+                    },
+                    "max_wait_seconds": {
+                        "title": "max_wait_seconds",
+                        "description": "Maximum number of seconds to wait for job to complete",
+                        "default": 900,
+                        "position": 3,
+                        "type": "integer"
+                    },
+                    "poll_frequency_seconds": {
+                        "title": "poll_frequency_seconds",
+                        "description": "Number of seconds to wait in between checks for\nrun completion.",
+                        "default": 10,
+                        "position": 4,
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "dbt_cloud_credentials",
+                    "run_id"
+                ],
+                "definitions": {
+                    "DbtCloudCredentials": {
+                        "title": "DbtCloudCredentials",
+                        "description": "Credentials block for credential use across dbt Cloud tasks and flows.",
+                        "type": "object",
+                        "properties": {
+                            "api_key": {
+                                "title": "API Key",
+                                "description": "A dbt Cloud API key to use for authentication.",
+                                "type": "string",
+                                "writeOnly": true,
+                                "format": "password"
+                            },
+                            "account_id": {
+                                "title": "Account ID",
+                                "description": "The ID of your dbt Cloud account.",
+                                "type": "integer"
+                            },
+                            "domain": {
+                                "title": "Domain",
+                                "description": "The base domain of your dbt Cloud instance.",
+                                "default": "cloud.getdbt.com",
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "api_key",
+                            "account_id"
+                        ],
+                        "block_type_slug": "dbt-cloud-credentials",
+                        "secret_fields": [
+                            "api_key"
+                        ],
+                        "block_schema_references": {}
+                    },
+                    "TriggerJobRunOptions": {
+                        "title": "TriggerJobRunOptions",
+                        "description": "Defines options that can be defined when triggering a dbt Cloud job run.",
+                        "type": "object",
+                        "properties": {
+                            "cause": {
+                                "title": "Cause",
+                                "description": "A text description of the reason for running this job.",
+                                "type": "string"
+                            },
+                            "git_sha": {
+                                "title": "Git Sha",
+                                "description": "The git sha to check out before running this job.",
+                                "type": "string"
+                            },
+                            "git_branch": {
+                                "title": "Git Branch",
+                                "description": "The git branch to check out before running this job.",
+                                "type": "string"
+                            },
+                            "schema_override": {
+                                "title": "Schema Override",
+                                "description": "Override the destination schema in the configured target for this job.",
+                                "type": "string"
+                            },
+                            "dbt_version_override": {
+                                "title": "Dbt Version Override",
+                                "description": "Override the version of dbt used to run this job.",
+                                "type": "string"
+                            },
+                            "threads_override": {
+                                "title": "Threads Override",
+                                "description": "Override the number of threads used to run this job.",
+                                "type": "integer"
+                            },
+                            "target_name_override": {
+                                "title": "Target Name Override",
+                                "description": "Override the target.name context variable used when running this job",
+                                "type": "string"
+                            },
+                            "generate_docs_override": {
+                                "title": "Generate Docs Override",
+                                "description": "Override whether or not this job generates docs (true=yes, false=no).",
+                                "type": "boolean"
+                            },
+                            "timeout_seconds_override": {
+                                "title": "Timeout Seconds Override",
+                                "description": "Override the timeout in seconds for this job.",
+                                "type": "integer"
+                            },
+                            "steps_override": {
+                                "title": "Steps Override",
+                                "description": "Override the list of steps for this job.",
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "install_command": "pip install prefect-dbt",
+            "description": {
+                "summary": "Retries a subset of dbt Cloud job run, filtered by select statuses, and waits for the triggered retry to complete."
+            }
+        },
+        "Trigger dbt Cloud job run and wait for completion": {
+            "name": "Trigger dbt Cloud job run and wait for completion",
+            "parameters": {
+                "title": "Parameters",
+                "type": "object",
+                "properties": {
+                    "dbt_cloud_credentials": {
+                        "title": "dbt_cloud_credentials",
+                        "description": "Credentials for authenticating with dbt Cloud.",
+                        "position": 0,
+                        "allOf": [
+                            {
+                                "$ref": "#/definitions/DbtCloudCredentials"
+                            }
+                        ]
+                    },
+                    "job_id": {
+                        "title": "job_id",
+                        "description": "The ID of the job to trigger.",
+                        "position": 1,
+                        "type": "integer"
+                    },
+                    "trigger_job_run_options": {
+                        "title": "trigger_job_run_options",
+                        "description": "An optional TriggerJobRunOptions instance to\nspecify overrides for the triggered job run.",
+                        "position": 2,
+                        "allOf": [
+                            {
+                                "$ref": "#/definitions/TriggerJobRunOptions"
+                            }
+                        ]
+                    },
+                    "max_wait_seconds": {
+                        "title": "max_wait_seconds",
+                        "description": "Maximum number of seconds to wait for job to complete",
+                        "default": 900,
+                        "position": 3,
+                        "type": "integer"
+                    },
+                    "poll_frequency_seconds": {
+                        "title": "poll_frequency_seconds",
+                        "description": "Number of seconds to wait in between checks for\nrun completion.",
+                        "default": 10,
+                        "position": 4,
+                        "type": "integer"
+                    },
+                    "retry_filtered_models_attempts": {
+                        "title": "retry_filtered_models_attempts",
+                        "description": "Number of times to retry models selected by `retry_status_filters`.",
+                        "default": 3,
+                        "position": 5,
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "dbt_cloud_credentials",
+                    "job_id"
+                ],
+                "definitions": {
+                    "DbtCloudCredentials": {
+                        "title": "DbtCloudCredentials",
+                        "description": "Credentials block for credential use across dbt Cloud tasks and flows.",
+                        "type": "object",
+                        "properties": {
+                            "api_key": {
+                                "title": "API Key",
+                                "description": "A dbt Cloud API key to use for authentication.",
+                                "type": "string",
+                                "writeOnly": true,
+                                "format": "password"
+                            },
+                            "account_id": {
+                                "title": "Account ID",
+                                "description": "The ID of your dbt Cloud account.",
+                                "type": "integer"
+                            },
+                            "domain": {
+                                "title": "Domain",
+                                "description": "The base domain of your dbt Cloud instance.",
+                                "default": "cloud.getdbt.com",
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "api_key",
+                            "account_id"
+                        ],
+                        "block_type_slug": "dbt-cloud-credentials",
+                        "secret_fields": [
+                            "api_key"
+                        ],
+                        "block_schema_references": {}
+                    },
+                    "TriggerJobRunOptions": {
+                        "title": "TriggerJobRunOptions",
+                        "description": "Defines options that can be defined when triggering a dbt Cloud job run.",
+                        "type": "object",
+                        "properties": {
+                            "cause": {
+                                "title": "Cause",
+                                "description": "A text description of the reason for running this job.",
+                                "type": "string"
+                            },
+                            "git_sha": {
+                                "title": "Git Sha",
+                                "description": "The git sha to check out before running this job.",
+                                "type": "string"
+                            },
+                            "git_branch": {
+                                "title": "Git Branch",
+                                "description": "The git branch to check out before running this job.",
+                                "type": "string"
+                            },
+                            "schema_override": {
+                                "title": "Schema Override",
+                                "description": "Override the destination schema in the configured target for this job.",
+                                "type": "string"
+                            },
+                            "dbt_version_override": {
+                                "title": "Dbt Version Override",
+                                "description": "Override the version of dbt used to run this job.",
+                                "type": "string"
+                            },
+                            "threads_override": {
+                                "title": "Threads Override",
+                                "description": "Override the number of threads used to run this job.",
+                                "type": "integer"
+                            },
+                            "target_name_override": {
+                                "title": "Target Name Override",
+                                "description": "Override the target.name context variable used when running this job",
+                                "type": "string"
+                            },
+                            "generate_docs_override": {
+                                "title": "Generate Docs Override",
+                                "description": "Override whether or not this job generates docs (true=yes, false=no).",
+                                "type": "boolean"
+                            },
+                            "timeout_seconds_override": {
+                                "title": "Timeout Seconds Override",
+                                "description": "Override the timeout in seconds for this job.",
+                                "type": "integer"
+                            },
+                            "steps_override": {
+                                "title": "Steps Override",
+                                "description": "Override the list of steps for this job.",
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "install_command": "pip install prefect-dbt",
+            "description": {
+                "summary": "Triggers a dbt Cloud job run and waits for thetriggered run to complete."
+            }
+        },
+        "Wait for dbt Cloud job run": {
+            "name": "Wait for dbt Cloud job run",
+            "parameters": {
+                "title": "Parameters",
+                "type": "object",
+                "properties": {
+                    "run_id": {
+                        "title": "run_id",
+                        "description": "The ID of the run to wait for.",
+                        "position": 0,
+                        "type": "integer"
+                    },
+                    "dbt_cloud_credentials": {
+                        "title": "dbt_cloud_credentials",
+                        "description": "Credentials for authenticating with dbt Cloud.",
+                        "position": 1,
+                        "allOf": [
+                            {
+                                "$ref": "#/definitions/DbtCloudCredentials"
+                            }
+                        ]
+                    },
+                    "max_wait_seconds": {
+                        "title": "max_wait_seconds",
+                        "description": "Maximum number of seconds to wait for job to complete",
+                        "default": 900,
+                        "position": 2,
+                        "type": "integer"
+                    },
+                    "poll_frequency_seconds": {
+                        "title": "poll_frequency_seconds",
+                        "description": "Number of seconds to wait in between checks for\nrun completion.",
+                        "default": 10,
+                        "position": 3,
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "run_id",
+                    "dbt_cloud_credentials"
+                ],
+                "definitions": {
+                    "DbtCloudCredentials": {
+                        "title": "DbtCloudCredentials",
+                        "description": "Credentials block for credential use across dbt Cloud tasks and flows.",
+                        "type": "object",
+                        "properties": {
+                            "api_key": {
+                                "title": "API Key",
+                                "description": "A dbt Cloud API key to use for authentication.",
+                                "type": "string",
+                                "writeOnly": true,
+                                "format": "password"
+                            },
+                            "account_id": {
+                                "title": "Account ID",
+                                "description": "The ID of your dbt Cloud account.",
+                                "type": "integer"
+                            },
+                            "domain": {
+                                "title": "Domain",
+                                "description": "The base domain of your dbt Cloud instance.",
+                                "default": "cloud.getdbt.com",
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "api_key",
+                            "account_id"
+                        ],
+                        "block_type_slug": "dbt-cloud-credentials",
+                        "secret_fields": [
+                            "api_key"
+                        ],
+                        "block_schema_references": {}
+                    }
+                }
+            },
+            "install_command": "pip install prefect-dbt",
+            "description": {
+                "summary": "Waits for a dbt Cloud job run to finish running."
+            }
+        }
     }
 }
