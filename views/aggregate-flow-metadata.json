@@ -2599,5 +2599,6 @@
     "prefect-shell": {},
     "prefect-gcp": {},
     "prefect-twitter": {},
-    "prefect-bitbucket": {}
+    "prefect-bitbucket": {},
+    "prefect-dask": {}
 }
