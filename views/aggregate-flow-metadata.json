@@ -2747,5 +2747,6 @@
             }
         }
     },
-    "prefect-openai": {}
+    "prefect-openai": {},
+    "prefect-openmetadata": {}
 }
