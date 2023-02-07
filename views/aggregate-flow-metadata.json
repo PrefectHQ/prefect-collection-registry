@@ -2594,5 +2594,6 @@
     },
     "prefect-aws": {},
     "prefect-azure": {},
-    "prefect-slack": {}
+    "prefect-slack": {},
+    "prefect-email": {}
 }
