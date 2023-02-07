@@ -2606,5 +2606,6 @@
     "prefect-github": {},
     "prefect-gitlab": {},
     "prefect-great-expectations": {},
-    "prefect-jupyter": {}
+    "prefect-jupyter": {},
+    "prefect-monday": {}
 }
