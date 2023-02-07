@@ -131,4 +131,4 @@ def generate_flow_metadata(collection_name: str):
         )
 
 if __name__ == "__main__":
-    generate_flow_metadata("prefect-airbyte")
+    generate_flow_metadata("prefect-kubernetes")
