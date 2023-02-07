@@ -2598,5 +2598,6 @@
     "prefect-email": {},
     "prefect-shell": {},
     "prefect-gcp": {},
-    "prefect-twitter": {}
+    "prefect-twitter": {},
+    "prefect-bitbucket": {}
 }
