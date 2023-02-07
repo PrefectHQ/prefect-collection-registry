@@ -2748,5 +2748,6 @@
         }
     },
     "prefect-openai": {},
-    "prefect-openmetadata": {}
+    "prefect-openmetadata": {},
+    "prefect-snowflake": {}
 }
