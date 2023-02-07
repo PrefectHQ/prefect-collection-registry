@@ -2481,5 +2481,128 @@
                 }
             }
         }
+    },
+    "prefect-bitbucket": {
+        "block_types": {
+            "bitbucket-credentials": {
+                "name": "BitBucket Credentials",
+                "slug": "bitbucket-credentials",
+                "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/27LMR24ewTSDW238Lks1vH/34c5028659f4007528feadc8db8cecbd/500px-Bitbucket-blue-logomark-only.svg.png?h=250",
+                "documentation_url": null,
+                "description": "Store BitBucket credentials to interact with private BitBucket repositories.",
+                "code_example": "Load stored BitBucket credentials:\n```python\nfrom prefect_bitbucket import BitBucketCredentials\nbitbucket_credentials_block = BitBucketCredentials.load(\"BLOCK_NAME\")\n```",
+                "block_schema": {
+                    "checksum": "sha256:9664d0350dce1573394c4828254a3be1fd4c9797b9eae02ea3ed322f988a34c9",
+                    "fields": {
+                        "title": "BitBucketCredentials",
+                        "description": "Store BitBucket credentials to interact with private BitBucket repositories.",
+                        "type": "object",
+                        "properties": {
+                            "token": {
+                                "title": "Token",
+                                "description": "A BitBucket Personal Access Token.",
+                                "name": "Personal Access Token",
+                                "type": "string",
+                                "writeOnly": true,
+                                "format": "password"
+                            },
+                            "username": {
+                                "title": "Username",
+                                "description": "Identification name unique across entire BitBucket site.",
+                                "type": "string"
+                            }
+                        },
+                        "block_type_slug": "bitbucket-credentials",
+                        "secret_fields": [
+                            "token"
+                        ],
+                        "block_schema_references": {}
+                    },
+                    "capabilities": [],
+                    "version": "0.1.0"
+                }
+            },
+            "bitbucket-repository": {
+                "name": "BitBucket Repository",
+                "slug": "bitbucket-repository",
+                "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/27LMR24ewTSDW238Lks1vH/34c5028659f4007528feadc8db8cecbd/500px-Bitbucket-blue-logomark-only.svg.png?h=250",
+                "documentation_url": null,
+                "description": "Interact with files stored in BitBucket repositories.",
+                "code_example": "```python\nfrom prefect_bitbucket.repository import BitBucketRepository\n\nbitbucket_repository_block = BitBucketRepository.load(\"BLOCK_NAME\")\n```",
+                "block_schema": {
+                    "checksum": "sha256:19bec1067241778f4467b24d19f2ff69eadf9098dde3d73f85536ab61bedd156",
+                    "fields": {
+                        "title": "BitBucketRepository",
+                        "description": "Interact with files stored in BitBucket repositories.",
+                        "type": "object",
+                        "properties": {
+                            "repository": {
+                                "title": "Repository",
+                                "description": "The URL of a BitBucket repository to read from in HTTPS format",
+                                "type": "string"
+                            },
+                            "reference": {
+                                "title": "Reference",
+                                "description": "An optional reference to pin to; can be a branch or tag.",
+                                "type": "string"
+                            },
+                            "bitbucket_credentials": {
+                                "title": "Bitbucket Credentials",
+                                "description": "An optional BitBucketCredentials block for authenticating with private BitBucket repos.",
+                                "allOf": [
+                                    {
+                                        "$ref": "#/definitions/BitBucketCredentials"
+                                    }
+                                ]
+                            }
+                        },
+                        "required": [
+                            "repository"
+                        ],
+                        "block_type_slug": "bitbucket-repository",
+                        "secret_fields": [
+                            "bitbucket_credentials.token"
+                        ],
+                        "block_schema_references": {
+                            "bitbucket_credentials": {
+                                "block_type_slug": "bitbucket-credentials",
+                                "block_schema_checksum": "sha256:9664d0350dce1573394c4828254a3be1fd4c9797b9eae02ea3ed322f988a34c9"
+                            }
+                        },
+                        "definitions": {
+                            "BitBucketCredentials": {
+                                "title": "BitBucketCredentials",
+                                "description": "Store BitBucket credentials to interact with private BitBucket repositories.",
+                                "type": "object",
+                                "properties": {
+                                    "token": {
+                                        "title": "Token",
+                                        "description": "A BitBucket Personal Access Token.",
+                                        "name": "Personal Access Token",
+                                        "type": "string",
+                                        "writeOnly": true,
+                                        "format": "password"
+                                    },
+                                    "username": {
+                                        "title": "Username",
+                                        "description": "Identification name unique across entire BitBucket site.",
+                                        "type": "string"
+                                    }
+                                },
+                                "block_type_slug": "bitbucket-credentials",
+                                "secret_fields": [
+                                    "token"
+                                ],
+                                "block_schema_references": {}
+                            }
+                        }
+                    },
+                    "capabilities": [
+                        "get-directory"
+                    ],
+                    "version": "0.1.0"
+                }
+            }
+        }
     }
 }
