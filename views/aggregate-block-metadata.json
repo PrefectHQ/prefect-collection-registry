@@ -5397,5 +5397,6 @@
             }
         }
     },
-    "prefect-openmetadata": {}
+    "prefect-openmetadata": {},
+    "prefect-shell": {}
 }
