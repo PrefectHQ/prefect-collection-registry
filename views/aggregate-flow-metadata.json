@@ -2601,5 +2601,6 @@
     "prefect-twitter": {},
     "prefect-bitbucket": {},
     "prefect-dask": {},
-    "prefect-docker": {}
+    "prefect-docker": {},
+    "prefect-firebolt": {}
 }
