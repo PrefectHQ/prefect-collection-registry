@@ -2604,5 +2604,6 @@
     "prefect-docker": {},
     "prefect-firebolt": {},
     "prefect-github": {},
-    "prefect-gitlab": {}
+    "prefect-gitlab": {},
+    "prefect-great-expectations": {}
 }
