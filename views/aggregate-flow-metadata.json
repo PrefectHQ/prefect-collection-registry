@@ -2592,5 +2592,6 @@
             }
         }
     },
-    "prefect-aws": {}
+    "prefect-aws": {},
+    "prefect-azure": {}
 }
