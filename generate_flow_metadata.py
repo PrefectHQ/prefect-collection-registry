@@ -89,7 +89,7 @@ def generate_flow_metadata(collection_name: str):
     Creates or updates a PR with a commit containing the updated JSON file.
     """
     collection_slug = collection_name.replace("-", "_")
-    flow_metadata_file = "collections/collection_flows_metadata.json"
+    flow_metadata_file = "flows/collection_flows_metadata.json"
     BRANCH_NAME = "flow-metadata"
 
     # read the existing flow metadata from existing JSON file
