@@ -1,4 +1,4 @@
-name: Merge Collection Metadata to Registry
+name: Merge Block Metadata to Registry
 
 on:
   workflow_dispatch:
@@ -18,7 +18,7 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: Merge collection metadata
+      - name: Merge block metadata
         run: |
           python merge_block_metadata.py
 
@@ -26,11 +26,11 @@ jobs:
         uses: peter-evans/create-pull-request@v4
         with:
           commit-message: Merging collections metadata
-          branch: merge-collections-metadata
+          branch: merge-block-metadata
           delete-branch: true
-          title: Update collections metadata with new releases
+          title: Update block metadata with new releases
           body: |
-            Automated PR created to merge collections metadata.
+            Automated PR created to merge block metadata.
             Feel free to make any necessary changes to this PR before merging.
           labels: |
             merge metadata

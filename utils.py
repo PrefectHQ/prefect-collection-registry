@@ -65,9 +65,3 @@ def skip_parsing(name: str, obj: Union[ModuleType, Callable], module_nesting: st
     except AttributeError:
         wrong_module = False
     return obj.__doc__ is None or name.startswith("_") or wrong_module
-
-
-class LatestCollectionReleases(Block):
-    releases: Dict[str, str] = Field(
-        default_factory=dict,
-    )
