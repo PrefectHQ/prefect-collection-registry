@@ -2596,5 +2596,6 @@
     "prefect-azure": {},
     "prefect-slack": {},
     "prefect-email": {},
-    "prefect-shell": {}
+    "prefect-shell": {},
+    "prefect-gcp": {}
 }
