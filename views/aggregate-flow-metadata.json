@@ -2605,5 +2605,6 @@
     "prefect-firebolt": {},
     "prefect-github": {},
     "prefect-gitlab": {},
-    "prefect-great-expectations": {}
+    "prefect-great-expectations": {},
+    "prefect-jupyter": {}
 }
