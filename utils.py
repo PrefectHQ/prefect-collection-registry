@@ -73,7 +73,7 @@ def submit_updates(
     latest_release = collection_repo.latest_release().tag_name
     
     metadata_dict.update(collection_metadata)
-        
+    
     # create a new commit adding the collection version metadata
     try:
         repo.create_file(
