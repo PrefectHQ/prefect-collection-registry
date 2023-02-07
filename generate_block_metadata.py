@@ -13,9 +13,9 @@ from uuid import uuid4
 
 from prefect.blocks.core import Block
 from prefect.plugins import safe_load_entrypoints
-from utils import submit_updates
+from utils import submit_updates, get_collection_names
 
-def generate_block_metadata(block_subcls: Type[Block]) -> Dict[str, Any]:
+def generate_block_subcls_metadata(block_subcls: Type[Block]) -> Dict[str, Any]:
     """
     Takes a block subclass and returns a JSON dict representation of
     its corresponding block type and block schema.
@@ -40,7 +40,7 @@ def generate_block_metadata(block_subcls: Type[Block]) -> Dict[str, Any]:
 def generate_block_metadata_for_module(module: ModuleType):
     block_subclasses = discover_block_subclasses(module)
     return {
-        block_subcls.get_block_type_slug(): generate_block_metadata(block_subcls)
+        block_subcls.get_block_type_slug(): generate_block_subcls_metadata(block_subcls)
         for block_subcls in block_subclasses
     }
 
@@ -62,7 +62,7 @@ def discover_block_subclasses(module: ModuleType) -> List[Type[Block]]:
     ]
 
 
-def generate_block_metadata(collection_name: str) -> Dict[str, Any]:
+def generate_all_block_metadata(collection_name: str) -> Dict[str, Any]:
     # group is only available for Python 3.10+
     collections = safe_load_entrypoints(entry_points(group="prefect.collections"))
     collections_plus_core = {
@@ -76,7 +76,6 @@ def generate_block_metadata(collection_name: str) -> Dict[str, Any]:
             logging.warning(f"Error loading collection entrypoint {ep_name} - skipping")
             continue
         discovered_collection_name = module.__name__.split(".")[0].replace("_", "-")
-        print(discovered_collection_name)
         if collection_name != discovered_collection_name:
             continue
 
@@ -102,10 +101,14 @@ def write_collection_metadata(
     )
     collection_metadata_path.parent.mkdir(parents=True, exist_ok=True)
     with open(collection_metadata_path, "w") as f:
-        json.dump(collection_metadata, f, indent=2)
+        json.dump({collection_name: collection_metadata}, f, indent=2)
 
 
 @flow
 def update_block_metadata_for_collection(collection_name: str):
-    collection_block_metadata = generate_block_metadata(collection_name)
-    submit_updates(collection_block_metadata, "blocks")
+    collection_block_metadata = generate_all_block_metadata(collection_name)
+    submit_updates(collection_block_metadata, "block")
+
+if __name__ == "__main__":
+    collection_name = argv[1]
+    update_block_metadata_for_collection(collection_name)

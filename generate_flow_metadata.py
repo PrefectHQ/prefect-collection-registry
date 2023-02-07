@@ -101,7 +101,7 @@ def generate_flow_metadata(collection_name: str) -> Dict[str, Any]:
 @flow(log_prints=True)
 def update_flow_metadata_for_collection(collection_name: str):
     collection_flow_metadata = generate_flow_metadata(collection_name)        
-    submit_updates(collection_flow_metadata, "flows")
+    submit_updates(collection_flow_metadata, "flow")
     
 if __name__ == "__main__":
     update_flow_metadata_for_collection("prefect-airbyte")

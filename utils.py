@@ -46,13 +46,13 @@ def skip_parsing(name: str, obj: Union[ModuleType, Callable], module_nesting: st
 @task
 def submit_updates(
     collection_metadata: Dict[str, Any],
-    variety: Literal["blocks", "flows", "collections"],
+    variety: Literal["block", "flow", "collection"],
 ):
 
     collection_name = list(collection_metadata.keys())[0]
-    flow_metadata_file = f"views/aggregate-{variety}-metadata.json"
+    metadata_file = f"views/aggregate-{variety}-metadata.json"
     REPO_NAME = "prefect-collection-registry"
-    BRANCH_NAME = "update-metadata"
+    BRANCH_NAME = "flow-metadata"
 
     # read the existing flow metadata from existing JSON file
     github_token = Secret.load("github-token")
@@ -60,12 +60,14 @@ def submit_updates(
     repo = gh.repository("PrefectHQ", REPO_NAME)
 
     existing_metadata_raw = repo.file_contents(
-        flow_metadata_file, ref=BRANCH_NAME
+        metadata_file, ref=BRANCH_NAME
     ).decoded.decode()
 
     metadata_dict = json.loads(existing_metadata_raw)
+
+    collection_repo = gh.repository("PrefectHQ", collection_name)
     
-    collection_repo = gh.repository("PrefectHQ", f"{collection_name}")
+    
     latest_release = collection_repo.latest_release().tag_name
     
     metadata_dict.update(collection_metadata)
@@ -73,7 +75,7 @@ def submit_updates(
     # create a new commit adding the collection version metadata
     try:
         repo.create_file(
-            path=f"{variety}/{collection_name}/{latest_release}.json",
+            path=f"{variety}s/{collection_name}/{latest_release}.json",
             message=f"Add {collection_name} {latest_release} to {variety} records",
             content=json.dumps(collection_metadata, indent=4).encode("utf-8"),
             branch=BRANCH_NAME,
@@ -86,7 +88,7 @@ def submit_updates(
         raise
     
     # create a new commit updating the aggregate flow metadata file
-    repo.file_contents(flow_metadata_file, ref=BRANCH_NAME).update(
+    repo.file_contents(metadata_file, ref=BRANCH_NAME).update(
         message=f"Update aggregate {variety} metadata with {collection_name} {latest_release}",
         content=json.dumps(metadata_dict, indent=4).encode("utf-8"),
         branch=BRANCH_NAME,
