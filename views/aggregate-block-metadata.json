@@ -4817,5 +4817,55 @@
                 }
             }
         }
+    },
+    "prefect-hightouch": {
+        "block_types": {
+            "hightouch-credentials": {
+                "name": "Hightouch Credentials",
+                "slug": "hightouch-credentials",
+                "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/6WT9DIXFrqQy0nA9VRZfuL/40a7039742fca9d053677f58a79aacd5/hightouch.png?h=250",
+                "documentation_url": null,
+                "description": "Block used to manage Hightouch authentication.",
+                "code_example": "Load stored Hightouch credentials:\n```python\nfrom prefect_hightouch import HightouchCredentials\nhightouch_credentials_block = HightouchCredentials.load(\"BLOCK_NAME\")\n```",
+                "block_schema": {
+                    "checksum": "sha256:b6921c7a00a9f74cd9d29fc4819c79c6255397f022fffc163323c679f37616e2",
+                    "fields": {
+                        "title": "HightouchCredentials",
+                        "description": "Block used to manage Hightouch authentication.",
+                        "type": "object",
+                        "properties": {
+                            "token": {
+                                "title": "Token",
+                                "description": "Token used for authentication.",
+                                "type": "string",
+                                "writeOnly": true,
+                                "format": "password"
+                            },
+                            "timeout": {
+                                "title": "Timeout",
+                                "description": "Number of seconds before the request times out.",
+                                "default": 5.0,
+                                "type": "number"
+                            },
+                            "client_kwargs": {
+                                "title": "Additional configuration",
+                                "description": "Additional keyword arguments to pass to `prefect_hightouch.api_client.client.AuthenticatedClient`.",
+                                "type": "object"
+                            }
+                        },
+                        "required": [
+                            "token"
+                        ],
+                        "block_type_slug": "hightouch-credentials",
+                        "secret_fields": [
+                            "token"
+                        ],
+                        "block_schema_references": {}
+                    },
+                    "capabilities": [],
+                    "version": "0.1.0"
+                }
+            }
+        }
     }
 }
