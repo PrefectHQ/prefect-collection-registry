@@ -2600,5 +2600,6 @@
     "prefect-gcp": {},
     "prefect-twitter": {},
     "prefect-bitbucket": {},
-    "prefect-dask": {}
+    "prefect-dask": {},
+    "prefect-docker": {}
 }
