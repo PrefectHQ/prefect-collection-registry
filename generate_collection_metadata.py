@@ -1,4 +1,4 @@
-import httpx, json
+import httpx
 
 from prefect import flow, task
 from prefect.tasks import task_input_hash
@@ -37,7 +37,7 @@ def generate_metadata_for_collection(collection_name: str) -> Dict[str, Any]:
         collection_name: summarize_collection(collection_name)
     }
 
-@flow(name="Update Collection Metadata")
+@flow(name="Update Collection Metadata", log_prints=True)
 def update_collection_package_metadata(collection_name: str):
     """
     Updates the collection metadata.
@@ -46,4 +46,5 @@ def update_collection_package_metadata(collection_name: str):
     submit_updates(collection_metadata, "collection")
 
 if __name__ == "__main__":
-    update_collection_package_metadata("prefect-airbyte")
+    for collection_name in get_collection_names():
+        update_collection_package_metadata(collection_name)
