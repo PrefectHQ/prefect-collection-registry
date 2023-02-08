@@ -31,5 +31,45 @@
             "mock ; (python_version < \"3.8\") and extra == 'dev'"
         ],
         "requires_python": ">=3.7"
+    },
+    "prefect-aws": {
+        "name": "prefect-aws",
+        "author": "Prefect Technologies, Inc.",
+        "latest_version": "0.2.4",
+        "downloads": {
+            "last_day": -1,
+            "last_month": -1,
+            "last_week": -1
+        },
+        "keywords": "prefect",
+        "home_page": "https://github.com/PrefectHQ/prefect-aws",
+        "package_url": "https://pypi.org/project/prefect-aws/",
+        "requires_dist": [
+            "boto3 (>=1.24.53)",
+            "botocore (>=1.27.53)",
+            "prefect (>=2.7)",
+            "mypy-boto3-s3 (>=1.24.94)",
+            "mypy-boto3-secretsmanager (>=1.26.49)",
+            "pytest ; extra == 'dev'",
+            "black ; extra == 'dev'",
+            "flake8 ; extra == 'dev'",
+            "mypy ; extra == 'dev'",
+            "mkdocs ; extra == 'dev'",
+            "mkdocs-material ; extra == 'dev'",
+            "mkdocstrings-python-legacy ; extra == 'dev'",
+            "isort ; extra == 'dev'",
+            "pre-commit ; extra == 'dev'",
+            "moto (<=4.0.6,>=3.1.16) ; extra == 'dev'",
+            "pytest-asyncio ; extra == 'dev'",
+            "pytest-lazy-fixture ; extra == 'dev'",
+            "mkdocs-gen-files ; extra == 'dev'",
+            "interrogate ; extra == 'dev'",
+            "coverage ; extra == 'dev'",
+            "types-boto3 (>=1.0.2) ; extra == 'dev'",
+            "boto3-stubs (>=1.24.39) ; extra == 'dev'",
+            "pillow ; extra == 'dev'",
+            "mock ; (python_version < \"3.8\") and extra == 'dev'"
+        ],
+        "requires_python": ">=3.7"
     }
 }
