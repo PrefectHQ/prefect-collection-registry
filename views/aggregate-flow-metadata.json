@@ -138,531 +138,173 @@
             }
         }
     },
-    "prefect-kubernetes": {
-        "run-namespaced-job": {
-            "name": "run-namespaced-job",
+    "prefect-aws": {},
+    "prefect-azure": {},
+    "prefect-bitbucket": {},
+    "prefect-census": {
+        "run-census-sync": {
+            "name": "run-census-sync",
             "parameters": {
                 "title": "Parameters",
                 "type": "object",
                 "properties": {
-                    "kubernetes_job": {
-                        "title": "kubernetes_job",
-                        "description": "The `KubernetesJob` block that specifies the job to run.",
+                    "census_sync": {
+                        "title": "census_sync",
+                        "description": "The Census sync job block to trigger.",
                         "position": 0,
                         "allOf": [
                             {
-                                "$ref": "#/definitions/KubernetesJob"
+                                "$ref": "#/definitions/CensusSync"
                             }
                         ]
                     }
                 },
                 "required": [
-                    "kubernetes_job"
+                    "census_sync"
                 ],
                 "definitions": {
-                    "KubernetesClusterConfig": {
-                        "title": "KubernetesClusterConfig",
-                        "description": "Stores configuration for interaction with Kubernetes clusters.\n\nSee `from_file` for creation.",
+                    "CensusCredentials": {
+                        "title": "CensusCredentials",
+                        "description": "Credentials block for credential use across Census tasks and flows.",
                         "type": "object",
                         "properties": {
-                            "config": {
-                                "title": "Config",
-                                "description": "The entire contents of a kubectl config file.",
-                                "type": "object"
-                            },
-                            "context_name": {
-                                "title": "Context Name",
-                                "description": "The name of the kubectl context to use.",
-                                "type": "string"
+                            "api_key": {
+                                "title": "API Key",
+                                "description": "API key to authenticate with the Census API.",
+                                "type": "string",
+                                "writeOnly": true,
+                                "format": "password"
                             }
                         },
                         "required": [
-                            "config",
-                            "context_name"
+                            "api_key"
                         ],
-                        "block_type_slug": "kubernetes-cluster-config",
-                        "secret_fields": [],
+                        "block_type_slug": "census-credentials",
+                        "secret_fields": [
+                            "api_key"
+                        ],
                         "block_schema_references": {}
                     },
-                    "KubernetesCredentials": {
-                        "title": "KubernetesCredentials",
-                        "description": "Credentials block for generating configured Kubernetes API clients.",
+                    "CensusSync": {
+                        "title": "CensusSync",
+                        "description": "Runs a Census sync",
                         "type": "object",
                         "properties": {
-                            "cluster_config": {
-                                "$ref": "#/definitions/KubernetesClusterConfig"
-                            }
-                        },
-                        "block_type_slug": "kubernetes-credentials",
-                        "secret_fields": [],
-                        "block_schema_references": {
-                            "cluster_config": {
-                                "block_type_slug": "kubernetes-cluster-config",
-                                "block_schema_checksum": "sha256:90d421e948bfbe4cdc98b124995f0edd0f84b0837549ad1390423bad8e31cf3b"
-                            }
-                        }
-                    },
-                    "KubernetesJob": {
-                        "title": "KubernetesJob",
-                        "description": "A block representing a Kubernetes job configuration.",
-                        "type": "object",
-                        "properties": {
-                            "v1_job": {
-                                "title": "Job Manifest",
-                                "description": "The Kubernetes job manifest to run. This dictionary can be produced using `yaml.safe_load`.",
-                                "type": "object"
-                            },
-                            "api_kwargs": {
-                                "title": "Additional API Arguments",
-                                "description": "Additional arguments to include in Kubernetes API calls.",
-                                "example": {
-                                    "pretty": "true"
-                                },
-                                "type": "object"
-                            },
                             "credentials": {
                                 "title": "Credentials",
-                                "description": "The credentials to configure a client from.",
+                                "description": "Credentials for authenticating with Census.",
                                 "allOf": [
                                     {
-                                        "$ref": "#/definitions/KubernetesCredentials"
+                                        "$ref": "#/definitions/CensusCredentials"
                                     }
                                 ]
                             },
-                            "delete_after_completion": {
-                                "title": "Delete After Completion",
-                                "description": "Whether to delete the job after it has completed.",
-                                "default": true,
+                            "sync_id": {
+                                "title": "Sync Id",
+                                "description": "The ID of the sync to trigger.",
+                                "type": "integer"
+                            },
+                            "force_full_sync": {
+                                "title": "Force Full Sync",
+                                "description": "If `True`, a full sync will be triggered.",
+                                "default": false,
                                 "type": "boolean"
                             },
-                            "interval_seconds": {
-                                "title": "Interval Seconds",
-                                "description": "The number of seconds to wait between job status checks.",
+                            "max_wait_seconds": {
+                                "title": "Max Wait Seconds",
+                                "description": "The maximum number of seconds to wait for the sync to complete.",
+                                "default": 3600,
+                                "type": "integer"
+                            },
+                            "poll_frequency_seconds": {
+                                "title": "Poll Frequency Seconds",
+                                "description": "Number of seconds to wait between sync status checks.",
                                 "default": 5,
                                 "type": "integer"
-                            },
-                            "namespace": {
-                                "title": "Namespace",
-                                "description": "The namespace to create and run the job in.",
-                                "default": "default",
-                                "type": "string"
-                            },
-                            "timeout_seconds": {
-                                "title": "Timeout Seconds",
-                                "description": "The number of seconds to wait for the job run before timing out.",
-                                "type": "integer"
                             }
                         },
                         "required": [
-                            "v1_job",
-                            "credentials"
+                            "credentials",
+                            "sync_id"
                         ],
-                        "block_type_slug": "k8s-job",
-                        "secret_fields": [],
+                        "block_type_slug": "census-sync",
+                        "secret_fields": [
+                            "credentials.api_key"
+                        ],
                         "block_schema_references": {
                             "credentials": {
-                                "block_type_slug": "kubernetes-credentials",
-                                "block_schema_checksum": "sha256:957fa8dca90bd1b5fb9c575ee09e80b454116c0b134287fbc2eff47a72564c3b"
+                                "block_type_slug": "census-credentials",
+                                "block_schema_checksum": "sha256:4101a4f4096dd3a5cf916692b7948959ea88e87bb08d91d6d5cc929224da5f4a"
                             }
                         }
                     }
                 }
             },
-            "install_command": "pip install prefect-kubernetes",
+            "install_command": "pip install prefect-census",
             "description": {
-                "summary": "Flow for running a namespaced Kubernetes job.",
-                "returns": "The a dict of logs from each pod in the job, e.g. {'pod_name': 'pod_log_str'}.",
-                "examples": [
-                    "```python\nfrom prefect_kubernetes import KubernetesJob, run_namespaced_job\nfrom prefect_kubernetes.credentials import KubernetesCredentials\n\nrun_namespaced_job(\n    kubernetes_job=KubernetesJob.from_yaml_file(\n        credentials=KubernetesCredentials.load(\"k8s-creds\"),\n        manifest_path=\"path/to/job.yaml\",\n    )\n)\n```"
-                ]
-            }
-        }
-    },
-    "prefect-dbt": {
-        "Retry subset of dbt Cloud job run and wait for completion": {
-            "name": "Retry subset of dbt Cloud job run and wait for completion",
-            "parameters": {
-                "title": "Parameters",
-                "type": "object",
-                "properties": {
-                    "dbt_cloud_credentials": {
-                        "title": "dbt_cloud_credentials",
-                        "description": "Credentials for authenticating with dbt Cloud.",
-                        "position": 0,
-                        "allOf": [
-                            {
-                                "$ref": "#/definitions/DbtCloudCredentials"
-                            }
-                        ]
-                    },
-                    "run_id": {
-                        "title": "run_id",
-                        "description": "The ID of the job run to retry.",
-                        "position": 1,
-                        "type": "integer"
-                    },
-                    "trigger_job_run_options": {
-                        "title": "trigger_job_run_options",
-                        "description": "An optional TriggerJobRunOptions instance to\nspecify overrides for the triggered job run.",
-                        "position": 2,
-                        "allOf": [
-                            {
-                                "$ref": "#/definitions/TriggerJobRunOptions"
-                            }
-                        ]
-                    },
-                    "max_wait_seconds": {
-                        "title": "max_wait_seconds",
-                        "description": "Maximum number of seconds to wait for job to complete",
-                        "default": 900,
-                        "position": 3,
-                        "type": "integer"
-                    },
-                    "poll_frequency_seconds": {
-                        "title": "poll_frequency_seconds",
-                        "description": "Number of seconds to wait in between checks for\nrun completion.",
-                        "default": 10,
-                        "position": 4,
-                        "type": "integer"
-                    }
-                },
-                "required": [
-                    "dbt_cloud_credentials",
-                    "run_id"
-                ],
-                "definitions": {
-                    "DbtCloudCredentials": {
-                        "title": "DbtCloudCredentials",
-                        "description": "Credentials block for credential use across dbt Cloud tasks and flows.",
-                        "type": "object",
-                        "properties": {
-                            "api_key": {
-                                "title": "API Key",
-                                "description": "A dbt Cloud API key to use for authentication.",
-                                "type": "string",
-                                "writeOnly": true,
-                                "format": "password"
-                            },
-                            "account_id": {
-                                "title": "Account ID",
-                                "description": "The ID of your dbt Cloud account.",
-                                "type": "integer"
-                            },
-                            "domain": {
-                                "title": "Domain",
-                                "description": "The base domain of your dbt Cloud instance.",
-                                "default": "cloud.getdbt.com",
-                                "type": "string"
-                            }
-                        },
-                        "required": [
-                            "api_key",
-                            "account_id"
-                        ],
-                        "block_type_slug": "dbt-cloud-credentials",
-                        "secret_fields": [
-                            "api_key"
-                        ],
-                        "block_schema_references": {}
-                    },
-                    "TriggerJobRunOptions": {
-                        "title": "TriggerJobRunOptions",
-                        "description": "Defines options that can be defined when triggering a dbt Cloud job run.",
-                        "type": "object",
-                        "properties": {
-                            "cause": {
-                                "title": "Cause",
-                                "description": "A text description of the reason for running this job.",
-                                "type": "string"
-                            },
-                            "git_sha": {
-                                "title": "Git Sha",
-                                "description": "The git sha to check out before running this job.",
-                                "type": "string"
-                            },
-                            "git_branch": {
-                                "title": "Git Branch",
-                                "description": "The git branch to check out before running this job.",
-                                "type": "string"
-                            },
-                            "schema_override": {
-                                "title": "Schema Override",
-                                "description": "Override the destination schema in the configured target for this job.",
-                                "type": "string"
-                            },
-                            "dbt_version_override": {
-                                "title": "Dbt Version Override",
-                                "description": "Override the version of dbt used to run this job.",
-                                "type": "string"
-                            },
-                            "threads_override": {
-                                "title": "Threads Override",
-                                "description": "Override the number of threads used to run this job.",
-                                "type": "integer"
-                            },
-                            "target_name_override": {
-                                "title": "Target Name Override",
-                                "description": "Override the target.name context variable used when running this job",
-                                "type": "string"
-                            },
-                            "generate_docs_override": {
-                                "title": "Generate Docs Override",
-                                "description": "Override whether or not this job generates docs (true=yes, false=no).",
-                                "type": "boolean"
-                            },
-                            "timeout_seconds_override": {
-                                "title": "Timeout Seconds Override",
-                                "description": "Override the timeout in seconds for this job.",
-                                "type": "integer"
-                            },
-                            "steps_override": {
-                                "title": "Steps Override",
-                                "description": "Override the list of steps for this job.",
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "install_command": "pip install prefect-dbt",
-            "description": {
-                "summary": "Retries a subset of dbt Cloud job run, filtered by select statuses, and waits for the triggered retry to complete."
+                "summary": "A flow for triggering a Census sync run and waiting for completion.",
+                "returns": "The result of the sync run."
             }
         },
-        "Trigger dbt Cloud job run and wait for completion": {
-            "name": "Trigger dbt Cloud job run and wait for completion",
-            "parameters": {
-                "title": "Parameters",
-                "type": "object",
-                "properties": {
-                    "dbt_cloud_credentials": {
-                        "title": "dbt_cloud_credentials",
-                        "description": "Credentials for authenticating with dbt Cloud.",
-                        "position": 0,
-                        "allOf": [
-                            {
-                                "$ref": "#/definitions/DbtCloudCredentials"
-                            }
-                        ]
-                    },
-                    "job_id": {
-                        "title": "job_id",
-                        "description": "The ID of the job to trigger.",
-                        "position": 1,
-                        "type": "integer"
-                    },
-                    "trigger_job_run_options": {
-                        "title": "trigger_job_run_options",
-                        "description": "An optional TriggerJobRunOptions instance to\nspecify overrides for the triggered job run.",
-                        "position": 2,
-                        "allOf": [
-                            {
-                                "$ref": "#/definitions/TriggerJobRunOptions"
-                            }
-                        ]
-                    },
-                    "max_wait_seconds": {
-                        "title": "max_wait_seconds",
-                        "description": "Maximum number of seconds to wait for job to complete",
-                        "default": 900,
-                        "position": 3,
-                        "type": "integer"
-                    },
-                    "poll_frequency_seconds": {
-                        "title": "poll_frequency_seconds",
-                        "description": "Number of seconds to wait in between checks for\nrun completion.",
-                        "default": 10,
-                        "position": 4,
-                        "type": "integer"
-                    },
-                    "retry_filtered_models_attempts": {
-                        "title": "retry_filtered_models_attempts",
-                        "description": "Number of times to retry models selected by `retry_status_filters`.",
-                        "default": 3,
-                        "position": 5,
-                        "type": "integer"
-                    }
-                },
-                "required": [
-                    "dbt_cloud_credentials",
-                    "job_id"
-                ],
-                "definitions": {
-                    "DbtCloudCredentials": {
-                        "title": "DbtCloudCredentials",
-                        "description": "Credentials block for credential use across dbt Cloud tasks and flows.",
-                        "type": "object",
-                        "properties": {
-                            "api_key": {
-                                "title": "API Key",
-                                "description": "A dbt Cloud API key to use for authentication.",
-                                "type": "string",
-                                "writeOnly": true,
-                                "format": "password"
-                            },
-                            "account_id": {
-                                "title": "Account ID",
-                                "description": "The ID of your dbt Cloud account.",
-                                "type": "integer"
-                            },
-                            "domain": {
-                                "title": "Domain",
-                                "description": "The base domain of your dbt Cloud instance.",
-                                "default": "cloud.getdbt.com",
-                                "type": "string"
-                            }
-                        },
-                        "required": [
-                            "api_key",
-                            "account_id"
-                        ],
-                        "block_type_slug": "dbt-cloud-credentials",
-                        "secret_fields": [
-                            "api_key"
-                        ],
-                        "block_schema_references": {}
-                    },
-                    "TriggerJobRunOptions": {
-                        "title": "TriggerJobRunOptions",
-                        "description": "Defines options that can be defined when triggering a dbt Cloud job run.",
-                        "type": "object",
-                        "properties": {
-                            "cause": {
-                                "title": "Cause",
-                                "description": "A text description of the reason for running this job.",
-                                "type": "string"
-                            },
-                            "git_sha": {
-                                "title": "Git Sha",
-                                "description": "The git sha to check out before running this job.",
-                                "type": "string"
-                            },
-                            "git_branch": {
-                                "title": "Git Branch",
-                                "description": "The git branch to check out before running this job.",
-                                "type": "string"
-                            },
-                            "schema_override": {
-                                "title": "Schema Override",
-                                "description": "Override the destination schema in the configured target for this job.",
-                                "type": "string"
-                            },
-                            "dbt_version_override": {
-                                "title": "Dbt Version Override",
-                                "description": "Override the version of dbt used to run this job.",
-                                "type": "string"
-                            },
-                            "threads_override": {
-                                "title": "Threads Override",
-                                "description": "Override the number of threads used to run this job.",
-                                "type": "integer"
-                            },
-                            "target_name_override": {
-                                "title": "Target Name Override",
-                                "description": "Override the target.name context variable used when running this job",
-                                "type": "string"
-                            },
-                            "generate_docs_override": {
-                                "title": "Generate Docs Override",
-                                "description": "Override whether or not this job generates docs (true=yes, false=no).",
-                                "type": "boolean"
-                            },
-                            "timeout_seconds_override": {
-                                "title": "Timeout Seconds Override",
-                                "description": "Override the timeout in seconds for this job.",
-                                "type": "integer"
-                            },
-                            "steps_override": {
-                                "title": "Steps Override",
-                                "description": "Override the list of steps for this job.",
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "install_command": "pip install prefect-dbt",
-            "description": {
-                "summary": "Triggers a dbt Cloud job run and waits for thetriggered run to complete."
-            }
-        },
-        "Wait for dbt Cloud job run": {
-            "name": "Wait for dbt Cloud job run",
+        "Wait for Census sync run": {
+            "name": "Wait for Census sync run",
             "parameters": {
                 "title": "Parameters",
                 "type": "object",
                 "properties": {
                     "run_id": {
                         "title": "run_id",
-                        "description": "The ID of the run to wait for.",
+                        "description": "The ID of the sync run to wait for.",
                         "position": 0,
                         "type": "integer"
                     },
-                    "dbt_cloud_credentials": {
-                        "title": "dbt_cloud_credentials",
-                        "description": "Credentials for authenticating with dbt Cloud.",
+                    "credentials": {
+                        "title": "credentials",
+                        "description": "Credentials for authenticating with Census.",
                         "position": 1,
                         "allOf": [
                             {
-                                "$ref": "#/definitions/DbtCloudCredentials"
+                                "$ref": "#/definitions/CensusCredentials"
                             }
                         ]
                     },
                     "max_wait_seconds": {
                         "title": "max_wait_seconds",
-                        "description": "Maximum number of seconds to wait for job to complete",
-                        "default": 900,
+                        "description": "Maximum number of seconds to wait for sync to complete.",
+                        "default": 60,
                         "position": 2,
                         "type": "integer"
                     },
                     "poll_frequency_seconds": {
                         "title": "poll_frequency_seconds",
                         "description": "Number of seconds to wait in between checks for\nrun completion.",
-                        "default": 10,
+                        "default": 5,
                         "position": 3,
                         "type": "integer"
                     }
                 },
                 "required": [
                     "run_id",
-                    "dbt_cloud_credentials"
+                    "credentials"
                 ],
                 "definitions": {
-                    "DbtCloudCredentials": {
-                        "title": "DbtCloudCredentials",
-                        "description": "Credentials block for credential use across dbt Cloud tasks and flows.",
+                    "CensusCredentials": {
+                        "title": "CensusCredentials",
+                        "description": "Credentials block for credential use across Census tasks and flows.",
                         "type": "object",
                         "properties": {
                             "api_key": {
                                 "title": "API Key",
-                                "description": "A dbt Cloud API key to use for authentication.",
+                                "description": "API key to authenticate with the Census API.",
                                 "type": "string",
                                 "writeOnly": true,
                                 "format": "password"
-                            },
-                            "account_id": {
-                                "title": "Account ID",
-                                "description": "The ID of your dbt Cloud account.",
-                                "type": "integer"
-                            },
-                            "domain": {
-                                "title": "Domain",
-                                "description": "The base domain of your dbt Cloud instance.",
-                                "default": "cloud.getdbt.com",
-                                "type": "string"
                             }
                         },
                         "required": [
-                            "api_key",
-                            "account_id"
+                            "api_key"
                         ],
-                        "block_type_slug": "dbt-cloud-credentials",
+                        "block_type_slug": "census-credentials",
                         "secret_fields": [
                             "api_key"
                         ],
@@ -670,12 +312,91 @@
                     }
                 }
             },
-            "install_command": "pip install prefect-dbt",
+            "install_command": "pip install prefect-census",
             "description": {
-                "summary": "Waits for a dbt Cloud job run to finish running."
+                "summary": "Waits for the Census sync run to finish running."
+            }
+        },
+        "Trigger Census sync run and wait for completion": {
+            "name": "Trigger Census sync run and wait for completion",
+            "parameters": {
+                "title": "Parameters",
+                "type": "object",
+                "properties": {
+                    "credentials": {
+                        "title": "credentials",
+                        "description": "Credentials for authenticating with Census.",
+                        "position": 0,
+                        "allOf": [
+                            {
+                                "$ref": "#/definitions/CensusCredentials"
+                            }
+                        ]
+                    },
+                    "sync_id": {
+                        "title": "sync_id",
+                        "description": "The ID of the sync to trigger.",
+                        "position": 1,
+                        "type": "integer"
+                    },
+                    "force_full_sync": {
+                        "title": "force_full_sync",
+                        "description": "If `True`, a full sync will be triggered.",
+                        "default": false,
+                        "position": 2,
+                        "type": "boolean"
+                    },
+                    "max_wait_seconds": {
+                        "title": "max_wait_seconds",
+                        "description": "Maximum number of seconds to wait for sync to complete",
+                        "default": 900,
+                        "position": 3,
+                        "type": "integer"
+                    },
+                    "poll_frequency_seconds": {
+                        "title": "poll_frequency_seconds",
+                        "description": "Number of seconds to wait in between checks for run completion.",
+                        "default": 10,
+                        "position": 4,
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "credentials",
+                    "sync_id"
+                ],
+                "definitions": {
+                    "CensusCredentials": {
+                        "title": "CensusCredentials",
+                        "description": "Credentials block for credential use across Census tasks and flows.",
+                        "type": "object",
+                        "properties": {
+                            "api_key": {
+                                "title": "API Key",
+                                "description": "API key to authenticate with the Census API.",
+                                "type": "string",
+                                "writeOnly": true,
+                                "format": "password"
+                            }
+                        },
+                        "required": [
+                            "api_key"
+                        ],
+                        "block_type_slug": "census-credentials",
+                        "secret_fields": [
+                            "api_key"
+                        ],
+                        "block_schema_references": {}
+                    }
+                }
+            },
+            "install_command": "pip install prefect-census",
+            "description": {
+                "summary": "Triggers a Census sync run and waits for thetriggered run to complete."
             }
         }
     },
+    "prefect-dask": {},
     "prefect-databricks": {
         "Submit jobs runs and wait for completion": {
             "name": "Submit jobs runs and wait for completion",
@@ -1984,39 +1705,42 @@
             }
         }
     },
-    "prefect-hightouch": {
-        "trigger-sync-run-and-wait-for-completion": {
-            "name": "trigger-sync-run-and-wait-for-completion",
+    "prefect-dbt": {
+        "Retry subset of dbt Cloud job run and wait for completion": {
+            "name": "Retry subset of dbt Cloud job run and wait for completion",
             "parameters": {
                 "title": "Parameters",
                 "type": "object",
                 "properties": {
-                    "hightouch_credentials": {
-                        "title": "hightouch_credentials",
-                        "description": "Credentials to use for authentication with Hightouch.",
+                    "dbt_cloud_credentials": {
+                        "title": "dbt_cloud_credentials",
+                        "description": "Credentials for authenticating with dbt Cloud.",
                         "position": 0,
                         "allOf": [
                             {
-                                "$ref": "#/definitions/HightouchCredentials"
+                                "$ref": "#/definitions/DbtCloudCredentials"
                             }
                         ]
                     },
-                    "sync_id": {
-                        "title": "sync_id",
-                        "description": "Sync ID used in formatting the endpoint URL.",
+                    "run_id": {
+                        "title": "run_id",
+                        "description": "The ID of the job run to retry.",
                         "position": 1,
-                        "type": "string"
+                        "type": "integer"
                     },
-                    "full_resync": {
-                        "title": "full_resync",
-                        "description": "Whether to resync all the rows in the query\n(i.e. ignoring previously synced rows).",
-                        "default": false,
+                    "trigger_job_run_options": {
+                        "title": "trigger_job_run_options",
+                        "description": "An optional TriggerJobRunOptions instance to\nspecify overrides for the triggered job run.",
                         "position": 2,
-                        "type": "boolean"
+                        "allOf": [
+                            {
+                                "$ref": "#/definitions/TriggerJobRunOptions"
+                            }
+                        ]
                     },
                     "max_wait_seconds": {
                         "title": "max_wait_seconds",
-                        "description": "Maximum number of seconds to wait for the entire\nflow to complete.",
+                        "description": "Maximum number of seconds to wait for job to complete",
                         "default": 900,
                         "position": 3,
                         "type": "integer"
@@ -2030,76 +1754,296 @@
                     }
                 },
                 "required": [
-                    "hightouch_credentials",
-                    "sync_id"
+                    "dbt_cloud_credentials",
+                    "run_id"
                 ],
                 "definitions": {
-                    "HightouchCredentials": {
-                        "title": "HightouchCredentials",
-                        "description": "Block used to manage Hightouch authentication.",
+                    "DbtCloudCredentials": {
+                        "title": "DbtCloudCredentials",
+                        "description": "Credentials block for credential use across dbt Cloud tasks and flows.",
                         "type": "object",
                         "properties": {
-                            "token": {
-                                "title": "Token",
-                                "description": "Token used for authentication.",
+                            "api_key": {
+                                "title": "API Key",
+                                "description": "A dbt Cloud API key to use for authentication.",
                                 "type": "string",
                                 "writeOnly": true,
                                 "format": "password"
                             },
-                            "timeout": {
-                                "title": "Timeout",
-                                "description": "Number of seconds before the request times out.",
-                                "default": 5.0,
-                                "type": "number"
+                            "account_id": {
+                                "title": "Account ID",
+                                "description": "The ID of your dbt Cloud account.",
+                                "type": "integer"
                             },
-                            "client_kwargs": {
-                                "title": "Additional configuration",
-                                "description": "Additional keyword arguments to pass to `prefect_hightouch.api_client.client.AuthenticatedClient`.",
-                                "type": "object"
+                            "domain": {
+                                "title": "Domain",
+                                "description": "The base domain of your dbt Cloud instance.",
+                                "default": "cloud.getdbt.com",
+                                "type": "string"
                             }
                         },
                         "required": [
-                            "token"
+                            "api_key",
+                            "account_id"
                         ],
-                        "block_type_slug": "hightouch-credentials",
+                        "block_type_slug": "dbt-cloud-credentials",
                         "secret_fields": [
-                            "token"
+                            "api_key"
                         ],
                         "block_schema_references": {}
+                    },
+                    "TriggerJobRunOptions": {
+                        "title": "TriggerJobRunOptions",
+                        "description": "Defines options that can be defined when triggering a dbt Cloud job run.",
+                        "type": "object",
+                        "properties": {
+                            "cause": {
+                                "title": "Cause",
+                                "description": "A text description of the reason for running this job.",
+                                "type": "string"
+                            },
+                            "git_sha": {
+                                "title": "Git Sha",
+                                "description": "The git sha to check out before running this job.",
+                                "type": "string"
+                            },
+                            "git_branch": {
+                                "title": "Git Branch",
+                                "description": "The git branch to check out before running this job.",
+                                "type": "string"
+                            },
+                            "schema_override": {
+                                "title": "Schema Override",
+                                "description": "Override the destination schema in the configured target for this job.",
+                                "type": "string"
+                            },
+                            "dbt_version_override": {
+                                "title": "Dbt Version Override",
+                                "description": "Override the version of dbt used to run this job.",
+                                "type": "string"
+                            },
+                            "threads_override": {
+                                "title": "Threads Override",
+                                "description": "Override the number of threads used to run this job.",
+                                "type": "integer"
+                            },
+                            "target_name_override": {
+                                "title": "Target Name Override",
+                                "description": "Override the target.name context variable used when running this job",
+                                "type": "string"
+                            },
+                            "generate_docs_override": {
+                                "title": "Generate Docs Override",
+                                "description": "Override whether or not this job generates docs (true=yes, false=no).",
+                                "type": "boolean"
+                            },
+                            "timeout_seconds_override": {
+                                "title": "Timeout Seconds Override",
+                                "description": "Override the timeout in seconds for this job.",
+                                "type": "integer"
+                            },
+                            "steps_override": {
+                                "title": "Steps Override",
+                                "description": "Override the list of steps for this job.",
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            }
+                        }
                     }
                 }
             },
-            "install_command": "pip install prefect-hightouch",
+            "install_command": "pip install prefect-dbt",
             "description": {
-                "summary": "Flow that triggers a sync run and waits for the triggered run to complete.",
-                "returns": "- `id`: `str`<br>\n- `slug`: `str`<br>\n- `workspace_id`: `str`<br>\n- `created_at`: `str`<br>\n- `updated_at`: `str`<br>\n- `destination_id`: `str`<br>\n- `model_id`: `str`<br>\n- `configuration`: `Dict`<br>\n- `schedule`: `Dict`<br>\n- `status`: `\"models.SyncStatus\"`<br>\n- `disabled`: `bool`<br>\n- `last_run_at`: `str`<br>\n- `referenced_columns`: `List[str]`<br>\n- `primary_key`: `str`<br>"
+                "summary": "Retries a subset of dbt Cloud job run, filtered by select statuses, and waits for the triggered retry to complete."
             }
         },
-        "wait-for-sync-run-completion": {
-            "name": "wait-for-sync-run-completion",
+        "Trigger dbt Cloud job run and wait for completion": {
+            "name": "Trigger dbt Cloud job run and wait for completion",
             "parameters": {
                 "title": "Parameters",
                 "type": "object",
                 "properties": {
-                    "hightouch_credentials": {
-                        "title": "hightouch_credentials",
-                        "description": "Credentials to use for authentication with Hightouch.",
+                    "dbt_cloud_credentials": {
+                        "title": "dbt_cloud_credentials",
+                        "description": "Credentials for authenticating with dbt Cloud.",
                         "position": 0,
                         "allOf": [
                             {
-                                "$ref": "#/definitions/HightouchCredentials"
+                                "$ref": "#/definitions/DbtCloudCredentials"
                             }
                         ]
                     },
-                    "sync_id": {
-                        "title": "sync_id",
-                        "description": "Sync ID used in formatting the endpoint URL.",
+                    "job_id": {
+                        "title": "job_id",
+                        "description": "The ID of the job to trigger.",
                         "position": 1,
-                        "type": "string"
+                        "type": "integer"
+                    },
+                    "trigger_job_run_options": {
+                        "title": "trigger_job_run_options",
+                        "description": "An optional TriggerJobRunOptions instance to\nspecify overrides for the triggered job run.",
+                        "position": 2,
+                        "allOf": [
+                            {
+                                "$ref": "#/definitions/TriggerJobRunOptions"
+                            }
+                        ]
                     },
                     "max_wait_seconds": {
                         "title": "max_wait_seconds",
-                        "description": "Maximum number of seconds to wait for the\nentire flow to complete.",
+                        "description": "Maximum number of seconds to wait for job to complete",
+                        "default": 900,
+                        "position": 3,
+                        "type": "integer"
+                    },
+                    "poll_frequency_seconds": {
+                        "title": "poll_frequency_seconds",
+                        "description": "Number of seconds to wait in between checks for\nrun completion.",
+                        "default": 10,
+                        "position": 4,
+                        "type": "integer"
+                    },
+                    "retry_filtered_models_attempts": {
+                        "title": "retry_filtered_models_attempts",
+                        "description": "Number of times to retry models selected by `retry_status_filters`.",
+                        "default": 3,
+                        "position": 5,
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "dbt_cloud_credentials",
+                    "job_id"
+                ],
+                "definitions": {
+                    "DbtCloudCredentials": {
+                        "title": "DbtCloudCredentials",
+                        "description": "Credentials block for credential use across dbt Cloud tasks and flows.",
+                        "type": "object",
+                        "properties": {
+                            "api_key": {
+                                "title": "API Key",
+                                "description": "A dbt Cloud API key to use for authentication.",
+                                "type": "string",
+                                "writeOnly": true,
+                                "format": "password"
+                            },
+                            "account_id": {
+                                "title": "Account ID",
+                                "description": "The ID of your dbt Cloud account.",
+                                "type": "integer"
+                            },
+                            "domain": {
+                                "title": "Domain",
+                                "description": "The base domain of your dbt Cloud instance.",
+                                "default": "cloud.getdbt.com",
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "api_key",
+                            "account_id"
+                        ],
+                        "block_type_slug": "dbt-cloud-credentials",
+                        "secret_fields": [
+                            "api_key"
+                        ],
+                        "block_schema_references": {}
+                    },
+                    "TriggerJobRunOptions": {
+                        "title": "TriggerJobRunOptions",
+                        "description": "Defines options that can be defined when triggering a dbt Cloud job run.",
+                        "type": "object",
+                        "properties": {
+                            "cause": {
+                                "title": "Cause",
+                                "description": "A text description of the reason for running this job.",
+                                "type": "string"
+                            },
+                            "git_sha": {
+                                "title": "Git Sha",
+                                "description": "The git sha to check out before running this job.",
+                                "type": "string"
+                            },
+                            "git_branch": {
+                                "title": "Git Branch",
+                                "description": "The git branch to check out before running this job.",
+                                "type": "string"
+                            },
+                            "schema_override": {
+                                "title": "Schema Override",
+                                "description": "Override the destination schema in the configured target for this job.",
+                                "type": "string"
+                            },
+                            "dbt_version_override": {
+                                "title": "Dbt Version Override",
+                                "description": "Override the version of dbt used to run this job.",
+                                "type": "string"
+                            },
+                            "threads_override": {
+                                "title": "Threads Override",
+                                "description": "Override the number of threads used to run this job.",
+                                "type": "integer"
+                            },
+                            "target_name_override": {
+                                "title": "Target Name Override",
+                                "description": "Override the target.name context variable used when running this job",
+                                "type": "string"
+                            },
+                            "generate_docs_override": {
+                                "title": "Generate Docs Override",
+                                "description": "Override whether or not this job generates docs (true=yes, false=no).",
+                                "type": "boolean"
+                            },
+                            "timeout_seconds_override": {
+                                "title": "Timeout Seconds Override",
+                                "description": "Override the timeout in seconds for this job.",
+                                "type": "integer"
+                            },
+                            "steps_override": {
+                                "title": "Steps Override",
+                                "description": "Override the list of steps for this job.",
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "install_command": "pip install prefect-dbt",
+            "description": {
+                "summary": "Triggers a dbt Cloud job run and waits for thetriggered run to complete."
+            }
+        },
+        "Wait for dbt Cloud job run": {
+            "name": "Wait for dbt Cloud job run",
+            "parameters": {
+                "title": "Parameters",
+                "type": "object",
+                "properties": {
+                    "run_id": {
+                        "title": "run_id",
+                        "description": "The ID of the run to wait for.",
+                        "position": 0,
+                        "type": "integer"
+                    },
+                    "dbt_cloud_credentials": {
+                        "title": "dbt_cloud_credentials",
+                        "description": "Credentials for authenticating with dbt Cloud.",
+                        "position": 1,
+                        "allOf": [
+                            {
+                                "$ref": "#/definitions/DbtCloudCredentials"
+                            }
+                        ]
+                    },
+                    "max_wait_seconds": {
+                        "title": "max_wait_seconds",
+                        "description": "Maximum number of seconds to wait for job to complete",
                         "default": 900,
                         "position": 2,
                         "type": "integer"
@@ -2113,52 +2057,59 @@
                     }
                 },
                 "required": [
-                    "hightouch_credentials",
-                    "sync_id"
+                    "run_id",
+                    "dbt_cloud_credentials"
                 ],
                 "definitions": {
-                    "HightouchCredentials": {
-                        "title": "HightouchCredentials",
-                        "description": "Block used to manage Hightouch authentication.",
+                    "DbtCloudCredentials": {
+                        "title": "DbtCloudCredentials",
+                        "description": "Credentials block for credential use across dbt Cloud tasks and flows.",
                         "type": "object",
                         "properties": {
-                            "token": {
-                                "title": "Token",
-                                "description": "Token used for authentication.",
+                            "api_key": {
+                                "title": "API Key",
+                                "description": "A dbt Cloud API key to use for authentication.",
                                 "type": "string",
                                 "writeOnly": true,
                                 "format": "password"
                             },
-                            "timeout": {
-                                "title": "Timeout",
-                                "description": "Number of seconds before the request times out.",
-                                "default": 5.0,
-                                "type": "number"
+                            "account_id": {
+                                "title": "Account ID",
+                                "description": "The ID of your dbt Cloud account.",
+                                "type": "integer"
                             },
-                            "client_kwargs": {
-                                "title": "Additional configuration",
-                                "description": "Additional keyword arguments to pass to `prefect_hightouch.api_client.client.AuthenticatedClient`.",
-                                "type": "object"
+                            "domain": {
+                                "title": "Domain",
+                                "description": "The base domain of your dbt Cloud instance.",
+                                "default": "cloud.getdbt.com",
+                                "type": "string"
                             }
                         },
                         "required": [
-                            "token"
+                            "api_key",
+                            "account_id"
                         ],
-                        "block_type_slug": "hightouch-credentials",
+                        "block_type_slug": "dbt-cloud-credentials",
                         "secret_fields": [
-                            "token"
+                            "api_key"
                         ],
                         "block_schema_references": {}
                     }
                 }
             },
-            "install_command": "pip install prefect-hightouch",
+            "install_command": "pip install prefect-dbt",
             "description": {
-                "summary": "Flow that waits for the triggered sync run to complete.",
-                "returns": "- `value`\n- `id`: `str`<br>\n- `slug`: `str`<br>\n- `workspace_id`: `str`<br>\n- `created_at`: `str`<br>\n- `updated_at`: `str`<br>\n- `destination_id`: `str`<br>\n- `model_id`: `str`<br>\n- `configuration`: `Dict`<br>\n- `schedule`: `Dict`<br>\n- `status`: `\"api_models.SyncStatus\"`<br>\n- `disabled`: `bool`<br>\n- `last_run_at`: `str`<br>\n- `referenced_columns`: `List[str]`<br>\n- `primary_key`: `str`<br>"
+                "summary": "Waits for a dbt Cloud job run to finish running."
             }
         }
     },
+    "prefect-docker": {},
+    "prefect-email": {},
+    "prefect-firebolt": {},
+    "prefect-gcp": {},
+    "prefect-github": {},
+    "prefect-gitlab": {},
+    "prefect-great-expectations": {},
     "prefect-hex": {
         "trigger-project-run-and-wait-for-completion": {
             "name": "trigger-project-run-and-wait-for-completion",
@@ -2337,276 +2288,322 @@
             }
         }
     },
-    "prefect-census": {
-        "run-census-sync": {
-            "name": "run-census-sync",
+    "prefect-hightouch": {
+        "trigger-sync-run-and-wait-for-completion": {
+            "name": "trigger-sync-run-and-wait-for-completion",
             "parameters": {
                 "title": "Parameters",
                 "type": "object",
                 "properties": {
-                    "census_sync": {
-                        "title": "census_sync",
-                        "description": "The Census sync job block to trigger.",
+                    "hightouch_credentials": {
+                        "title": "hightouch_credentials",
+                        "description": "Credentials to use for authentication with Hightouch.",
                         "position": 0,
                         "allOf": [
                             {
-                                "$ref": "#/definitions/CensusSync"
-                            }
-                        ]
-                    }
-                },
-                "required": [
-                    "census_sync"
-                ],
-                "definitions": {
-                    "CensusCredentials": {
-                        "title": "CensusCredentials",
-                        "description": "Credentials block for credential use across Census tasks and flows.",
-                        "type": "object",
-                        "properties": {
-                            "api_key": {
-                                "title": "API Key",
-                                "description": "API key to authenticate with the Census API.",
-                                "type": "string",
-                                "writeOnly": true,
-                                "format": "password"
-                            }
-                        },
-                        "required": [
-                            "api_key"
-                        ],
-                        "block_type_slug": "census-credentials",
-                        "secret_fields": [
-                            "api_key"
-                        ],
-                        "block_schema_references": {}
-                    },
-                    "CensusSync": {
-                        "title": "CensusSync",
-                        "description": "Runs a Census sync",
-                        "type": "object",
-                        "properties": {
-                            "credentials": {
-                                "title": "Credentials",
-                                "description": "Credentials for authenticating with Census.",
-                                "allOf": [
-                                    {
-                                        "$ref": "#/definitions/CensusCredentials"
-                                    }
-                                ]
-                            },
-                            "sync_id": {
-                                "title": "Sync Id",
-                                "description": "The ID of the sync to trigger.",
-                                "type": "integer"
-                            },
-                            "force_full_sync": {
-                                "title": "Force Full Sync",
-                                "description": "If `True`, a full sync will be triggered.",
-                                "default": false,
-                                "type": "boolean"
-                            },
-                            "max_wait_seconds": {
-                                "title": "Max Wait Seconds",
-                                "description": "The maximum number of seconds to wait for the sync to complete.",
-                                "default": 3600,
-                                "type": "integer"
-                            },
-                            "poll_frequency_seconds": {
-                                "title": "Poll Frequency Seconds",
-                                "description": "Number of seconds to wait between sync status checks.",
-                                "default": 5,
-                                "type": "integer"
-                            }
-                        },
-                        "required": [
-                            "credentials",
-                            "sync_id"
-                        ],
-                        "block_type_slug": "census-sync",
-                        "secret_fields": [
-                            "credentials.api_key"
-                        ],
-                        "block_schema_references": {
-                            "credentials": {
-                                "block_type_slug": "census-credentials",
-                                "block_schema_checksum": "sha256:4101a4f4096dd3a5cf916692b7948959ea88e87bb08d91d6d5cc929224da5f4a"
-                            }
-                        }
-                    }
-                }
-            },
-            "install_command": "pip install prefect-census",
-            "description": {
-                "summary": "A flow for triggering a Census sync run and waiting for completion.",
-                "returns": "The result of the sync run."
-            }
-        },
-        "Wait for Census sync run": {
-            "name": "Wait for Census sync run",
-            "parameters": {
-                "title": "Parameters",
-                "type": "object",
-                "properties": {
-                    "run_id": {
-                        "title": "run_id",
-                        "description": "The ID of the sync run to wait for.",
-                        "position": 0,
-                        "type": "integer"
-                    },
-                    "credentials": {
-                        "title": "credentials",
-                        "description": "Credentials for authenticating with Census.",
-                        "position": 1,
-                        "allOf": [
-                            {
-                                "$ref": "#/definitions/CensusCredentials"
-                            }
-                        ]
-                    },
-                    "max_wait_seconds": {
-                        "title": "max_wait_seconds",
-                        "description": "Maximum number of seconds to wait for sync to complete.",
-                        "default": 60,
-                        "position": 2,
-                        "type": "integer"
-                    },
-                    "poll_frequency_seconds": {
-                        "title": "poll_frequency_seconds",
-                        "description": "Number of seconds to wait in between checks for\nrun completion.",
-                        "default": 5,
-                        "position": 3,
-                        "type": "integer"
-                    }
-                },
-                "required": [
-                    "run_id",
-                    "credentials"
-                ],
-                "definitions": {
-                    "CensusCredentials": {
-                        "title": "CensusCredentials",
-                        "description": "Credentials block for credential use across Census tasks and flows.",
-                        "type": "object",
-                        "properties": {
-                            "api_key": {
-                                "title": "API Key",
-                                "description": "API key to authenticate with the Census API.",
-                                "type": "string",
-                                "writeOnly": true,
-                                "format": "password"
-                            }
-                        },
-                        "required": [
-                            "api_key"
-                        ],
-                        "block_type_slug": "census-credentials",
-                        "secret_fields": [
-                            "api_key"
-                        ],
-                        "block_schema_references": {}
-                    }
-                }
-            },
-            "install_command": "pip install prefect-census",
-            "description": {
-                "summary": "Waits for the Census sync run to finish running."
-            }
-        },
-        "Trigger Census sync run and wait for completion": {
-            "name": "Trigger Census sync run and wait for completion",
-            "parameters": {
-                "title": "Parameters",
-                "type": "object",
-                "properties": {
-                    "credentials": {
-                        "title": "credentials",
-                        "description": "Credentials for authenticating with Census.",
-                        "position": 0,
-                        "allOf": [
-                            {
-                                "$ref": "#/definitions/CensusCredentials"
+                                "$ref": "#/definitions/HightouchCredentials"
                             }
                         ]
                     },
                     "sync_id": {
                         "title": "sync_id",
-                        "description": "The ID of the sync to trigger.",
+                        "description": "Sync ID used in formatting the endpoint URL.",
                         "position": 1,
-                        "type": "integer"
+                        "type": "string"
                     },
-                    "force_full_sync": {
-                        "title": "force_full_sync",
-                        "description": "If `True`, a full sync will be triggered.",
+                    "full_resync": {
+                        "title": "full_resync",
+                        "description": "Whether to resync all the rows in the query\n(i.e. ignoring previously synced rows).",
                         "default": false,
                         "position": 2,
                         "type": "boolean"
                     },
                     "max_wait_seconds": {
                         "title": "max_wait_seconds",
-                        "description": "Maximum number of seconds to wait for sync to complete",
+                        "description": "Maximum number of seconds to wait for the entire\nflow to complete.",
                         "default": 900,
                         "position": 3,
                         "type": "integer"
                     },
                     "poll_frequency_seconds": {
                         "title": "poll_frequency_seconds",
-                        "description": "Number of seconds to wait in between checks for run completion.",
+                        "description": "Number of seconds to wait in between checks for\nrun completion.",
                         "default": 10,
                         "position": 4,
                         "type": "integer"
                     }
                 },
                 "required": [
-                    "credentials",
+                    "hightouch_credentials",
                     "sync_id"
                 ],
                 "definitions": {
-                    "CensusCredentials": {
-                        "title": "CensusCredentials",
-                        "description": "Credentials block for credential use across Census tasks and flows.",
+                    "HightouchCredentials": {
+                        "title": "HightouchCredentials",
+                        "description": "Block used to manage Hightouch authentication.",
                         "type": "object",
                         "properties": {
-                            "api_key": {
-                                "title": "API Key",
-                                "description": "API key to authenticate with the Census API.",
+                            "token": {
+                                "title": "Token",
+                                "description": "Token used for authentication.",
                                 "type": "string",
                                 "writeOnly": true,
                                 "format": "password"
+                            },
+                            "timeout": {
+                                "title": "Timeout",
+                                "description": "Number of seconds before the request times out.",
+                                "default": 5.0,
+                                "type": "number"
+                            },
+                            "client_kwargs": {
+                                "title": "Additional configuration",
+                                "description": "Additional keyword arguments to pass to `prefect_hightouch.api_client.client.AuthenticatedClient`.",
+                                "type": "object"
                             }
                         },
                         "required": [
-                            "api_key"
+                            "token"
                         ],
-                        "block_type_slug": "census-credentials",
+                        "block_type_slug": "hightouch-credentials",
                         "secret_fields": [
-                            "api_key"
+                            "token"
                         ],
                         "block_schema_references": {}
                     }
                 }
             },
-            "install_command": "pip install prefect-census",
+            "install_command": "pip install prefect-hightouch",
             "description": {
-                "summary": "Triggers a Census sync run and waits for thetriggered run to complete."
+                "summary": "Flow that triggers a sync run and waits for the triggered run to complete.",
+                "returns": "- `id`: `str`<br>\n- `slug`: `str`<br>\n- `workspace_id`: `str`<br>\n- `created_at`: `str`<br>\n- `updated_at`: `str`<br>\n- `destination_id`: `str`<br>\n- `model_id`: `str`<br>\n- `configuration`: `Dict`<br>\n- `schedule`: `Dict`<br>\n- `status`: `\"models.SyncStatus\"`<br>\n- `disabled`: `bool`<br>\n- `last_run_at`: `str`<br>\n- `referenced_columns`: `List[str]`<br>\n- `primary_key`: `str`<br>"
+            }
+        },
+        "wait-for-sync-run-completion": {
+            "name": "wait-for-sync-run-completion",
+            "parameters": {
+                "title": "Parameters",
+                "type": "object",
+                "properties": {
+                    "hightouch_credentials": {
+                        "title": "hightouch_credentials",
+                        "description": "Credentials to use for authentication with Hightouch.",
+                        "position": 0,
+                        "allOf": [
+                            {
+                                "$ref": "#/definitions/HightouchCredentials"
+                            }
+                        ]
+                    },
+                    "sync_id": {
+                        "title": "sync_id",
+                        "description": "Sync ID used in formatting the endpoint URL.",
+                        "position": 1,
+                        "type": "string"
+                    },
+                    "max_wait_seconds": {
+                        "title": "max_wait_seconds",
+                        "description": "Maximum number of seconds to wait for the\nentire flow to complete.",
+                        "default": 900,
+                        "position": 2,
+                        "type": "integer"
+                    },
+                    "poll_frequency_seconds": {
+                        "title": "poll_frequency_seconds",
+                        "description": "Number of seconds to wait in between checks for\nrun completion.",
+                        "default": 10,
+                        "position": 3,
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "hightouch_credentials",
+                    "sync_id"
+                ],
+                "definitions": {
+                    "HightouchCredentials": {
+                        "title": "HightouchCredentials",
+                        "description": "Block used to manage Hightouch authentication.",
+                        "type": "object",
+                        "properties": {
+                            "token": {
+                                "title": "Token",
+                                "description": "Token used for authentication.",
+                                "type": "string",
+                                "writeOnly": true,
+                                "format": "password"
+                            },
+                            "timeout": {
+                                "title": "Timeout",
+                                "description": "Number of seconds before the request times out.",
+                                "default": 5.0,
+                                "type": "number"
+                            },
+                            "client_kwargs": {
+                                "title": "Additional configuration",
+                                "description": "Additional keyword arguments to pass to `prefect_hightouch.api_client.client.AuthenticatedClient`.",
+                                "type": "object"
+                            }
+                        },
+                        "required": [
+                            "token"
+                        ],
+                        "block_type_slug": "hightouch-credentials",
+                        "secret_fields": [
+                            "token"
+                        ],
+                        "block_schema_references": {}
+                    }
+                }
+            },
+            "install_command": "pip install prefect-hightouch",
+            "description": {
+                "summary": "Flow that waits for the triggered sync run to complete.",
+                "returns": "- `value`\n- `id`: `str`<br>\n- `slug`: `str`<br>\n- `workspace_id`: `str`<br>\n- `created_at`: `str`<br>\n- `updated_at`: `str`<br>\n- `destination_id`: `str`<br>\n- `model_id`: `str`<br>\n- `configuration`: `Dict`<br>\n- `schedule`: `Dict`<br>\n- `status`: `\"api_models.SyncStatus\"`<br>\n- `disabled`: `bool`<br>\n- `last_run_at`: `str`<br>\n- `referenced_columns`: `List[str]`<br>\n- `primary_key`: `str`<br>"
             }
         }
     },
-    "prefect-aws": {},
-    "prefect-azure": {},
-    "prefect-slack": {},
-    "prefect-email": {},
-    "prefect-shell": {},
-    "prefect-gcp": {},
-    "prefect-twitter": {},
-    "prefect-bitbucket": {},
-    "prefect-dask": {},
-    "prefect-docker": {},
-    "prefect-firebolt": {},
-    "prefect-github": {},
-    "prefect-gitlab": {},
-    "prefect-great-expectations": {},
     "prefect-jupyter": {},
+    "prefect-kubernetes": {
+        "run-namespaced-job": {
+            "name": "run-namespaced-job",
+            "parameters": {
+                "title": "Parameters",
+                "type": "object",
+                "properties": {
+                    "kubernetes_job": {
+                        "title": "kubernetes_job",
+                        "description": "The `KubernetesJob` block that specifies the job to run.",
+                        "position": 0,
+                        "allOf": [
+                            {
+                                "$ref": "#/definitions/KubernetesJob"
+                            }
+                        ]
+                    }
+                },
+                "required": [
+                    "kubernetes_job"
+                ],
+                "definitions": {
+                    "KubernetesClusterConfig": {
+                        "title": "KubernetesClusterConfig",
+                        "description": "Stores configuration for interaction with Kubernetes clusters.\n\nSee `from_file` for creation.",
+                        "type": "object",
+                        "properties": {
+                            "config": {
+                                "title": "Config",
+                                "description": "The entire contents of a kubectl config file.",
+                                "type": "object"
+                            },
+                            "context_name": {
+                                "title": "Context Name",
+                                "description": "The name of the kubectl context to use.",
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "config",
+                            "context_name"
+                        ],
+                        "block_type_slug": "kubernetes-cluster-config",
+                        "secret_fields": [],
+                        "block_schema_references": {}
+                    },
+                    "KubernetesCredentials": {
+                        "title": "KubernetesCredentials",
+                        "description": "Credentials block for generating configured Kubernetes API clients.",
+                        "type": "object",
+                        "properties": {
+                            "cluster_config": {
+                                "$ref": "#/definitions/KubernetesClusterConfig"
+                            }
+                        },
+                        "block_type_slug": "kubernetes-credentials",
+                        "secret_fields": [],
+                        "block_schema_references": {
+                            "cluster_config": {
+                                "block_type_slug": "kubernetes-cluster-config",
+                                "block_schema_checksum": "sha256:90d421e948bfbe4cdc98b124995f0edd0f84b0837549ad1390423bad8e31cf3b"
+                            }
+                        }
+                    },
+                    "KubernetesJob": {
+                        "title": "KubernetesJob",
+                        "description": "A block representing a Kubernetes job configuration.",
+                        "type": "object",
+                        "properties": {
+                            "v1_job": {
+                                "title": "Job Manifest",
+                                "description": "The Kubernetes job manifest to run. This dictionary can be produced using `yaml.safe_load`.",
+                                "type": "object"
+                            },
+                            "api_kwargs": {
+                                "title": "Additional API Arguments",
+                                "description": "Additional arguments to include in Kubernetes API calls.",
+                                "example": {
+                                    "pretty": "true"
+                                },
+                                "type": "object"
+                            },
+                            "credentials": {
+                                "title": "Credentials",
+                                "description": "The credentials to configure a client from.",
+                                "allOf": [
+                                    {
+                                        "$ref": "#/definitions/KubernetesCredentials"
+                                    }
+                                ]
+                            },
+                            "delete_after_completion": {
+                                "title": "Delete After Completion",
+                                "description": "Whether to delete the job after it has completed.",
+                                "default": true,
+                                "type": "boolean"
+                            },
+                            "interval_seconds": {
+                                "title": "Interval Seconds",
+                                "description": "The number of seconds to wait between job status checks.",
+                                "default": 5,
+                                "type": "integer"
+                            },
+                            "namespace": {
+                                "title": "Namespace",
+                                "description": "The namespace to create and run the job in.",
+                                "default": "default",
+                                "type": "string"
+                            },
+                            "timeout_seconds": {
+                                "title": "Timeout Seconds",
+                                "description": "The number of seconds to wait for the job run before timing out.",
+                                "type": "integer"
+                            }
+                        },
+                        "required": [
+                            "v1_job",
+                            "credentials"
+                        ],
+                        "block_type_slug": "k8s-job",
+                        "secret_fields": [],
+                        "block_schema_references": {
+                            "credentials": {
+                                "block_type_slug": "kubernetes-credentials",
+                                "block_schema_checksum": "sha256:957fa8dca90bd1b5fb9c575ee09e80b454116c0b134287fbc2eff47a72564c3b"
+                            }
+                        }
+                    }
+                }
+            },
+            "install_command": "pip install prefect-kubernetes",
+            "description": {
+                "summary": "Flow for running a namespaced Kubernetes job.",
+                "returns": "The a dict of logs from each pod in the job, e.g. {'pod_name': 'pod_log_str'}.",
+                "examples": [
+                    "```python\nfrom prefect_kubernetes import KubernetesJob, run_namespaced_job\nfrom prefect_kubernetes.credentials import KubernetesCredentials\n\nrun_namespaced_job(\n    kubernetes_job=KubernetesJob.from_yaml_file(\n        credentials=KubernetesCredentials.load(\"k8s-creds\"),\n        manifest_path=\"path/to/job.yaml\",\n    )\n)\n```"
+                ]
+            }
+        }
+    },
     "prefect-monday": {},
     "prefect-monte-carlo": {
         "create-or-update-lineage": {
@@ -2749,6 +2746,9 @@
     },
     "prefect-openai": {},
     "prefect-openmetadata": {},
+    "prefect-shell": {},
+    "prefect-slack": {},
     "prefect-snowflake": {},
-    "prefect-sqlalchemy": {}
+    "prefect-sqlalchemy": {},
+    "prefect-twitter": {}
 }
