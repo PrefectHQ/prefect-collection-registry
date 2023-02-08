@@ -2844,199 +2844,6 @@
                     "version": "0.2.7"
                 }
             },
-            "dbt-cli-profile": {
-                "name": "dbt CLI Profile",
-                "slug": "dbt-cli-profile",
-                "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5zE9lxfzBHjw3tnEup4wWL/9a001902ed43a84c6c96d23b24622e19/dbt-bit_tm.png?h=250",
-                "documentation_url": null,
-                "description": "Profile for use across dbt CLI tasks and flows.",
-                "code_example": "Load stored dbt CLI profile:\n```python\nfrom prefect_dbt.cli import DbtCliProfile\ndbt_cli_profile = DbtCliProfile.load(\"BLOCK_NAME\").get_profile()\n```\n\nGet a dbt Snowflake profile from DbtCliProfile by using SnowflakeTargetConfigs:\n```python\nfrom prefect_dbt.cli import DbtCliProfile\nfrom prefect_dbt.cli.configs import SnowflakeTargetConfigs\nfrom prefect_snowflake.credentials import SnowflakeCredentials\nfrom prefect_snowflake.database import SnowflakeConnector\n\ncredentials = SnowflakeCredentials(\n    user=\"user\",\n    password=\"password\",\n    account=\"account.region.aws\",\n    role=\"role\",\n)\nconnector = SnowflakeConnector(\n    schema=\"public\",\n    database=\"database\",\n    warehouse=\"warehouse\",\n    credentials=credentials,\n)\ntarget_configs = SnowflakeTargetConfigs(\n    connector=connector\n)\ndbt_cli_profile = DbtCliProfile(\n    name=\"jaffle_shop\",\n    target=\"dev\",\n    target_configs=target_configs,\n)\nprofile = dbt_cli_profile.get_profile()\n```\n\nGet a dbt Redshift profile from DbtCliProfile by using generic TargetConfigs:\n```python\nfrom prefect_dbt.cli import DbtCliProfile\nfrom prefect_dbt.cli.configs import GlobalConfigs, TargetConfigs\n\ntarget_configs_extras = dict(\n    host=\"hostname.region.redshift.amazonaws.com\",\n    user=\"username\",\n    password=\"password1\",\n    port=5439,\n    dbname=\"analytics\",\n)\ntarget_configs = TargetConfigs(\n    type=\"redshift\",\n    schema=\"schema\",\n    threads=4,\n    extras=target_configs_extras\n)\ndbt_cli_profile = DbtCliProfile(\n    name=\"jaffle_shop\",\n    target=\"dev\",\n    target_configs=target_configs,\n)\nprofile = dbt_cli_profile.get_profile()\n```",
-                "block_schema": {
-                    "checksum": "sha256:bd0025fe2c7f1b2596c414a359bd0d72e8d9034cadce43c99535e5f9eb6aabda",
-                    "fields": {
-                        "title": "DbtCliProfile",
-                        "description": "Profile for use across dbt CLI tasks and flows.",
-                        "type": "object",
-                        "properties": {
-                            "name": {
-                                "title": "Name",
-                                "type": "string"
-                            },
-                            "target": {
-                                "title": "Target",
-                                "type": "string"
-                            },
-                            "target_configs": {
-                                "$ref": "#/definitions/TargetConfigs"
-                            },
-                            "global_configs": {
-                                "$ref": "#/definitions/GlobalConfigs"
-                            }
-                        },
-                        "required": [
-                            "name",
-                            "target",
-                            "target_configs"
-                        ],
-                        "block_type_slug": "dbt-cli-profile",
-                        "secret_fields": [],
-                        "block_schema_references": {
-                            "target_configs": {
-                                "block_type_slug": "dbt-cli-target-configs",
-                                "block_schema_checksum": "sha256:ca3db7fedd6f0003c96690056f7add371dfc846f3d6cda3186328660f02474f0"
-                            },
-                            "global_configs": {
-                                "block_type_slug": "dbt-cli-global-configs",
-                                "block_schema_checksum": "sha256:f23fea693fd48fcc832fb24ac967ce035eb45f53be02c54021f0365965e331b9"
-                            }
-                        },
-                        "definitions": {
-                            "TargetConfigs": {
-                                "title": "TargetConfigs",
-                                "description": "Target configs contain credentials and\nsettings, specific to the warehouse you're connecting to.\nTo find valid keys, head to the [Available adapters](\nhttps://docs.getdbt.com/docs/available-adapters) page and\nclick the desired adapter's \"Profile Setup\" hyperlink.",
-                                "type": "object",
-                                "properties": {
-                                    "extras": {
-                                        "title": "Extras",
-                                        "type": "object"
-                                    },
-                                    "type": {
-                                        "title": "Type",
-                                        "type": "string"
-                                    },
-                                    "schema": {
-                                        "title": "Schema",
-                                        "type": "string"
-                                    },
-                                    "threads": {
-                                        "title": "Threads",
-                                        "default": 4,
-                                        "type": "integer"
-                                    }
-                                },
-                                "required": [
-                                    "type",
-                                    "schema"
-                                ],
-                                "block_type_slug": "dbt-cli-target-configs",
-                                "secret_fields": [],
-                                "block_schema_references": {}
-                            },
-                            "GlobalConfigs": {
-                                "title": "GlobalConfigs",
-                                "description": "Global configs control things like the visual output\nof logs, the manner in which dbt parses your project,\nand what to do when dbt finds a version mismatch\nor a failing model. Docs can be found [here](\nhttps://docs.getdbt.com/reference/global-configs).",
-                                "type": "object",
-                                "properties": {
-                                    "extras": {
-                                        "title": "Extras",
-                                        "type": "object"
-                                    },
-                                    "send_anonymous_usage_stats": {
-                                        "title": "Send Anonymous Usage Stats",
-                                        "type": "boolean"
-                                    },
-                                    "use_colors": {
-                                        "title": "Use Colors",
-                                        "type": "boolean"
-                                    },
-                                    "partial_parse": {
-                                        "title": "Partial Parse",
-                                        "type": "boolean"
-                                    },
-                                    "printer_width": {
-                                        "title": "Printer Width",
-                                        "type": "integer"
-                                    },
-                                    "write_json": {
-                                        "title": "Write Json",
-                                        "type": "boolean"
-                                    },
-                                    "warn_error": {
-                                        "title": "Warn Error",
-                                        "type": "boolean"
-                                    },
-                                    "log_format": {
-                                        "title": "Log Format",
-                                        "type": "boolean"
-                                    },
-                                    "debug": {
-                                        "title": "Debug",
-                                        "type": "boolean"
-                                    },
-                                    "version_check": {
-                                        "title": "Version Check",
-                                        "type": "boolean"
-                                    },
-                                    "fail_fast": {
-                                        "title": "Fail Fast",
-                                        "type": "boolean"
-                                    },
-                                    "use_experimental_parser": {
-                                        "title": "Use Experimental Parser",
-                                        "type": "boolean"
-                                    },
-                                    "static_parser": {
-                                        "title": "Static Parser",
-                                        "type": "boolean"
-                                    }
-                                },
-                                "block_type_slug": "dbt-cli-global-configs",
-                                "secret_fields": [],
-                                "block_schema_references": {}
-                            }
-                        }
-                    },
-                    "capabilities": [],
-                    "version": "0.2.7"
-                }
-            },
-            "dbt-cloud-credentials": {
-                "name": "dbt Cloud Credentials",
-                "slug": "dbt-cloud-credentials",
-                "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5zE9lxfzBHjw3tnEup4wWL/9a001902ed43a84c6c96d23b24622e19/dbt-bit_tm.png?h=250",
-                "documentation_url": null,
-                "description": "Credentials block for credential use across dbt Cloud tasks and flows.",
-                "code_example": "Load stored dbt Cloud credentials:\n```python\nfrom prefect_dbt.cloud import DbtCloudCredentials\n\ndbt_cloud_credentials = DbtCloudCredentials.load(\"BLOCK_NAME\")\n```\n\nUse DbtCloudCredentials instance to trigger a job run:\n```python\nfrom prefect_dbt.cloud import DbtCloudCredentials\n\ncredentials = DbtCloudCredentials(api_key=\"my_api_key\", account_id=123456789)\n\nasync with dbt_cloud_credentials.get_administrative_client() as client:\n    client.trigger_job_run(job_id=1)\n```\n\nLoad saved dbt Cloud credentials within a flow:\n```python\nfrom prefect import flow\n\nfrom prefect_dbt.cloud import DbtCloudCredentials\nfrom prefect_dbt.cloud.jobs import trigger_dbt_cloud_job_run\n\n\n@flow\ndef trigger_dbt_cloud_job_run_flow():\n    credentials = DbtCloudCredentials.load(\"my-dbt-credentials\")\n    trigger_dbt_cloud_job_run(dbt_cloud_credentials=credentials, job_id=1)\n\ntrigger_dbt_cloud_job_run_flow()\n```",
-                "block_schema": {
-                    "checksum": "sha256:0e1b2e94e09041e7d732822354503e87b99ddb31422d9d2c83c671be249aa231",
-                    "fields": {
-                        "title": "DbtCloudCredentials",
-                        "description": "Credentials block for credential use across dbt Cloud tasks and flows.",
-                        "type": "object",
-                        "properties": {
-                            "api_key": {
-                                "title": "API Key",
-                                "description": "A dbt Cloud API key to use for authentication.",
-                                "type": "string",
-                                "writeOnly": true,
-                                "format": "password"
-                            },
-                            "account_id": {
-                                "title": "Account ID",
-                                "description": "The ID of your dbt Cloud account.",
-                                "type": "integer"
-                            },
-                            "domain": {
-                                "title": "Domain",
-                                "description": "The base domain of your dbt Cloud instance.",
-                                "default": "cloud.getdbt.com",
-                                "type": "string"
-                            }
-                        },
-                        "required": [
-                            "api_key",
-                            "account_id"
-                        ],
-                        "block_type_slug": "dbt-cloud-credentials",
-                        "secret_fields": [
-                            "api_key"
-                        ],
-                        "block_schema_references": {}
-                    },
-                    "capabilities": [],
-                    "version": "0.2.7"
-                }
-            },
             "dbt-cli-global-configs": {
                 "name": "dbt CLI Global Configs",
                 "slug": "dbt-cli-global-configs",
@@ -3263,6 +3070,152 @@
                                 "secret_fields": [
                                     "password"
                                 ],
+                                "block_schema_references": {}
+                            }
+                        }
+                    },
+                    "capabilities": [],
+                    "version": "0.2.7"
+                }
+            },
+            "dbt-cli-profile": {
+                "name": "dbt CLI Profile",
+                "slug": "dbt-cli-profile",
+                "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5zE9lxfzBHjw3tnEup4wWL/9a001902ed43a84c6c96d23b24622e19/dbt-bit_tm.png?h=250",
+                "documentation_url": null,
+                "description": "Profile for use across dbt CLI tasks and flows.",
+                "code_example": "Load stored dbt CLI profile:\n```python\nfrom prefect_dbt.cli import DbtCliProfile\ndbt_cli_profile = DbtCliProfile.load(\"BLOCK_NAME\").get_profile()\n```\n\nGet a dbt Snowflake profile from DbtCliProfile by using SnowflakeTargetConfigs:\n```python\nfrom prefect_dbt.cli import DbtCliProfile\nfrom prefect_dbt.cli.configs import SnowflakeTargetConfigs\nfrom prefect_snowflake.credentials import SnowflakeCredentials\nfrom prefect_snowflake.database import SnowflakeConnector\n\ncredentials = SnowflakeCredentials(\n    user=\"user\",\n    password=\"password\",\n    account=\"account.region.aws\",\n    role=\"role\",\n)\nconnector = SnowflakeConnector(\n    schema=\"public\",\n    database=\"database\",\n    warehouse=\"warehouse\",\n    credentials=credentials,\n)\ntarget_configs = SnowflakeTargetConfigs(\n    connector=connector\n)\ndbt_cli_profile = DbtCliProfile(\n    name=\"jaffle_shop\",\n    target=\"dev\",\n    target_configs=target_configs,\n)\nprofile = dbt_cli_profile.get_profile()\n```\n\nGet a dbt Redshift profile from DbtCliProfile by using generic TargetConfigs:\n```python\nfrom prefect_dbt.cli import DbtCliProfile\nfrom prefect_dbt.cli.configs import GlobalConfigs, TargetConfigs\n\ntarget_configs_extras = dict(\n    host=\"hostname.region.redshift.amazonaws.com\",\n    user=\"username\",\n    password=\"password1\",\n    port=5439,\n    dbname=\"analytics\",\n)\ntarget_configs = TargetConfigs(\n    type=\"redshift\",\n    schema=\"schema\",\n    threads=4,\n    extras=target_configs_extras\n)\ndbt_cli_profile = DbtCliProfile(\n    name=\"jaffle_shop\",\n    target=\"dev\",\n    target_configs=target_configs,\n)\nprofile = dbt_cli_profile.get_profile()\n```",
+                "block_schema": {
+                    "checksum": "sha256:bd0025fe2c7f1b2596c414a359bd0d72e8d9034cadce43c99535e5f9eb6aabda",
+                    "fields": {
+                        "title": "DbtCliProfile",
+                        "description": "Profile for use across dbt CLI tasks and flows.",
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "title": "Name",
+                                "type": "string"
+                            },
+                            "target": {
+                                "title": "Target",
+                                "type": "string"
+                            },
+                            "target_configs": {
+                                "$ref": "#/definitions/TargetConfigs"
+                            },
+                            "global_configs": {
+                                "$ref": "#/definitions/GlobalConfigs"
+                            }
+                        },
+                        "required": [
+                            "name",
+                            "target",
+                            "target_configs"
+                        ],
+                        "block_type_slug": "dbt-cli-profile",
+                        "secret_fields": [],
+                        "block_schema_references": {
+                            "target_configs": {
+                                "block_type_slug": "dbt-cli-target-configs",
+                                "block_schema_checksum": "sha256:ca3db7fedd6f0003c96690056f7add371dfc846f3d6cda3186328660f02474f0"
+                            },
+                            "global_configs": {
+                                "block_type_slug": "dbt-cli-global-configs",
+                                "block_schema_checksum": "sha256:f23fea693fd48fcc832fb24ac967ce035eb45f53be02c54021f0365965e331b9"
+                            }
+                        },
+                        "definitions": {
+                            "TargetConfigs": {
+                                "title": "TargetConfigs",
+                                "description": "Target configs contain credentials and\nsettings, specific to the warehouse you're connecting to.\nTo find valid keys, head to the [Available adapters](\nhttps://docs.getdbt.com/docs/available-adapters) page and\nclick the desired adapter's \"Profile Setup\" hyperlink.",
+                                "type": "object",
+                                "properties": {
+                                    "extras": {
+                                        "title": "Extras",
+                                        "type": "object"
+                                    },
+                                    "type": {
+                                        "title": "Type",
+                                        "type": "string"
+                                    },
+                                    "schema": {
+                                        "title": "Schema",
+                                        "type": "string"
+                                    },
+                                    "threads": {
+                                        "title": "Threads",
+                                        "default": 4,
+                                        "type": "integer"
+                                    }
+                                },
+                                "required": [
+                                    "type",
+                                    "schema"
+                                ],
+                                "block_type_slug": "dbt-cli-target-configs",
+                                "secret_fields": [],
+                                "block_schema_references": {}
+                            },
+                            "GlobalConfigs": {
+                                "title": "GlobalConfigs",
+                                "description": "Global configs control things like the visual output\nof logs, the manner in which dbt parses your project,\nand what to do when dbt finds a version mismatch\nor a failing model. Docs can be found [here](\nhttps://docs.getdbt.com/reference/global-configs).",
+                                "type": "object",
+                                "properties": {
+                                    "extras": {
+                                        "title": "Extras",
+                                        "type": "object"
+                                    },
+                                    "send_anonymous_usage_stats": {
+                                        "title": "Send Anonymous Usage Stats",
+                                        "type": "boolean"
+                                    },
+                                    "use_colors": {
+                                        "title": "Use Colors",
+                                        "type": "boolean"
+                                    },
+                                    "partial_parse": {
+                                        "title": "Partial Parse",
+                                        "type": "boolean"
+                                    },
+                                    "printer_width": {
+                                        "title": "Printer Width",
+                                        "type": "integer"
+                                    },
+                                    "write_json": {
+                                        "title": "Write Json",
+                                        "type": "boolean"
+                                    },
+                                    "warn_error": {
+                                        "title": "Warn Error",
+                                        "type": "boolean"
+                                    },
+                                    "log_format": {
+                                        "title": "Log Format",
+                                        "type": "boolean"
+                                    },
+                                    "debug": {
+                                        "title": "Debug",
+                                        "type": "boolean"
+                                    },
+                                    "version_check": {
+                                        "title": "Version Check",
+                                        "type": "boolean"
+                                    },
+                                    "fail_fast": {
+                                        "title": "Fail Fast",
+                                        "type": "boolean"
+                                    },
+                                    "use_experimental_parser": {
+                                        "title": "Use Experimental Parser",
+                                        "type": "boolean"
+                                    },
+                                    "static_parser": {
+                                        "title": "Static Parser",
+                                        "type": "boolean"
+                                    }
+                                },
+                                "block_type_slug": "dbt-cli-global-configs",
+                                "secret_fields": [],
                                 "block_schema_references": {}
                             }
                         }
@@ -3526,6 +3479,53 @@
                         ],
                         "block_type_slug": "dbt-cli-target-configs",
                         "secret_fields": [],
+                        "block_schema_references": {}
+                    },
+                    "capabilities": [],
+                    "version": "0.2.7"
+                }
+            },
+            "dbt-cloud-credentials": {
+                "name": "dbt Cloud Credentials",
+                "slug": "dbt-cloud-credentials",
+                "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5zE9lxfzBHjw3tnEup4wWL/9a001902ed43a84c6c96d23b24622e19/dbt-bit_tm.png?h=250",
+                "documentation_url": null,
+                "description": "Credentials block for credential use across dbt Cloud tasks and flows.",
+                "code_example": "Load stored dbt Cloud credentials:\n```python\nfrom prefect_dbt.cloud import DbtCloudCredentials\n\ndbt_cloud_credentials = DbtCloudCredentials.load(\"BLOCK_NAME\")\n```\n\nUse DbtCloudCredentials instance to trigger a job run:\n```python\nfrom prefect_dbt.cloud import DbtCloudCredentials\n\ncredentials = DbtCloudCredentials(api_key=\"my_api_key\", account_id=123456789)\n\nasync with dbt_cloud_credentials.get_administrative_client() as client:\n    client.trigger_job_run(job_id=1)\n```\n\nLoad saved dbt Cloud credentials within a flow:\n```python\nfrom prefect import flow\n\nfrom prefect_dbt.cloud import DbtCloudCredentials\nfrom prefect_dbt.cloud.jobs import trigger_dbt_cloud_job_run\n\n\n@flow\ndef trigger_dbt_cloud_job_run_flow():\n    credentials = DbtCloudCredentials.load(\"my-dbt-credentials\")\n    trigger_dbt_cloud_job_run(dbt_cloud_credentials=credentials, job_id=1)\n\ntrigger_dbt_cloud_job_run_flow()\n```",
+                "block_schema": {
+                    "checksum": "sha256:0e1b2e94e09041e7d732822354503e87b99ddb31422d9d2c83c671be249aa231",
+                    "fields": {
+                        "title": "DbtCloudCredentials",
+                        "description": "Credentials block for credential use across dbt Cloud tasks and flows.",
+                        "type": "object",
+                        "properties": {
+                            "api_key": {
+                                "title": "API Key",
+                                "description": "A dbt Cloud API key to use for authentication.",
+                                "type": "string",
+                                "writeOnly": true,
+                                "format": "password"
+                            },
+                            "account_id": {
+                                "title": "Account ID",
+                                "description": "The ID of your dbt Cloud account.",
+                                "type": "integer"
+                            },
+                            "domain": {
+                                "title": "Domain",
+                                "description": "The base domain of your dbt Cloud instance.",
+                                "default": "cloud.getdbt.com",
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "api_key",
+                            "account_id"
+                        ],
+                        "block_type_slug": "dbt-cloud-credentials",
+                        "secret_fields": [
+                            "api_key"
+                        ],
                         "block_schema_references": {}
                     },
                     "capabilities": [],
@@ -4834,63 +4834,6 @@
     "prefect-jupyter": {},
     "prefect-kubernetes": {
         "block_types": {
-            "kubernetes-credentials": {
-                "name": "Kubernetes Credentials",
-                "slug": "kubernetes-credentials",
-                "logo_url": "https://images.ctfassets.net/zscdif0zqppk/oYuHjIbc26oilfQSEMjRv/a61f5f6ef406eead2df5231835b4c4c2/logo.png?h=250",
-                "documentation_url": null,
-                "description": "Credentials block for generating configured Kubernetes API clients.",
-                "code_example": "Load stored Kubernetes credentials:\n```python\nfrom prefect_kubernetes.credentials import KubernetesCredentials\n\nkubernetes_credentials = KubernetesCredentials.load(\"BLOCK_NAME\")\n```",
-                "block_schema": {
-                    "checksum": "sha256:957fa8dca90bd1b5fb9c575ee09e80b454116c0b134287fbc2eff47a72564c3b",
-                    "fields": {
-                        "title": "KubernetesCredentials",
-                        "description": "Credentials block for generating configured Kubernetes API clients.",
-                        "type": "object",
-                        "properties": {
-                            "cluster_config": {
-                                "$ref": "#/definitions/KubernetesClusterConfig"
-                            }
-                        },
-                        "block_type_slug": "kubernetes-credentials",
-                        "secret_fields": [],
-                        "block_schema_references": {
-                            "cluster_config": {
-                                "block_type_slug": "kubernetes-cluster-config",
-                                "block_schema_checksum": "sha256:90d421e948bfbe4cdc98b124995f0edd0f84b0837549ad1390423bad8e31cf3b"
-                            }
-                        },
-                        "definitions": {
-                            "KubernetesClusterConfig": {
-                                "title": "KubernetesClusterConfig",
-                                "description": "Stores configuration for interaction with Kubernetes clusters.\n\nSee `from_file` for creation.",
-                                "type": "object",
-                                "properties": {
-                                    "config": {
-                                        "title": "Config",
-                                        "description": "The entire contents of a kubectl config file.",
-                                        "type": "object"
-                                    },
-                                    "context_name": {
-                                        "title": "Context Name",
-                                        "description": "The name of the kubectl context to use.",
-                                        "type": "string"
-                                    }
-                                },
-                                "required": [
-                                    "config",
-                                    "context_name"
-                                ],
-                                "block_type_slug": "kubernetes-cluster-config",
-                                "secret_fields": [],
-                                "block_schema_references": {}
-                            }
-                        }
-                    },
-                    "capabilities": [],
-                    "version": "0.2.0"
-                }
-            },
             "k8s-job": {
                 "name": "Kubernetes Job",
                 "slug": "k8s-job",
@@ -5005,6 +4948,63 @@
                                         "block_schema_checksum": "sha256:90d421e948bfbe4cdc98b124995f0edd0f84b0837549ad1390423bad8e31cf3b"
                                     }
                                 }
+                            }
+                        }
+                    },
+                    "capabilities": [],
+                    "version": "0.2.0"
+                }
+            },
+            "kubernetes-credentials": {
+                "name": "Kubernetes Credentials",
+                "slug": "kubernetes-credentials",
+                "logo_url": "https://images.ctfassets.net/zscdif0zqppk/oYuHjIbc26oilfQSEMjRv/a61f5f6ef406eead2df5231835b4c4c2/logo.png?h=250",
+                "documentation_url": null,
+                "description": "Credentials block for generating configured Kubernetes API clients.",
+                "code_example": "Load stored Kubernetes credentials:\n```python\nfrom prefect_kubernetes.credentials import KubernetesCredentials\n\nkubernetes_credentials = KubernetesCredentials.load(\"BLOCK_NAME\")\n```",
+                "block_schema": {
+                    "checksum": "sha256:957fa8dca90bd1b5fb9c575ee09e80b454116c0b134287fbc2eff47a72564c3b",
+                    "fields": {
+                        "title": "KubernetesCredentials",
+                        "description": "Credentials block for generating configured Kubernetes API clients.",
+                        "type": "object",
+                        "properties": {
+                            "cluster_config": {
+                                "$ref": "#/definitions/KubernetesClusterConfig"
+                            }
+                        },
+                        "block_type_slug": "kubernetes-credentials",
+                        "secret_fields": [],
+                        "block_schema_references": {
+                            "cluster_config": {
+                                "block_type_slug": "kubernetes-cluster-config",
+                                "block_schema_checksum": "sha256:90d421e948bfbe4cdc98b124995f0edd0f84b0837549ad1390423bad8e31cf3b"
+                            }
+                        },
+                        "definitions": {
+                            "KubernetesClusterConfig": {
+                                "title": "KubernetesClusterConfig",
+                                "description": "Stores configuration for interaction with Kubernetes clusters.\n\nSee `from_file` for creation.",
+                                "type": "object",
+                                "properties": {
+                                    "config": {
+                                        "title": "Config",
+                                        "description": "The entire contents of a kubectl config file.",
+                                        "type": "object"
+                                    },
+                                    "context_name": {
+                                        "title": "Context Name",
+                                        "description": "The name of the kubectl context to use.",
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "config",
+                                    "context_name"
+                                ],
+                                "block_type_slug": "kubernetes-cluster-config",
+                                "secret_fields": [],
+                                "block_schema_references": {}
                             }
                         }
                     },
@@ -5220,6 +5220,46 @@
                     "version": "0.1.1"
                 }
             },
+            "openai-credentials": {
+                "name": "OpenAI Credentials",
+                "slug": "openai-credentials",
+                "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/QE8JwcbZBmIfiognXDLcY/2bcd4c759f877d37159f576101218b49/open-ai-logo-8B9BFEDC26-seeklogo.com.png?h=250",
+                "documentation_url": "https://prefecthq.github.io/prefect-openai/credentials/#prefect_openai.credentials.OpenAICredentials",
+                "description": "Credentials used to authenticate with OpenAI.",
+                "code_example": "Load a configured block:\n```python\nfrom prefect_openai import OpenAICredentials\n\ncredentials = OpenAICredentials.load(\"BLOCK_NAME\")\n```",
+                "block_schema": {
+                    "checksum": "sha256:acea8c195b0a3fd20d47b997fa4f070953b25c8b4a02619e7632ace075e4f882",
+                    "fields": {
+                        "title": "OpenAICredentials",
+                        "description": "Credentials used to authenticate with OpenAI.",
+                        "type": "object",
+                        "properties": {
+                            "api_key": {
+                                "title": "API Key",
+                                "description": "The API key used to authenticate with OpenAI.",
+                                "type": "string",
+                                "writeOnly": true,
+                                "format": "password"
+                            },
+                            "organization": {
+                                "title": "Organization",
+                                "description": "Specify which organization is used for an API request.",
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "api_key"
+                        ],
+                        "block_type_slug": "openai-credentials",
+                        "secret_fields": [
+                            "api_key"
+                        ],
+                        "block_schema_references": {}
+                    },
+                    "capabilities": [],
+                    "version": "0.1.1"
+                }
+            },
             "openai-image-model": {
                 "name": "OpenAI Image Model",
                 "slug": "openai-image-model",
@@ -5313,46 +5353,6 @@
                                 "block_schema_references": {}
                             }
                         }
-                    },
-                    "capabilities": [],
-                    "version": "0.1.1"
-                }
-            },
-            "openai-credentials": {
-                "name": "OpenAI Credentials",
-                "slug": "openai-credentials",
-                "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/QE8JwcbZBmIfiognXDLcY/2bcd4c759f877d37159f576101218b49/open-ai-logo-8B9BFEDC26-seeklogo.com.png?h=250",
-                "documentation_url": "https://prefecthq.github.io/prefect-openai/credentials/#prefect_openai.credentials.OpenAICredentials",
-                "description": "Credentials used to authenticate with OpenAI.",
-                "code_example": "Load a configured block:\n```python\nfrom prefect_openai import OpenAICredentials\n\ncredentials = OpenAICredentials.load(\"BLOCK_NAME\")\n```",
-                "block_schema": {
-                    "checksum": "sha256:acea8c195b0a3fd20d47b997fa4f070953b25c8b4a02619e7632ace075e4f882",
-                    "fields": {
-                        "title": "OpenAICredentials",
-                        "description": "Credentials used to authenticate with OpenAI.",
-                        "type": "object",
-                        "properties": {
-                            "api_key": {
-                                "title": "API Key",
-                                "description": "The API key used to authenticate with OpenAI.",
-                                "type": "string",
-                                "writeOnly": true,
-                                "format": "password"
-                            },
-                            "organization": {
-                                "title": "Organization",
-                                "description": "Specify which organization is used for an API request.",
-                                "type": "string"
-                            }
-                        },
-                        "required": [
-                            "api_key"
-                        ],
-                        "block_type_slug": "openai-credentials",
-                        "secret_fields": [
-                            "api_key"
-                        ],
-                        "block_schema_references": {}
                     },
                     "capabilities": [],
                     "version": "0.1.1"
