@@ -1,0 +1,49 @@
+{
+    "prefect-dbt": {
+        "name": "prefect-dbt",
+        "author": "Prefect Technologies, Inc.",
+        "latest_version": "0.2.7",
+        "downloads": {
+            "last_day": -1,
+            "last_month": -1,
+            "last_week": -1
+        },
+        "keywords": "prefect",
+        "home_page": "https://github.com/PrefectHQ/prefect-dbt",
+        "package_url": "https://pypi.org/project/prefect-dbt/",
+        "requires_dist": [
+            "prefect (>=2.7.2)",
+            "prefect-shell (>=0.1.0)",
+            "sgqlc (>=16.0.0)",
+            "dbt-core (>=1.1.1) ; extra == 'all_extras'",
+            "prefect-gcp (>=0.1.8) ; extra == 'all_extras'",
+            "prefect-snowflake (>=0.2.0) ; extra == 'all_extras'",
+            "prefect-sqlalchemy (>=0.2.1) ; extra == 'all_extras'",
+            "prefect-gcp (>=0.1.8) ; extra == 'bigquery'",
+            "dbt-core (>=1.1.1) ; extra == 'cli'",
+            "pytest ; extra == 'dev'",
+            "black ; extra == 'dev'",
+            "flake8 ; extra == 'dev'",
+            "mypy ; extra == 'dev'",
+            "mkdocs ; extra == 'dev'",
+            "mkdocs-material ; extra == 'dev'",
+            "mkdocstrings[python] ; extra == 'dev'",
+            "isort ; extra == 'dev'",
+            "pre-commit ; extra == 'dev'",
+            "pytest-asyncio ; extra == 'dev'",
+            "mkdocs-gen-files ; extra == 'dev'",
+            "interrogate ; extra == 'dev'",
+            "coverage ; extra == 'dev'",
+            "respx ; extra == 'dev'",
+            "pillow ; extra == 'dev'",
+            "dbt-core (>=1.1.1) ; extra == 'dev'",
+            "prefect-gcp (>=0.1.8) ; extra == 'dev'",
+            "prefect-snowflake (>=0.2.0) ; extra == 'dev'",
+            "prefect-sqlalchemy (>=0.2.1) ; extra == 'dev'",
+            "mock ; (python_version < \"3.8\") and extra == 'dev'",
+            "prefect-sqlalchemy (>=0.2.1) ; extra == 'postgres'",
+            "prefect-snowflake (>=0.2.0) ; extra == 'snowflake'"
+        ],
+        "requires_python": ">=3.7"
+    }
+}
