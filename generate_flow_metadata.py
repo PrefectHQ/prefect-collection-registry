@@ -1,10 +1,9 @@
-import github3, inspect, json, os, subprocess
+import inspect, subprocess
 from collections import defaultdict
 from griffe.dataclasses import Docstring
 from griffe.docstrings.parsers import Parser, parse
 from pkgutil import iter_modules
 from prefect import Flow, flow, task
-from prefect.blocks.system import Secret
 from prefect.utilities.importtools import load_module
 from typing import Any, Dict, Generator
 from utils import skip_parsing, submit_updates
