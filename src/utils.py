@@ -1,29 +1,51 @@
-import github3, httpx, json
-from bs4 import BeautifulSoup
-from prefect import task
-from prefect.blocks.system import Secret
-from prefect.utilities.importtools import to_qualified_name
+import json
 from types import ModuleType
 from typing import Any, Callable, Dict, Union
+
+import github3
+import httpx
+from bs4 import BeautifulSoup
+from prefect import task
+from prefect.blocks.core import Block
+from prefect.blocks.system import Secret
+from prefect.utilities.importtools import to_qualified_name
+from pydantic import Field
 from typing_extensions import Literal
 
-exclude_collections = {
-    "prefect-ray"
-}
+exclude_collections = {"prefect-ray"}
+
+
+class LatestReleases(Block):
+    releases: Dict[str, str] = Field(
+        default_factory=dict,
+        description="A dictionary of the latest releases for each Prefect library.",
+    )
+
+    def get(self, collection_name: str) -> str | None:
+        if collection_name not in self.releases:
+            return None
+        return self.releases[collection_name]
+
+    def set(self, collection_name: str, release: str) -> None:
+        self.releases[collection_name] = release
+
 
 def get_collection_names():
     catalog_resp = httpx.get("https://docs.prefect.io/collections/catalog/")
     catalog_soup = BeautifulSoup(catalog_resp.text, "html.parser")
-    repo_api_urls = sorted({
-        url["href"]
-        .replace("https://", "https://api.github.com/repos/")
-        .replace(".github.io", "")
-        .rstrip("/")
-        for url in catalog_soup.find_all("a", href=True)
-        if ".io/prefect-" in url["href"]
-    })
+    repo_api_urls = sorted(
+        {
+            url["href"]
+            .replace("https://", "https://api.github.com/repos/")
+            .replace(".github.io", "")
+            .rstrip("/")
+            for url in catalog_soup.find_all("a", href=True)
+            if ".io/prefect-" in url["href"]
+        }
+    )
     return [
-        i.split("/")[-1] for i in repo_api_urls
+        i.split("/")[-1]
+        for i in repo_api_urls
         if i.split("/")[-2] == "prefecthq"
         and i.split("/")[-1] not in exclude_collections
     ]
@@ -63,17 +85,14 @@ def submit_updates(
         metadata_file, ref=BRANCH_NAME
     ).decoded.decode()
 
-    existing_metadata_dict = dict(
-        sorted(json.loads(existing_metadata_content).items())
-    )
-    
+    existing_metadata_dict = dict(sorted(json.loads(existing_metadata_content).items()))
+
     collection_repo = gh.repository("PrefectHQ", collection_name)
-    
-    
+
     latest_release = collection_repo.latest_release().tag_name
-    
+
     existing_metadata_dict.update(collection_metadata)
-    
+
     # create a new commit adding the collection version metadata
     try:
         repo.create_file(
@@ -83,22 +102,28 @@ def submit_updates(
             branch=BRANCH_NAME,
         )
     except github3.exceptions.UnprocessableEntity as e:
-        if "\"sha\" wasn't supplied" in str(e):
+        if '"sha" wasn\'t supplied' in str(e):
             # file already exists so nothing to do
-            print(f"{variety} metadata for {collection_name} {latest_release} already exists!")
+            print(
+                f"{variety} metadata for {collection_name} {latest_release} already exists!"
+            )
         else:
             raise
-    
+
     # create a new commit updating the aggregate flow metadata file
     updated_metadata_content = json.dumps(existing_metadata_dict, indent=4)
     if existing_metadata_content == updated_metadata_content:
-        print(f"Aggregate {variety} metadata for {collection_name} {latest_release} already up to date!")
+        print(
+            f"Aggregate {variety} metadata for {collection_name} {latest_release} already up to date!"
+        )
         return
-    
+
     repo.file_contents(metadata_file, ref=BRANCH_NAME).update(
         message=f"Update aggregate {variety} metadata with {collection_name} {latest_release}",
         content=updated_metadata_content.encode("utf-8"),
         branch=BRANCH_NAME,
     )
 
-    print(f"Updated aggregate {variety} metadata for {collection_name} {latest_release}!")
+    print(
+        f"Updated aggregate {variety} metadata for {collection_name} {latest_release}!"
+    )

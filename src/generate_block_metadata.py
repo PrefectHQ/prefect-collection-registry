@@ -1,19 +1,20 @@
-import inspect
 import importlib
+import inspect
 import json
 import logging
 from abc import ABC
 from importlib.metadata import entry_points
 from pathlib import Path
-from prefect import flow, task
-from sys import argv
 from types import ModuleType
 from typing import Any, Dict, List, Type
 from uuid import uuid4
 
+from prefect import flow
 from prefect.blocks.core import Block
 from prefect.plugins import safe_load_entrypoints
-from utils import submit_updates, get_collection_names
+
+from utils import submit_updates
+
 
 def generate_block_subcls_metadata(block_subcls: Type[Block]) -> Dict[str, Any]:
     """
@@ -49,27 +50,28 @@ def discover_block_subclasses(module: ModuleType) -> List[Type[Block]]:
     print(f"Discovering block subclasses in {module.__name__}...")
 
     if module.__name__ == "prefect":
-        # special case for core        
+        # special case for core
         block_submodules = [
             module.blocks.kubernetes,
             module.blocks.notifications,
             module.blocks.system,
         ]
-        
+
         infrastructure_submodules = [
             module.infrastructure.docker,
             module.infrastructure.kubernetes,
             module.infrastructure.process,
         ]
-        
+
         subclasses_for_each_submodule = [
             discover_block_subclasses(submodule)
             for submodule in block_submodules + infrastructure_submodules
         ]
-        
-        return [subcls for sublist in subclasses_for_each_submodule for subcls in sublist]
-        
-        
+
+        return [
+            subcls for sublist in subclasses_for_each_submodule for subcls in sublist
+        ]
+
     return [
         cls
         for _, cls in inspect.getmembers(module)
@@ -86,7 +88,7 @@ def generate_all_block_metadata(collection_name: str) -> Dict[str, Any]:
         "prefect": importlib.import_module("prefect"),
         **collections,
     }
-    
+
     output_dict = {}
     for ep_name, module in collections_plus_core.items():
         if isinstance(module, Exception):
@@ -101,9 +103,7 @@ def generate_all_block_metadata(collection_name: str) -> Dict[str, Any]:
             **generate_block_metadata_for_module(module),
         }
 
-        output_dict["block_types"] = dict(
-            sorted(all_block_type_metadata.items())
-        )
+        output_dict["block_types"] = dict(sorted(all_block_type_metadata.items()))
 
     return {
         collection_name: output_dict,
@@ -132,6 +132,7 @@ def write_collection_metadata(
 def update_block_metadata_for_collection(collection_name: str):
     collection_block_metadata = generate_all_block_metadata(collection_name)
     submit_updates(collection_block_metadata, "block")
+
 
 if __name__ == "__main__":
     # for collection_name in get_collection_names():

@@ -142,3 +142,18 @@ Metadata files are stored in JSON format. The structure of each JSON for a given
         }
     }
 }
+```
+
+## Development
+Setup a virtual environment and install the dependencies:
+
+```bash
+python3 -m venv venv
+source venv/bin/activate # or your preferred method of activating a venv
+pip install .
+```
+
+Run the tests:
+```bash
+pytest
+```

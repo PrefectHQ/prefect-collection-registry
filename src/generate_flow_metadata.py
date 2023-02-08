@@ -1,11 +1,13 @@
-import inspect, subprocess
+import inspect
 from collections import defaultdict
+from pkgutil import iter_modules
+from typing import Any, Dict, Generator
+
 from griffe.dataclasses import Docstring
 from griffe.docstrings.parsers import Parser, parse
-from pkgutil import iter_modules
 from prefect import Flow, flow, task
 from prefect.utilities.importtools import load_module
-from typing import Any, Dict, Generator
+
 from utils import skip_parsing, submit_updates
 
 skip_sections = {"parameters", "raises"}
@@ -57,22 +59,29 @@ def find_flows_in_module(
     """
     module = load_module(module_name)
 
-    for _, name, ispkg in iter_modules(module.__path__):
-        if ispkg:
+    # support loading flows from a module that is not a package
+    if not hasattr(module, "__path__"):
+        for _, obj in inspect.getmembers(module):
+            if isinstance(obj, Flow):
+                yield obj
 
-            yield from find_flows_in_module(f"{module_name}.{name}")
-        else:
-            try:
-                submodule = load_module(f"{module_name}.{name}")
-                print(f"\t\tLoaded submodule {module_name}.{name}...")
-            except ModuleNotFoundError:
-                continue
+    else:
+        for _, name, ispkg in iter_modules(module.__path__):
+            if ispkg:
 
-            for _, obj in inspect.getmembers(submodule):
-                if skip_parsing(name, obj, module_name):
+                yield from find_flows_in_module(f"{module_name}.{name}")
+            else:
+                try:
+                    submodule = load_module(f"{module_name}.{name}")
+                    print(f"\t\tLoaded submodule {module_name}.{name}...")
+                except ModuleNotFoundError:
                     continue
-                if isinstance(obj, Flow):
-                    yield obj
+
+                for _, obj in inspect.getmembers(submodule):
+                    if skip_parsing(name, obj, module_name):
+                        continue
+                    if isinstance(obj, Flow):
+                        yield obj
 
 
 @task(log_prints=True)
@@ -82,25 +91,24 @@ def generate_flow_metadata(collection_name: str) -> Dict[str, Any]:
 
     Creates or updates a PR with a commit containing the updated JSON file.
     """
-    subprocess.run(["pip", "install", collection_name])
-
     collection_slug = collection_name.replace("-", "_")
 
     collection_module = load_module(collection_slug)
     print(f"Loaded collection {collection_module.__name__}...")
 
     return {
-        collection_name:
-        {
+        collection_name: {
             flow.name: summarize_flow(flow, collection_name)
             for flow in find_flows_in_module(collection_slug)
         }
     }
 
+
 @flow(log_prints=True)
 def update_flow_metadata_for_collection(collection_name: str):
-    collection_flow_metadata = generate_flow_metadata(collection_name)        
+    collection_flow_metadata = generate_flow_metadata(collection_name)
     submit_updates(collection_flow_metadata, "flow")
-    
+
+
 if __name__ == "__main__":
     update_flow_metadata_for_collection("prefect-airbyte")
