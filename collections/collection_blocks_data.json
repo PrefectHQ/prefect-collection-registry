@@ -2915,7 +2915,7 @@
               }
             },
             "capabilities": [],
-            "version": "0.2.5"
+            "version": "0.2.6"
           }
         },
         "cloud-run-job": {
@@ -3081,7 +3081,7 @@
             "capabilities": [
               "run-infrastructure"
             ],
-            "version": "0.2.5"
+            "version": "0.2.6"
           }
         },
         "gcp-credentials": {
@@ -3122,7 +3122,7 @@
               "block_schema_references": {}
             },
             "capabilities": [],
-            "version": "0.2.5"
+            "version": "0.2.6"
           }
         },
         "gcpsecret": {
@@ -3200,7 +3200,7 @@
               }
             },
             "capabilities": [],
-            "version": "0.2.5"
+            "version": "0.2.6"
           }
         },
         "gcs-bucket": {
@@ -3208,13 +3208,13 @@
           "slug": "gcs-bucket",
           "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/4CD4wwbiIKPkZDt4U3TEuW/c112fe85653da054b6d5334ef662bec4/gcp.png?h=250",
           "documentation_url": "https://prefecthq.github.io/prefect-gcp/cloud_storage/#prefect_gcp.cloud_storage.GcsBucket",
-          "description": "Block used to store data using GCP Cloud Storage Buckets.",
+          "description": "Block used to store data using GCP Cloud Storage Buckets.\n\nNote! `GcsBucket` in `prefect-gcp` is a unique block, separate from `GCS`\nin core Prefect. `GcsBucket` does not use `gcsfs` under the hood,\ninstead using the `google-cloud-storage` package, and offers more configuration\nand functionality.",
           "code_example": "Load stored GCP Cloud Storage Bucket:\n```python\nfrom prefect_gcp.cloud_storage import GcsBucket\ngcp_cloud_storage_bucket_block = GcsBucket.load(\"BLOCK_NAME\")\n```",
           "block_schema": {
-            "checksum": "sha256:d4c53e2f6fbd2f141ffe2c47a61b29627d431bf1114d3019453305036241a7d7",
+            "checksum": "sha256:6f44cdbd523fb8d4029fbc504a89095d67d27439aec09d2c1871b03a1f4e14e9",
             "fields": {
               "title": "GcsBucket",
-              "description": "Block used to store data using GCP Cloud Storage Buckets.",
+              "description": "Block used to store data using GCP Cloud Storage Buckets.\n\nNote! `GcsBucket` in `prefect-gcp` is a unique block, separate from `GCS`\nin core Prefect. `GcsBucket` does not use `gcsfs` under the hood,\ninstead using the `google-cloud-storage` package, and offers more configuration\nand functionality.",
               "type": "object",
               "properties": {
                 "bucket": {
@@ -3288,7 +3288,7 @@
               "read-path",
               "write-path"
             ],
-            "version": "0.2.5"
+            "version": "0.2.6"
           }
         },
         "vertex-ai-custom-training-job": {
@@ -3453,7 +3453,7 @@
             "capabilities": [
               "run-infrastructure"
             ],
-            "version": "0.2.5"
+            "version": "0.2.6"
           }
         }
       }
