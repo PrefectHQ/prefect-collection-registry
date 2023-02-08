@@ -1,7 +1,9 @@
 # Prefect Collection Registry
 This is a registry of metadata for Prefect collections.
 
-![Registry](imgs/registry.png)
+<center>
+    <img src=imgs/registry.png width=500>
+</center>
 
 ## What metadata is stored here?
 This repository stores metadata for:
