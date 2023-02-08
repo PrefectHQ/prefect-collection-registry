@@ -1,0 +1,35 @@
+{
+    "prefect-docker": {
+        "name": "prefect-docker",
+        "author": "Prefect Technologies, Inc.",
+        "latest_version": "0.1.0",
+        "downloads": {
+            "last_day": -1,
+            "last_month": -1,
+            "last_week": -1
+        },
+        "keywords": "prefect",
+        "home_page": "https://github.com/PrefectHQ/prefect-docker",
+        "package_url": "https://pypi.org/project/prefect-docker/",
+        "requires_dist": [
+            "prefect (>=2.0.0)",
+            "docker (>=6.0.0)",
+            "pytest ; extra == 'dev'",
+            "black ; extra == 'dev'",
+            "flake8 ; extra == 'dev'",
+            "mypy ; extra == 'dev'",
+            "mkdocs ; extra == 'dev'",
+            "mkdocs-material ; extra == 'dev'",
+            "mkdocstrings[python] ; extra == 'dev'",
+            "isort ; extra == 'dev'",
+            "pre-commit ; extra == 'dev'",
+            "pytest-asyncio ; extra == 'dev'",
+            "mkdocs-gen-files ; extra == 'dev'",
+            "interrogate ; extra == 'dev'",
+            "coverage ; extra == 'dev'",
+            "pillow ; extra == 'dev'",
+            "mock ; (python_version < \"3.8\") and extra == 'dev'"
+        ],
+        "requires_python": ">=3.7"
+    }
+}
