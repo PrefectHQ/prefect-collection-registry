@@ -44,7 +44,7 @@ def summarize_flow(flow: Flow, collection_name: str):
     return {
         "name": flow.name,
         "parameters": dict(flow.parameters),
-        "install_command": f"pip install {collection_name.replace('_', '-')}",
+        "install_command": f"pip install {collection_name}",
         "description": {**parse_flow_docstring(flow)},
     }
 
@@ -92,7 +92,7 @@ def generate_flow_metadata(collection_name: str) -> Dict[str, Any]:
     return {
         collection_name:
         {
-            flow.name: summarize_flow(flow, collection_slug)
+            flow.name: summarize_flow(flow, collection_name)
             for flow in find_flows_in_module(collection_slug)
         }
     }
