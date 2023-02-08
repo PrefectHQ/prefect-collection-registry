@@ -96,10 +96,15 @@ def generate_all_block_metadata(collection_name: str) -> Dict[str, Any]:
         if collection_name != discovered_collection_name:
             continue
 
-        output_dict["block_types"] = {
+        all_block_type_metadata = {
             **output_dict.get("block_types", {}),
             **generate_block_metadata_for_module(module),
         }
+
+        output_dict["block_types"] = dict(
+            sorted(all_block_type_metadata.items())
+        )
+
     return {
         collection_name: output_dict,
     }
@@ -123,7 +128,7 @@ def write_collection_metadata(
         json.dump(collection_metadata, f, indent=2)
 
 
-@flow
+@flow(log_prints=True)
 def update_block_metadata_for_collection(collection_name: str):
     collection_block_metadata = generate_all_block_metadata(collection_name)
     submit_updates(collection_block_metadata, "block")

@@ -59,13 +59,11 @@ def submit_updates(
     gh = github3.login(token=github_token.get())
     repo = gh.repository("PrefectHQ", REPO_NAME)
 
-    existing_metadata_raw = repo.file_contents(
+    existing_metadata_content = repo.file_contents(
         metadata_file, ref=BRANCH_NAME
     ).decoded.decode()
 
-    metadata_dict = json.loads(existing_metadata_raw)
-
-    print(collection_name)
+    metadata_dict = json.loads(existing_metadata_content)
 
     collection_repo = gh.repository("PrefectHQ", collection_name)
     
@@ -90,9 +88,14 @@ def submit_updates(
             raise
     
     # create a new commit updating the aggregate flow metadata file
+    updated_metadata_content = json.dumps(metadata_dict, indent=4)
+    if existing_metadata_content == updated_metadata_content:
+        print(f"Aggregate {variety} metadata for {collection_name} {latest_release} already up to date!")
+        return
+    
     repo.file_contents(metadata_file, ref=BRANCH_NAME).update(
         message=f"Update aggregate {variety} metadata with {collection_name} {latest_release}",
-        content=json.dumps(metadata_dict, indent=4).encode("utf-8"),
+        content=updated_metadata_content.encode("utf-8"),
         branch=BRANCH_NAME,
     )
 
