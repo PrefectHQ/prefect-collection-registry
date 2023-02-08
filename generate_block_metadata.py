@@ -134,5 +134,5 @@ def update_block_metadata_for_collection(collection_name: str):
     submit_updates(collection_block_metadata, "block")
 
 if __name__ == "__main__":
-    for collection_name in get_collection_names():
-        update_block_metadata_for_collection(collection_name)
+    # for collection_name in get_collection_names():
+    update_block_metadata_for_collection("prefect")
