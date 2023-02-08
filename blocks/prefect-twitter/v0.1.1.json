@@ -1,0 +1,58 @@
+{
+  "prefect-twitter": {
+    "block_types": {
+      "twitter-credentials": {
+        "name": "Twitter Credentials",
+        "slug": "twitter-credentials",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/1NyN5egjNk9Sel17rs0cTz/067bb478b4fec22d8aa47b79b085a6e9/twitter.png?h=250",
+        "documentation_url": null,
+        "description": "Block used to manage Twitter authentication with tweepy.\nSee Authentication Tokens section of the Keys and Tokens tab of\nyour app, under the Twitter Developer Portal Projects & Apps page at\nhttps://developer.twitter.com/en/portal/projects-and-apps.",
+        "code_example": "Load stored Twitter credentials:\n```python\nfrom prefect_twitter import TwitterCredentials\ntwitter_credentials_block = TwitterCredentials.load(\"BLOCK_NAME\")\n```",
+        "block_schema": {
+          "checksum": "sha256:4c24588fb507d62c850405da822ec87e52ffc726dbbfea8ceca944d72817a7e2",
+          "fields": {
+            "title": "TwitterCredentials",
+            "description": "Block used to manage Twitter authentication with tweepy.\nSee Authentication Tokens section of the Keys and Tokens tab of\nyour app, under the Twitter Developer Portal Projects & Apps page at\nhttps://developer.twitter.com/en/portal/projects-and-apps.",
+            "type": "object",
+            "properties": {
+              "consumer_key": {
+                "title": "Consumer Key",
+                "type": "string"
+              },
+              "consumer_secret": {
+                "title": "Consumer Secret",
+                "type": "string",
+                "writeOnly": true,
+                "format": "password"
+              },
+              "access_token": {
+                "title": "Access Token",
+                "type": "string"
+              },
+              "access_token_secret": {
+                "title": "Access Token Secret",
+                "type": "string",
+                "writeOnly": true,
+                "format": "password"
+              }
+            },
+            "required": [
+              "consumer_key",
+              "consumer_secret",
+              "access_token",
+              "access_token_secret"
+            ],
+            "block_type_slug": "twitter-credentials",
+            "secret_fields": [
+              "consumer_secret",
+              "access_token_secret"
+            ],
+            "block_schema_references": {}
+          },
+          "capabilities": [],
+          "version": "0.1.1"
+        }
+      }
+    }
+  }
+}

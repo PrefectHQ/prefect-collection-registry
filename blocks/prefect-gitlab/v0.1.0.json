@@ -1,0 +1,115 @@
+{
+  "prefect-gitlab": {
+    "block_types": {
+      "gitlab-credentials": {
+        "name": "GitLab Credentials",
+        "slug": "gitlab-credentials",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/55edIimT4g9gbjhkh5a3Sp/dfdb9391d8f45c2e93e72e3a4d350771/gitlab-logo-500.png?h=250",
+        "documentation_url": null,
+        "description": "Store a GitLab personal access token to interact with private GitLab\nrepositories.",
+        "code_example": "Load stored GitLab credentials:\n```python\nfrom prefect_gitlab import GitLabCredentials\ngitlab_credentials_block = GitLabCredentials.load(\"BLOCK_NAME\")\n```",
+        "block_schema": {
+          "checksum": "sha256:b07a18be8375744f34dcb2353c34ec2839f0f50bac369ff94f9a290dfe6822d8",
+          "fields": {
+            "title": "GitLabCredentials",
+            "description": "Store a GitLab personal access token to interact with private GitLab\nrepositories.",
+            "type": "object",
+            "properties": {
+              "token": {
+                "title": "Token",
+                "description": "A GitLab Personal Access Token with repo scope.",
+                "name": "Personal Access Token",
+                "type": "string",
+                "writeOnly": true,
+                "format": "password"
+              }
+            },
+            "block_type_slug": "gitlab-credentials",
+            "secret_fields": [
+              "token"
+            ],
+            "block_schema_references": {}
+          },
+          "capabilities": [],
+          "version": "0.1.0"
+        }
+      },
+      "gitlab-repository": {
+        "name": "GitLab Repository",
+        "slug": "gitlab-repository",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/55edIimT4g9gbjhkh5a3Sp/dfdb9391d8f45c2e93e72e3a4d350771/gitlab-logo-500.png?h=250",
+        "documentation_url": null,
+        "description": "Interact with files stored in GitLab repositories.",
+        "code_example": "```python\nfrom prefect_gitlab.repositories import GitLabRepository\n\ngitlab_repository_block = GitLabRepository.load(\"BLOCK_NAME\")\n```",
+        "block_schema": {
+          "checksum": "sha256:63a31456076d9bb84456e6cd2710c5579df5341d5da192d443873249e30dbff4",
+          "fields": {
+            "title": "GitLabRepository",
+            "description": "Interact with files stored in GitLab repositories.",
+            "type": "object",
+            "properties": {
+              "repository": {
+                "title": "Repository",
+                "description": "The URL of a GitLab repository to read from, in either HTTPS or SSH format.",
+                "type": "string"
+              },
+              "reference": {
+                "title": "Reference",
+                "description": "An optional reference to pin to; can be a branch name or tag.",
+                "type": "string"
+              },
+              "credentials": {
+                "title": "Credentials",
+                "description": "An optional GitLab Credentials block for authenticating with private GitLab repos.",
+                "allOf": [
+                  {
+                    "$ref": "#/definitions/GitLabCredentials"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "repository"
+            ],
+            "block_type_slug": "gitlab-repository",
+            "secret_fields": [
+              "credentials.token"
+            ],
+            "block_schema_references": {
+              "credentials": {
+                "block_type_slug": "gitlab-credentials",
+                "block_schema_checksum": "sha256:b07a18be8375744f34dcb2353c34ec2839f0f50bac369ff94f9a290dfe6822d8"
+              }
+            },
+            "definitions": {
+              "GitLabCredentials": {
+                "title": "GitLabCredentials",
+                "description": "Store a GitLab personal access token to interact with private GitLab\nrepositories.",
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "title": "Token",
+                    "description": "A GitLab Personal Access Token with repo scope.",
+                    "name": "Personal Access Token",
+                    "type": "string",
+                    "writeOnly": true,
+                    "format": "password"
+                  }
+                },
+                "block_type_slug": "gitlab-credentials",
+                "secret_fields": [
+                  "token"
+                ],
+                "block_schema_references": {}
+              }
+            }
+          },
+          "capabilities": [
+            "get-directory"
+          ],
+          "version": "0.1.0"
+        }
+      }
+    }
+  }
+}
