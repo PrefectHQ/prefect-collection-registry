@@ -2,7 +2,7 @@
 This is a registry of metadata for Prefect collections.
 
 <p align="center">
-    <img src=imgs/registry.png width=500>
+    <img src=imgs/registry.png width=400>
 </p>
 
 ## What metadata is stored here?
