@@ -149,7 +149,6 @@
     "prefect-bitbucket": {},
     "prefect-census": {
         "run-census-sync": {
-            "collection_repo_url": "https://github.com/PrefectHQ/prefect-census",
             "description": {
                 "summary": "A flow for triggering a Census sync run and waiting for completion.",
                 "returns": "The result of the sync run."
@@ -256,14 +255,14 @@
                 }
             },
             "path_containing_flow": "prefect_census/flows.py",
+            "repo_url": "https://github.com/PrefectHQ/prefect-census",
             "slug": "run_census_sync"
         },
         "Wait for Census sync run": {
-            "collection_repo_url": "https://github.com/PrefectHQ/prefect-census",
             "description": {
                 "summary": "Waits for the Census sync run to finish running."
             },
-            "documentation_url": "https://prefecthq.github.io/prefect-census/syncs/#prefect_census.syncs.Wait for Census sync run",
+            "documentation_url": "https://prefecthq.github.io/prefect-census/syncs/#prefect_census.syncs.wait_census_sync_completion",
             "entrypoint": "prefect_census/syncs.py:wait_census_sync_completion",
             "install_command": "pip install prefect-census",
             "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/3oznRx2UFkd2XyqNkEZpzB/4e0967a828aec5e2527cedadf8d24e8a/llmjpn8a0pgu8szjmnyi.webp?h=250",
@@ -333,14 +332,14 @@
                 }
             },
             "path_containing_flow": "prefect_census/syncs.py",
+            "repo_url": "https://github.com/PrefectHQ/prefect-census",
             "slug": "wait_census_sync_completion"
         },
         "Trigger Census sync run and wait for completion": {
-            "collection_repo_url": "https://github.com/PrefectHQ/prefect-census",
             "description": {
                 "summary": "Triggers a Census sync run and waits for thetriggered run to complete."
             },
-            "documentation_url": "https://prefecthq.github.io/prefect-census/syncs/#prefect_census.syncs.Trigger Census sync run and wait for completion",
+            "documentation_url": "https://prefecthq.github.io/prefect-census/syncs/#prefect_census.syncs.trigger_census_sync_run_and_wait_for_completion",
             "entrypoint": "prefect_census/syncs.py:trigger_census_sync_run_and_wait_for_completion",
             "install_command": "pip install prefect-census",
             "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/3oznRx2UFkd2XyqNkEZpzB/4e0967a828aec5e2527cedadf8d24e8a/llmjpn8a0pgu8szjmnyi.webp?h=250",
@@ -417,6 +416,7 @@
                 }
             },
             "path_containing_flow": "prefect_census/syncs.py",
+            "repo_url": "https://github.com/PrefectHQ/prefect-census",
             "slug": "trigger_census_sync_run_and_wait_for_completion"
         }
     },
