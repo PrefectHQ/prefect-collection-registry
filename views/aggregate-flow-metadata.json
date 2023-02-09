@@ -2232,11 +2232,15 @@
                     }
                 }
             },
-            "install_command": "pip install prefect-hex",
             "description": {
                 "summary": "Flow that triggers a project run and waits for the triggered run to complete.",
                 "returns": "Information about the triggered project run."
-            }
+            },
+            "documentation_url": "https://prefecthq.github.io/prefect-hex/project/#prefect_hex.project",
+            "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/3biMverMLGiDA7y5fkqKZF/4b7747052b59fa8182a9686b88ea9541/Hex_Purple__for_light_backgrounds_.png?h=250",
+            "install_command": "pip install prefect-hex",
+            "location_in_collection": "prefect_hex.project",
+            "collection_repo_url": "https://github.com/PrefectHQ/prefect-hex"
         },
         "wait-for-project-run-completion": {
             "name": "wait-for-project-run-completion",
@@ -2317,11 +2321,15 @@
                     }
                 }
             },
-            "install_command": "pip install prefect-hex",
             "description": {
                 "summary": "Flow that waits for the triggered project run to complete.",
                 "returns": "The status of the project run and the metadata associated with the run."
-            }
+            },
+            "documentation_url": "https://prefecthq.github.io/prefect-hex/project/#prefect_hex.project",
+            "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/3biMverMLGiDA7y5fkqKZF/4b7747052b59fa8182a9686b88ea9541/Hex_Purple__for_light_backgrounds_.png?h=250",
+            "install_command": "pip install prefect-hex",
+            "location_in_collection": "prefect_hex.project",
+            "collection_repo_url": "https://github.com/PrefectHQ/prefect-hex"
         }
     },
     "prefect-hightouch": {
