@@ -124,9 +124,15 @@ def submit_updates(
     gh = github3.login(token=github_token.get())
     repo = gh.repository("PrefectHQ", repo_name)
 
-    existing_metadata_content = repo.file_contents(
-        metadata_file, ref=branch_name
-    ).decoded.decode()
+    try:
+        existing_metadata_content = repo.file_contents(
+            metadata_file, ref=branch_name
+        ).decoded.decode()
+    except github3.exceptions.NotFoundError as e:
+        raise ValueError(
+            "Either the branch doesn't exist or the metadata "
+            "file doesn't exist on the branch."
+        ) from e
 
     existing_metadata_dict = dict(sorted(json.loads(existing_metadata_content).items()))
 
