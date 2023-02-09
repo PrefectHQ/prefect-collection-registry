@@ -150,6 +150,7 @@ def submit_updates(
             print(
                 f"{variety} metadata for {collection_name} {latest_release} already exists!"
             )
+            return  # since the file already exists, we don't need to update the aggregate metadata
         else:
             raise
 
