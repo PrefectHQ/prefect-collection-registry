@@ -2166,7 +2166,6 @@
     "prefect-great-expectations": {},
     "prefect-hex": {
         "trigger-project-run-and-wait-for-completion": {
-            "collection_repo_url": "https://github.com/PrefectHQ/prefect-hex",
             "description": {
                 "summary": "Flow that triggers a project run and waits for the triggered run to complete.",
                 "returns": "Information about the triggered project run."
@@ -2260,10 +2259,10 @@
                 }
             },
             "path_containing_flow": "prefect_hex/project.py",
+            "repo_url": "https://github.com/PrefectHQ/prefect-hex",
             "slug": "trigger_project_run_and_wait_for_completion"
         },
         "wait-for-project-run-completion": {
-            "collection_repo_url": "https://github.com/PrefectHQ/prefect-hex",
             "description": {
                 "summary": "Flow that waits for the triggered project run to complete.",
                 "returns": "The status of the project run and the metadata associated with the run."
@@ -2351,6 +2350,7 @@
                 }
             },
             "path_containing_flow": "prefect_hex/project.py",
+            "repo_url": "https://github.com/PrefectHQ/prefect-hex",
             "slug": "wait_for_project_run_completion"
         }
     },
