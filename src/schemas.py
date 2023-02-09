@@ -1,0 +1,28 @@
+flow_schema = {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+        "name": {"type": "string"},
+        "slug": {"type": "string"},
+        "parameters": {"type": "object"},
+        "description": {"type": "object"},
+        "documentation_url": {"type": "string"},
+        "logo_url": {"type": "string"},
+        "install_command": {"type": "string"},
+        "path_containing_flow": {"type": "string"},
+        "entrypoint": {"type": "string"},
+        "collection_repo_url": {"type": "string"},
+    },
+    "required": [
+        "name",
+        "slug",
+        "parameters",
+        "description",
+        "documentation_url",
+        "logo_url",
+        "install_command",
+        "path_containing_flow",
+        "entrypoint",
+        "collection_repo_url",
+    ],
+}
