@@ -2794,10 +2794,14 @@
                     }
                 }
             },
-            "install_command": "pip install prefect-monte-carlo",
             "description": {
                 "summary": "Create or update a `source` node, `destination` node, and the edge that connects them."
-            }
+            },
+            "documentation_url": "https://prefecthq.github.io/prefect-monte-carlo/lineage/#prefect_monte_carlo.lineage",
+            "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5OqrPNRdLMvqZzxo9f6Z25/f920dff0f1201fc014b0b083a6d2fdb1/image.png?h=250",
+            "install_command": "pip install prefect-monte-carlo",
+            "location_in_collection": "prefect_monte_carlo.lineage",
+            "collection_repo_url": "https://github.com/PrefectHQ/prefect-monte-carlo"
         }
     },
     "prefect-openai": {},
