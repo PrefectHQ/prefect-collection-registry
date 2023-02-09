@@ -51,13 +51,14 @@ class FlowLinks(Block):
         self.links[flow_name][key] = value
 
     def get_doc_url(self, flow_name: str) -> str | None:
-        location = self.get(flow_name, "location")
+        location = self.get(flow_name, "submodule")
         if location is None:
             return None
         return (
             "https://prefecthq.github.io/"
             f"{location.replace('.', '/').replace('_', '-')}/"
-            f"#{location}"
+            f"#{location}."
+            f"{flow_name.replace('-', '_')}"
         )
 
 

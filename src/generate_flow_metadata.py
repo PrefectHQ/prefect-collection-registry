@@ -8,7 +8,13 @@ from griffe.docstrings.parsers import Parser, parse
 from prefect import Flow, flow, task
 from prefect.utilities.importtools import load_module
 
-from utils import FlowLinks, get_logo_url_for_collection, skip_parsing, submit_updates
+from utils import (
+    FlowLinks,
+    get_collection_names,
+    get_logo_url_for_collection,
+    skip_parsing,
+    submit_updates,
+)
 
 skip_sections = {"parameters", "raises"}
 
@@ -46,16 +52,23 @@ def summarize_flow(flow: Flow, collection_name: str):
 
     links = FlowLinks.load("collections")
 
-    return {
-        "name": flow.name,
-        "parameters": dict(flow.parameters),
-        "description": {**parse_flow_docstring(flow)},
-        "documentation_url": links.get_doc_url(flow.name),
-        "logo_url": get_logo_url_for_collection(collection_name),
-        "install_command": f"pip install {collection_name}",
-        "location_in_collection": links.get(flow.name, "location"),
-        "collection_repo_url": f"https://github.com/PrefectHQ/{collection_name}",
-    }
+    flow_filepath = links.get(flow.name, "path")
+    return dict(
+        sorted(
+            {
+                "name": flow.name,
+                "slug": flow.fn.__name__,
+                "parameters": dict(flow.parameters),
+                "description": {**parse_flow_docstring(flow)},
+                "documentation_url": links.get_doc_url(flow.name),
+                "logo_url": get_logo_url_for_collection(collection_name),
+                "install_command": f"pip install {collection_name}",
+                "path_containing_flow": flow_filepath,
+                "entrypoint": f"{flow_filepath}:{flow.fn.__name__}",
+                "collection_repo_url": f"https://github.com/PrefectHQ/{collection_name}",
+            }.items()
+        )
+    )
 
 
 def find_flows_in_module(
@@ -80,7 +93,7 @@ def find_flows_in_module(
             else:
                 try:
                     submodule = load_module(f"{module_name}.{name}")
-                    print(f"\t\tLoaded submodule {module_name}.{name}...")
+                    print(f"\tLoaded submodule {module_name}.{name}...")
                 except ModuleNotFoundError:
                     continue
 
@@ -88,8 +101,10 @@ def find_flows_in_module(
                     if skip_parsing(name, obj, module_name):
                         continue
                     if isinstance(obj, Flow):
+                        path = submodule.__name__.replace(".", "/") + ".py"
                         flow_locations = FlowLinks.load("collections")
-                        flow_locations.set(obj.name, "location", submodule.__name__)
+                        flow_locations.set(obj.name, "path", path)
+                        flow_locations.set(obj.name, "submodule", submodule.__name__)
                         flow_locations.save("collections", overwrite=True)
                         yield obj
 
@@ -117,11 +132,9 @@ def generate_flow_metadata(collection_name: str) -> Dict[str, Any]:
 @flow(log_prints=True)
 def update_flow_metadata_for_collection(collection_name: str):
     collection_flow_metadata = generate_flow_metadata(collection_name)
-
-    # print(json.dumps(collection_flow_metadata, indent=4))
     submit_updates(collection_flow_metadata, "flow")
 
 
 if __name__ == "__main__":
-    # for collection_name in get_collection_names():
-    update_flow_metadata_for_collection("prefect-twitter")
+    for collection_name in get_collection_names():
+        update_flow_metadata_for_collection(collection_name)
