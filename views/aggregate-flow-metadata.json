@@ -1878,10 +1878,14 @@
                     }
                 }
             },
-            "install_command": "pip install prefect-dbt",
             "description": {
                 "summary": "Retries a subset of dbt Cloud job run, filtered by select statuses, and waits for the triggered retry to complete."
-            }
+            },
+            "documentation_url": "https://prefecthq.github.io/prefect-dbt/cloud/jobs/#prefect_dbt.cloud.jobs",
+            "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5zE9lxfzBHjw3tnEup4wWL/9a001902ed43a84c6c96d23b24622e19/dbt-bit_tm.png?h=250",
+            "install_command": "pip install prefect-dbt",
+            "location_in_collection": "prefect_dbt.cloud.jobs",
+            "collection_repo_url": "https://github.com/PrefectHQ/prefect-dbt"
         },
         "Trigger dbt Cloud job run and wait for completion": {
             "name": "Trigger dbt Cloud job run and wait for completion",
@@ -2038,10 +2042,14 @@
                     }
                 }
             },
-            "install_command": "pip install prefect-dbt",
             "description": {
                 "summary": "Triggers a dbt Cloud job run and waits for thetriggered run to complete."
-            }
+            },
+            "documentation_url": "https://prefecthq.github.io/prefect-dbt/cloud/jobs/#prefect_dbt.cloud.jobs",
+            "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5zE9lxfzBHjw3tnEup4wWL/9a001902ed43a84c6c96d23b24622e19/dbt-bit_tm.png?h=250",
+            "install_command": "pip install prefect-dbt",
+            "location_in_collection": "prefect_dbt.cloud.jobs",
+            "collection_repo_url": "https://github.com/PrefectHQ/prefect-dbt"
         },
         "Wait for dbt Cloud job run": {
             "name": "Wait for dbt Cloud job run",
@@ -2121,10 +2129,14 @@
                     }
                 }
             },
-            "install_command": "pip install prefect-dbt",
             "description": {
                 "summary": "Waits for a dbt Cloud job run to finish running."
-            }
+            },
+            "documentation_url": "https://prefecthq.github.io/prefect-dbt/cloud/runs/#prefect_dbt.cloud.runs",
+            "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5zE9lxfzBHjw3tnEup4wWL/9a001902ed43a84c6c96d23b24622e19/dbt-bit_tm.png?h=250",
+            "install_command": "pip install prefect-dbt",
+            "location_in_collection": "prefect_dbt.cloud.runs",
+            "collection_repo_url": "https://github.com/PrefectHQ/prefect-dbt"
         }
     },
     "prefect-docker": {},
