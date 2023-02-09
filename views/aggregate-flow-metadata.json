@@ -2417,11 +2417,15 @@
                     }
                 }
             },
-            "install_command": "pip install prefect-hightouch",
             "description": {
                 "summary": "Flow that triggers a sync run and waits for the triggered run to complete.",
                 "returns": "- `id`: `str`<br>\n- `slug`: `str`<br>\n- `workspace_id`: `str`<br>\n- `created_at`: `str`<br>\n- `updated_at`: `str`<br>\n- `destination_id`: `str`<br>\n- `model_id`: `str`<br>\n- `configuration`: `Dict`<br>\n- `schedule`: `Dict`<br>\n- `status`: `\"models.SyncStatus\"`<br>\n- `disabled`: `bool`<br>\n- `last_run_at`: `str`<br>\n- `referenced_columns`: `List[str]`<br>\n- `primary_key`: `str`<br>"
-            }
+            },
+            "documentation_url": "https://prefecthq.github.io/prefect-hightouch/syncs/flows/#prefect_hightouch.syncs.flows",
+            "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/6WT9DIXFrqQy0nA9VRZfuL/40a7039742fca9d053677f58a79aacd5/hightouch.png?h=250",
+            "install_command": "pip install prefect-hightouch",
+            "location_in_collection": "prefect_hightouch.syncs.flows",
+            "collection_repo_url": "https://github.com/PrefectHQ/prefect-hightouch"
         },
         "wait-for-sync-run-completion": {
             "name": "wait-for-sync-run-completion",
@@ -2500,11 +2504,15 @@
                     }
                 }
             },
-            "install_command": "pip install prefect-hightouch",
             "description": {
                 "summary": "Flow that waits for the triggered sync run to complete.",
                 "returns": "- `value`\n- `id`: `str`<br>\n- `slug`: `str`<br>\n- `workspace_id`: `str`<br>\n- `created_at`: `str`<br>\n- `updated_at`: `str`<br>\n- `destination_id`: `str`<br>\n- `model_id`: `str`<br>\n- `configuration`: `Dict`<br>\n- `schedule`: `Dict`<br>\n- `status`: `\"api_models.SyncStatus\"`<br>\n- `disabled`: `bool`<br>\n- `last_run_at`: `str`<br>\n- `referenced_columns`: `List[str]`<br>\n- `primary_key`: `str`<br>"
-            }
+            },
+            "documentation_url": "https://prefecthq.github.io/prefect-hightouch/syncs/flows/#prefect_hightouch.syncs.flows",
+            "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/6WT9DIXFrqQy0nA9VRZfuL/40a7039742fca9d053677f58a79aacd5/hightouch.png?h=250",
+            "install_command": "pip install prefect-hightouch",
+            "location_in_collection": "prefect_hightouch.syncs.flows",
+            "collection_repo_url": "https://github.com/PrefectHQ/prefect-hightouch"
         }
     },
     "prefect-jupyter": {},
