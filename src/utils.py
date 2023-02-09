@@ -169,7 +169,7 @@ def submit_updates(
     )
 
     print(
-        f"Updated aggregate {variety} metadata for {collection_name} {latest_release}!"
+        f"Updated aggregate {variety} metadata with {collection_name} {latest_release}!"
     )
 
 
