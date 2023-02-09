@@ -2646,14 +2646,18 @@
                     }
                 }
             },
-            "install_command": "pip install prefect-kubernetes",
             "description": {
                 "summary": "Flow for running a namespaced Kubernetes job.",
                 "returns": "The a dict of logs from each pod in the job, e.g. {'pod_name': 'pod_log_str'}.",
                 "examples": [
                     "```python\nfrom prefect_kubernetes import KubernetesJob, run_namespaced_job\nfrom prefect_kubernetes.credentials import KubernetesCredentials\n\nrun_namespaced_job(\n    kubernetes_job=KubernetesJob.from_yaml_file(\n        credentials=KubernetesCredentials.load(\"k8s-creds\"),\n        manifest_path=\"path/to/job.yaml\",\n    )\n)\n```"
                 ]
-            }
+            },
+            "documentation_url": "https://prefecthq.github.io/prefect-kubernetes/flows/#prefect_kubernetes.flows",
+            "logo_url": "https://images.ctfassets.net/zscdif0zqppk/oYuHjIbc26oilfQSEMjRv/a61f5f6ef406eead2df5231835b4c4c2/logo.png?h=250",
+            "install_command": "pip install prefect-kubernetes",
+            "location_in_collection": "prefect_kubernetes.flows",
+            "collection_repo_url": "https://github.com/PrefectHQ/prefect-kubernetes"
         }
     },
     "prefect-monday": {},
