@@ -1,7 +1,6 @@
 {
     "prefect-airbyte": {
         "run-connection-sync": {
-            "collection_repo_url": "https://github.com/PrefectHQ/prefect-airbyte",
             "description": {
                 "summary": "A flow that triggers a sync of an Airbyte connection and waits for it to complete.",
                 "returns": "`AirbyteSyncResult`: Model containing metadata for the `AirbyteSync`.",
@@ -141,6 +140,7 @@
                 }
             },
             "path_containing_flow": "prefect_airbyte/flows.py",
+            "repo_url": "https://github.com/PrefectHQ/prefect-airbyte",
             "slug": "run_connection_sync"
         }
     },
@@ -149,7 +149,6 @@
     "prefect-bitbucket": {},
     "prefect-census": {
         "run-census-sync": {
-            "collection_repo_url": "https://github.com/PrefectHQ/prefect-census",
             "description": {
                 "summary": "A flow for triggering a Census sync run and waiting for completion.",
                 "returns": "The result of the sync run."
@@ -256,14 +255,14 @@
                 }
             },
             "path_containing_flow": "prefect_census/flows.py",
+            "repo_url": "https://github.com/PrefectHQ/prefect-census",
             "slug": "run_census_sync"
         },
         "Wait for Census sync run": {
-            "collection_repo_url": "https://github.com/PrefectHQ/prefect-census",
             "description": {
                 "summary": "Waits for the Census sync run to finish running."
             },
-            "documentation_url": "https://prefecthq.github.io/prefect-census/syncs/#prefect_census.syncs.Wait for Census sync run",
+            "documentation_url": "https://prefecthq.github.io/prefect-census/syncs/#prefect_census.syncs.wait_census_sync_completion",
             "entrypoint": "prefect_census/syncs.py:wait_census_sync_completion",
             "install_command": "pip install prefect-census",
             "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/3oznRx2UFkd2XyqNkEZpzB/4e0967a828aec5e2527cedadf8d24e8a/llmjpn8a0pgu8szjmnyi.webp?h=250",
@@ -333,14 +332,14 @@
                 }
             },
             "path_containing_flow": "prefect_census/syncs.py",
+            "repo_url": "https://github.com/PrefectHQ/prefect-census",
             "slug": "wait_census_sync_completion"
         },
         "Trigger Census sync run and wait for completion": {
-            "collection_repo_url": "https://github.com/PrefectHQ/prefect-census",
             "description": {
                 "summary": "Triggers a Census sync run and waits for thetriggered run to complete."
             },
-            "documentation_url": "https://prefecthq.github.io/prefect-census/syncs/#prefect_census.syncs.Trigger Census sync run and wait for completion",
+            "documentation_url": "https://prefecthq.github.io/prefect-census/syncs/#prefect_census.syncs.trigger_census_sync_run_and_wait_for_completion",
             "entrypoint": "prefect_census/syncs.py:trigger_census_sync_run_and_wait_for_completion",
             "install_command": "pip install prefect-census",
             "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/3oznRx2UFkd2XyqNkEZpzB/4e0967a828aec5e2527cedadf8d24e8a/llmjpn8a0pgu8szjmnyi.webp?h=250",
@@ -417,17 +416,17 @@
                 }
             },
             "path_containing_flow": "prefect_census/syncs.py",
+            "repo_url": "https://github.com/PrefectHQ/prefect-census",
             "slug": "trigger_census_sync_run_and_wait_for_completion"
         }
     },
     "prefect-dask": {},
     "prefect-databricks": {
         "Submit jobs runs and wait for completion": {
-            "collection_repo_url": "https://github.com/PrefectHQ/prefect-databricks",
             "description": {
                 "summary": "Triggers a Databricks jobs runs and waits for the triggered runs to complete."
             },
-            "documentation_url": "https://prefecthq.github.io/prefect-databricks/flows/#prefect_databricks.flows.Submit jobs runs and wait for completion",
+            "documentation_url": "https://prefecthq.github.io/prefect-databricks/flows/#prefect_databricks.flows.jobs_runs_submit_and_wait_for_completion",
             "entrypoint": "prefect_databricks/flows.py:jobs_runs_submit_and_wait_for_completion",
             "install_command": "pip install prefect-databricks",
             "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5GTHI1PH2dTiantfps6Fnc/1c750fab7f4c14ea1b93a62b9fea6a94/databricks_logo_icon_170295.png?h=250",
@@ -1645,14 +1644,14 @@
                 }
             },
             "path_containing_flow": "prefect_databricks/flows.py",
+            "repo_url": "https://github.com/PrefectHQ/prefect-databricks",
             "slug": "jobs_runs_submit_and_wait_for_completion"
         },
         "Wait for completion of jobs runs": {
-            "collection_repo_url": "https://github.com/PrefectHQ/prefect-databricks",
             "description": {
                 "summary": "Waits for the jobs runs to finish running"
             },
-            "documentation_url": "https://prefecthq.github.io/prefect-databricks/flows/#prefect_databricks.flows.Wait for completion of jobs runs",
+            "documentation_url": "https://prefecthq.github.io/prefect-databricks/flows/#prefect_databricks.flows.jobs_runs_wait_for_completion",
             "entrypoint": "prefect_databricks/flows.py:jobs_runs_wait_for_completion",
             "install_command": "pip install prefect-databricks",
             "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5GTHI1PH2dTiantfps6Fnc/1c750fab7f4c14ea1b93a62b9fea6a94/databricks_logo_icon_170295.png?h=250",
@@ -1738,16 +1737,16 @@
                 }
             },
             "path_containing_flow": "prefect_databricks/flows.py",
+            "repo_url": "https://github.com/PrefectHQ/prefect-databricks",
             "slug": "jobs_runs_wait_for_completion"
         }
     },
     "prefect-dbt": {
         "Retry subset of dbt Cloud job run and wait for completion": {
-            "collection_repo_url": "https://github.com/PrefectHQ/prefect-dbt",
             "description": {
                 "summary": "Retries a subset of dbt Cloud job run, filtered by select statuses, and waits for the triggered retry to complete."
             },
-            "documentation_url": "https://prefecthq.github.io/prefect-dbt/cloud/jobs/#prefect_dbt.cloud.jobs.Retry subset of dbt Cloud job run and wait for completion",
+            "documentation_url": "https://prefecthq.github.io/prefect-dbt/cloud/jobs/#prefect_dbt.cloud.jobs.retry_dbt_cloud_job_run_subset_and_wait_for_completion",
             "entrypoint": "prefect_dbt/cloud/jobs.py:retry_dbt_cloud_job_run_subset_and_wait_for_completion",
             "install_command": "pip install prefect-dbt",
             "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5zE9lxfzBHjw3tnEup4wWL/9a001902ed43a84c6c96d23b24622e19/dbt-bit_tm.png?h=250",
@@ -1899,14 +1898,14 @@
                 }
             },
             "path_containing_flow": "prefect_dbt/cloud/jobs.py",
+            "repo_url": "https://github.com/PrefectHQ/prefect-dbt",
             "slug": "retry_dbt_cloud_job_run_subset_and_wait_for_completion"
         },
         "Trigger dbt Cloud job run and wait for completion": {
-            "collection_repo_url": "https://github.com/PrefectHQ/prefect-dbt",
             "description": {
                 "summary": "Triggers a dbt Cloud job run and waits for thetriggered run to complete."
             },
-            "documentation_url": "https://prefecthq.github.io/prefect-dbt/cloud/jobs/#prefect_dbt.cloud.jobs.Trigger dbt Cloud job run and wait for completion",
+            "documentation_url": "https://prefecthq.github.io/prefect-dbt/cloud/jobs/#prefect_dbt.cloud.jobs.trigger_dbt_cloud_job_run_and_wait_for_completion",
             "entrypoint": "prefect_dbt/cloud/jobs.py:trigger_dbt_cloud_job_run_and_wait_for_completion",
             "install_command": "pip install prefect-dbt",
             "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5zE9lxfzBHjw3tnEup4wWL/9a001902ed43a84c6c96d23b24622e19/dbt-bit_tm.png?h=250",
@@ -2065,14 +2064,14 @@
                 }
             },
             "path_containing_flow": "prefect_dbt/cloud/jobs.py",
+            "repo_url": "https://github.com/PrefectHQ/prefect-dbt",
             "slug": "trigger_dbt_cloud_job_run_and_wait_for_completion"
         },
         "Wait for dbt Cloud job run": {
-            "collection_repo_url": "https://github.com/PrefectHQ/prefect-dbt",
             "description": {
                 "summary": "Waits for a dbt Cloud job run to finish running."
             },
-            "documentation_url": "https://prefecthq.github.io/prefect-dbt/cloud/runs/#prefect_dbt.cloud.runs.Wait for dbt Cloud job run",
+            "documentation_url": "https://prefecthq.github.io/prefect-dbt/cloud/runs/#prefect_dbt.cloud.runs.wait_for_dbt_cloud_job_run",
             "entrypoint": "prefect_dbt/cloud/runs.py:wait_for_dbt_cloud_job_run",
             "install_command": "pip install prefect-dbt",
             "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5zE9lxfzBHjw3tnEup4wWL/9a001902ed43a84c6c96d23b24622e19/dbt-bit_tm.png?h=250",
@@ -2154,6 +2153,7 @@
                 }
             },
             "path_containing_flow": "prefect_dbt/cloud/runs.py",
+            "repo_url": "https://github.com/PrefectHQ/prefect-dbt",
             "slug": "wait_for_dbt_cloud_job_run"
         }
     },
@@ -2166,7 +2166,6 @@
     "prefect-great-expectations": {},
     "prefect-hex": {
         "trigger-project-run-and-wait-for-completion": {
-            "collection_repo_url": "https://github.com/PrefectHQ/prefect-hex",
             "description": {
                 "summary": "Flow that triggers a project run and waits for the triggered run to complete.",
                 "returns": "Information about the triggered project run."
@@ -2260,10 +2259,10 @@
                 }
             },
             "path_containing_flow": "prefect_hex/project.py",
+            "repo_url": "https://github.com/PrefectHQ/prefect-hex",
             "slug": "trigger_project_run_and_wait_for_completion"
         },
         "wait-for-project-run-completion": {
-            "collection_repo_url": "https://github.com/PrefectHQ/prefect-hex",
             "description": {
                 "summary": "Flow that waits for the triggered project run to complete.",
                 "returns": "The status of the project run and the metadata associated with the run."
@@ -2351,12 +2350,12 @@
                 }
             },
             "path_containing_flow": "prefect_hex/project.py",
+            "repo_url": "https://github.com/PrefectHQ/prefect-hex",
             "slug": "wait_for_project_run_completion"
         }
     },
     "prefect-hightouch": {
         "trigger-sync-run-and-wait-for-completion": {
-            "collection_repo_url": "https://github.com/PrefectHQ/prefect-hightouch",
             "description": {
                 "summary": "Flow that triggers a sync run and waits for the triggered run to complete.",
                 "returns": "- `id`: `str`<br>\n- `slug`: `str`<br>\n- `workspace_id`: `str`<br>\n- `created_at`: `str`<br>\n- `updated_at`: `str`<br>\n- `destination_id`: `str`<br>\n- `model_id`: `str`<br>\n- `configuration`: `Dict`<br>\n- `schedule`: `Dict`<br>\n- `status`: `\"models.SyncStatus\"`<br>\n- `disabled`: `bool`<br>\n- `last_run_at`: `str`<br>\n- `referenced_columns`: `List[str]`<br>\n- `primary_key`: `str`<br>"
@@ -2449,10 +2448,10 @@
                 }
             },
             "path_containing_flow": "prefect_hightouch/syncs/flows.py",
+            "repo_url": "https://github.com/PrefectHQ/prefect-hightouch",
             "slug": "trigger_sync_run_and_wait_for_completion"
         },
         "wait-for-sync-run-completion": {
-            "collection_repo_url": "https://github.com/PrefectHQ/prefect-hightouch",
             "description": {
                 "summary": "Flow that waits for the triggered sync run to complete.",
                 "returns": "- `value`\n- `id`: `str`<br>\n- `slug`: `str`<br>\n- `workspace_id`: `str`<br>\n- `created_at`: `str`<br>\n- `updated_at`: `str`<br>\n- `destination_id`: `str`<br>\n- `model_id`: `str`<br>\n- `configuration`: `Dict`<br>\n- `schedule`: `Dict`<br>\n- `status`: `\"api_models.SyncStatus\"`<br>\n- `disabled`: `bool`<br>\n- `last_run_at`: `str`<br>\n- `referenced_columns`: `List[str]`<br>\n- `primary_key`: `str`<br>"
@@ -2538,13 +2537,13 @@
                 }
             },
             "path_containing_flow": "prefect_hightouch/syncs/flows.py",
+            "repo_url": "https://github.com/PrefectHQ/prefect-hightouch",
             "slug": "wait_for_sync_run_completion"
         }
     },
     "prefect-jupyter": {},
     "prefect-kubernetes": {
         "run-namespaced-job": {
-            "collection_repo_url": "https://github.com/PrefectHQ/prefect-kubernetes",
             "description": {
                 "summary": "Flow for running a namespaced Kubernetes job.",
                 "returns": "The a dict of logs from each pod in the job, e.g. {'pod_name': 'pod_log_str'}.",
@@ -2685,13 +2684,13 @@
                 }
             },
             "path_containing_flow": "prefect_kubernetes/flows.py",
+            "repo_url": "https://github.com/PrefectHQ/prefect-kubernetes",
             "slug": "run_namespaced_job"
         }
     },
     "prefect-monday": {},
     "prefect-monte-carlo": {
         "create-or-update-lineage": {
-            "collection_repo_url": "https://github.com/PrefectHQ/prefect-monte-carlo",
             "description": {
                 "summary": "Create or update a `source` node, `destination` node, and the edge that connects them."
             },
@@ -2831,6 +2830,7 @@
                 }
             },
             "path_containing_flow": "prefect_monte_carlo/lineage.py",
+            "repo_url": "https://github.com/PrefectHQ/prefect-monte-carlo",
             "slug": "create_or_update_lineage"
         }
     },
