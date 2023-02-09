@@ -244,11 +244,15 @@
                     }
                 }
             },
-            "install_command": "pip install prefect-census",
             "description": {
                 "summary": "A flow for triggering a Census sync run and waiting for completion.",
                 "returns": "The result of the sync run."
-            }
+            },
+            "documentation_url": "https://prefecthq.github.io/prefect-census/flows/#prefect_census.flows",
+            "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/3oznRx2UFkd2XyqNkEZpzB/4e0967a828aec5e2527cedadf8d24e8a/llmjpn8a0pgu8szjmnyi.webp?h=250",
+            "install_command": "pip install prefect-census",
+            "location_in_collection": "prefect_census.flows",
+            "collection_repo_url": "https://github.com/PrefectHQ/prefect-census"
         },
         "Wait for Census sync run": {
             "name": "Wait for Census sync run",
@@ -316,10 +320,14 @@
                     }
                 }
             },
-            "install_command": "pip install prefect-census",
             "description": {
                 "summary": "Waits for the Census sync run to finish running."
-            }
+            },
+            "documentation_url": "https://prefecthq.github.io/prefect-census/syncs/#prefect_census.syncs",
+            "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/3oznRx2UFkd2XyqNkEZpzB/4e0967a828aec5e2527cedadf8d24e8a/llmjpn8a0pgu8szjmnyi.webp?h=250",
+            "install_command": "pip install prefect-census",
+            "location_in_collection": "prefect_census.syncs",
+            "collection_repo_url": "https://github.com/PrefectHQ/prefect-census"
         },
         "Trigger Census sync run and wait for completion": {
             "name": "Trigger Census sync run and wait for completion",
@@ -394,10 +402,14 @@
                     }
                 }
             },
-            "install_command": "pip install prefect-census",
             "description": {
                 "summary": "Triggers a Census sync run and waits for thetriggered run to complete."
-            }
+            },
+            "documentation_url": "https://prefecthq.github.io/prefect-census/syncs/#prefect_census.syncs",
+            "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/3oznRx2UFkd2XyqNkEZpzB/4e0967a828aec5e2527cedadf8d24e8a/llmjpn8a0pgu8szjmnyi.webp?h=250",
+            "install_command": "pip install prefect-census",
+            "location_in_collection": "prefect_census.syncs",
+            "collection_repo_url": "https://github.com/PrefectHQ/prefect-census"
         }
     },
     "prefect-dask": {},
