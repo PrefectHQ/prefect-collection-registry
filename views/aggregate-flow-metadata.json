@@ -128,14 +128,18 @@
                     }
                 }
             },
-            "install_command": "pip install prefect-airbyte",
             "description": {
                 "summary": "A flow that triggers a sync of an Airbyte connection and waits for it to complete.",
                 "returns": "`AirbyteSyncResult`: Model containing metadata for the `AirbyteSync`.",
                 "examples": [
                     "Define a flow that runs an Airbyte connection sync:\n```python\nfrom prefect import flow\nfrom prefect_airbyte.server import AirbyteServer\nfrom prefect_airbyte.connections import AirbyteConnection\nfrom prefect_airbyte.flows import run_connection_sync\n\nairbyte_server = AirbyteServer(\n    server_host=\"localhost\",\n    server_port=8000\n)\n\nconnection = AirbyteConnection(\n    airbyte_server=airbyte_server,\n    connection_id=\"<YOUR-AIRBYTE-CONNECTION-UUID>\"\n)\n\n@flow\ndef airbyte_sync_flow():\n    # do some things\n\n    airbyte_sync_result = run_connection_sync(\n        airbyte_connection=connection\n    )\n    print(airbyte_sync_result.records_synced)\n\n    # do some other things, like trigger DBT based on number of new raw records\n```"
                 ]
-            }
+            },
+            "documentation_url": "https://prefecthq.github.io/prefect-airbyte/flows/#prefect_airbyte.flows",
+            "logo_url": "https://images.ctfassets.net/zscdif0zqppk/6gm7wsC7ANnKYQsm7oiSYz/aac1ad5e054d35d9e24af8d6ed3aed5f/59758427?h=250",
+            "install_command": "pip install prefect-airbyte",
+            "location_in_collection": "prefect_airbyte.flows",
+            "collection_repo_url": "https://github.com/PrefectHQ/prefect-airbyte"
         }
     },
     "prefect-aws": {},
