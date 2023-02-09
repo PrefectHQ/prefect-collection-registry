@@ -1628,10 +1628,14 @@
                     }
                 }
             },
-            "install_command": "pip install prefect-databricks",
             "description": {
                 "summary": "Triggers a Databricks jobs runs and waits for the triggered runs to complete."
-            }
+            },
+            "documentation_url": "https://prefecthq.github.io/prefect-databricks/flows/#prefect_databricks.flows",
+            "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5GTHI1PH2dTiantfps6Fnc/1c750fab7f4c14ea1b93a62b9fea6a94/databricks_logo_icon_170295.png?h=250",
+            "install_command": "pip install prefect-databricks",
+            "location_in_collection": "prefect_databricks.flows",
+            "collection_repo_url": "https://github.com/PrefectHQ/prefect-databricks"
         },
         "Wait for completion of jobs runs": {
             "name": "Wait for completion of jobs runs",
@@ -1715,10 +1719,14 @@
                     }
                 }
             },
-            "install_command": "pip install prefect-databricks",
             "description": {
                 "summary": "Waits for the jobs runs to finish running"
-            }
+            },
+            "documentation_url": "https://prefecthq.github.io/prefect-databricks/flows/#prefect_databricks.flows",
+            "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5GTHI1PH2dTiantfps6Fnc/1c750fab7f4c14ea1b93a62b9fea6a94/databricks_logo_icon_170295.png?h=250",
+            "install_command": "pip install prefect-databricks",
+            "location_in_collection": "prefect_databricks.flows",
+            "collection_repo_url": "https://github.com/PrefectHQ/prefect-databricks"
         }
     },
     "prefect-dbt": {
