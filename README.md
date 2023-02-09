@@ -17,20 +17,21 @@ This repository is structured as follows:
 ```
 prefect-collection-registry/
 |-- collections/
-|   |-- collection-name/
-|   |   |-- release-tag-n.json
-|   |   |-- release-tag-0.json
-|   |   ...
+|   |-- collection-A/
+|   |   |-- latest-release-tag-n.json
+|   |-- ...
 |-- flows/
-|   |-- collection-name/
+|   |-- collection-A/
 |   |   |-- release-tag-n.json
+|   |   |-- ...
 |   |   |-- release-tag-0.json
-|   |   ...
+|   |-- ...
 |-- blocks/
-|   |-- collection-name/
+|   |-- collection-A/
 |   |   |-- release-tag-n.json
+|   |   |-- ...
 |   |   |-- release-tag-0.json
-|   |   ...
+|   |-- ...
 |-- views/
 |   |-- aggregate-block-metadata.json
 |   |-- aggregate-collection-metadata.json
@@ -41,13 +42,7 @@ prefect-collection-registry/
 ## Structure of Metadata Files
 Metadata files are stored in JSON format. The structure of each JSON is validated against a JSON schema.
 
-### Block Metadata
-TODO
-
-### Collection Metadata
-TODO
-
-### Flow Metadata
+### Flow Metadata Schema
 ```json
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
@@ -98,6 +93,12 @@ TODO
     ],
 }
 ```
+### Block Metadata Schema
+TODO
+
+### Collection Metadata Schema
+TODO
+
 
 ## Development
 Setup a virtual environment and install the dependencies:
