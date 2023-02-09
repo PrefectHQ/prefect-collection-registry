@@ -2544,7 +2544,6 @@
     "prefect-jupyter": {},
     "prefect-kubernetes": {
         "run-namespaced-job": {
-            "collection_repo_url": "https://github.com/PrefectHQ/prefect-kubernetes",
             "description": {
                 "summary": "Flow for running a namespaced Kubernetes job.",
                 "returns": "The a dict of logs from each pod in the job, e.g. {'pod_name': 'pod_log_str'}.",
@@ -2685,6 +2684,7 @@
                 }
             },
             "path_containing_flow": "prefect_kubernetes/flows.py",
+            "repo_url": "https://github.com/PrefectHQ/prefect-kubernetes",
             "slug": "run_namespaced_job"
         }
     },
