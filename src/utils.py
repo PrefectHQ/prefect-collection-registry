@@ -38,27 +38,27 @@ class FlowLinks(Block):
         description="A dictionary of the locations of each flow in a collection.",
     )
 
-    def get(self, flow_name: str, key: str) -> str | None:
-        if flow_name not in self.links or key not in self.links[flow_name]:
+    def get(self, flow_slug: str, key: str) -> str | None:
+        if flow_slug not in self.links or key not in self.links[flow_slug]:
             return None
-        return self.links[flow_name][key]
+        return self.links[flow_slug][key]
 
-    def set(self, flow_name: str, key: str, value: str) -> None:
+    def set(self, flow_slug: str, key: str, value: str) -> None:
 
-        if flow_name not in self.links:
-            self.links[flow_name] = {}
+        if flow_slug not in self.links:
+            self.links[flow_slug] = {}
 
-        self.links[flow_name][key] = value
+        self.links[flow_slug][key] = value
 
-    def get_doc_url(self, flow_name: str) -> str | None:
-        location = self.get(flow_name, "submodule")
-        if location is None:
+    def get_doc_url(self, flow_slug: str) -> str | None:
+        submodule = self.get(flow_slug, "submodule")
+        if submodule is None:
             return None
         return (
             "https://prefecthq.github.io/"
-            f"{location.replace('.', '/').replace('_', '-')}/"
-            f"#{location}."
-            f"{flow_name.replace('-', '_')}"
+            f"{submodule.replace('.', '/').replace('_', '-')}/"
+            f"#{submodule}."
+            f"{flow_slug}"
         )
 
 

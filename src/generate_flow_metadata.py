@@ -10,7 +10,13 @@ from prefect import Flow, flow, task
 from prefect.utilities.importtools import load_module
 
 from schemas import flow_schema
-from utils import FlowLinks, get_logo_url_for_collection, skip_parsing, submit_updates
+from utils import (
+    FlowLinks,
+    get_collection_names,
+    get_logo_url_for_collection,
+    skip_parsing,
+    submit_updates,
+)
 
 skip_sections = {"parameters", "raises"}
 
@@ -48,7 +54,8 @@ def summarize_flow(flow: Flow, collection_name: str):
 
     links = FlowLinks.load("collections")
 
-    flow_filepath = links.get(flow.name, "path")
+    flow_filepath = links.get(flow.fn.__name__, "path")
+
     flow_summary = dict(
         sorted(
             {
@@ -56,12 +63,12 @@ def summarize_flow(flow: Flow, collection_name: str):
                 "slug": flow.fn.__name__,
                 "parameters": dict(flow.parameters),
                 "description": {**parse_flow_docstring(flow)},
-                "documentation_url": links.get_doc_url(flow.name),
+                "documentation_url": links.get_doc_url(flow.fn.__name__),
                 "logo_url": get_logo_url_for_collection(collection_name),
                 "install_command": f"pip install {collection_name}",
                 "path_containing_flow": flow_filepath,
                 "entrypoint": f"{flow_filepath}:{flow.fn.__name__}",
-                "collection_repo_url": f"https://github.com/PrefectHQ/{collection_name}",
+                "repo_url": f"https://github.com/PrefectHQ/{collection_name}",
             }.items()
         )
     )
@@ -103,8 +110,10 @@ def find_flows_in_module(
                     if isinstance(obj, Flow):
                         path = submodule.__name__.replace(".", "/") + ".py"
                         flow_locations = FlowLinks.load("collections")
-                        flow_locations.set(obj.name, "path", path)
-                        flow_locations.set(obj.name, "submodule", submodule.__name__)
+                        flow_locations.set(obj.fn.__name__, "path", path)
+                        flow_locations.set(
+                            obj.fn.__name__, "submodule", submodule.__name__
+                        )
                         flow_locations.save("collections", overwrite=True)
                         yield obj
 
@@ -136,5 +145,5 @@ def update_flow_metadata_for_collection(collection_name: str):
 
 
 if __name__ == "__main__":
-    # for collection_name in get_collection_names():
-    update_flow_metadata_for_collection("prefect-airbyte")
+    for collection_name in get_collection_names():
+        update_flow_metadata_for_collection(collection_name)

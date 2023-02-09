@@ -80,7 +80,7 @@ TODO
         "entrypoint": {
             "type": "string"
         },
-        "collection_repo_url": {
+        "repo_url": {
             "type": "string"
         }
     },
@@ -94,7 +94,7 @@ TODO
         "install_command",
         "path_containing_flow",
         "entrypoint",
-        "collection_repo_url"
+        "repo_url"
     ],
 }
 ```
