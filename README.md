@@ -113,8 +113,3 @@ Run the tests:
 ```bash
 pytest
 ```
-
-Register the blocks on your workspace:
-```bash
-prefect block register -f src/utils.py
-```
