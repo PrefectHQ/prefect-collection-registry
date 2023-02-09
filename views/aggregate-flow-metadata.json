@@ -1,7 +1,6 @@
 {
     "prefect-airbyte": {
         "run-connection-sync": {
-            "collection_repo_url": "https://github.com/PrefectHQ/prefect-airbyte",
             "description": {
                 "summary": "A flow that triggers a sync of an Airbyte connection and waits for it to complete.",
                 "returns": "`AirbyteSyncResult`: Model containing metadata for the `AirbyteSync`.",
@@ -141,6 +140,7 @@
                 }
             },
             "path_containing_flow": "prefect_airbyte/flows.py",
+            "repo_url": "https://github.com/PrefectHQ/prefect-airbyte",
             "slug": "run_connection_sync"
         }
     },
