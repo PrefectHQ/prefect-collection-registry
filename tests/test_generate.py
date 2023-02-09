@@ -8,7 +8,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")
 
 import pytest
 
-from src import generate_flow_metadata
+from src.generate_flow_metadata import find_flows_in_module
 
 
 class TestGenerateFlowMetadata:
@@ -24,10 +24,7 @@ class TestGenerateFlowMetadata:
         majewel = load_module(module_name)
 
         flows = {
-            flow.name: flow
-            for flow in list(
-                generate_flow_metadata.find_flows_in_module(majewel.__name__)
-            )
+            flow.name: flow for flow in list(find_flows_in_module(majewel.__name__))
         }
 
         assert list(flows.keys()) == sorted(expected_flows)

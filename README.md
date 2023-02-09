@@ -39,108 +39,63 @@ prefect-collection-registry/
 ```
 
 ## Structure of Metadata Files
-Metadata files are stored in JSON format. The structure of each JSON for a given release is as follows:
+Metadata files are stored in JSON format. The structure of each JSON is validated against a JSON schema.
 
 ### Block Metadata
-```json
-    {
-        "prefect-collection-that-defines-block": {
-            "block-slug": {
-                "name": "Block Name",
-                "slug": "block-slug",
-                "logo_url": "https://images.ctfassets.net/example.png",
-                "documentation_url": "https://docs.prefect.io/api-ref/prefect/blocks/...",
-                "description": "A block that represents something",
-                "code_example": "block code example",
-                "block_schema": {
-                "checksum": "sha256:...",
-                "fields": {
-                    "title": "Block Title",
-                    "description": "A block that represents something",
-                    "type": "object",
-                    "properties": {
-                    "value": {
-                        "title": "Value",
-                        "description": "A description of block attr.",
-                        "type": "string",
-                        "format": "date-time"
-                    }
-                    },
-                    "required": [
-                    "value"
-                    ],
-                    "block_type_slug": "block-slug",
-                    "secret_fields": [],
-                    "block_schema_references": {}
-                },
-                "capabilities": [],
-                "version": "2.7.12"
-                }
-            }
-        }
-    }
-```
+TODO
 
 ### Collection Metadata
-```json
-{
-    "collection-name": {
-        "name": "collection-name",
-        "author": "Prefect Technologies, Inc.",
-        "latest_version": "0.2.0",
-        "downloads": {
-            "last_day": -1,
-            "last_month": -1,
-            "last_week": -1
-        },
-        "keywords": "prefect",
-        "home_page": "https://github.com/PrefectHQ/collection-name",
-        "package_url": "https://pypi.org/project/collection-name/",
-        "requires_dist": [
-            "prefect (>=2.0.0)",
-            ...
-        ],
-        "requires_python": ">=3.7"
-    }
-}
-```
+TODO
 
 ### Flow Metadata
 ```json
 {
-    "prefect-collection-that-defines-flow": {
-        "some-prefect-flow": {
-            "name": "some-prefect-flow",
-            "parameters": {
-                "title": "Parameters",
-                "type": "object",
-                "properties": {
-                    "flow_parameter": {
-                        "title": "flow_parameter",
-                        "description": "Description of flow parameter.",
-                        "position": 0,
-                        "allOf": [
-                            {
-                                "$ref": "#/definitions/FlowParameter"
-                            }
-                        ]
-                    }
-                },
-                "required": [
-                    "flow_parameter"
-                ],
-                "definitions": { ... Schema of flow parameter, if applicable... }
-            },
-            "install_command": "pip install prefect-collection",
-            "description": {
-                "summary": "First line of the docstring",
-                "returns": "Description of the return value per docstring",
-                "examples": [
-                    "from prefect_collection import flow\nflow()",
-                ]
-            }
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+        "name": {
+            "type": "string"
+        },
+        "slug": {
+            "type": "string"
+        },
+        "parameters": {
+            "type": "object"
+        },
+        "description": {
+            "type": "object"
+        },
+        "documentation_url": {
+            "type": "string"
+        },
+        "logo_url": {
+            "type": "string"
+        },
+        "install_command": {
+            "type": "string"
+        },
+        "path_containing_flow": {
+            "type": "string"
+        },
+        "entrypoint": {
+            "type": "string"
+        },
+        "collection_repo_url": {
+            "type": "string"
         }
-    }
+    },
+    "required": [
+        "name",
+        "slug",
+        "parameters",
+        "description",
+        "documentation_url",
+        "logo_url",
+        "install_command",
+        "path_containing_flow",
+        "entrypoint",
+        "collection_repo_url"
+    ],
 }
 ```
 
@@ -156,4 +111,9 @@ pip install .
 Run the tests:
 ```bash
 pytest
+```
+
+Register the blocks on your workspace:
+```bash
+prefect block register -f src/utils.py
 ```

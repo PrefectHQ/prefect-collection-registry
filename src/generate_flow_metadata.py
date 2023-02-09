@@ -5,16 +5,12 @@ from typing import Any, Dict, Generator
 
 from griffe.dataclasses import Docstring
 from griffe.docstrings.parsers import Parser, parse
+from jsonschema import validate
 from prefect import Flow, flow, task
 from prefect.utilities.importtools import load_module
 
-from utils import (
-    FlowLinks,
-    get_collection_names,
-    get_logo_url_for_collection,
-    skip_parsing,
-    submit_updates,
-)
+from schemas import flow_schema
+from utils import FlowLinks, get_logo_url_for_collection, skip_parsing, submit_updates
 
 skip_sections = {"parameters", "raises"}
 
@@ -53,7 +49,7 @@ def summarize_flow(flow: Flow, collection_name: str):
     links = FlowLinks.load("collections")
 
     flow_filepath = links.get(flow.name, "path")
-    return dict(
+    flow_summary = dict(
         sorted(
             {
                 "name": flow.name,
@@ -69,6 +65,10 @@ def summarize_flow(flow: Flow, collection_name: str):
             }.items()
         )
     )
+
+    validate(flow_summary, flow_schema)
+
+    return flow_summary
 
 
 def find_flows_in_module(
@@ -136,5 +136,5 @@ def update_flow_metadata_for_collection(collection_name: str):
 
 
 if __name__ == "__main__":
-    for collection_name in get_collection_names():
-        update_flow_metadata_for_collection(collection_name)
+    # for collection_name in get_collection_names():
+    update_flow_metadata_for_collection("prefect-airbyte")
