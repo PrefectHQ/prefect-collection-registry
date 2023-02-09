@@ -423,11 +423,10 @@
     "prefect-dask": {},
     "prefect-databricks": {
         "Submit jobs runs and wait for completion": {
-            "collection_repo_url": "https://github.com/PrefectHQ/prefect-databricks",
             "description": {
                 "summary": "Triggers a Databricks jobs runs and waits for the triggered runs to complete."
             },
-            "documentation_url": "https://prefecthq.github.io/prefect-databricks/flows/#prefect_databricks.flows.Submit jobs runs and wait for completion",
+            "documentation_url": "https://prefecthq.github.io/prefect-databricks/flows/#prefect_databricks.flows.jobs_runs_submit_and_wait_for_completion",
             "entrypoint": "prefect_databricks/flows.py:jobs_runs_submit_and_wait_for_completion",
             "install_command": "pip install prefect-databricks",
             "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5GTHI1PH2dTiantfps6Fnc/1c750fab7f4c14ea1b93a62b9fea6a94/databricks_logo_icon_170295.png?h=250",
@@ -1645,14 +1644,14 @@
                 }
             },
             "path_containing_flow": "prefect_databricks/flows.py",
+            "repo_url": "https://github.com/PrefectHQ/prefect-databricks",
             "slug": "jobs_runs_submit_and_wait_for_completion"
         },
         "Wait for completion of jobs runs": {
-            "collection_repo_url": "https://github.com/PrefectHQ/prefect-databricks",
             "description": {
                 "summary": "Waits for the jobs runs to finish running"
             },
-            "documentation_url": "https://prefecthq.github.io/prefect-databricks/flows/#prefect_databricks.flows.Wait for completion of jobs runs",
+            "documentation_url": "https://prefecthq.github.io/prefect-databricks/flows/#prefect_databricks.flows.jobs_runs_wait_for_completion",
             "entrypoint": "prefect_databricks/flows.py:jobs_runs_wait_for_completion",
             "install_command": "pip install prefect-databricks",
             "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5GTHI1PH2dTiantfps6Fnc/1c750fab7f4c14ea1b93a62b9fea6a94/databricks_logo_icon_170295.png?h=250",
@@ -1738,6 +1737,7 @@
                 }
             },
             "path_containing_flow": "prefect_databricks/flows.py",
+            "repo_url": "https://github.com/PrefectHQ/prefect-databricks",
             "slug": "jobs_runs_wait_for_completion"
         }
     },
