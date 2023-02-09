@@ -8,7 +8,7 @@ from griffe.docstrings.parsers import Parser, parse
 from prefect import Flow, flow, task
 from prefect.utilities.importtools import load_module
 
-from utils import skip_parsing, submit_updates
+from utils import FlowLinks, get_logo_url_for_collection, skip_parsing, submit_updates
 
 skip_sections = {"parameters", "raises"}
 
@@ -43,11 +43,18 @@ def parse_flow_docstring(flow: Flow) -> Dict[str, Any]:
 
 
 def summarize_flow(flow: Flow, collection_name: str):
+
+    links = FlowLinks.load("collections")
+
     return {
         "name": flow.name,
         "parameters": dict(flow.parameters),
-        "install_command": f"pip install {collection_name}",
         "description": {**parse_flow_docstring(flow)},
+        "documentation_url": links.get_doc_url(flow.name),
+        "logo_url": get_logo_url_for_collection(collection_name),
+        "install_command": f"pip install {collection_name}",
+        "location_in_collection": links.get(flow.name, "location"),
+        "collection_repo_url": f"https://github.com/PrefectHQ/{collection_name}",
     }
 
 
@@ -81,6 +88,9 @@ def find_flows_in_module(
                     if skip_parsing(name, obj, module_name):
                         continue
                     if isinstance(obj, Flow):
+                        flow_locations = FlowLinks.load("collections")
+                        flow_locations.set(obj.name, "location", submodule.__name__)
+                        flow_locations.save("collections", overwrite=True)
                         yield obj
 
 
@@ -107,8 +117,11 @@ def generate_flow_metadata(collection_name: str) -> Dict[str, Any]:
 @flow(log_prints=True)
 def update_flow_metadata_for_collection(collection_name: str):
     collection_flow_metadata = generate_flow_metadata(collection_name)
+
+    # print(json.dumps(collection_flow_metadata, indent=4))
     submit_updates(collection_flow_metadata, "flow")
 
 
 if __name__ == "__main__":
-    update_flow_metadata_for_collection("prefect-airbyte")
+    # for collection_name in get_collection_names():
+    update_flow_metadata_for_collection("prefect-twitter")

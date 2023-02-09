@@ -45,17 +45,13 @@ async def create_ref_if_not_exists(collection_name: str, branch_name: str):
     gh = github3.login(token=github_token.get())
     repo = gh.repository("PrefectHQ", "prefect-collection-registry")
 
-    latest_release = (
-        gh.repository("PrefectHQ", collection_name).latest_release().tag_name
-    )
-
     try:
         repo.create_ref(
             ref=f"refs/heads/{branch_name}",
             sha=repo.commit(sha="main").sha,
         )
+        print(f"Created ref {branch_name!r} on {repo.full_name!r}!")
 
-        print(f"Created ref {branch_name!r} for {collection_name} {latest_release}")
     except github3.exceptions.UnprocessableEntity as e:
         if "Reference already exists" in str(e):
             print(f"Ref {branch_name!r} already exists!")

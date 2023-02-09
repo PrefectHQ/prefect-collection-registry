@@ -30,6 +30,37 @@ class LatestReleases(Block):
         self.releases[collection_name] = release
 
 
+class FlowLinks(Block):
+    _block_type_slug = "flow-links"
+
+    links: Dict[str, Any] = Field(
+        default_factory=dict,
+        description="A dictionary of the locations of each flow in a collection.",
+    )
+
+    def get(self, flow_name: str, key: str) -> str | None:
+        if flow_name not in self.links or key not in self.links[flow_name]:
+            return None
+        return self.links[flow_name][key]
+
+    def set(self, flow_name: str, key: str, value: str) -> None:
+
+        if flow_name not in self.links:
+            self.links[flow_name] = {}
+
+        self.links[flow_name][key] = value
+
+    def get_doc_url(self, flow_name: str) -> str | None:
+        location = self.get(flow_name, "location")
+        if location is None:
+            return None
+        return (
+            "https://prefecthq.github.io/"
+            f"{location.replace('.', '/').replace('_', '-')}/"
+            f"#{location}"
+        )
+
+
 def get_collection_names():
     catalog_resp = httpx.get("https://docs.prefect.io/collections/catalog/")
     catalog_soup = BeautifulSoup(catalog_resp.text, "html.parser")
@@ -127,3 +158,28 @@ def submit_updates(
     print(
         f"Updated aggregate {variety} metadata for {collection_name} {latest_release}!"
     )
+
+
+def read_view_content(view: Literal["block", "flow", "collection"]) -> Dict[str, Any]:
+    """Reads the content of a view from the views directory."""
+
+    repo_organization = "PrefectHQ"
+    repo_name = "prefect-collection-registry"
+
+    repo_url = f"https://raw.githubusercontent.com/{repo_organization}/{repo_name}/main"
+
+    view_filename = f"aggregate-{view}-metadata.json"
+
+    resp = httpx.get(repo_url + f"/views/{view_filename}")
+    resp.raise_for_status()
+    return resp.json()
+
+
+def get_logo_url_for_collection(collection_name: str) -> str:
+    """Returns the URL of the logo for a collection."""
+
+    blocks_metadata = read_view_content("block")
+
+    block_types_from_collection = blocks_metadata[collection_name]["block_types"]
+
+    return block_types_from_collection.popitem()[1]["logo_url"]
