@@ -2691,7 +2691,6 @@
     "prefect-monday": {},
     "prefect-monte-carlo": {
         "create-or-update-lineage": {
-            "collection_repo_url": "https://github.com/PrefectHQ/prefect-monte-carlo",
             "description": {
                 "summary": "Create or update a `source` node, `destination` node, and the edge that connects them."
             },
@@ -2831,6 +2830,7 @@
                 }
             },
             "path_containing_flow": "prefect_monte_carlo/lineage.py",
+            "repo_url": "https://github.com/PrefectHQ/prefect-monte-carlo",
             "slug": "create_or_update_lineage"
         }
     },
