@@ -1,6 +1,6 @@
 {
     "prefect-airbyte": {
-        "run-connection-sync": {
+        "run_connection_sync": {
             "description": {
                 "summary": "A flow that triggers a sync of an Airbyte connection and waits for it to complete.",
                 "returns": "`AirbyteSyncResult`: Model containing metadata for the `AirbyteSync`.",
