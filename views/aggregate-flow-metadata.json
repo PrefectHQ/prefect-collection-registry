@@ -2690,7 +2690,7 @@
     },
     "prefect-monday": {},
     "prefect-monte-carlo": {
-        "create-or-update-lineage": {
+        "create_or_update_lineage": {
             "description": {
                 "summary": "Create or update a `source` node, `destination` node, and the edge that connects them."
             },
