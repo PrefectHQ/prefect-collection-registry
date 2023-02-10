@@ -262,8 +262,8 @@
             "description": {
                 "summary": "Waits for the Census sync run to finish running."
             },
-            "documentation_url": "https://prefecthq.github.io/prefect-census/syncs/#prefect_census.syncs.wait_census_sync_completion",
-            "entrypoint": "prefect_census/syncs.py:wait_census_sync_completion",
+            "documentation_url": "https://prefecthq.github.io/prefect-census/runs/#prefect_census.runs.wait_census_sync_completion",
+            "entrypoint": "prefect_census/runs.py:wait_census_sync_completion",
             "install_command": "pip install prefect-census",
             "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/3oznRx2UFkd2XyqNkEZpzB/4e0967a828aec5e2527cedadf8d24e8a/llmjpn8a0pgu8szjmnyi.webp?h=250",
             "name": "Wait for Census sync run",
@@ -331,7 +331,7 @@
                     }
                 }
             },
-            "path_containing_flow": "prefect_census/syncs.py",
+            "path_containing_flow": "prefect_census/runs.py",
             "repo_url": "https://github.com/PrefectHQ/prefect-census",
             "slug": "wait_census_sync_completion"
         },
