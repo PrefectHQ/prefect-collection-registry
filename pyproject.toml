@@ -1,0 +1,9 @@
+[tool.poetry]
+name = "prefect-collection-registry"
+version = "0.1.0"
+
+[tool.poetry.dependencies]
+prefect = "^2.7.12"
+jsonschema = "^4.17.3"
+pytest = "^6.1.0"
+prefect_airbyte = "^0.2.0"

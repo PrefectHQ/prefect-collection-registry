@@ -11,7 +11,7 @@ flow_schema = {
         "install_command": {"type": "string"},
         "path_containing_flow": {"type": "string"},
         "entrypoint": {"type": "string"},
-        "collection_repo_url": {"type": "string"},
+        "repo_url": {"type": "string"},
     },
     "required": [
         "name",
@@ -23,6 +23,6 @@ flow_schema = {
         "install_command",
         "path_containing_flow",
         "entrypoint",
-        "collection_repo_url",
+        "repo_url",
     ],
 }
