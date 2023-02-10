@@ -2355,7 +2355,7 @@
         }
     },
     "prefect-hightouch": {
-        "trigger-sync-run-and-wait-for-completion": {
+        "trigger_sync_run_and_wait_for_completion": {
             "description": {
                 "summary": "Flow that triggers a sync run and waits for the triggered run to complete.",
                 "returns": "- `id`: `str`<br>\n- `slug`: `str`<br>\n- `workspace_id`: `str`<br>\n- `created_at`: `str`<br>\n- `updated_at`: `str`<br>\n- `destination_id`: `str`<br>\n- `model_id`: `str`<br>\n- `configuration`: `Dict`<br>\n- `schedule`: `Dict`<br>\n- `status`: `\"models.SyncStatus\"`<br>\n- `disabled`: `bool`<br>\n- `last_run_at`: `str`<br>\n- `referenced_columns`: `List[str]`<br>\n- `primary_key`: `str`<br>"
@@ -2451,7 +2451,7 @@
             "repo_url": "https://github.com/PrefectHQ/prefect-hightouch",
             "slug": "trigger_sync_run_and_wait_for_completion"
         },
-        "wait-for-sync-run-completion": {
+        "wait_for_sync_run_completion": {
             "description": {
                 "summary": "Flow that waits for the triggered sync run to complete.",
                 "returns": "- `value`\n- `id`: `str`<br>\n- `slug`: `str`<br>\n- `workspace_id`: `str`<br>\n- `created_at`: `str`<br>\n- `updated_at`: `str`<br>\n- `destination_id`: `str`<br>\n- `model_id`: `str`<br>\n- `configuration`: `Dict`<br>\n- `schedule`: `Dict`<br>\n- `status`: `\"api_models.SyncStatus\"`<br>\n- `disabled`: `bool`<br>\n- `last_run_at`: `str`<br>\n- `referenced_columns`: `List[str]`<br>\n- `primary_key`: `str`<br>"
