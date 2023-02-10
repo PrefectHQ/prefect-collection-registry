@@ -1,6 +1,5 @@
 import inspect
 import json
-from collections import defaultdict
 from pkgutil import iter_modules
 from types import ModuleType
 from typing import Any, Callable, Dict, Generator, Union
@@ -9,10 +8,8 @@ import github3
 import httpx
 from bs4 import BeautifulSoup
 from prefect import Flow, task
-from prefect.blocks.core import Block
 from prefect.blocks.system import Secret
 from prefect.utilities.importtools import load_module, to_qualified_name
-from pydantic import Field
 from typing_extensions import Literal
 
 exclude_collections = {
@@ -21,47 +18,6 @@ exclude_collections = {
         "prefect-ray",
     ]
 }
-
-
-class KV(Block):
-    """A block for storing arbitrary kv pairs for each flow in a collection.
-
-    Example:
-        ```python
-        from utils import KV
-        kv = KV.load("collections")
-        kv.set("my_flow", "path", "path/to/my_flow.py")
-        assert kv.get("my_flow", "path") == "path/to/my_flow.py"
-    """
-
-    _block_type_slug = "kv"
-
-    value: Dict[str, Dict[str, Any]] = Field(
-        default_factory=lambda: defaultdict(dict),
-        description="A dictionary of the locations of each flow in a collection.",
-    )
-
-    def get(self, flow_slug: str, key: str) -> Any | None:
-        if flow_slug in self.value:
-            return self.value[flow_slug].get(key)
-        raise KeyError(f"{flow_slug!r} not found.")
-
-    def set(self, flow_slug: str, key: str, value: Any):
-        self.value.setdefault(flow_slug, {})[key] = value
-
-    def get_path(self, flow_slug: str) -> str | None:
-        submodule = self.get(flow_slug, "submodule")
-        if submodule:
-            return f"{submodule.replace('.', '/')}.py"
-
-    def get_doc_url(self, flow_slug: str) -> str | None:
-        if (submodule := self.get(flow_slug, "submodule")) is not None:
-            return (
-                "https://prefecthq.github.io/"
-                f"{submodule.replace('.', '/').replace('_', '-')}/"
-                f"#{submodule}."
-                f"{flow_slug}"
-            )
 
 
 def skip_parsing(name: str, obj: Union[ModuleType, Callable], module_nesting: str):
@@ -76,12 +32,6 @@ def skip_parsing(name: str, obj: Union[ModuleType, Callable], module_nesting: st
     except AttributeError:
         wrong_module = False
     return obj.__doc__ is None or name.startswith("_") or wrong_module
-
-
-def mark_flow_location(obj: Flow):
-    flow_locations = KV.load("collections")
-    flow_locations.set(obj.fn.__name__, "submodule", obj.fn.__module__)
-    flow_locations.save("collections", overwrite=True)
 
 
 def find_flows_in_module(
@@ -108,7 +58,6 @@ def find_flows_in_module(
                 if skip_parsing(name, obj, module_name):
                     continue
                 if isinstance(obj, Flow):
-                    mark_flow_location(obj)
                     yield obj
 
 
@@ -143,7 +92,7 @@ def submit_updates(
     # create a new commit adding the collection version metadata
     try:
         repo.create_file(
-            path=f"{variety}s/{collection_name}/{latest_release}.json",
+            path=f"collections/{collection_name}/{variety}s/{latest_release}.json",
             message=f"Add {collection_name} {latest_release} to {variety} records",
             content=json.dumps(collection_metadata, indent=4).encode("utf-8"),
             branch=branch_name,

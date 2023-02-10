@@ -7,13 +7,8 @@ from jsonschema import validate
 from prefect import Flow, flow, task
 from prefect.utilities.importtools import load_module
 
+import utils
 from schemas import flow_schema
-from utils import (
-    KV,
-    find_flows_in_module,
-    get_logo_url_for_collection,
-    submit_updates,
-)
 
 SKIP_SECTIONS = {"parameters", "raises"}
 
@@ -46,11 +41,18 @@ def parse_flow_docstring(flow: Flow) -> Dict[str, Any]:
     return docstring_sections
 
 
+def get_doc_url(flow: Flow) -> str:
+    return (
+        "https://prefecthq.github.io/"
+        f"{flow.fn.__module__.replace('.', '/').replace('_', '-')}/"
+        f"#{flow.fn.__module__}."
+        f"{flow.fn.__name__}"
+    )
+
+
 def summarize_flow(flow: Flow, collection_name: str):
 
-    flows_kv = KV.load("collections")
-
-    flow_filepath = flows_kv.get_path(flow.fn.__name__)
+    flow_filepath = f"{flow.fn.__module__.replace('.', '/')}.py"
 
     flow_summary = dict(
         sorted(
@@ -59,8 +61,8 @@ def summarize_flow(flow: Flow, collection_name: str):
                 "slug": flow.fn.__name__,
                 "parameters": dict(flow.parameters),
                 "description": {**parse_flow_docstring(flow)},
-                "documentation_url": flows_kv.get_doc_url(flow.fn.__name__),
-                "logo_url": get_logo_url_for_collection(collection_name),
+                "documentation_url": get_doc_url(flow),
+                "logo_url": utils.get_logo_url_for_collection(collection_name),
                 "install_command": f"pip install {collection_name}",
                 "path_containing_flow": flow_filepath,
                 "entrypoint": f"{flow_filepath}:{flow.fn.__name__}",
@@ -87,7 +89,7 @@ def generate_flow_metadata(collection_name: str) -> Dict[str, Any]:
     return {
         collection_name: {
             flow.fn.__name__: summarize_flow(flow, collection_name)
-            for flow in find_flows_in_module(collection_slug)
+            for flow in utils.find_flows_in_module(collection_slug)
         }
     }
 
@@ -96,9 +98,8 @@ def generate_flow_metadata(collection_name: str) -> Dict[str, Any]:
 def update_flow_metadata_for_collection(collection_name: str):
     """Generates and submits flow metadata for a given collection."""
     collection_flow_metadata = generate_flow_metadata(collection_name)
-    submit_updates(collection_flow_metadata, "flow")
+    utils.submit_updates(collection_flow_metadata, "flow")
 
 
-# if __name__ == "__main__":
-#     for collection_name in get_collection_names():
-#         update_flow_metadata_for_collection(collection_name)
+if __name__ == "__main__":
+    update_flow_metadata_for_collection("prefect-airbyte")
