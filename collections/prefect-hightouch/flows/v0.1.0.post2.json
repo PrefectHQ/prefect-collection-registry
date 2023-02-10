@@ -1,0 +1,189 @@
+{
+    "prefect-hightouch": {
+        "trigger_sync_run_and_wait_for_completion": {
+            "description": {
+                "summary": "Flow that triggers a sync run and waits for the triggered run to complete.",
+                "returns": "- `id`: `str`<br>\n- `slug`: `str`<br>\n- `workspace_id`: `str`<br>\n- `created_at`: `str`<br>\n- `updated_at`: `str`<br>\n- `destination_id`: `str`<br>\n- `model_id`: `str`<br>\n- `configuration`: `Dict`<br>\n- `schedule`: `Dict`<br>\n- `status`: `\"models.SyncStatus\"`<br>\n- `disabled`: `bool`<br>\n- `last_run_at`: `str`<br>\n- `referenced_columns`: `List[str]`<br>\n- `primary_key`: `str`<br>"
+            },
+            "documentation_url": "https://prefecthq.github.io/prefect-hightouch/syncs/flows/#prefect_hightouch.syncs.flows.trigger_sync_run_and_wait_for_completion",
+            "entrypoint": "prefect_hightouch/syncs/flows.py:trigger_sync_run_and_wait_for_completion",
+            "install_command": "pip install prefect-hightouch",
+            "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/6WT9DIXFrqQy0nA9VRZfuL/40a7039742fca9d053677f58a79aacd5/hightouch.png?h=250",
+            "name": "trigger-sync-run-and-wait-for-completion",
+            "parameters": {
+                "title": "Parameters",
+                "type": "object",
+                "properties": {
+                    "hightouch_credentials": {
+                        "title": "hightouch_credentials",
+                        "description": "Credentials to use for authentication with Hightouch.",
+                        "position": 0,
+                        "allOf": [
+                            {
+                                "$ref": "#/definitions/HightouchCredentials"
+                            }
+                        ]
+                    },
+                    "sync_id": {
+                        "title": "sync_id",
+                        "description": "Sync ID used in formatting the endpoint URL.",
+                        "position": 1,
+                        "type": "string"
+                    },
+                    "full_resync": {
+                        "title": "full_resync",
+                        "description": "Whether to resync all the rows in the query\n(i.e. ignoring previously synced rows).",
+                        "default": false,
+                        "position": 2,
+                        "type": "boolean"
+                    },
+                    "max_wait_seconds": {
+                        "title": "max_wait_seconds",
+                        "description": "Maximum number of seconds to wait for the entire\nflow to complete.",
+                        "default": 900,
+                        "position": 3,
+                        "type": "integer"
+                    },
+                    "poll_frequency_seconds": {
+                        "title": "poll_frequency_seconds",
+                        "description": "Number of seconds to wait in between checks for\nrun completion.",
+                        "default": 10,
+                        "position": 4,
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "hightouch_credentials",
+                    "sync_id"
+                ],
+                "definitions": {
+                    "HightouchCredentials": {
+                        "title": "HightouchCredentials",
+                        "description": "Block used to manage Hightouch authentication.",
+                        "type": "object",
+                        "properties": {
+                            "token": {
+                                "title": "Token",
+                                "description": "Token used for authentication.",
+                                "type": "string",
+                                "writeOnly": true,
+                                "format": "password"
+                            },
+                            "timeout": {
+                                "title": "Timeout",
+                                "description": "Number of seconds before the request times out.",
+                                "default": 5.0,
+                                "type": "number"
+                            },
+                            "client_kwargs": {
+                                "title": "Additional configuration",
+                                "description": "Additional keyword arguments to pass to `prefect_hightouch.api_client.client.AuthenticatedClient`.",
+                                "type": "object"
+                            }
+                        },
+                        "required": [
+                            "token"
+                        ],
+                        "block_type_slug": "hightouch-credentials",
+                        "secret_fields": [
+                            "token"
+                        ],
+                        "block_schema_references": {}
+                    }
+                }
+            },
+            "path_containing_flow": "prefect_hightouch/syncs/flows.py",
+            "repo_url": "https://github.com/PrefectHQ/prefect-hightouch",
+            "slug": "trigger_sync_run_and_wait_for_completion"
+        },
+        "wait_for_sync_run_completion": {
+            "description": {
+                "summary": "Flow that waits for the triggered sync run to complete.",
+                "returns": "- `value`\n- `id`: `str`<br>\n- `slug`: `str`<br>\n- `workspace_id`: `str`<br>\n- `created_at`: `str`<br>\n- `updated_at`: `str`<br>\n- `destination_id`: `str`<br>\n- `model_id`: `str`<br>\n- `configuration`: `Dict`<br>\n- `schedule`: `Dict`<br>\n- `status`: `\"api_models.SyncStatus\"`<br>\n- `disabled`: `bool`<br>\n- `last_run_at`: `str`<br>\n- `referenced_columns`: `List[str]`<br>\n- `primary_key`: `str`<br>"
+            },
+            "documentation_url": "https://prefecthq.github.io/prefect-hightouch/syncs/flows/#prefect_hightouch.syncs.flows.wait_for_sync_run_completion",
+            "entrypoint": "prefect_hightouch/syncs/flows.py:wait_for_sync_run_completion",
+            "install_command": "pip install prefect-hightouch",
+            "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/6WT9DIXFrqQy0nA9VRZfuL/40a7039742fca9d053677f58a79aacd5/hightouch.png?h=250",
+            "name": "wait-for-sync-run-completion",
+            "parameters": {
+                "title": "Parameters",
+                "type": "object",
+                "properties": {
+                    "hightouch_credentials": {
+                        "title": "hightouch_credentials",
+                        "description": "Credentials to use for authentication with Hightouch.",
+                        "position": 0,
+                        "allOf": [
+                            {
+                                "$ref": "#/definitions/HightouchCredentials"
+                            }
+                        ]
+                    },
+                    "sync_id": {
+                        "title": "sync_id",
+                        "description": "Sync ID used in formatting the endpoint URL.",
+                        "position": 1,
+                        "type": "string"
+                    },
+                    "max_wait_seconds": {
+                        "title": "max_wait_seconds",
+                        "description": "Maximum number of seconds to wait for the\nentire flow to complete.",
+                        "default": 900,
+                        "position": 2,
+                        "type": "integer"
+                    },
+                    "poll_frequency_seconds": {
+                        "title": "poll_frequency_seconds",
+                        "description": "Number of seconds to wait in between checks for\nrun completion.",
+                        "default": 10,
+                        "position": 3,
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "hightouch_credentials",
+                    "sync_id"
+                ],
+                "definitions": {
+                    "HightouchCredentials": {
+                        "title": "HightouchCredentials",
+                        "description": "Block used to manage Hightouch authentication.",
+                        "type": "object",
+                        "properties": {
+                            "token": {
+                                "title": "Token",
+                                "description": "Token used for authentication.",
+                                "type": "string",
+                                "writeOnly": true,
+                                "format": "password"
+                            },
+                            "timeout": {
+                                "title": "Timeout",
+                                "description": "Number of seconds before the request times out.",
+                                "default": 5.0,
+                                "type": "number"
+                            },
+                            "client_kwargs": {
+                                "title": "Additional configuration",
+                                "description": "Additional keyword arguments to pass to `prefect_hightouch.api_client.client.AuthenticatedClient`.",
+                                "type": "object"
+                            }
+                        },
+                        "required": [
+                            "token"
+                        ],
+                        "block_type_slug": "hightouch-credentials",
+                        "secret_fields": [
+                            "token"
+                        ],
+                        "block_schema_references": {}
+                    }
+                }
+            },
+            "path_containing_flow": "prefect_hightouch/syncs/flows.py",
+            "repo_url": "https://github.com/PrefectHQ/prefect-hightouch",
+            "slug": "wait_for_sync_run_completion"
+        }
+    }
+}
