@@ -1,6 +1,6 @@
 {
     "prefect-airbyte": {
-        "run-connection-sync": {
+        "run_connection_sync": {
             "description": {
                 "summary": "A flow that triggers a sync of an Airbyte connection and waits for it to complete.",
                 "returns": "`AirbyteSyncResult`: Model containing metadata for the `AirbyteSync`.",
@@ -148,7 +148,7 @@
     "prefect-azure": {},
     "prefect-bitbucket": {},
     "prefect-census": {
-        "run-census-sync": {
+        "run_census_sync": {
             "description": {
                 "summary": "A flow for triggering a Census sync run and waiting for completion.",
                 "returns": "The result of the sync run."
@@ -258,7 +258,7 @@
             "repo_url": "https://github.com/PrefectHQ/prefect-census",
             "slug": "run_census_sync"
         },
-        "Wait for Census sync run": {
+        "wait_census_sync_completion": {
             "description": {
                 "summary": "Waits for the Census sync run to finish running."
             },
@@ -335,7 +335,7 @@
             "repo_url": "https://github.com/PrefectHQ/prefect-census",
             "slug": "wait_census_sync_completion"
         },
-        "Trigger Census sync run and wait for completion": {
+        "trigger_census_sync_run_and_wait_for_completion": {
             "description": {
                 "summary": "Triggers a Census sync run and waits for thetriggered run to complete."
             },
@@ -422,7 +422,7 @@
     },
     "prefect-dask": {},
     "prefect-databricks": {
-        "Submit jobs runs and wait for completion": {
+        "jobs_runs_submit_and_wait_for_completion": {
             "description": {
                 "summary": "Triggers a Databricks jobs runs and waits for the triggered runs to complete."
             },
@@ -1647,7 +1647,7 @@
             "repo_url": "https://github.com/PrefectHQ/prefect-databricks",
             "slug": "jobs_runs_submit_and_wait_for_completion"
         },
-        "Wait for completion of jobs runs": {
+        "jobs_runs_wait_for_completion": {
             "description": {
                 "summary": "Waits for the jobs runs to finish running"
             },
@@ -1742,7 +1742,7 @@
         }
     },
     "prefect-dbt": {
-        "Retry subset of dbt Cloud job run and wait for completion": {
+        "retry_dbt_cloud_job_run_subset_and_wait_for_completion": {
             "description": {
                 "summary": "Retries a subset of dbt Cloud job run, filtered by select statuses, and waits for the triggered retry to complete."
             },
@@ -1901,7 +1901,7 @@
             "repo_url": "https://github.com/PrefectHQ/prefect-dbt",
             "slug": "retry_dbt_cloud_job_run_subset_and_wait_for_completion"
         },
-        "Trigger dbt Cloud job run and wait for completion": {
+        "trigger_dbt_cloud_job_run_and_wait_for_completion": {
             "description": {
                 "summary": "Triggers a dbt Cloud job run and waits for thetriggered run to complete."
             },
@@ -2067,7 +2067,7 @@
             "repo_url": "https://github.com/PrefectHQ/prefect-dbt",
             "slug": "trigger_dbt_cloud_job_run_and_wait_for_completion"
         },
-        "Wait for dbt Cloud job run": {
+        "wait_for_dbt_cloud_job_run": {
             "description": {
                 "summary": "Waits for a dbt Cloud job run to finish running."
             },
@@ -2165,7 +2165,7 @@
     "prefect-gitlab": {},
     "prefect-great-expectations": {},
     "prefect-hex": {
-        "trigger-project-run-and-wait-for-completion": {
+        "trigger_project_run_and_wait_for_completion": {
             "description": {
                 "summary": "Flow that triggers a project run and waits for the triggered run to complete.",
                 "returns": "Information about the triggered project run."
@@ -2262,7 +2262,7 @@
             "repo_url": "https://github.com/PrefectHQ/prefect-hex",
             "slug": "trigger_project_run_and_wait_for_completion"
         },
-        "wait-for-project-run-completion": {
+        "wait_for_project_run_completion": {
             "description": {
                 "summary": "Flow that waits for the triggered project run to complete.",
                 "returns": "The status of the project run and the metadata associated with the run."
@@ -2355,7 +2355,7 @@
         }
     },
     "prefect-hightouch": {
-        "trigger-sync-run-and-wait-for-completion": {
+        "trigger_sync_run_and_wait_for_completion": {
             "description": {
                 "summary": "Flow that triggers a sync run and waits for the triggered run to complete.",
                 "returns": "- `id`: `str`<br>\n- `slug`: `str`<br>\n- `workspace_id`: `str`<br>\n- `created_at`: `str`<br>\n- `updated_at`: `str`<br>\n- `destination_id`: `str`<br>\n- `model_id`: `str`<br>\n- `configuration`: `Dict`<br>\n- `schedule`: `Dict`<br>\n- `status`: `\"models.SyncStatus\"`<br>\n- `disabled`: `bool`<br>\n- `last_run_at`: `str`<br>\n- `referenced_columns`: `List[str]`<br>\n- `primary_key`: `str`<br>"
@@ -2451,7 +2451,7 @@
             "repo_url": "https://github.com/PrefectHQ/prefect-hightouch",
             "slug": "trigger_sync_run_and_wait_for_completion"
         },
-        "wait-for-sync-run-completion": {
+        "wait_for_sync_run_completion": {
             "description": {
                 "summary": "Flow that waits for the triggered sync run to complete.",
                 "returns": "- `value`\n- `id`: `str`<br>\n- `slug`: `str`<br>\n- `workspace_id`: `str`<br>\n- `created_at`: `str`<br>\n- `updated_at`: `str`<br>\n- `destination_id`: `str`<br>\n- `model_id`: `str`<br>\n- `configuration`: `Dict`<br>\n- `schedule`: `Dict`<br>\n- `status`: `\"api_models.SyncStatus\"`<br>\n- `disabled`: `bool`<br>\n- `last_run_at`: `str`<br>\n- `referenced_columns`: `List[str]`<br>\n- `primary_key`: `str`<br>"
@@ -2543,7 +2543,7 @@
     },
     "prefect-jupyter": {},
     "prefect-kubernetes": {
-        "run-namespaced-job": {
+        "run_namespaced_job": {
             "description": {
                 "summary": "Flow for running a namespaced Kubernetes job.",
                 "returns": "The a dict of logs from each pod in the job, e.g. {'pod_name': 'pod_log_str'}.",
@@ -2690,7 +2690,7 @@
     },
     "prefect-monday": {},
     "prefect-monte-carlo": {
-        "create-or-update-lineage": {
+        "create_or_update_lineage": {
             "description": {
                 "summary": "Create or update a `source` node, `destination` node, and the edge that connects them."
             },
