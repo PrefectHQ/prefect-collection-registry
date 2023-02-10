@@ -99,8 +99,3 @@ def update_flow_metadata_for_collection(collection_name: str):
     """Generates and submits flow metadata for a given collection."""
     collection_flow_metadata = generate_flow_metadata(collection_name)
     utils.submit_updates(collection_flow_metadata, "flow")
-
-
-if __name__ == "__main__":
-    for collection_name in utils.get_collection_names():
-        update_flow_metadata_for_collection(collection_name)
