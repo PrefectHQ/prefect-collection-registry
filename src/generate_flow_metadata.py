@@ -11,7 +11,6 @@ from schemas import flow_schema
 from utils import (
     KV,
     find_flows_in_module,
-    get_collection_names,
     get_logo_url_for_collection,
     submit_updates,
 )
@@ -100,7 +99,6 @@ def update_flow_metadata_for_collection(collection_name: str):
     submit_updates(collection_flow_metadata, "flow")
 
 
-if __name__ == "__main__":
-    collection_name = "prefect-airbyte"
-    for collection_name in get_collection_names():
-        update_flow_metadata_for_collection(collection_name)
+# if __name__ == "__main__":
+#     for collection_name in get_collection_names():
+#         update_flow_metadata_for_collection(collection_name)

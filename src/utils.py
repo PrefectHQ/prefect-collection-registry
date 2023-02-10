@@ -64,23 +64,24 @@ class KV(Block):
             )
 
 
+def skip_parsing(name: str, obj: Union[ModuleType, Callable], module_nesting: str):
+    """
+    Skips parsing the object if it's a private object or if it's not in the
+    module nesting, preventing imports from other libraries from being added to the
+    examples catalog.
+    """
+
+    try:
+        wrong_module = not to_qualified_name(obj).startswith(module_nesting)
+    except AttributeError:
+        wrong_module = False
+    return obj.__doc__ is None or name.startswith("_") or wrong_module
+
+
 def mark_flow_location(obj: Flow):
     flow_locations = KV.load("collections")
     flow_locations.set(obj.fn.__name__, "submodule", obj.fn.__module__)
     flow_locations.save("collections", overwrite=True)
-
-
-def get_collection_names():
-    catalog_resp = httpx.get("https://docs.prefect.io/collections/catalog/")
-    catalog_soup = BeautifulSoup(catalog_resp.text, "html.parser")
-    return sorted(
-        {
-            url.split("/")[-2]
-            for div in catalog_soup.find_all("div", class_="collection-item")
-            if "prefecthq.github.io" in (url := div.find("a")["href"])
-            and url not in exclude_collections
-        }
-    )
 
 
 def find_flows_in_module(
@@ -109,20 +110,6 @@ def find_flows_in_module(
                 if isinstance(obj, Flow):
                     mark_flow_location(obj)
                     yield obj
-
-
-def skip_parsing(name: str, obj: Union[ModuleType, Callable], module_nesting: str):
-    """
-    Skips parsing the object if it's a private object or if it's not in the
-    module nesting, preventing imports from other libraries from being added to the
-    examples catalog.
-    """
-
-    try:
-        wrong_module = not to_qualified_name(obj).startswith(module_nesting)
-    except AttributeError:
-        wrong_module = False
-    return obj.__doc__ is None or name.startswith("_") or wrong_module
 
 
 @task
@@ -163,10 +150,11 @@ def submit_updates(
         )
     except github3.exceptions.UnprocessableEntity as e:
         if '"sha" wasn\'t supplied' in str(e):
-            # file already exists so nothing to do
+            # file already exists so nothing to update
             print(
                 f"{variety} metadata for {collection_name} {latest_release} already exists!"
             )
+            return
         else:
             raise
 
@@ -189,6 +177,29 @@ def submit_updates(
     )
 
 
+def get_collection_names():
+    catalog_resp = httpx.get("https://docs.prefect.io/collections/catalog/")
+    catalog_soup = BeautifulSoup(catalog_resp.text, "html.parser")
+    return sorted(
+        {
+            url.split("/")[-2]
+            for div in catalog_soup.find_all("div", class_="collection-item")
+            if "prefecthq.github.io" in (url := div.find("a")["href"])
+            and url not in exclude_collections
+        }
+    )
+
+
+def get_logo_url_for_collection(collection_name: str) -> str:
+    """Returns the URL of the logo for a collection."""
+
+    blocks_metadata = read_view_content("block")
+
+    block_types_from_collection = blocks_metadata[collection_name]["block_types"]
+
+    return block_types_from_collection.popitem()[1]["logo_url"]
+
+
 def read_view_content(view: Literal["block", "flow", "collection"]) -> Dict[str, Any]:
     """Reads the content of a view from the views directory."""
 
@@ -202,13 +213,3 @@ def read_view_content(view: Literal["block", "flow", "collection"]) -> Dict[str,
     resp = httpx.get(repo_url + f"/views/{view_filename}")
     resp.raise_for_status()
     return resp.json()
-
-
-def get_logo_url_for_collection(collection_name: str) -> str:
-    """Returns the URL of the logo for a collection."""
-
-    blocks_metadata = read_view_content("block")
-
-    block_types_from_collection = blocks_metadata[collection_name]["block_types"]
-
-    return block_types_from_collection.popitem()[1]["logo_url"]
