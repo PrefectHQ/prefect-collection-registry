@@ -1742,7 +1742,7 @@
         }
     },
     "prefect-dbt": {
-        "Retry subset of dbt Cloud job run and wait for completion": {
+        "retry_dbt_cloud_job_run_subset_and_wait_for_completion": {
             "description": {
                 "summary": "Retries a subset of dbt Cloud job run, filtered by select statuses, and waits for the triggered retry to complete."
             },
@@ -1901,7 +1901,7 @@
             "repo_url": "https://github.com/PrefectHQ/prefect-dbt",
             "slug": "retry_dbt_cloud_job_run_subset_and_wait_for_completion"
         },
-        "Trigger dbt Cloud job run and wait for completion": {
+        "trigger_dbt_cloud_job_run_and_wait_for_completion": {
             "description": {
                 "summary": "Triggers a dbt Cloud job run and waits for thetriggered run to complete."
             },
@@ -2067,7 +2067,7 @@
             "repo_url": "https://github.com/PrefectHQ/prefect-dbt",
             "slug": "trigger_dbt_cloud_job_run_and_wait_for_completion"
         },
-        "Wait for dbt Cloud job run": {
+        "wait_for_dbt_cloud_job_run": {
             "description": {
                 "summary": "Waits for a dbt Cloud job run to finish running."
             },
