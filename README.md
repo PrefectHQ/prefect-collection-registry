@@ -19,18 +19,14 @@ prefect-collection-registry/
 |-- collections/
 |   |-- collection-A/
 |   |   |-- latest-release-tag-n.json
-|   |-- ...
-|-- flows/
-|   |-- collection-A/
-|   |   |-- release-tag-n.json
-|   |   |-- ...
-|   |   |-- release-tag-0.json
-|   |-- ...
-|-- blocks/
-|   |-- collection-A/
-|   |   |-- release-tag-n.json
-|   |   |-- ...
-|   |   |-- release-tag-0.json
+|   |   |-- flows/
+|   |   |   |-- release-tag-n.json
+|   |   |   |-- ...
+|   |   |   |-- release-tag-0.json
+|   |   |-- blocks/
+|   |   |   |-- release-tag-n.json
+|   |   |   |-- ...
+|   |   |   |-- release-tag-0.json
 |   |-- ...
 |-- views/
 |   |-- aggregate-block-metadata.json
@@ -75,7 +71,7 @@ Metadata files are stored in JSON format. The structure of each JSON is validate
         "entrypoint": {
             "type": "string"
         },
-        "collection_repo_url": {
+        "repo_url": {
             "type": "string"
         }
     },
@@ -89,7 +85,7 @@ Metadata files are stored in JSON format. The structure of each JSON is validate
         "install_command",
         "path_containing_flow",
         "entrypoint",
-        "collection_repo_url"
+        "repo_url"
     ],
 }
 ```
