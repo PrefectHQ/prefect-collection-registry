@@ -148,7 +148,7 @@
     "prefect-azure": {},
     "prefect-bitbucket": {},
     "prefect-census": {
-        "run-census-sync": {
+        "run_census_sync": {
             "description": {
                 "summary": "A flow for triggering a Census sync run and waiting for completion.",
                 "returns": "The result of the sync run."
@@ -258,7 +258,7 @@
             "repo_url": "https://github.com/PrefectHQ/prefect-census",
             "slug": "run_census_sync"
         },
-        "Wait for Census sync run": {
+        "wait_census_sync_completion": {
             "description": {
                 "summary": "Waits for the Census sync run to finish running."
             },
@@ -335,7 +335,7 @@
             "repo_url": "https://github.com/PrefectHQ/prefect-census",
             "slug": "wait_census_sync_completion"
         },
-        "Trigger Census sync run and wait for completion": {
+        "trigger_census_sync_run_and_wait_for_completion": {
             "description": {
                 "summary": "Triggers a Census sync run and waits for thetriggered run to complete."
             },
