@@ -2543,7 +2543,7 @@
     },
     "prefect-jupyter": {},
     "prefect-kubernetes": {
-        "run-namespaced-job": {
+        "run_namespaced_job": {
             "description": {
                 "summary": "Flow for running a namespaced Kubernetes job.",
                 "returns": "The a dict of logs from each pod in the job, e.g. {'pod_name': 'pod_log_str'}.",
