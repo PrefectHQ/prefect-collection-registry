@@ -2915,7 +2915,7 @@
               }
             },
             "capabilities": [],
-            "version": "0.2.5"
+            "version": "0.2.6"
           }
         },
         "cloud-run-job": {
@@ -3081,7 +3081,7 @@
             "capabilities": [
               "run-infrastructure"
             ],
-            "version": "0.2.5"
+            "version": "0.2.6"
           }
         },
         "gcp-credentials": {
@@ -3122,7 +3122,7 @@
               "block_schema_references": {}
             },
             "capabilities": [],
-            "version": "0.2.5"
+            "version": "0.2.6"
           }
         },
         "gcpsecret": {
@@ -3200,7 +3200,7 @@
               }
             },
             "capabilities": [],
-            "version": "0.2.5"
+            "version": "0.2.6"
           }
         },
         "gcs-bucket": {
@@ -3208,13 +3208,13 @@
           "slug": "gcs-bucket",
           "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/4CD4wwbiIKPkZDt4U3TEuW/c112fe85653da054b6d5334ef662bec4/gcp.png?h=250",
           "documentation_url": "https://prefecthq.github.io/prefect-gcp/cloud_storage/#prefect_gcp.cloud_storage.GcsBucket",
-          "description": "Block used to store data using GCP Cloud Storage Buckets.",
+          "description": "Block used to store data using GCP Cloud Storage Buckets.\n\nNote! `GcsBucket` in `prefect-gcp` is a unique block, separate from `GCS`\nin core Prefect. `GcsBucket` does not use `gcsfs` under the hood,\ninstead using the `google-cloud-storage` package, and offers more configuration\nand functionality.",
           "code_example": "Load stored GCP Cloud Storage Bucket:\n```python\nfrom prefect_gcp.cloud_storage import GcsBucket\ngcp_cloud_storage_bucket_block = GcsBucket.load(\"BLOCK_NAME\")\n```",
           "block_schema": {
-            "checksum": "sha256:d4c53e2f6fbd2f141ffe2c47a61b29627d431bf1114d3019453305036241a7d7",
+            "checksum": "sha256:6f44cdbd523fb8d4029fbc504a89095d67d27439aec09d2c1871b03a1f4e14e9",
             "fields": {
               "title": "GcsBucket",
-              "description": "Block used to store data using GCP Cloud Storage Buckets.",
+              "description": "Block used to store data using GCP Cloud Storage Buckets.\n\nNote! `GcsBucket` in `prefect-gcp` is a unique block, separate from `GCS`\nin core Prefect. `GcsBucket` does not use `gcsfs` under the hood,\ninstead using the `google-cloud-storage` package, and offers more configuration\nand functionality.",
               "type": "object",
               "properties": {
                 "bucket": {
@@ -3288,7 +3288,7 @@
               "read-path",
               "write-path"
             ],
-            "version": "0.2.5"
+            "version": "0.2.6"
           }
         },
         "vertex-ai-custom-training-job": {
@@ -3453,7 +3453,7 @@
             "capabilities": [
               "run-infrastructure"
             ],
-            "version": "0.2.5"
+            "version": "0.2.6"
           }
         }
       }
@@ -4392,7 +4392,7 @@
           "name": "Snowflake Connector",
           "slug": "snowflake-connector",
           "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/2DxzAeTM9eHLDcRQx1FR34/f858a501cdff918d398b39365ec2150f/snowflake.png?h=250",
-          "documentation_url": null,
+          "documentation_url": "https://prefecthq.github.io/prefect-snowflake/database/#prefect_snowflake.database.SnowflakeConnector",
           "description": "Perform data operations against a Snowflake database.",
           "code_example": "Load stored Snowflake connector as a context manager:\n```python\nfrom prefect_snowflake.database import SnowflakeConnector\n\nsnowflake_connector = SnowflakeConnector.load(\"BLOCK_NAME\"):\n```\n\nInsert data into database and fetch results.\n```python\nfrom prefect_snowflake.database import SnowflakeConnector\n\nwith SnowflakeConnector.load(\"BLOCK_NAME\") as conn:\n    conn.execute(\n        \"CREATE TABLE IF NOT EXISTS customers (name varchar, address varchar);\"\n    )\n    conn.execute_many(\n        \"INSERT INTO customers (name, address) VALUES (%(name)s, %(address)s);\",\n        seq_of_parameters=[\n            {\"name\": \"Ford\", \"address\": \"Highway 42\"},\n            {\"name\": \"Unknown\", \"address\": \"Space\"},\n            {\"name\": \"Me\", \"address\": \"Myway 88\"},\n        ],\n    )\n    results = conn.fetch_all(\n        \"SELECT * FROM customers WHERE address = %(address)s\",\n        parameters={\"address\": \"Space\"}\n    )\n    print(results)\n```",
           "block_schema": {
@@ -4555,14 +4555,14 @@
               }
             },
             "capabilities": [],
-            "version": "0.26.0"
+            "version": "0.26.1"
           }
         },
         "snowflake-credentials": {
           "name": "Snowflake Credentials",
           "slug": "snowflake-credentials",
           "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/2DxzAeTM9eHLDcRQx1FR34/f858a501cdff918d398b39365ec2150f/snowflake.png?h=250",
-          "documentation_url": null,
+          "documentation_url": "https://prefecthq.github.io/prefect-snowflake/credentials/#prefect_snowflake.credentials.SnowflakeCredentials",
           "description": "Block used to manage authentication with Snowflake.",
           "code_example": "Load stored Snowflake credentials:\n```python\nfrom prefect_snowflake import SnowflakeCredentials\n\nsnowflake_credentials_block = SnowflakeCredentials.load(\"BLOCK_NAME\")\n```",
           "block_schema": {
@@ -4661,7 +4661,7 @@
               "block_schema_references": {}
             },
             "capabilities": [],
-            "version": "0.26.0"
+            "version": "0.26.1"
           }
         }
       }
@@ -4672,11 +4672,11 @@
           "name": "Database Credentials",
           "slug": "database-credentials",
           "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/3xLant5G70S4vJpmdWCYmr/8fdb19f15b97c3a07c3af3efde4d28fb/download.svg.png?h=250",
-          "documentation_url": null,
+          "documentation_url": "https://prefecthq.github.io/prefect-sqlalchemy/credentials/#prefect_sqlalchemy.credentials.DatabaseCredentials",
           "description": "Block used to manage authentication with a database.",
           "code_example": "Load stored database credentials:\n```python\nfrom prefect_sqlalchemy import DatabaseCredentials\ndatabase_block = DatabaseCredentials.load(\"BLOCK_NAME\")\n```",
           "block_schema": {
-            "checksum": "sha256:a026c06b03d98a6f03031e888381de2144d6f1082850a09672f909cd5cb84d51",
+            "checksum": "sha256:76d1ccbf0ab2038fea77e9689b91a7c8b6398e080e95d9303f65a93a4c03162e",
             "fields": {
               "title": "DatabaseCredentials",
               "description": "Block used to manage authentication with a database.",
@@ -4684,6 +4684,7 @@
               "properties": {
                 "driver": {
                   "title": "Driver",
+                  "description": "The driver name to use.",
                   "anyOf": [
                     {
                       "$ref": "#/definitions/AsyncDriver"
@@ -4698,28 +4699,34 @@
                 },
                 "username": {
                   "title": "Username",
+                  "description": "The user name used to authenticate.",
                   "type": "string"
                 },
                 "password": {
                   "title": "Password",
+                  "description": "The password used to authenticate.",
                   "type": "string",
                   "writeOnly": true,
                   "format": "password"
                 },
                 "database": {
                   "title": "Database",
+                  "description": "The name of the database to use.",
                   "type": "string"
                 },
                 "host": {
                   "title": "Host",
+                  "description": "The host address of the database.",
                   "type": "string"
                 },
                 "port": {
                   "title": "Port",
+                  "description": "The port to connect to the database.",
                   "type": "string"
                 },
                 "query": {
                   "title": "Query",
+                  "description": "A dictionary of string keys to string values to be passed to the dialect and/or the DBAPI upon connect. To specify non-string parameters to a Python DBAPI directly, use connect_args.",
                   "type": "object",
                   "additionalProperties": {
                     "type": "string"
@@ -4727,6 +4734,7 @@
                 },
                 "url": {
                   "title": "Url",
+                  "description": "Manually create and provide a URL to create the engine, this is useful for external dialects, e.g. Snowflake, because some of the params, such as 'warehouse', is not directly supported in the vanilla `sqlalchemy.engine.URL.create` method; do not provide this alongside with other URL params as it will raise a `ValueError`.",
                   "minLength": 1,
                   "maxLength": 65536,
                   "format": "uri",
@@ -4734,6 +4742,7 @@
                 },
                 "connect_args": {
                   "title": "Connect Args",
+                  "description": "The options which will be passed directly to the DBAPI's connect() method as additional keyword arguments.",
                   "type": "object"
                 }
               },
@@ -4779,18 +4788,18 @@
               }
             },
             "capabilities": [],
-            "version": "0.2.2"
+            "version": "0.2.3"
           }
         },
         "sqlalchemy-connector": {
           "name": "SQLAlchemy Connector",
           "slug": "sqlalchemy-connector",
           "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/37TOcxeP9kfXffpKVRAHiJ/0f359112e79d0bd3dfe38c73c4fc6363/sqlalchemy.png?h=250",
-          "documentation_url": null,
+          "documentation_url": "https://prefecthq.github.io/prefect-sqlalchemy/database/#prefect_sqlalchemy.database.SqlAlchemyConnector",
           "description": "Block used to manage authentication with a database.\n\nUpon instantiating, an engine is created and maintained for the life of\nthe object until the close method is called.\n\nIt is recommended to use this block as a context manager, which will automatically\nclose the engine and its connections when the context is exited.\n\nIt is also recommended that this block is loaded and consumed within a single task\nor flow because if the block is passed across separate tasks and flows,\nthe state of the block's connection and cursor could be lost.",
-          "code_example": "Load stored database credentials and use in context manager:\n```python\nfrom prefect_sqlalchemy import SqlAlchemyConnector\n\nwith SqlAlchemyConnector.load(\"BLOCK_NAME\") as database_block:\n    ...\n```\n\nCreate table named customers and insert values; then fetch the first 10 rows.\n```python\nfrom prefect_sqlalchemy import (\n    SqlAlchemyConnector, SyncDriver, ConnectionComponents\n)\n\nwith SqlAlchemyConnector(\n    connection_info=ConnectionComponents(\n        driver=SyncDriver.SQLITE_PYSQLITE,\n        database=\"prefect.db\"\n    )\n) as database:\n    database.execute(\n        \"CREATE TABLE IF NOT EXISTS customers (name varchar, address varchar);\",\n    )\n    for i in range(1, 42):\n        database.execute(\n            \"INSERT INTO customers (name, address) VALUES (:name, :address);\",\n            parameters={\"name\": \"Marvin\", \"address\": f\"Highway {i}\"},\n        )\n    results = database.fetch_many(\n        \"SELECT * FROM customers WHERE name = :name;\",\n        parameters={\"name\": \"Marvin\"},\n        size=10\n    )\nprint(results)\n```",
+          "code_example": "Load stored database credentials and use in context manager:\n```python\nfrom prefect_sqlalchemy import SqlAlchemyConnector\n\ndatabase_block = SqlAlchemyConnector.load(\"BLOCK_NAME\")\nwith database_block:\n    ...\n```\n\nCreate table named customers and insert values; then fetch the first 10 rows.\n```python\nfrom prefect_sqlalchemy import (\n    SqlAlchemyConnector, SyncDriver, ConnectionComponents\n)\n\nwith SqlAlchemyConnector(\n    connection_info=ConnectionComponents(\n        driver=SyncDriver.SQLITE_PYSQLITE,\n        database=\"prefect.db\"\n    )\n) as database:\n    database.execute(\n        \"CREATE TABLE IF NOT EXISTS customers (name varchar, address varchar);\",\n    )\n    for i in range(1, 42):\n        database.execute(\n            \"INSERT INTO customers (name, address) VALUES (:name, :address);\",\n            parameters={\"name\": \"Marvin\", \"address\": f\"Highway {i}\"},\n        )\n    results = database.fetch_many(\n        \"SELECT * FROM customers WHERE name = :name;\",\n        parameters={\"name\": \"Marvin\"},\n        size=10\n    )\nprint(results)\n```",
           "block_schema": {
-            "checksum": "sha256:75f2e5759668c3d072006b6028e93d1e14ffba526d12368b4746e96a0c64c297",
+            "checksum": "sha256:01e6c0bdaac125860811b201f5a5e98ffefd5f8a49f1398b6996aec362643acc",
             "fields": {
               "title": "SqlAlchemyConnector",
               "description": "Block used to manage authentication with a database.\n\nUpon instantiating, an engine is created and maintained for the life of\nthe object until the close method is called.\n\nIt is recommended to use this block as a context manager, which will automatically\nclose the engine and its connections when the context is exited.\n\nIt is also recommended that this block is loaded and consumed within a single task\nor flow because if the block is passed across separate tasks and flows,\nthe state of the block's connection and cursor could be lost.",
@@ -4867,7 +4876,7 @@
                 },
                 "ConnectionComponents": {
                   "title": "ConnectionComponents",
-                  "description": "Parameters to use to create a SQLAlchemy engine URL.",
+                  "description": "Parameters to use to create a SQLAlchemy engine URL.\n\nAttributes:\n    driver: The driver name to use.\n    database: The name of the database to use.\n    username: The user name used to authenticate.\n    password: The password used to authenticate.\n    host: The host address of the database.\n    port: The port to connect to the database.\n    query: A dictionary of string keys to string values to be passed to the dialect\n        and/or the DBAPI upon connect.",
                   "type": "object",
                   "properties": {
                     "driver": {
@@ -4929,7 +4938,7 @@
               }
             },
             "capabilities": [],
-            "version": "0.2.2"
+            "version": "0.2.3"
           }
         }
       }
