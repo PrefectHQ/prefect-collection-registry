@@ -50,7 +50,10 @@ def get_doc_url(flow: Flow) -> str:
     )
 
 
-def summarize_flow(flow: Flow, collection_name: str):
+def summarize_flow(flow: Flow, collection_name: str) -> Dict[str, Any]:
+    """Generates a summary of a flow that should match the flow JSON schema,
+    and validates it against the schema.
+    """
 
     flow_filepath = f"{flow.fn.__module__.replace('.', '/')}.py"
 
