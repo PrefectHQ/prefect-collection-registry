@@ -7,10 +7,10 @@ from prefect.utilities.importtools import load_module
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 
-from src.generate_flow_metadata import find_flows_in_module
+from src.utils import find_flows_in_module
 
 
-class TestGenerateFlowMetadata:
+class TestFindFlowsInModule:
     def test_find_flows_in_module(self):
 
         majewel = load_module("prefect_airbyte")

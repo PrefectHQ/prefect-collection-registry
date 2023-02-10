@@ -97,6 +97,7 @@ def submit_updates(
             content=json.dumps(collection_metadata, indent=4).encode("utf-8"),
             branch=branch_name,
         )
+        print(f"Added {collection_name} {latest_release} to {variety} records!")
     except github3.exceptions.UnprocessableEntity as e:
         if '"sha" wasn\'t supplied' in str(e):
             # file already exists so nothing to update

@@ -102,4 +102,5 @@ def update_flow_metadata_for_collection(collection_name: str):
 
 
 if __name__ == "__main__":
-    update_flow_metadata_for_collection("prefect-airbyte")
+    for collection_name in utils.get_collection_names():
+        update_flow_metadata_for_collection(collection_name)
