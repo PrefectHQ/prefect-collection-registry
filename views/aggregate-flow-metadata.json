@@ -422,7 +422,7 @@
     },
     "prefect-dask": {},
     "prefect-databricks": {
-        "Submit jobs runs and wait for completion": {
+        "jobs_runs_submit_and_wait_for_completion": {
             "description": {
                 "summary": "Triggers a Databricks jobs runs and waits for the triggered runs to complete."
             },
@@ -1647,7 +1647,7 @@
             "repo_url": "https://github.com/PrefectHQ/prefect-databricks",
             "slug": "jobs_runs_submit_and_wait_for_completion"
         },
-        "Wait for completion of jobs runs": {
+        "jobs_runs_wait_for_completion": {
             "description": {
                 "summary": "Waits for the jobs runs to finish running"
             },
