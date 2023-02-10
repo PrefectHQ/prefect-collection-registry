@@ -132,7 +132,7 @@ def generate_flow_metadata(collection_name: str) -> Dict[str, Any]:
 
     return {
         collection_name: {
-            flow.name: summarize_flow(flow, collection_name)
+            flow.fn.__name__: summarize_flow(flow, collection_name)
             for flow in find_flows_in_module(collection_slug)
         }
     }
