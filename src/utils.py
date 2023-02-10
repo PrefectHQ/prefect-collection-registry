@@ -6,7 +6,6 @@ from typing import Any, Callable, Dict, Generator, Union
 
 import github3
 import httpx
-from bs4 import BeautifulSoup
 from prefect import Flow, task
 from prefect.blocks.system import Secret
 from prefect.utilities.importtools import load_module, to_qualified_name
@@ -128,16 +127,18 @@ def submit_updates(
 
 
 def get_collection_names():
-    catalog_resp = httpx.get("https://docs.prefect.io/collections/catalog/")
-    catalog_soup = BeautifulSoup(catalog_resp.text, "html.parser")
-    return sorted(
-        {
-            url.split("/")[-2]
-            for div in catalog_soup.find_all("div", class_="collection-item")
-            if "prefecthq.github.io" in (url := div.find("a")["href"])
-            and url not in exclude_collections
-        }
-    )
+
+    repo_owner = "PrefectHQ"
+    repo_name = "prefect-collection-registry"
+    path = "collections"
+
+    url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/contents/{path}"
+
+    headers = {"Accept": "application/vnd.github+json"}
+
+    response = httpx.get(url, headers=headers)
+
+    return [item["name"] for item in response.json() if item["type"] == "dir"]
 
 
 def get_logo_url_for_collection(collection_name: str) -> str:
