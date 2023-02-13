@@ -11,17 +11,19 @@ def generate_prefect_block_metadata():
 
     block_registry = get_registry_for_type(Block) or {}
 
-    return dict(
-        sorted(
-            {
-                block_subcls.get_block_type_slug(): generate_block_metadata(
-                    block_subcls
-                )
-                for block_subcls in block_registry.values()
-                if block_subcls.get_block_type_slug() not in BLOCKS_BLACKLIST
-            }.items()
+    return {
+        "block_types": dict(
+            sorted(
+                {
+                    block_subcls.get_block_type_slug(): generate_block_metadata(
+                        block_subcls
+                    )
+                    for block_subcls in block_registry.values()
+                    if block_subcls.get_block_type_slug() not in BLOCKS_BLACKLIST
+                }.items()
+            )
         )
-    )
+    }
 
 
 if __name__ == "__main__":
