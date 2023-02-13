@@ -72,7 +72,9 @@ async def create_ref_if_not_exists(branch_name: str, github_token_name: str):
 
         prs = list(repo.pull_requests(state="open"))
 
-        pr_already_exists = any(pr.title == PR_TITLE for pr in prs)
+        pr_already_exists = any(
+            pr.title == PR_TITLE and pr.head.ref == new_branch_name for pr in prs
+        )
 
         if pr_already_exists:
             print(f"PR for {new_branch_name!r} already exists!")
@@ -126,6 +128,10 @@ async def update_all_collections():
                 name="update-collection-metadata/collection-updates",
                 parameters=dict(collection_name=collection_name),
             )
-            for collection_name in utils.get_collection_names()
+            for collection_name in utils.get_collection_names()[:2]
         ]
     )
+
+
+if __name__ == "__main__":
+    asyncio.run(update_collection_metadata("prefect-airbyte"))
