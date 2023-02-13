@@ -1,4 +1,4 @@
-# Prefect Collection Registry
+# Prefect Collection Registrar for test
 This is a registry of metadata for Prefect collections.
 
 <p align="center">
