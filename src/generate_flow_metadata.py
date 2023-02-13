@@ -35,7 +35,6 @@ def parse_flow_docstring(flow: Flow) -> Dict[str, Any]:
         elif (
             section["kind"] == "admonition" and section_value["annotation"] == "example"
         ):
-
             docstring_sections["examples"].append(section_value["description"])
 
     return docstring_sections
