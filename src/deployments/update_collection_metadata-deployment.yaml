@@ -1,0 +1,53 @@
+###
+### A complete description of a Prefect Deployment for flow 'update-collection-metadata'
+###
+name: collections-updates
+description: Updates the collection metadata.
+version: d7a8cdbec4768de5a1360d2736ee7feb
+# The work queue that will handle this deployment's runs
+work_queue_name: default
+work_pool_name: default-agent-pool
+tags: []
+parameters: {}
+schedule: null
+is_schedule_active: true
+infra_overrides: {}
+
+###
+### DO NOT EDIT BELOW THIS LINE
+###
+flow_name: update-collection-metadata
+manifest_path: null
+infrastructure:
+  type: process
+  env: {}
+  labels: {}
+  name: null
+  command: null
+  stream_output: true
+  working_dir: null
+  _block_document_id: b1a8d179-e377-4eb5-80a4-f0add2fa3c93
+  _block_document_name: anonymous-8ee82159-f73f-43f1-8338-273a91a87e43
+  _is_anonymous: true
+  block_type_slug: process
+  _block_type_slug: process
+storage: null
+path: /Users/nate/src/open-source/prefect-stuff/prefect-collection-registry
+entrypoint: src/update_collection_metadata.py:update_collection_metadata
+parameter_openapi_schema:
+  title: Parameters
+  type: object
+  properties:
+    collection_name:
+      title: collection_name
+      position: 0
+      type: string
+    branch_name:
+      title: branch_name
+      default: update-metadata
+      position: 1
+      type: string
+  required:
+  - collection_name
+  definitions: null
+timestamp: '2023-02-13T18:54:13.490236+00:00'

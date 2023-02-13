@@ -1,0 +1,106 @@
+import asyncio
+import subprocess
+
+import github3
+from prefect import flow, task
+from prefect.blocks.system import Secret
+from prefect.deployments import run_deployment
+from prefect.states import Completed
+
+import utils
+from generate_block_metadata import update_block_metadata_for_collection
+from generate_flow_metadata import update_flow_metadata_for_collection
+
+
+@task
+async def collection_needs_update(collection_name: str) -> bool:
+    """
+    Checks if the collection needs to be updated.
+    """
+    github_token = await Secret.load("github-token")
+    gh = github3.login(token=github_token.get())
+
+    collection_repo = gh.repository("PrefectHQ", collection_name)
+    registry_repo = gh.repository("PrefectHQ", "prefect-collection-registry")
+    latest_recorded_release = sorted(
+        [
+            name
+            for name, _ in registry_repo.directory_contents(
+                directory_path=f"collections/{collection_name}/blocks", ref="main"
+            )
+        ]
+    )[-1].replace(".json", "")
+
+    latest_release = collection_repo.latest_release().tag_name.replace("v", "")
+
+    if latest_release == latest_recorded_release:
+        print(
+            f"Collection {collection_name} is up to date! - "
+            f"(latest release: {latest_release})"
+        )
+        return False
+
+    return True
+
+
+@task
+async def create_ref_if_not_exists(branch_name: str):
+    """
+    Creates a reference to the latest release if it doesn't exist.
+    """
+    github_token = await Secret.load("github-token")
+    gh = github3.login(token=github_token.get())
+    repo = gh.repository("PrefectHQ", "prefect-collection-registry")
+
+    try:
+        repo.create_ref(
+            ref=f"refs/heads/{branch_name}",
+            sha=repo.commit(sha="main").sha,
+        )
+        print(f"Created ref {branch_name!r} on {repo.full_name!r}!")
+
+    except github3.exceptions.UnprocessableEntity as e:
+        if "Reference already exists" in str(e):
+            print(f"Ref {branch_name!r} already exists!")
+        else:
+            raise
+
+
+# create a deployment for this with
+# prefect deployment build update_collection_metadata.py:update_collection_metadata -n collections-updates ... -a
+@flow
+async def update_collection_metadata(
+    collection_name: str, branch_name: str = "update-metadata"
+):
+    """
+    Updates the collection metadata.
+    """
+
+    await create_ref_if_not_exists(branch_name)
+
+    need_update = await collection_needs_update(collection_name)
+
+    if not need_update:
+        return Completed(message=f"{collection_name} is up to date!")
+    else:
+        # install the collection
+        subprocess.run(f"pip install {collection_name}".split())
+
+        update_flow_metadata_for_collection(collection_name)
+        update_block_metadata_for_collection(collection_name)
+
+
+@flow
+async def update_all_collections():
+    """
+    Updates all collections.
+    """
+    await asyncio.gather(
+        *[
+            run_deployment(
+                name="update-collection-metadata/collections-updates",
+                parameters=dict(collection_name=collection_name),
+            )
+            for collection_name in utils.get_collection_names()
+        ]
+    )

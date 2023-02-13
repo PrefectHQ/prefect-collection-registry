@@ -65,7 +65,7 @@ def submit_updates(
     collection_metadata: Dict[str, Any],
     variety: Literal["block", "flow", "collection"],
     repo_name: str = "prefect-collection-registry",
-    branch_name: str = "flow-metadata",
+    branch_name: str = "update-metadata",
 ):
     collection_name = list(collection_metadata.keys())[0]
     metadata_file = f"views/aggregate-{variety}-metadata.json"
