@@ -20,7 +20,7 @@ jobs:
 
       - name: Update aggregated block metadata
         run: |
-          python merge_block_metadata.py
+          python src/merge_block_metadata.py
 
       - name: Submit PR
         uses: peter-evans/create-pull-request@v4
