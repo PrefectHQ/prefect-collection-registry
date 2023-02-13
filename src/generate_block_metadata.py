@@ -42,11 +42,17 @@ def generate_block_metadata(block_subcls: Type[Block]) -> Dict[str, Any]:
 
 def generate_block_metadata_for_module(module: ModuleType):
     block_subclasses = discover_block_subclasses(module)
-    return {
-        block_subcls.get_block_type_slug(): generate_block_metadata(block_subcls)
-        for block_subcls in block_subclasses
-        if block_subcls.get_block_type_slug() not in BLOCKS_BLACKLIST
-    }
+    return dict(
+        sorted(
+            {
+                block_subcls.get_block_type_slug(): generate_block_metadata(
+                    block_subcls
+                )
+                for block_subcls in block_subclasses
+                if block_subcls.get_block_type_slug() not in BLOCKS_BLACKLIST
+            }.items()
+        )
+    )
 
 
 def discover_block_subclasses(module: ModuleType) -> List[Type[Block]]:
