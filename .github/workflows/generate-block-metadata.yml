@@ -55,7 +55,7 @@ jobs:
 
       - name: Generate collection block metadata
         run: |
-          python generate_block_metadata.py ${{ matrix.collection-name }}
+          python src/generate_block_metadata.py ${{ matrix.collection-name }}
 
       - name: Submit PR
         uses: peter-evans/create-pull-request@v4
