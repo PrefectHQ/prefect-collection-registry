@@ -67,7 +67,6 @@ def submit_updates(
     repo_name: str = "prefect-collection-registry",
     branch_name: str = "flow-metadata",
 ):
-
     collection_name = list(collection_metadata.keys())[0]
     metadata_file = f"views/aggregate-{variety}-metadata.json"
 
@@ -127,7 +126,6 @@ def submit_updates(
 
 
 def get_collection_names():
-
     repo_owner = "PrefectHQ"
     repo_name = "prefect-collection-registry"
     path = "collections"

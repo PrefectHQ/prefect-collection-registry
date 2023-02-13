@@ -12,7 +12,6 @@ from src.utils import find_flows_in_module
 
 class TestFindFlowsInModule:
     def test_find_flows_in_module(self):
-
         majewel = load_module("prefect_airbyte")
 
         flow = list(find_flows_in_module(majewel.__name__))[0]
