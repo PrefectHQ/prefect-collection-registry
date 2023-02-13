@@ -69,6 +69,15 @@ async def create_ref_if_not_exists(branch_name: str, github_token_name: str):
             raise
 
     if repo.compare_commits("main", new_branch_name).ahead_by != 0:
+
+        prs = list(repo.pull_requests(state="open", head=new_branch_name))
+
+        pr_already_exists = len(prs) > 0
+
+        if pr_already_exists:
+            print(f"PR for {new_branch_name!r} already exists!")
+            return
+
         repo.create_pull(
             title=f"Update metadata for collection releases",
             body="Collection metadata updates are submitted to this PR by a Prefect flow.",
