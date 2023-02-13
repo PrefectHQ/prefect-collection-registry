@@ -76,7 +76,7 @@ async def create_ref_if_not_exists(branch_name: str, github_token_name: str):
             base="main",
             maintainer_can_modify=True,
         )
-        print(f"Created PR for {branch_name!r} on {repo.full_name!r}!")
+        print(f"Created PR for {new_branch_name!r} on {repo.full_name!r}!")
 
 
 # create a deployment for this with
