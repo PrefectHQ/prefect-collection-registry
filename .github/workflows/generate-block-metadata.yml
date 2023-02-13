@@ -1,4 +1,4 @@
-name: Submit Collection Metadata to Registry
+name: Submit Collection Block Metadata to Registry
 
 on:
   workflow_dispatch:
@@ -53,9 +53,9 @@ jobs:
           python -m pip install --upgrade pip build
           python -m pip install --upgrade --upgrade-strategy eager "${{ matrix.collection-name }}[all_extras]"
 
-      - name: Generate collection metadata
+      - name: Generate collection block metadata
         run: |
-          python generate_collection_metadata.py ${{ matrix.collection-name }}
+          python generate_block_metadata.py ${{ matrix.collection-name }}
 
       - name: Submit PR
         uses: peter-evans/create-pull-request@v4
