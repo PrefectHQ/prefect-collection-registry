@@ -131,7 +131,3 @@ async def update_all_collections():
             for collection_name in utils.get_collection_names()[:2]
         ]
     )
-
-
-if __name__ == "__main__":
-    asyncio.run(update_collection_metadata("prefect-airbyte"))
