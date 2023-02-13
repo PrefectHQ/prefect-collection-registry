@@ -13,11 +13,11 @@ from generate_flow_metadata import update_flow_metadata_for_collection
 
 
 @task
-async def collection_needs_update(collection_name: str) -> bool:
+async def collection_needs_update(collection_name: str, github_token_name: str) -> bool:
     """
     Checks if the collection needs to be updated.
     """
-    github_token = await Secret.load("github-token")
+    github_token = await Secret.load(github_token_name)
     gh = github3.login(token=github_token.get())
 
     collection_repo = gh.repository("PrefectHQ", collection_name)
@@ -44,11 +44,11 @@ async def collection_needs_update(collection_name: str) -> bool:
 
 
 @task
-async def create_ref_if_not_exists(branch_name: str):
+async def create_ref_if_not_exists(branch_name: str, github_token_name: str):
     """
     Creates a reference to the latest release if it doesn't exist.
     """
-    github_token = await Secret.load("collection-registry-github-token")
+    github_token = await Secret.load(github_token_name)
     gh = github3.login(token=github_token.get())
     repo = gh.repository("PrefectHQ", "prefect-collection-registry")
 
@@ -70,15 +70,17 @@ async def create_ref_if_not_exists(branch_name: str):
 # prefect deployment build update_collection_metadata.py:update_collection_metadata -n collections-updates ... -a
 @flow
 async def update_collection_metadata(
-    collection_name: str, branch_name: str = "update-metadata"
+    collection_name: str,
+    branch_name: str = "update-metadata",
+    github_token_name: str = "collection-registry-github-token",
 ):
     """
     Updates the collection metadata.
     """
 
-    await create_ref_if_not_exists(branch_name)
+    await create_ref_if_not_exists(branch_name, github_token_name)
 
-    need_update = await collection_needs_update(collection_name)
+    need_update = await collection_needs_update(collection_name, github_token_name)
 
     if not need_update:
         return Completed(message=f"{collection_name} is up to date!")

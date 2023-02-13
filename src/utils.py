@@ -66,12 +66,13 @@ def submit_updates(
     variety: Literal["block", "flow", "collection"],
     repo_name: str = "prefect-collection-registry",
     branch_name: str = "update-metadata",
+    github_token_name: str = "collection-registry-github-token",
 ):
     collection_name = list(collection_metadata.keys())[0]
     metadata_file = f"views/aggregate-{variety}-metadata.json"
 
     # read the existing flow metadata from existing JSON file
-    github_token = Secret.load("collection-registry-github-token")
+    github_token = Secret.load(github_token_name)
     gh = github3.login(token=github_token.get())
     repo = gh.repository("PrefectHQ", repo_name)
     collection_repo = gh.repository("PrefectHQ", collection_name)
