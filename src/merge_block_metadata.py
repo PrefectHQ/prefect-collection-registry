@@ -39,5 +39,5 @@ if __name__ == "__main__":
 
     collections = dict(sorted(collections.items()))
     (Path("views") / "aggregate-block-metadata.json").write_text(
-        json.dumps(collections)
+        json.dumps(collections, indent=2)
     )
