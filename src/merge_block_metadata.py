@@ -8,6 +8,6 @@ if __name__ == "__main__":
         # get the latest tag
         path = sorted(collection_dir.glob("*.json"), reverse=True)[0]
         collections["collections"][collection_dir.stem] = json.loads(path.read_text())
-    (Path("collections") / "collection_blocks_data.json").write_text(
+    (Path("views") / "aggregate-block-metadata.json").write_text(
         json.dumps(collections, indent=2)
     )

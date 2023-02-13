@@ -13,6 +13,10 @@ from uuid import uuid4
 from prefect.blocks.core import Block
 from prefect.plugins import safe_load_entrypoints
 
+# Some collection blocks share names with core blocks. We exclude them
+# from the registry for now to avoid confusion.
+BLOCKS_BLACKLIST = {"k8s-job"}
+
 
 def generate_block_metadata(block_subcls: Type[Block]) -> Dict[str, Any]:
     """
@@ -41,6 +45,7 @@ def generate_block_metadata_for_module(module: ModuleType):
     return {
         block_subcls.get_block_type_slug(): generate_block_metadata(block_subcls)
         for block_subcls in block_subclasses
+        if block_subcls.get_block_type_slug() not in BLOCKS_BLACKLIST
     }
 
 
@@ -54,7 +59,7 @@ def discover_block_subclasses(module: ModuleType) -> List[Type[Block]]:
     ]
 
 
-def generate_full_metadata(collection_name: str):
+def generate_block_metadata_for_collection(collection_name: str):
     # group is only available for Python 3.10+
     collections = safe_load_entrypoints(entry_points(group="prefect.collections"))
     output_dict = {}
@@ -73,9 +78,7 @@ def generate_full_metadata(collection_name: str):
     return output_dict
 
 
-def write_collection_metadata(
-    collection_metadata: Dict[str, Any], collection_name: str
-):
+def write_block_metadata(collection_metadata: Dict[str, Any], collection_name: str):
     if "_" in collection_name:
         raise ValueError(
             f"Names can only contain dashes, not underscores, got: {collection_name!r}"
@@ -84,7 +87,7 @@ def write_collection_metadata(
     collection_slug = collection_name.replace("-", "_")
     collection_version = importlib.import_module(collection_slug).__version__
     collection_metadata_path = (
-        Path("collections") / collection_name / f"{collection_version}.json"
+        Path("collections") / collection_name / "blocks" / f"{collection_version}.json"
     )
     collection_metadata_path.parent.mkdir(parents=True, exist_ok=True)
     with open(collection_metadata_path, "w") as f:
@@ -93,5 +96,5 @@ def write_collection_metadata(
 
 if __name__ == "__main__":
     collection_name = argv[1]
-    collection_metadata = generate_full_metadata(collection_name)
-    write_collection_metadata(collection_metadata, collection_name)
+    block_metadata = generate_block_metadata_for_collection(collection_name)
+    write_block_metadata(block_metadata, collection_name)
