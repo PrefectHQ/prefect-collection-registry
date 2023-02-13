@@ -71,7 +71,7 @@ def submit_updates(
     metadata_file = f"views/aggregate-{variety}-metadata.json"
 
     # read the existing flow metadata from existing JSON file
-    github_token = Secret.load("github-token")
+    github_token = Secret.load("collection-registry-github-token")
     gh = github3.login(token=github_token.get())
     repo = gh.repository("PrefectHQ", repo_name)
     collection_repo = gh.repository("PrefectHQ", collection_name)

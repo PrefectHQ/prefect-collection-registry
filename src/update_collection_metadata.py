@@ -48,7 +48,7 @@ async def create_ref_if_not_exists(branch_name: str):
     """
     Creates a reference to the latest release if it doesn't exist.
     """
-    github_token = await Secret.load("github-token")
+    github_token = await Secret.load("collection-registry-github-token")
     gh = github3.login(token=github_token.get())
     repo = gh.repository("PrefectHQ", "prefect-collection-registry")
 
@@ -98,9 +98,13 @@ async def update_all_collections():
     await asyncio.gather(
         *[
             run_deployment(
-                name="update-collection-metadata/collections-updates",
+                name="update-collection-metadata/collection-updates",
                 parameters=dict(collection_name=collection_name),
             )
-            for collection_name in utils.get_collection_names()
+            for collection_name in utils.get_collection_names()[:2]
         ]
     )
+
+
+if __name__ == "__main__":
+    asyncio.run(update_all_collections())
