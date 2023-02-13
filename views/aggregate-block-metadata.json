@@ -84,7 +84,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.7.10"
+          "version": "2.8.0"
         }
       },
       "date-time": {
@@ -116,7 +116,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.7.10"
+          "version": "2.8.0"
         }
       },
       "docker-container": {
@@ -317,7 +317,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.7.10"
+          "version": "2.8.0"
         }
       },
       "docker-registry": {
@@ -372,7 +372,7 @@
           "capabilities": [
             "docker-login"
           ],
-          "version": "2.7.10"
+          "version": "2.8.0"
         }
       },
       "gcs": {
@@ -423,7 +423,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.7.10"
+          "version": "2.8.0"
         }
       },
       "github": {
@@ -477,7 +477,7 @@
           "capabilities": [
             "get-directory"
           ],
-          "version": "2.7.10"
+          "version": "2.8.0"
         }
       },
       "json": {
@@ -507,7 +507,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.7.10"
+          "version": "2.8.0"
         }
       },
       "kubernetes-cluster-config": {
@@ -544,7 +544,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.7.10"
+          "version": "2.8.0"
         }
       },
       "kubernetes-job": {
@@ -718,7 +718,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.7.10"
+          "version": "2.8.0"
         }
       },
       "local-file-system": {
@@ -751,7 +751,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.7.10"
+          "version": "2.8.0"
         }
       },
       "ms-teams-webhook": {
@@ -802,7 +802,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.7.10"
+          "version": "2.8.0"
         }
       },
       "opsgenie-webhook": {
@@ -924,7 +924,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.7.10"
+          "version": "2.8.0"
         }
       },
       "pager-duty-webhook": {
@@ -1037,7 +1037,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.7.10"
+          "version": "2.8.0"
         }
       },
       "process": {
@@ -1119,7 +1119,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.7.10"
+          "version": "2.8.0"
         }
       },
       "remote-file-system": {
@@ -1161,7 +1161,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.7.10"
+          "version": "2.8.0"
         }
       },
       "s3": {
@@ -1217,7 +1217,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.7.10"
+          "version": "2.8.0"
         }
       },
       "secret": {
@@ -1252,7 +1252,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.7.10"
+          "version": "2.8.0"
         }
       },
       "slack-webhook": {
@@ -1303,7 +1303,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.7.10"
+          "version": "2.8.0"
         }
       },
       "smb": {
@@ -1369,7 +1369,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.7.10"
+          "version": "2.8.0"
         }
       },
       "string": {
@@ -1400,7 +1400,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.7.10"
+          "version": "2.8.0"
         }
       },
       "twilio-sms": {
@@ -1473,7 +1473,62 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.7.10"
+          "version": "2.8.0"
+        }
+      },
+      "webhook": {
+        "name": "Webhook",
+        "slug": "webhook",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/6ciCsTFsvUAiiIvTllMfOU/627e9513376ca457785118fbba6a858d/webhook_icon_138018.png?h=250",
+        "documentation_url": "https://docs.prefect.io/api-ref/prefect/blocks/webhook/#prefect.blocks.webhook.Webhook",
+        "description": "Block that enables calling webhooks.",
+        "code_example": "```python\nfrom prefect.blocks.webhook import Webhook\n\nwebhook_block = Webhook.load(\"BLOCK_NAME\")\n```",
+        "block_schema": {
+          "checksum": "sha256:0207cea0ff5b9d2b39e52007c3ba1d797f1aca7906fb3bf26dd409abae953a85",
+          "fields": {
+            "title": "Webhook",
+            "description": "Block that enables calling webhooks.",
+            "type": "object",
+            "properties": {
+              "method": {
+                "title": "Method",
+                "description": "The webhook request method. Defaults to `POST`.",
+                "default": "POST",
+                "enum": [
+                  "GET",
+                  "POST",
+                  "PUT",
+                  "PATCH",
+                  "DELETE"
+                ],
+                "type": "string"
+              },
+              "url": {
+                "title": "Webhook URL",
+                "description": "The webhook URL.",
+                "example": "https://hooks.slack.com/XXX",
+                "type": "string",
+                "writeOnly": true,
+                "format": "password"
+              },
+              "headers": {
+                "title": "Webhook Headers",
+                "description": "A dictionary of headers to send with the webhook request.",
+                "type": "object"
+              }
+            },
+            "required": [
+              "url"
+            ],
+            "block_type_slug": "webhook",
+            "secret_fields": [
+              "url",
+              "headers.*"
+            ],
+            "block_schema_references": {}
+          },
+          "capabilities": [],
+          "version": "2.8.0"
         }
       }
     }
@@ -6290,6 +6345,62 @@
           },
           "capabilities": [],
           "version": "0.2.3"
+        }
+      }
+    }
+  },
+  "prefect-twitter": {
+    "block_types": {
+      "twitter-credentials": {
+        "name": "Twitter Credentials",
+        "slug": "twitter-credentials",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/1NyN5egjNk9Sel17rs0cTz/067bb478b4fec22d8aa47b79b085a6e9/twitter.png?h=250",
+        "documentation_url": null,
+        "description": "Block used to manage Twitter authentication with tweepy.\nSee Authentication Tokens section of the Keys and Tokens tab of\nyour app, under the Twitter Developer Portal Projects & Apps page at\nhttps://developer.twitter.com/en/portal/projects-and-apps.",
+        "code_example": "Load stored Twitter credentials:\n```python\nfrom prefect_twitter import TwitterCredentials\ntwitter_credentials_block = TwitterCredentials.load(\"BLOCK_NAME\")\n```",
+        "block_schema": {
+          "checksum": "sha256:4c24588fb507d62c850405da822ec87e52ffc726dbbfea8ceca944d72817a7e2",
+          "fields": {
+            "title": "TwitterCredentials",
+            "description": "Block used to manage Twitter authentication with tweepy.\nSee Authentication Tokens section of the Keys and Tokens tab of\nyour app, under the Twitter Developer Portal Projects & Apps page at\nhttps://developer.twitter.com/en/portal/projects-and-apps.",
+            "type": "object",
+            "properties": {
+              "consumer_key": {
+                "title": "Consumer Key",
+                "type": "string"
+              },
+              "consumer_secret": {
+                "title": "Consumer Secret",
+                "type": "string",
+                "writeOnly": true,
+                "format": "password"
+              },
+              "access_token": {
+                "title": "Access Token",
+                "type": "string"
+              },
+              "access_token_secret": {
+                "title": "Access Token Secret",
+                "type": "string",
+                "writeOnly": true,
+                "format": "password"
+              }
+            },
+            "required": [
+              "consumer_key",
+              "consumer_secret",
+              "access_token",
+              "access_token_secret"
+            ],
+            "block_type_slug": "twitter-credentials",
+            "secret_fields": [
+              "consumer_secret",
+              "access_token_secret"
+            ],
+            "block_schema_references": {}
+          },
+          "capabilities": [],
+          "version": "0.1.1"
         }
       }
     }
