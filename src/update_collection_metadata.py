@@ -52,7 +52,7 @@ async def create_ref_if_not_exists(branch_name: str, github_token_name: str):
     github_token = await Secret.load(github_token_name)
     gh = github3.login(token=github_token.get())
     repo = gh.repository("PrefectHQ", "prefect-collection-registry")
-
+    PR_TITLE = "Update metadata for collection releases"
     new_branch_name = f"{branch_name}-{pendulum.now().format('MM-DD-YYYY')}"
 
     try:
@@ -64,27 +64,28 @@ async def create_ref_if_not_exists(branch_name: str, github_token_name: str):
 
     except github3.exceptions.UnprocessableEntity as e:
         if "Reference already exists" in str(e):
-            print(f"Ref {branch_name!r} already exists!")
+            print(f"Ref {new_branch_name!r} already exists!")
         else:
             raise
 
     if repo.compare_commits("main", new_branch_name).ahead_by != 0:
 
-        prs = list(repo.pull_requests(state="open", head=new_branch_name))
+        prs = list(repo.pull_requests(state="open"))
 
-        pr_already_exists = len(prs) > 0
+        pr_already_exists = any(pr.title == PR_TITLE for pr in prs)
 
         if pr_already_exists:
             print(f"PR for {new_branch_name!r} already exists!")
             return
 
         repo.create_pull(
-            title=f"Update metadata for collection releases",
+            title=PR_TITLE,
             body="Collection metadata updates are submitted to this PR by a Prefect flow.",
             head=new_branch_name,
             base="main",
             maintainer_can_modify=True,
         )
+
         print(f"Created PR for {new_branch_name!r} on {repo.full_name!r}!")
 
 
@@ -125,10 +126,6 @@ async def update_all_collections():
                 name="update-collection-metadata/collection-updates",
                 parameters=dict(collection_name=collection_name),
             )
-            for collection_name in utils.get_collection_names()[:2]
+            for collection_name in utils.get_collection_names()
         ]
     )
-
-
-if __name__ == "__main__":
-    asyncio.run(update_all_collections())
