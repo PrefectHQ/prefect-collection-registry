@@ -118,6 +118,46 @@
         "version": "0.1.1"
       }
     },
+    "openai-credentials": {
+      "name": "OpenAI Credentials",
+      "slug": "openai-credentials",
+      "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/QE8JwcbZBmIfiognXDLcY/2bcd4c759f877d37159f576101218b49/open-ai-logo-8B9BFEDC26-seeklogo.com.png?h=250",
+      "documentation_url": "https://prefecthq.github.io/prefect-openai/credentials/#prefect_openai.credentials.OpenAICredentials",
+      "description": "Credentials used to authenticate with OpenAI.",
+      "code_example": "Load a configured block:\n```python\nfrom prefect_openai import OpenAICredentials\n\ncredentials = OpenAICredentials.load(\"BLOCK_NAME\")\n```",
+      "block_schema": {
+        "checksum": "sha256:acea8c195b0a3fd20d47b997fa4f070953b25c8b4a02619e7632ace075e4f882",
+        "fields": {
+          "title": "OpenAICredentials",
+          "description": "Credentials used to authenticate with OpenAI.",
+          "type": "object",
+          "properties": {
+            "api_key": {
+              "title": "API Key",
+              "description": "The API key used to authenticate with OpenAI.",
+              "type": "string",
+              "writeOnly": true,
+              "format": "password"
+            },
+            "organization": {
+              "title": "Organization",
+              "description": "Specify which organization is used for an API request.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "api_key"
+          ],
+          "block_type_slug": "openai-credentials",
+          "secret_fields": [
+            "api_key"
+          ],
+          "block_schema_references": {}
+        },
+        "capabilities": [],
+        "version": "0.1.1"
+      }
+    },
     "openai-image-model": {
       "name": "OpenAI Image Model",
       "slug": "openai-image-model",
@@ -211,46 +251,6 @@
               "block_schema_references": {}
             }
           }
-        },
-        "capabilities": [],
-        "version": "0.1.1"
-      }
-    },
-    "openai-credentials": {
-      "name": "OpenAI Credentials",
-      "slug": "openai-credentials",
-      "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/QE8JwcbZBmIfiognXDLcY/2bcd4c759f877d37159f576101218b49/open-ai-logo-8B9BFEDC26-seeklogo.com.png?h=250",
-      "documentation_url": "https://prefecthq.github.io/prefect-openai/credentials/#prefect_openai.credentials.OpenAICredentials",
-      "description": "Credentials used to authenticate with OpenAI.",
-      "code_example": "Load a configured block:\n```python\nfrom prefect_openai import OpenAICredentials\n\ncredentials = OpenAICredentials.load(\"BLOCK_NAME\")\n```",
-      "block_schema": {
-        "checksum": "sha256:acea8c195b0a3fd20d47b997fa4f070953b25c8b4a02619e7632ace075e4f882",
-        "fields": {
-          "title": "OpenAICredentials",
-          "description": "Credentials used to authenticate with OpenAI.",
-          "type": "object",
-          "properties": {
-            "api_key": {
-              "title": "API Key",
-              "description": "The API key used to authenticate with OpenAI.",
-              "type": "string",
-              "writeOnly": true,
-              "format": "password"
-            },
-            "organization": {
-              "title": "Organization",
-              "description": "Specify which organization is used for an API request.",
-              "type": "string"
-            }
-          },
-          "required": [
-            "api_key"
-          ],
-          "block_type_slug": "openai-credentials",
-          "secret_fields": [
-            "api_key"
-          ],
-          "block_schema_references": {}
         },
         "capabilities": [],
         "version": "0.1.1"
