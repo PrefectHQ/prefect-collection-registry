@@ -72,7 +72,7 @@ async def create_ref_if_not_exists(branch_name: str, github_token_name: str):
         repo.create_pull(
             title=f"Update metadata for collection releases",
             body="Collection metadata updates are submitted to this PR by a Prefect flow.",
-            head=f"{branch_name}-{pendulum.now().format('MM-DD-YYYY')}",
+            head=new_branch_name,
             base="main",
             maintainer_can_modify=True,
         )
