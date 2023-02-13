@@ -60,7 +60,7 @@ async def create_ref_if_not_exists(branch_name: str, github_token_name: str):
             ref=f"refs/heads/{new_branch_name}",
             sha=repo.commit(sha="main").sha,
         )
-        print(f"Created ref {branch_name!r} on {repo.full_name!r}!")
+        print(f"Created ref {new_branch_name!r} on {repo.full_name!r}!")
 
     except github3.exceptions.UnprocessableEntity as e:
         if "Reference already exists" in str(e):
@@ -119,3 +119,7 @@ async def update_all_collections():
             for collection_name in utils.get_collection_names()[:2]
         ]
     )
+
+
+if __name__ == "__main__":
+    asyncio.run(update_all_collections())
