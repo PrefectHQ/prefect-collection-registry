@@ -2,6 +2,7 @@ import asyncio
 import subprocess
 
 import github3
+import pendulum
 from prefect import flow, task
 from prefect.blocks.system import Secret
 from prefect.deployments import run_deployment
@@ -52,9 +53,11 @@ async def create_ref_if_not_exists(branch_name: str, github_token_name: str):
     gh = github3.login(token=github_token.get())
     repo = gh.repository("PrefectHQ", "prefect-collection-registry")
 
+    new_branch_name = f"{branch_name}-{pendulum.now().format('MM-DD-YYYY')}"
+
     try:
         repo.create_ref(
-            ref=f"refs/heads/{branch_name}",
+            ref=f"refs/heads/{new_branch_name}",
             sha=repo.commit(sha="main").sha,
         )
         print(f"Created ref {branch_name!r} on {repo.full_name!r}!")
@@ -65,10 +68,20 @@ async def create_ref_if_not_exists(branch_name: str, github_token_name: str):
         else:
             raise
 
+    if repo.compare_commits("main", new_branch_name).ahead_by != 0:
+        repo.create_pull(
+            title=f"Update metadata for collection releases",
+            body="Collection metadata updates are submitted to this PR by a Prefect flow.",
+            head=f"{branch_name}-{pendulum.now().format('MM-DD-YYYY')}",
+            base="main",
+            maintainer_can_modify=True,
+        )
+        print(f"Created PR for {branch_name!r} on {repo.full_name!r}!")
+
 
 # create a deployment for this with
 # prefect deployment build update_collection_metadata.py:update_collection_metadata -n collections-updates ... -a
-@flow
+@flow(log_prints=True)
 async def update_collection_metadata(
     collection_name: str,
     branch_name: str = "update-metadata",
@@ -106,7 +119,3 @@ async def update_all_collections():
             for collection_name in utils.get_collection_names()[:2]
         ]
     )
-
-
-if __name__ == "__main__":
-    asyncio.run(update_all_collections())
