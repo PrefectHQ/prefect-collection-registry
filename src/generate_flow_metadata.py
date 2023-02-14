@@ -97,7 +97,11 @@ def generate_flow_metadata(collection_name: str) -> Dict[str, Any]:
 
 
 @flow(log_prints=True)
-def update_flow_metadata_for_collection(collection_name: str):
+def update_flow_metadata_for_collection(collection_name: str, branch_name: str):
     """Generates and submits flow metadata for a given collection."""
     collection_flow_metadata = generate_flow_metadata(collection_name)
-    utils.submit_updates(collection_flow_metadata, "flow")
+    utils.submit_updates(
+        collection_metadata=collection_flow_metadata,
+        branch_name=branch_name,
+        variety="flow",
+    )

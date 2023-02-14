@@ -14,11 +14,11 @@ from generate_flow_metadata import update_flow_metadata_for_collection
 
 
 @task
-async def collection_needs_update(collection_name: str, github_token_name: str) -> bool:
+def collection_needs_update(collection_name: str, github_token_name: str) -> bool:
     """
     Checks if the collection needs to be updated.
     """
-    github_token = await Secret.load(github_token_name)
+    github_token = Secret.load(github_token_name)
     gh = github3.login(token=github_token.get())
 
     collection_repo = gh.repository("PrefectHQ", collection_name)
@@ -45,11 +45,11 @@ async def collection_needs_update(collection_name: str, github_token_name: str) 
 
 
 @task
-async def create_ref_if_not_exists(branch_name: str, github_token_name: str):
+def create_ref_if_not_exists(branch_name: str, github_token_name: str) -> str:
     """
-    Creates a reference to the latest release if it doesn't exist.
+    Creates a branch and PR for latest releases if they don't already exist.
     """
-    github_token = await Secret.load(github_token_name)
+    github_token = Secret.load(github_token_name)
     gh = github3.login(token=github_token.get())
     repo = gh.repository("PrefectHQ", "prefect-collection-registry")
     PR_TITLE = "Update metadata for collection releases"
@@ -68,33 +68,37 @@ async def create_ref_if_not_exists(branch_name: str, github_token_name: str):
         else:
             raise
 
-    if repo.compare_commits("main", new_branch_name).ahead_by != 0:
+    if repo.compare_commits("main", new_branch_name).ahead_by == 0:
+        print(f"Cannot create PR - no difference between main and {new_branch_name!r}.")
+        return new_branch_name
 
-        prs = list(repo.pull_requests(state="open"))
+    prs = list(repo.pull_requests(state="open"))
 
-        pr_already_exists = any(
-            pr.title == PR_TITLE and pr.head.ref == new_branch_name for pr in prs
-        )
+    pr_already_exists = any(
+        pr.title == PR_TITLE and pr.head.ref == new_branch_name for pr in prs
+    )
 
-        if pr_already_exists:
-            print(f"PR for {new_branch_name!r} already exists!")
-            return
+    if pr_already_exists:
+        print(f"PR for {new_branch_name!r} already exists!")
+        return new_branch_name
 
-        repo.create_pull(
-            title=PR_TITLE,
-            body="Collection metadata updates are submitted to this PR by a Prefect flow.",
-            head=new_branch_name,
-            base="main",
-            maintainer_can_modify=True,
-        )
+    repo.create_pull(
+        title=PR_TITLE,
+        body="Collection metadata updates are submitted to this PR by a Prefect flow.",
+        head=new_branch_name,
+        base="main",
+        maintainer_can_modify=True,
+    )
 
-        print(f"Created PR for {new_branch_name!r} on {repo.full_name!r}!")
+    print(f"Created PR for {new_branch_name!r} on {repo.full_name!r}!")
+
+    return new_branch_name
 
 
 # create a deployment for this with
 # prefect deployment build update_collection_metadata.py:update_collection_metadata -n collections-updates ... -a
 @flow(log_prints=True)
-async def update_collection_metadata(
+def update_collection_metadata(
     collection_name: str,
     branch_name: str = "update-metadata",
     github_token_name: str = "collection-registry-github-token",
@@ -103,9 +107,9 @@ async def update_collection_metadata(
     Updates the collection metadata.
     """
 
-    await create_ref_if_not_exists(branch_name, github_token_name)
+    branch = create_ref_if_not_exists(branch_name, github_token_name)
 
-    need_update = await collection_needs_update(collection_name, github_token_name)
+    need_update = collection_needs_update(collection_name, github_token_name)
 
     if not need_update:
         return Completed(message=f"{collection_name} is up to date!")
@@ -113,14 +117,14 @@ async def update_collection_metadata(
         # install the collection
         subprocess.run(f"pip install {collection_name}".split())
 
-        update_flow_metadata_for_collection(collection_name)
-        update_block_metadata_for_collection(collection_name)
+        update_flow_metadata_for_collection(collection_name, branch)
+        update_block_metadata_for_collection(collection_name, branch)
 
 
 @flow
 async def update_all_collections():
     """
-    Updates all collections.
+    Checks all collections for releases and updates the metadata if needed.
     """
     await asyncio.gather(
         *[
