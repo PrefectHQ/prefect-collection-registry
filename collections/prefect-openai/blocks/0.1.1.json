@@ -1,259 +1,261 @@
 {
-  "block_types": {
-    "openai-completion-model": {
-      "name": "OpenAI Completion Model",
-      "slug": "openai-completion-model",
-      "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/QE8JwcbZBmIfiognXDLcY/2bcd4c759f877d37159f576101218b49/open-ai-logo-8B9BFEDC26-seeklogo.com.png?h=250",
-      "documentation_url": "https://prefecthq.github.io/prefect-openai/completion/#prefect_openai.completion.CompletionModel",
-      "description": "A block that contains config for an OpenAI Completion Model.\nLearn more in the [OpenAPI Text Completion docs](\n    https://beta.openai.com/docs/guides/completion)",
-      "code_example": "Load a configured block:\n```python\nfrom prefect_openai import CompletionModel\n\ncompletion_model = CompletionModel.load(\"BLOCK_NAME\")\n```",
-      "block_schema": {
-        "checksum": "sha256:f82aab0d3735247d99fa72170e885b764a353d247e923e69348ae01b180f7597",
-        "fields": {
-          "title": "CompletionModel",
-          "description": "A block that contains config for an OpenAI Completion Model.\nLearn more in the [OpenAPI Text Completion docs](\n    https://beta.openai.com/docs/guides/completion)",
-          "type": "object",
-          "properties": {
-            "openai_credentials": {
-              "title": "Openai Credentials",
-              "description": "The credentials used to authenticate with OpenAI.",
-              "allOf": [
-                {
-                  "$ref": "#/definitions/OpenAICredentials"
-                }
-              ]
-            },
-            "model": {
-              "title": "Model",
-              "description": "ID of the model to use.",
-              "default": "text-curie-001",
-              "anyOf": [
-                {
-                  "enum": [
-                    "text-davinci-003",
-                    "text-curie-001",
-                    "text-babbage-001",
-                    "text-ada-001"
-                  ],
-                  "type": "string"
-                },
-                {
-                  "type": "string"
-                }
-              ]
-            },
-            "temperature": {
-              "title": "Temperature",
-              "description": "What sampling temperature to use. Higher values means the model will take more risks. Try 0.9 for more creative applications, and 0 (argmax sampling) for ones with a well-defined answer.",
-              "default": 0.5,
-              "type": "number"
-            },
-            "max_tokens": {
-              "title": "Max Tokens",
-              "description": "The maximum number of tokens to generate in the completion. The token count of your prompt plus max_tokens cannot exceed the model's context length. Most models have a context length of 2048 tokens (except for the newest models, which support 4096).",
-              "default": 16,
-              "type": "integer"
-            },
-            "suffix": {
-              "title": "Suffix",
-              "description": "The suffix to append to the prompt.",
-              "type": "string"
-            },
-            "echo": {
-              "title": "Echo",
-              "description": "Whether to echo the prompt.",
-              "default": false,
-              "type": "boolean"
-            },
-            "timeout": {
-              "title": "Timeout",
-              "description": "The maximum time to wait for the model to warm up.",
-              "type": "number"
-            }
-          },
-          "required": [
-            "openai_credentials"
-          ],
-          "block_type_slug": "openai-completion-model",
-          "secret_fields": [
-            "openai_credentials.api_key"
-          ],
-          "block_schema_references": {
-            "openai_credentials": {
-              "block_type_slug": "openai-credentials",
-              "block_schema_checksum": "sha256:acea8c195b0a3fd20d47b997fa4f070953b25c8b4a02619e7632ace075e4f882"
-            }
-          },
-          "definitions": {
-            "OpenAICredentials": {
-              "title": "OpenAICredentials",
-              "description": "Credentials used to authenticate with OpenAI.",
-              "type": "object",
-              "properties": {
-                "api_key": {
-                  "title": "API Key",
-                  "description": "The API key used to authenticate with OpenAI.",
-                  "type": "string",
-                  "writeOnly": true,
-                  "format": "password"
-                },
-                "organization": {
-                  "title": "Organization",
-                  "description": "Specify which organization is used for an API request.",
-                  "type": "string"
-                }
+  "prefect-openai": {
+    "block_types": {
+      "openai-completion-model": {
+        "name": "OpenAI Completion Model",
+        "slug": "openai-completion-model",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/QE8JwcbZBmIfiognXDLcY/2bcd4c759f877d37159f576101218b49/open-ai-logo-8B9BFEDC26-seeklogo.com.png?h=250",
+        "documentation_url": "https://prefecthq.github.io/prefect-openai/completion/#prefect_openai.completion.CompletionModel",
+        "description": "A block that contains config for an OpenAI Completion Model.\nLearn more in the [OpenAPI Text Completion docs](\n    https://beta.openai.com/docs/guides/completion)",
+        "code_example": "Load a configured block:\n```python\nfrom prefect_openai import CompletionModel\n\ncompletion_model = CompletionModel.load(\"BLOCK_NAME\")\n```",
+        "block_schema": {
+          "checksum": "sha256:f82aab0d3735247d99fa72170e885b764a353d247e923e69348ae01b180f7597",
+          "fields": {
+            "title": "CompletionModel",
+            "description": "A block that contains config for an OpenAI Completion Model.\nLearn more in the [OpenAPI Text Completion docs](\n    https://beta.openai.com/docs/guides/completion)",
+            "type": "object",
+            "properties": {
+              "openai_credentials": {
+                "title": "Openai Credentials",
+                "description": "The credentials used to authenticate with OpenAI.",
+                "allOf": [
+                  {
+                    "$ref": "#/definitions/OpenAICredentials"
+                  }
+                ]
               },
-              "required": [
-                "api_key"
-              ],
-              "block_type_slug": "openai-credentials",
-              "secret_fields": [
-                "api_key"
-              ],
-              "block_schema_references": {}
-            }
-          }
-        },
-        "capabilities": [],
-        "version": "0.1.1"
-      }
-    },
-    "openai-credentials": {
-      "name": "OpenAI Credentials",
-      "slug": "openai-credentials",
-      "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/QE8JwcbZBmIfiognXDLcY/2bcd4c759f877d37159f576101218b49/open-ai-logo-8B9BFEDC26-seeklogo.com.png?h=250",
-      "documentation_url": "https://prefecthq.github.io/prefect-openai/credentials/#prefect_openai.credentials.OpenAICredentials",
-      "description": "Credentials used to authenticate with OpenAI.",
-      "code_example": "Load a configured block:\n```python\nfrom prefect_openai import OpenAICredentials\n\ncredentials = OpenAICredentials.load(\"BLOCK_NAME\")\n```",
-      "block_schema": {
-        "checksum": "sha256:acea8c195b0a3fd20d47b997fa4f070953b25c8b4a02619e7632ace075e4f882",
-        "fields": {
-          "title": "OpenAICredentials",
-          "description": "Credentials used to authenticate with OpenAI.",
-          "type": "object",
-          "properties": {
-            "api_key": {
-              "title": "API Key",
-              "description": "The API key used to authenticate with OpenAI.",
-              "type": "string",
-              "writeOnly": true,
-              "format": "password"
-            },
-            "organization": {
-              "title": "Organization",
-              "description": "Specify which organization is used for an API request.",
-              "type": "string"
-            }
-          },
-          "required": [
-            "api_key"
-          ],
-          "block_type_slug": "openai-credentials",
-          "secret_fields": [
-            "api_key"
-          ],
-          "block_schema_references": {}
-        },
-        "capabilities": [],
-        "version": "0.1.1"
-      }
-    },
-    "openai-image-model": {
-      "name": "OpenAI Image Model",
-      "slug": "openai-image-model",
-      "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/QE8JwcbZBmIfiognXDLcY/2bcd4c759f877d37159f576101218b49/open-ai-logo-8B9BFEDC26-seeklogo.com.png?h=250",
-      "documentation_url": null,
-      "description": "A block that contains config for an OpenAI Image Model.\nLearn more in the [OpenAPI Image generation docs](\n    https://beta.openai.com/docs/guides/images)",
-      "code_example": "Load a configured block:\n```python\nfrom prefect_openai import ImageModel\n\nimage_model = ImageModel.load(\"BLOCK_NAME\")\n```",
-      "block_schema": {
-        "checksum": "sha256:f7dc669378cf87bf12b7a132b4728b583145bb6e094ce32240ae70c75e4ce1ea",
-        "fields": {
-          "title": "ImageModel",
-          "description": "A block that contains config for an OpenAI Image Model.\nLearn more in the [OpenAPI Image generation docs](\n    https://beta.openai.com/docs/guides/images)",
-          "type": "object",
-          "properties": {
-            "openai_credentials": {
-              "title": "Openai Credentials",
-              "description": "The credentials used to authenticate with OpenAI.",
-              "allOf": [
-                {
-                  "$ref": "#/definitions/OpenAICredentials"
-                }
-              ]
-            },
-            "size": {
-              "title": "Size",
-              "description": "The size of the image to generate.",
-              "default": "256x256",
-              "enum": [
-                "256x256",
-                "512x512",
-                "1024x1024"
-              ],
-              "type": "string"
-            },
-            "n": {
-              "title": "Number of images",
-              "description": "The number of images to generate.",
-              "default": 1,
-              "type": "integer"
-            },
-            "response_format": {
-              "title": "Response Format",
-              "description": "The format of the image to generate.",
-              "default": "url",
-              "enum": [
-                "url",
-                "b64_json"
-              ],
-              "type": "string"
-            }
-          },
-          "required": [
-            "openai_credentials"
-          ],
-          "block_type_slug": "openai-image-model",
-          "secret_fields": [
-            "openai_credentials.api_key"
-          ],
-          "block_schema_references": {
-            "openai_credentials": {
-              "block_type_slug": "openai-credentials",
-              "block_schema_checksum": "sha256:acea8c195b0a3fd20d47b997fa4f070953b25c8b4a02619e7632ace075e4f882"
-            }
-          },
-          "definitions": {
-            "OpenAICredentials": {
-              "title": "OpenAICredentials",
-              "description": "Credentials used to authenticate with OpenAI.",
-              "type": "object",
-              "properties": {
-                "api_key": {
-                  "title": "API Key",
-                  "description": "The API key used to authenticate with OpenAI.",
-                  "type": "string",
-                  "writeOnly": true,
-                  "format": "password"
-                },
-                "organization": {
-                  "title": "Organization",
-                  "description": "Specify which organization is used for an API request.",
-                  "type": "string"
-                }
+              "model": {
+                "title": "Model",
+                "description": "ID of the model to use.",
+                "default": "text-curie-001",
+                "anyOf": [
+                  {
+                    "enum": [
+                      "text-davinci-003",
+                      "text-curie-001",
+                      "text-babbage-001",
+                      "text-ada-001"
+                    ],
+                    "type": "string"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
               },
-              "required": [
-                "api_key"
-              ],
-              "block_type_slug": "openai-credentials",
-              "secret_fields": [
-                "api_key"
-              ],
-              "block_schema_references": {}
+              "temperature": {
+                "title": "Temperature",
+                "description": "What sampling temperature to use. Higher values means the model will take more risks. Try 0.9 for more creative applications, and 0 (argmax sampling) for ones with a well-defined answer.",
+                "default": 0.5,
+                "type": "number"
+              },
+              "max_tokens": {
+                "title": "Max Tokens",
+                "description": "The maximum number of tokens to generate in the completion. The token count of your prompt plus max_tokens cannot exceed the model's context length. Most models have a context length of 2048 tokens (except for the newest models, which support 4096).",
+                "default": 16,
+                "type": "integer"
+              },
+              "suffix": {
+                "title": "Suffix",
+                "description": "The suffix to append to the prompt.",
+                "type": "string"
+              },
+              "echo": {
+                "title": "Echo",
+                "description": "Whether to echo the prompt.",
+                "default": false,
+                "type": "boolean"
+              },
+              "timeout": {
+                "title": "Timeout",
+                "description": "The maximum time to wait for the model to warm up.",
+                "type": "number"
+              }
+            },
+            "required": [
+              "openai_credentials"
+            ],
+            "block_type_slug": "openai-completion-model",
+            "secret_fields": [
+              "openai_credentials.api_key"
+            ],
+            "block_schema_references": {
+              "openai_credentials": {
+                "block_type_slug": "openai-credentials",
+                "block_schema_checksum": "sha256:acea8c195b0a3fd20d47b997fa4f070953b25c8b4a02619e7632ace075e4f882"
+              }
+            },
+            "definitions": {
+              "OpenAICredentials": {
+                "title": "OpenAICredentials",
+                "description": "Credentials used to authenticate with OpenAI.",
+                "type": "object",
+                "properties": {
+                  "api_key": {
+                    "title": "API Key",
+                    "description": "The API key used to authenticate with OpenAI.",
+                    "type": "string",
+                    "writeOnly": true,
+                    "format": "password"
+                  },
+                  "organization": {
+                    "title": "Organization",
+                    "description": "Specify which organization is used for an API request.",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "api_key"
+                ],
+                "block_type_slug": "openai-credentials",
+                "secret_fields": [
+                  "api_key"
+                ],
+                "block_schema_references": {}
+              }
             }
-          }
-        },
-        "capabilities": [],
-        "version": "0.1.1"
+          },
+          "capabilities": [],
+          "version": "0.1.1"
+        }
+      },
+      "openai-credentials": {
+        "name": "OpenAI Credentials",
+        "slug": "openai-credentials",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/QE8JwcbZBmIfiognXDLcY/2bcd4c759f877d37159f576101218b49/open-ai-logo-8B9BFEDC26-seeklogo.com.png?h=250",
+        "documentation_url": "https://prefecthq.github.io/prefect-openai/credentials/#prefect_openai.credentials.OpenAICredentials",
+        "description": "Credentials used to authenticate with OpenAI.",
+        "code_example": "Load a configured block:\n```python\nfrom prefect_openai import OpenAICredentials\n\ncredentials = OpenAICredentials.load(\"BLOCK_NAME\")\n```",
+        "block_schema": {
+          "checksum": "sha256:acea8c195b0a3fd20d47b997fa4f070953b25c8b4a02619e7632ace075e4f882",
+          "fields": {
+            "title": "OpenAICredentials",
+            "description": "Credentials used to authenticate with OpenAI.",
+            "type": "object",
+            "properties": {
+              "api_key": {
+                "title": "API Key",
+                "description": "The API key used to authenticate with OpenAI.",
+                "type": "string",
+                "writeOnly": true,
+                "format": "password"
+              },
+              "organization": {
+                "title": "Organization",
+                "description": "Specify which organization is used for an API request.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "api_key"
+            ],
+            "block_type_slug": "openai-credentials",
+            "secret_fields": [
+              "api_key"
+            ],
+            "block_schema_references": {}
+          },
+          "capabilities": [],
+          "version": "0.1.1"
+        }
+      },
+      "openai-image-model": {
+        "name": "OpenAI Image Model",
+        "slug": "openai-image-model",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/QE8JwcbZBmIfiognXDLcY/2bcd4c759f877d37159f576101218b49/open-ai-logo-8B9BFEDC26-seeklogo.com.png?h=250",
+        "documentation_url": null,
+        "description": "A block that contains config for an OpenAI Image Model.\nLearn more in the [OpenAPI Image generation docs](\n    https://beta.openai.com/docs/guides/images)",
+        "code_example": "Load a configured block:\n```python\nfrom prefect_openai import ImageModel\n\nimage_model = ImageModel.load(\"BLOCK_NAME\")\n```",
+        "block_schema": {
+          "checksum": "sha256:f7dc669378cf87bf12b7a132b4728b583145bb6e094ce32240ae70c75e4ce1ea",
+          "fields": {
+            "title": "ImageModel",
+            "description": "A block that contains config for an OpenAI Image Model.\nLearn more in the [OpenAPI Image generation docs](\n    https://beta.openai.com/docs/guides/images)",
+            "type": "object",
+            "properties": {
+              "openai_credentials": {
+                "title": "Openai Credentials",
+                "description": "The credentials used to authenticate with OpenAI.",
+                "allOf": [
+                  {
+                    "$ref": "#/definitions/OpenAICredentials"
+                  }
+                ]
+              },
+              "size": {
+                "title": "Size",
+                "description": "The size of the image to generate.",
+                "default": "256x256",
+                "enum": [
+                  "256x256",
+                  "512x512",
+                  "1024x1024"
+                ],
+                "type": "string"
+              },
+              "n": {
+                "title": "Number of images",
+                "description": "The number of images to generate.",
+                "default": 1,
+                "type": "integer"
+              },
+              "response_format": {
+                "title": "Response Format",
+                "description": "The format of the image to generate.",
+                "default": "url",
+                "enum": [
+                  "url",
+                  "b64_json"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "openai_credentials"
+            ],
+            "block_type_slug": "openai-image-model",
+            "secret_fields": [
+              "openai_credentials.api_key"
+            ],
+            "block_schema_references": {
+              "openai_credentials": {
+                "block_type_slug": "openai-credentials",
+                "block_schema_checksum": "sha256:acea8c195b0a3fd20d47b997fa4f070953b25c8b4a02619e7632ace075e4f882"
+              }
+            },
+            "definitions": {
+              "OpenAICredentials": {
+                "title": "OpenAICredentials",
+                "description": "Credentials used to authenticate with OpenAI.",
+                "type": "object",
+                "properties": {
+                  "api_key": {
+                    "title": "API Key",
+                    "description": "The API key used to authenticate with OpenAI.",
+                    "type": "string",
+                    "writeOnly": true,
+                    "format": "password"
+                  },
+                  "organization": {
+                    "title": "Organization",
+                    "description": "Specify which organization is used for an API request.",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "api_key"
+                ],
+                "block_type_slug": "openai-credentials",
+                "secret_fields": [
+                  "api_key"
+                ],
+                "block_schema_references": {}
+              }
+            }
+          },
+          "capabilities": [],
+          "version": "0.1.1"
+        }
       }
     }
   }
