@@ -1,187 +1,189 @@
 {
-  "block_types": {
-    "airbyte-connection": {
-      "name": "Airbyte Connection",
-      "slug": "airbyte-connection",
-      "logo_url": "https://images.ctfassets.net/zscdif0zqppk/6gm7wsC7ANnKYQsm7oiSYz/aac1ad5e054d35d9e24af8d6ed3aed5f/59758427?h=250",
-      "documentation_url": null,
-      "description": "A block representing an existing Airbyte connection.",
-      "code_example": "Load an existing `AirbyteConnection` block:\n```python\nfrom prefect_airbyte import AirbyteConnection\n\nairbyte_connection = AirbyteConnection.load(\"BLOCK_NAME\")\n```\n\nRun an Airbyte connection sync as a flow:\n```python\nfrom prefect import flow\nfrom prefect_airbyte import AirbyteConnection\nfrom prefect_airbyte.flows import run_connection_sync # this is a flow\n\nairbyte_connection = AirbyteConnection.load(\"BLOCK_NAME\")\n\n@flow\ndef airbyte_orchestrator():\n    run_connection_sync(airbyte_connection) # now it's a subflow\n```",
-      "block_schema": {
-        "checksum": "sha256:b0d1479644a23659067536d89a7254ec7ab05101e225db74de165b90cd3a1d73",
-        "fields": {
-          "title": "AirbyteConnection",
-          "description": "A block representing an existing Airbyte connection.",
-          "type": "object",
-          "properties": {
-            "airbyte_server": {
-              "title": "Airbyte Server",
-              "description": "AirbyteServer block representing the Airbyte instance where the Airbyte connection is defined.",
-              "allOf": [
-                {
-                  "$ref": "#/definitions/AirbyteServer"
-                }
-              ]
-            },
-            "connection_id": {
-              "title": "Connection Id",
-              "description": "UUID of the Airbyte Connection to trigger.",
-              "type": "string",
-              "format": "uuid"
-            },
-            "poll_interval_s": {
-              "title": "Poll Interval S",
-              "description": "Time in seconds between status checks of the Airbyte sync job.",
-              "default": 15,
-              "type": "integer"
-            },
-            "status_updates": {
-              "title": "Status Updates",
-              "description": "Whether to log job status on each poll of the Airbyte sync job.",
-              "default": false,
-              "type": "boolean"
-            },
-            "timeout": {
-              "title": "Timeout",
-              "description": "Timeout in seconds for requests made by httpx.AsyncClient.",
-              "default": 5,
-              "type": "integer"
-            }
-          },
-          "required": [
-            "airbyte_server",
-            "connection_id"
-          ],
-          "block_type_slug": "airbyte-connection",
-          "secret_fields": [
-            "airbyte_server.password"
-          ],
-          "block_schema_references": {
-            "airbyte_server": {
-              "block_type_slug": "airbyte-server",
-              "block_schema_checksum": "sha256:f0bc49c549405ef3e753b3cc0a81e0e13b1b036acfab571c76f4d198c4bb842a"
-            }
-          },
-          "definitions": {
-            "AirbyteServer": {
-              "title": "AirbyteServer",
-              "description": "A block representing an Airbyte server for generating `AirbyteClient` instances.",
-              "type": "object",
-              "properties": {
-                "username": {
-                  "title": "Username",
-                  "description": "Username to authenticate with Airbyte API.",
-                  "default": "airbyte",
-                  "type": "string"
-                },
-                "password": {
-                  "title": "Password",
-                  "description": "Password to authenticate with Airbyte API.",
-                  "default": "**********",
-                  "type": "string",
-                  "writeOnly": true,
-                  "format": "password"
-                },
-                "server_host": {
-                  "title": "Server Host",
-                  "description": "Host address of Airbyte server.",
-                  "default": "localhost",
-                  "example": "127.0.0.1",
-                  "type": "string"
-                },
-                "server_port": {
-                  "title": "Server Port",
-                  "description": "Port number of Airbyte server.",
-                  "default": 8000,
-                  "type": "integer"
-                },
-                "api_version": {
-                  "title": "API Version",
-                  "description": "Airbyte API version to use.",
-                  "default": "v1",
-                  "type": "string"
-                },
-                "use_ssl": {
-                  "title": "Use SSL",
-                  "description": "Whether to use SSL when connecting to Airbyte server.",
-                  "default": false,
-                  "type": "boolean"
-                }
+  "prefect-airbyte": {
+    "block_types": {
+      "airbyte-connection": {
+        "name": "Airbyte Connection",
+        "slug": "airbyte-connection",
+        "logo_url": "https://images.ctfassets.net/zscdif0zqppk/6gm7wsC7ANnKYQsm7oiSYz/aac1ad5e054d35d9e24af8d6ed3aed5f/59758427?h=250",
+        "documentation_url": null,
+        "description": "A block representing an existing Airbyte connection.",
+        "code_example": "Load an existing `AirbyteConnection` block:\n```python\nfrom prefect_airbyte import AirbyteConnection\n\nairbyte_connection = AirbyteConnection.load(\"BLOCK_NAME\")\n```\n\nRun an Airbyte connection sync as a flow:\n```python\nfrom prefect import flow\nfrom prefect_airbyte import AirbyteConnection\nfrom prefect_airbyte.flows import run_connection_sync # this is a flow\n\nairbyte_connection = AirbyteConnection.load(\"BLOCK_NAME\")\n\n@flow\ndef airbyte_orchestrator():\n    run_connection_sync(airbyte_connection) # now it's a subflow\n```",
+        "block_schema": {
+          "checksum": "sha256:b0d1479644a23659067536d89a7254ec7ab05101e225db74de165b90cd3a1d73",
+          "fields": {
+            "title": "AirbyteConnection",
+            "description": "A block representing an existing Airbyte connection.",
+            "type": "object",
+            "properties": {
+              "airbyte_server": {
+                "title": "Airbyte Server",
+                "description": "AirbyteServer block representing the Airbyte instance where the Airbyte connection is defined.",
+                "allOf": [
+                  {
+                    "$ref": "#/definitions/AirbyteServer"
+                  }
+                ]
               },
-              "block_type_slug": "airbyte-server",
-              "secret_fields": [
-                "password"
-              ],
-              "block_schema_references": {}
-            }
-          }
-        },
-        "capabilities": [],
-        "version": "0.2.0"
-      }
-    },
-    "airbyte-server": {
-      "name": "Airbyte Server",
-      "slug": "airbyte-server",
-      "logo_url": "https://images.ctfassets.net/zscdif0zqppk/6gm7wsC7ANnKYQsm7oiSYz/aac1ad5e054d35d9e24af8d6ed3aed5f/59758427?h=250",
-      "documentation_url": null,
-      "description": "A block representing an Airbyte server for generating `AirbyteClient` instances.",
-      "code_example": "```python\nfrom prefect_airbyte.server import AirbyteServer\n\nserver = AirbyteServer.load(\"BLOCK_NAME\")\n```",
-      "block_schema": {
-        "checksum": "sha256:f0bc49c549405ef3e753b3cc0a81e0e13b1b036acfab571c76f4d198c4bb842a",
-        "fields": {
-          "title": "AirbyteServer",
-          "description": "A block representing an Airbyte server for generating `AirbyteClient` instances.",
-          "type": "object",
-          "properties": {
-            "username": {
-              "title": "Username",
-              "description": "Username to authenticate with Airbyte API.",
-              "default": "airbyte",
-              "type": "string"
+              "connection_id": {
+                "title": "Connection Id",
+                "description": "UUID of the Airbyte Connection to trigger.",
+                "type": "string",
+                "format": "uuid"
+              },
+              "poll_interval_s": {
+                "title": "Poll Interval S",
+                "description": "Time in seconds between status checks of the Airbyte sync job.",
+                "default": 15,
+                "type": "integer"
+              },
+              "status_updates": {
+                "title": "Status Updates",
+                "description": "Whether to log job status on each poll of the Airbyte sync job.",
+                "default": false,
+                "type": "boolean"
+              },
+              "timeout": {
+                "title": "Timeout",
+                "description": "Timeout in seconds for requests made by httpx.AsyncClient.",
+                "default": 5,
+                "type": "integer"
+              }
             },
-            "password": {
-              "title": "Password",
-              "description": "Password to authenticate with Airbyte API.",
-              "default": "**********",
-              "type": "string",
-              "writeOnly": true,
-              "format": "password"
+            "required": [
+              "airbyte_server",
+              "connection_id"
+            ],
+            "block_type_slug": "airbyte-connection",
+            "secret_fields": [
+              "airbyte_server.password"
+            ],
+            "block_schema_references": {
+              "airbyte_server": {
+                "block_type_slug": "airbyte-server",
+                "block_schema_checksum": "sha256:f0bc49c549405ef3e753b3cc0a81e0e13b1b036acfab571c76f4d198c4bb842a"
+              }
             },
-            "server_host": {
-              "title": "Server Host",
-              "description": "Host address of Airbyte server.",
-              "default": "localhost",
-              "example": "127.0.0.1",
-              "type": "string"
-            },
-            "server_port": {
-              "title": "Server Port",
-              "description": "Port number of Airbyte server.",
-              "default": 8000,
-              "type": "integer"
-            },
-            "api_version": {
-              "title": "API Version",
-              "description": "Airbyte API version to use.",
-              "default": "v1",
-              "type": "string"
-            },
-            "use_ssl": {
-              "title": "Use SSL",
-              "description": "Whether to use SSL when connecting to Airbyte server.",
-              "default": false,
-              "type": "boolean"
+            "definitions": {
+              "AirbyteServer": {
+                "title": "AirbyteServer",
+                "description": "A block representing an Airbyte server for generating `AirbyteClient` instances.",
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "title": "Username",
+                    "description": "Username to authenticate with Airbyte API.",
+                    "default": "airbyte",
+                    "type": "string"
+                  },
+                  "password": {
+                    "title": "Password",
+                    "description": "Password to authenticate with Airbyte API.",
+                    "default": "**********",
+                    "type": "string",
+                    "writeOnly": true,
+                    "format": "password"
+                  },
+                  "server_host": {
+                    "title": "Server Host",
+                    "description": "Host address of Airbyte server.",
+                    "default": "localhost",
+                    "example": "127.0.0.1",
+                    "type": "string"
+                  },
+                  "server_port": {
+                    "title": "Server Port",
+                    "description": "Port number of Airbyte server.",
+                    "default": 8000,
+                    "type": "integer"
+                  },
+                  "api_version": {
+                    "title": "API Version",
+                    "description": "Airbyte API version to use.",
+                    "default": "v1",
+                    "type": "string"
+                  },
+                  "use_ssl": {
+                    "title": "Use SSL",
+                    "description": "Whether to use SSL when connecting to Airbyte server.",
+                    "default": false,
+                    "type": "boolean"
+                  }
+                },
+                "block_type_slug": "airbyte-server",
+                "secret_fields": [
+                  "password"
+                ],
+                "block_schema_references": {}
+              }
             }
           },
-          "block_type_slug": "airbyte-server",
-          "secret_fields": [
-            "password"
-          ],
-          "block_schema_references": {}
-        },
-        "capabilities": [],
-        "version": "0.2.0"
+          "capabilities": [],
+          "version": "0.2.0"
+        }
+      },
+      "airbyte-server": {
+        "name": "Airbyte Server",
+        "slug": "airbyte-server",
+        "logo_url": "https://images.ctfassets.net/zscdif0zqppk/6gm7wsC7ANnKYQsm7oiSYz/aac1ad5e054d35d9e24af8d6ed3aed5f/59758427?h=250",
+        "documentation_url": null,
+        "description": "A block representing an Airbyte server for generating `AirbyteClient` instances.",
+        "code_example": "```python\nfrom prefect_airbyte.server import AirbyteServer\n\nserver = AirbyteServer.load(\"BLOCK_NAME\")\n```",
+        "block_schema": {
+          "checksum": "sha256:f0bc49c549405ef3e753b3cc0a81e0e13b1b036acfab571c76f4d198c4bb842a",
+          "fields": {
+            "title": "AirbyteServer",
+            "description": "A block representing an Airbyte server for generating `AirbyteClient` instances.",
+            "type": "object",
+            "properties": {
+              "username": {
+                "title": "Username",
+                "description": "Username to authenticate with Airbyte API.",
+                "default": "airbyte",
+                "type": "string"
+              },
+              "password": {
+                "title": "Password",
+                "description": "Password to authenticate with Airbyte API.",
+                "default": "**********",
+                "type": "string",
+                "writeOnly": true,
+                "format": "password"
+              },
+              "server_host": {
+                "title": "Server Host",
+                "description": "Host address of Airbyte server.",
+                "default": "localhost",
+                "example": "127.0.0.1",
+                "type": "string"
+              },
+              "server_port": {
+                "title": "Server Port",
+                "description": "Port number of Airbyte server.",
+                "default": 8000,
+                "type": "integer"
+              },
+              "api_version": {
+                "title": "API Version",
+                "description": "Airbyte API version to use.",
+                "default": "v1",
+                "type": "string"
+              },
+              "use_ssl": {
+                "title": "Use SSL",
+                "description": "Whether to use SSL when connecting to Airbyte server.",
+                "default": false,
+                "type": "boolean"
+              }
+            },
+            "block_type_slug": "airbyte-server",
+            "secret_fields": [
+              "password"
+            ],
+            "block_schema_references": {}
+          },
+          "capabilities": [],
+          "version": "0.2.0"
+        }
       }
     }
   }
