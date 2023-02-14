@@ -1,34 +1,36 @@
 {
-  "block_types": {
-    "monday-credentials": {
-      "name": "Monday Credentials",
-      "slug": "monday-credentials",
-      "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/3ohoKiYTO3Kjt6sri58HXu/27b45e8641127b196008976dde856058/imageedit_5_6047243931.png?h=250",
-      "documentation_url": null,
-      "description": "Block used to manage Monday authentication.",
-      "code_example": "Load stored Monday credentials:\n```python\nfrom prefect_monday import MondayCredentials\nmonday_credentials_block = MondayCredentials.load(\"BLOCK_NAME\")\n```",
-      "block_schema": {
-        "checksum": "sha256:75cd6ebd47abb93e5e4c8d359ca2b02af97438df098c1565197b04db468d595c",
-        "fields": {
-          "title": "MondayCredentials",
-          "description": "Block used to manage Monday authentication.",
-          "type": "object",
-          "properties": {
-            "token": {
-              "title": "Token",
-              "type": "string",
-              "writeOnly": true,
-              "format": "password"
-            }
+  "prefect-monday": {
+    "block_types": {
+      "monday-credentials": {
+        "name": "Monday Credentials",
+        "slug": "monday-credentials",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/3ohoKiYTO3Kjt6sri58HXu/27b45e8641127b196008976dde856058/imageedit_5_6047243931.png?h=250",
+        "documentation_url": null,
+        "description": "Block used to manage Monday authentication.",
+        "code_example": "Load stored Monday credentials:\n```python\nfrom prefect_monday import MondayCredentials\nmonday_credentials_block = MondayCredentials.load(\"BLOCK_NAME\")\n```",
+        "block_schema": {
+          "checksum": "sha256:75cd6ebd47abb93e5e4c8d359ca2b02af97438df098c1565197b04db468d595c",
+          "fields": {
+            "title": "MondayCredentials",
+            "description": "Block used to manage Monday authentication.",
+            "type": "object",
+            "properties": {
+              "token": {
+                "title": "Token",
+                "type": "string",
+                "writeOnly": true,
+                "format": "password"
+              }
+            },
+            "block_type_slug": "monday-credentials",
+            "secret_fields": [
+              "token"
+            ],
+            "block_schema_references": {}
           },
-          "block_type_slug": "monday-credentials",
-          "secret_fields": [
-            "token"
-          ],
-          "block_schema_references": {}
-        },
-        "capabilities": [],
-        "version": "0.1.0"
+          "capabilities": [],
+          "version": "0.1.0"
+        }
       }
     }
   }
