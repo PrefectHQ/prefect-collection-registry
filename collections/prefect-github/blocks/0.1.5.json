@@ -1,110 +1,112 @@
 {
-  "block_types": {
-    "github-credentials": {
-      "name": "GitHub Credentials",
-      "slug": "github-credentials",
-      "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/187oCWsD18m5yooahq1vU0/ace41e99ab6dc40c53e5584365a33821/github.png?h=250",
-      "documentation_url": null,
-      "description": "Block used to manage GitHub authentication.",
-      "code_example": "Load stored GitHub credentials:\n```python\nfrom prefect_github import GitHubCredentials\ngithub_credentials_block = GitHubCredentials.load(\"BLOCK_NAME\")\n```",
-      "block_schema": {
-        "checksum": "sha256:74a34b668838ba661d9160ab127053dd44a22dd04e89562839645791e70d046a",
-        "fields": {
-          "title": "GitHubCredentials",
-          "description": "Block used to manage GitHub authentication.",
-          "type": "object",
-          "properties": {
-            "token": {
-              "title": "Token",
-              "description": "A GitHub personal access token (PAT).",
-              "type": "string",
-              "writeOnly": true,
-              "format": "password"
-            }
-          },
-          "block_type_slug": "github-credentials",
-          "secret_fields": [
-            "token"
-          ],
-          "block_schema_references": {}
-        },
-        "capabilities": [],
-        "version": "0.1.5"
-      }
-    },
-    "github-repository": {
-      "name": "GitHub Repository",
-      "slug": "github-repository",
-      "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/187oCWsD18m5yooahq1vU0/ace41e99ab6dc40c53e5584365a33821/github.png?h=250",
-      "documentation_url": null,
-      "description": "Interact with files stored on GitHub repositories.",
-      "code_example": "```python\nfrom prefect_github.repository import GitHubRepository\n\ngithub_repository_block = GitHubRepository.load(\"BLOCK_NAME\")\n```",
-      "block_schema": {
-        "checksum": "sha256:3d2b2de1cd9336264ccc73f7078264d9053dc956941136516e18050c9953abf0",
-        "fields": {
-          "title": "GitHubRepository",
-          "description": "Interact with files stored on GitHub repositories.",
-          "type": "object",
-          "properties": {
-            "repository_url": {
-              "title": "Repository URL",
-              "description": "The URL of a GitHub repository to read from, in either HTTPS or SSH format. If you are using a private repo, it must be in the HTTPS format.",
-              "type": "string"
+  "prefect-github": {
+    "block_types": {
+      "github-credentials": {
+        "name": "GitHub Credentials",
+        "slug": "github-credentials",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/187oCWsD18m5yooahq1vU0/ace41e99ab6dc40c53e5584365a33821/github.png?h=250",
+        "documentation_url": null,
+        "description": "Block used to manage GitHub authentication.",
+        "code_example": "Load stored GitHub credentials:\n```python\nfrom prefect_github import GitHubCredentials\ngithub_credentials_block = GitHubCredentials.load(\"BLOCK_NAME\")\n```",
+        "block_schema": {
+          "checksum": "sha256:74a34b668838ba661d9160ab127053dd44a22dd04e89562839645791e70d046a",
+          "fields": {
+            "title": "GitHubCredentials",
+            "description": "Block used to manage GitHub authentication.",
+            "type": "object",
+            "properties": {
+              "token": {
+                "title": "Token",
+                "description": "A GitHub personal access token (PAT).",
+                "type": "string",
+                "writeOnly": true,
+                "format": "password"
+              }
             },
-            "reference": {
-              "title": "Reference",
-              "description": "An optional reference to pin to; can be a branch name or tag.",
-              "type": "string"
-            },
-            "credentials": {
-              "title": "Credentials",
-              "description": "An optional GitHubCredentials block for using private GitHub repos.",
-              "allOf": [
-                {
-                  "$ref": "#/definitions/GitHubCredentials"
-                }
-              ]
-            }
+            "block_type_slug": "github-credentials",
+            "secret_fields": [
+              "token"
+            ],
+            "block_schema_references": {}
           },
-          "required": [
-            "repository_url"
-          ],
-          "block_type_slug": "github-repository",
-          "secret_fields": [
-            "credentials.token"
-          ],
-          "block_schema_references": {
-            "credentials": {
-              "block_type_slug": "github-credentials",
-              "block_schema_checksum": "sha256:74a34b668838ba661d9160ab127053dd44a22dd04e89562839645791e70d046a"
-            }
-          },
-          "definitions": {
-            "GitHubCredentials": {
-              "title": "GitHubCredentials",
-              "description": "Block used to manage GitHub authentication.",
-              "type": "object",
-              "properties": {
-                "token": {
-                  "title": "Token",
-                  "description": "A GitHub personal access token (PAT).",
-                  "type": "string",
-                  "writeOnly": true,
-                  "format": "password"
-                }
+          "capabilities": [],
+          "version": "0.1.5"
+        }
+      },
+      "github-repository": {
+        "name": "GitHub Repository",
+        "slug": "github-repository",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/187oCWsD18m5yooahq1vU0/ace41e99ab6dc40c53e5584365a33821/github.png?h=250",
+        "documentation_url": null,
+        "description": "Interact with files stored on GitHub repositories.",
+        "code_example": "```python\nfrom prefect_github.repository import GitHubRepository\n\ngithub_repository_block = GitHubRepository.load(\"BLOCK_NAME\")\n```",
+        "block_schema": {
+          "checksum": "sha256:3d2b2de1cd9336264ccc73f7078264d9053dc956941136516e18050c9953abf0",
+          "fields": {
+            "title": "GitHubRepository",
+            "description": "Interact with files stored on GitHub repositories.",
+            "type": "object",
+            "properties": {
+              "repository_url": {
+                "title": "Repository URL",
+                "description": "The URL of a GitHub repository to read from, in either HTTPS or SSH format. If you are using a private repo, it must be in the HTTPS format.",
+                "type": "string"
               },
-              "block_type_slug": "github-credentials",
-              "secret_fields": [
-                "token"
-              ],
-              "block_schema_references": {}
+              "reference": {
+                "title": "Reference",
+                "description": "An optional reference to pin to; can be a branch name or tag.",
+                "type": "string"
+              },
+              "credentials": {
+                "title": "Credentials",
+                "description": "An optional GitHubCredentials block for using private GitHub repos.",
+                "allOf": [
+                  {
+                    "$ref": "#/definitions/GitHubCredentials"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "repository_url"
+            ],
+            "block_type_slug": "github-repository",
+            "secret_fields": [
+              "credentials.token"
+            ],
+            "block_schema_references": {
+              "credentials": {
+                "block_type_slug": "github-credentials",
+                "block_schema_checksum": "sha256:74a34b668838ba661d9160ab127053dd44a22dd04e89562839645791e70d046a"
+              }
+            },
+            "definitions": {
+              "GitHubCredentials": {
+                "title": "GitHubCredentials",
+                "description": "Block used to manage GitHub authentication.",
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "title": "Token",
+                    "description": "A GitHub personal access token (PAT).",
+                    "type": "string",
+                    "writeOnly": true,
+                    "format": "password"
+                  }
+                },
+                "block_type_slug": "github-credentials",
+                "secret_fields": [
+                  "token"
+                ],
+                "block_schema_references": {}
+              }
             }
-          }
-        },
-        "capabilities": [
-          "get-directory"
-        ],
-        "version": "0.1.5"
+          },
+          "capabilities": [
+            "get-directory"
+          ],
+          "version": "0.1.5"
+        }
       }
     }
   }
