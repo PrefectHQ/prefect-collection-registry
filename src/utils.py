@@ -63,15 +63,16 @@ def find_flows_in_module(
 @task
 def submit_updates(
     collection_metadata: Dict[str, Any],
+    branch_name: str,
     variety: Literal["block", "flow", "collection"],
     repo_name: str = "prefect-collection-registry",
-    branch_name: str = "flow-metadata",
+    github_token_name: str = "collection-registry-github-token",
 ):
     collection_name = list(collection_metadata.keys())[0]
     metadata_file = f"views/aggregate-{variety}-metadata.json"
 
     # read the existing flow metadata from existing JSON file
-    github_token = Secret.load("github-token")
+    github_token = Secret.load(github_token_name)
     gh = github3.login(token=github_token.get())
     repo = gh.repository("PrefectHQ", repo_name)
     collection_repo = gh.repository("PrefectHQ", collection_name)
@@ -91,7 +92,7 @@ def submit_updates(
     try:
         repo.create_file(
             path=f"collections/{collection_name}/{variety}s/{latest_release}.json",
-            message=f"Add {collection_name} {latest_release} to {variety} records",
+            message=f"Add `{collection_name}` `{latest_release}` to {variety} records",
             content=json.dumps(collection_metadata, indent=4).encode("utf-8"),
             branch=branch_name,
         )
@@ -115,7 +116,7 @@ def submit_updates(
         return
 
     repo.file_contents(metadata_file, ref=branch_name).update(
-        message=f"Update aggregate {variety} metadata with {collection_name} {latest_release}",
+        message=f"Update aggregate {variety} metadata with `{collection_name}` `{latest_release}`",
         content=updated_metadata_content.encode("utf-8"),
         branch=branch_name,
     )

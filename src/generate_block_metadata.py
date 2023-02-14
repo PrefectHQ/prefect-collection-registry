@@ -10,8 +10,11 @@ from types import ModuleType
 from typing import Any, Dict, List, Type
 from uuid import uuid4
 
+from prefect import flow
 from prefect.blocks.core import Block
 from prefect.plugins import safe_load_entrypoints
+
+import utils
 
 # Some collection blocks share names with core blocks. We exclude them
 # from the registry for now to avoid confusion.
@@ -81,7 +84,9 @@ def generate_block_metadata_for_collection(collection_name: str):
             **output_dict.get("block_types", {}),
             **generate_block_metadata_for_module(module),
         }
-    return output_dict
+    return {
+        collection_name: output_dict,
+    }
 
 
 def write_block_metadata(collection_metadata: Dict[str, Any], collection_name: str):
@@ -98,6 +103,14 @@ def write_block_metadata(collection_metadata: Dict[str, Any], collection_name: s
     collection_metadata_path.parent.mkdir(parents=True, exist_ok=True)
     with open(collection_metadata_path, "w") as f:
         json.dump(collection_metadata, f, indent=2)
+
+
+@flow
+def update_block_metadata_for_collection(collection_name: str, branch_name: str):
+    block_metadata = generate_block_metadata_for_collection(collection_name)
+    utils.submit_updates(
+        collection_metadata=block_metadata, branch_name=branch_name, variety="block"
+    )
 
 
 if __name__ == "__main__":
