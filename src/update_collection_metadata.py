@@ -128,6 +128,6 @@ async def update_all_collections():
                 name="update-collection-metadata/collection-updates",
                 parameters=dict(collection_name=collection_name),
             )
-            for collection_name in utils.get_collection_names()[:2]
+            for collection_name in utils.get_collection_names()
         ]
     )
