@@ -102,6 +102,7 @@ def update_flow_metadata_for_collection(collection_name: str, branch_name: str):
     collection_flow_metadata = generate_flow_metadata(collection_name)
     utils.submit_updates(
         collection_metadata=collection_flow_metadata,
+        collection_name=collection_name,
         branch_name=branch_name,
         variety="flow",
     )

@@ -63,12 +63,12 @@ def find_flows_in_module(
 @task
 def submit_updates(
     collection_metadata: Dict[str, Any],
+    collection_name: str,
     branch_name: str,
     variety: Literal["block", "flow", "collection"],
     repo_name: str = "prefect-collection-registry",
     github_token_name: str = "collection-registry-github-token",
 ):
-    collection_name = list(collection_metadata.keys())[0]
     metadata_file = f"views/aggregate-{variety}-metadata.json"
 
     # read the existing flow metadata from existing JSON file
@@ -84,7 +84,7 @@ def submit_updates(
 
     existing_metadata_dict = json.loads(existing_metadata_content)
 
-    existing_metadata_dict.update(collection_metadata)
+    existing_metadata_dict.update({collection_name: collection_metadata})
 
     updated_metadata_dict = dict(sorted(existing_metadata_dict.items()))
 
