@@ -1,0 +1,53 @@
+{
+  "workers": {
+    "prefect-agent": {
+      "type": "prefect-agent",
+      "install_command": "pip install prefect",
+      "default_base_job_configuration": {},
+      "description": "A Prefect agent that executes flow runs via infrastructure blocks."
+    },
+    "process": {
+      "default_base_job_configuration": {
+        "job_configuration": {
+          "command": "{{ command }}",
+          "stream_output": "{{ stream_output }}",
+          "working_dir": "{{ working_dir }}"
+        },
+        "variables": {
+          "properties": {
+            "command": {
+              "title": "Command",
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "stream_output": {
+              "title": "Stream Output",
+              "default": true,
+              "type": "boolean"
+            },
+            "working_dir": {
+              "title": "Working Dir",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "path"
+                }
+              ]
+            }
+          },
+          "required": []
+        }
+      },
+      "description": "Worker that executes flow runs within processes.",
+      "documentation_url": "",
+      "install_command": "pip install prefect",
+      "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/39WQhVu4JK40rZWltGqhuC/d15be6189a0cb95949a6b43df00dcb9b/image5.png?h=250",
+      "type": "process"
+    }
+  }
+}

@@ -26,3 +26,22 @@ flow_schema = {
         "repo_url",
     ],
 }
+
+worker_schema = {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+        "type": {"type": "string"},
+        "description": {"type": "string"},
+        "documentation_url": {"type": "string"},
+        "logo_url": {"type": "string"},
+        "install_command": {"type": "string"},
+        "default_base_job_configuration": {"type": "object"},
+    },
+    "required": [
+        "type",
+        "description",
+        "install_command",
+        "default_base_job_configuration",
+    ],
+}
