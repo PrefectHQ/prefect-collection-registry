@@ -1,4 +1,7 @@
 {
+    "prefect": {
+        "prefect": {}
+    },
     "prefect-airbyte": {
         "run_connection_sync": {
             "description": {
