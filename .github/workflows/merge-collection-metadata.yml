@@ -20,8 +20,7 @@ jobs:
 
       - name: Install prefect and github3
         run: |
-          python -m pip install --upgrade pip prefect
-          python -m pip install github3.py
+          python -m pip install --upgrade pip prefect github3.py
 
       - name: Update aggregated block metadata
         run: |
