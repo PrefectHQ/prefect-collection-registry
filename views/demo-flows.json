@@ -7,7 +7,7 @@
                 "examples": []
             },
             "documentation_url": "https://github.com/PrefectHQ/prefect-recipes",
-            "entrypoint": "prefect_airbyte/flows-simple/hello.py:hello",
+            "entrypoint": "flows-simple/hello.py:hello",
             "install_command": "",
             "logo_url": "",
             "name": "hello",
