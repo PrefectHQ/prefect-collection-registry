@@ -1,30 +1,7 @@
 import json
 from pathlib import Path
 
-from generate_block_metadata import BLOCKS_BLACKLIST, generate_block_metadata
-
-
-def generate_prefect_block_metadata():
-    """Generates block metadata from the prefect package."""
-    from prefect.blocks.core import Block
-    from prefect.utilities.dispatch import get_registry_for_type
-
-    block_registry = get_registry_for_type(Block) or {}
-
-    return {
-        "block_types": dict(
-            sorted(
-                {
-                    block_subcls.get_block_type_slug(): generate_block_metadata(
-                        block_subcls
-                    )
-                    for block_subcls in block_registry.values()
-                    if block_subcls.get_block_type_slug() not in BLOCKS_BLACKLIST
-                }.items()
-            )
-        )
-    }
-
+from generate_block_metadata import generate_prefect_block_metadata
 
 if __name__ == "__main__":
     collection_dirs = Path("collections").glob("prefect-*")

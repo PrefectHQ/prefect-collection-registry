@@ -43,7 +43,31 @@ def generate_block_metadata(block_subcls: Type[Block]) -> Dict[str, Any]:
     return block_type_dict
 
 
+def generate_prefect_block_metadata():
+    """Generates block metadata from the prefect package."""
+    from prefect.utilities.dispatch import get_registry_for_type
+
+    block_registry = get_registry_for_type(Block) or {}
+
+    return {
+        "block_types": dict(
+            sorted(
+                {
+                    block_subcls.get_block_type_slug(): generate_block_metadata(
+                        block_subcls
+                    )
+                    for block_subcls in block_registry.values()
+                    if block_subcls.get_block_type_slug() not in BLOCKS_BLACKLIST
+                }.items()
+            )
+        )
+    }
+
+
 def generate_block_metadata_for_module(module: ModuleType):
+    if module.__name__ == "prefect":
+        return generate_prefect_block_metadata()
+
     block_subclasses = discover_block_subclasses(module)
     return dict(
         sorted(

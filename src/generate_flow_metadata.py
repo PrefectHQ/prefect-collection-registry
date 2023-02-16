@@ -5,6 +5,7 @@ from griffe.dataclasses import Docstring
 from griffe.docstrings.parsers import Parser, parse
 from jsonschema import validate
 from prefect import Flow, flow, task
+from prefect.states import Completed
 from prefect.utilities.importtools import load_module
 
 import utils
@@ -98,6 +99,10 @@ def generate_flow_metadata(collection_name: str) -> Dict[str, Any]:
 
 @flow(log_prints=True)
 def update_flow_metadata_for_collection(collection_name: str, branch_name: str):
+
+    if collection_name == "prefect":
+        return Completed(message="No flow metadata to update for Prefect core.")
+
     """Generates and submits flow metadata for a given collection."""
     collection_flow_metadata = generate_flow_metadata(collection_name)
     utils.submit_updates(
