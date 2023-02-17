@@ -69,6 +69,9 @@ def submit_updates(
     repo_name: str = "prefect-collection-registry",
     github_token_name: str = "collection-registry-github-token",
 ):
+    if branch_name == "main":
+        raise ValueError("Cannot submit updates directly to main!")
+    
     metadata_file = f"views/aggregate-{variety}-metadata.json"
 
     # read the existing flow metadata from existing JSON file
