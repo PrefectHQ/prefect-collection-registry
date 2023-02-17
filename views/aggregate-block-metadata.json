@@ -3022,7 +3022,7 @@
         "description": "Store BitBucket credentials to interact with private BitBucket repositories.",
         "code_example": "Load stored BitBucket credentials:\n```python\nfrom prefect_bitbucket import BitBucketCredentials\nbitbucket_credentials_block = BitBucketCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:9664d0350dce1573394c4828254a3be1fd4c9797b9eae02ea3ed322f988a34c9",
+          "checksum": "sha256:ac894e8f4bff58261c7072b7b2a6e4154622bf68aa38ebca2bce58fedfd54e06",
           "fields": {
             "title": "BitBucketCredentials",
             "description": "Store BitBucket credentials to interact with private BitBucket repositories.",
@@ -3040,16 +3040,30 @@
                 "title": "Username",
                 "description": "Identification name unique across entire BitBucket site.",
                 "type": "string"
+              },
+              "password": {
+                "title": "Password",
+                "description": "The password to authenticate to BitBucket.",
+                "type": "string",
+                "writeOnly": true,
+                "format": "password"
+              },
+              "url": {
+                "title": "URL",
+                "description": "The base URL of your BitBucket instance.",
+                "default": "https://api.bitbucket.org/",
+                "type": "string"
               }
             },
             "block_type_slug": "bitbucket-credentials",
             "secret_fields": [
-              "token"
+              "token",
+              "password"
             ],
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.1.0"
+          "version": "0.1.1"
         }
       },
       "bitbucket-repository": {
@@ -3060,7 +3074,7 @@
         "description": "Interact with files stored in BitBucket repositories.",
         "code_example": "```python\nfrom prefect_bitbucket.repository import BitBucketRepository\n\nbitbucket_repository_block = BitBucketRepository.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:19bec1067241778f4467b24d19f2ff69eadf9098dde3d73f85536ab61bedd156",
+          "checksum": "sha256:5cb02c2fabf32f266105998c7261862992d7f912bc61fcc97d6e27fa7e588f26",
           "fields": {
             "title": "BitBucketRepository",
             "description": "Interact with files stored in BitBucket repositories.",
@@ -3091,12 +3105,13 @@
             ],
             "block_type_slug": "bitbucket-repository",
             "secret_fields": [
-              "bitbucket_credentials.token"
+              "bitbucket_credentials.token",
+              "bitbucket_credentials.password"
             ],
             "block_schema_references": {
               "bitbucket_credentials": {
                 "block_type_slug": "bitbucket-credentials",
-                "block_schema_checksum": "sha256:9664d0350dce1573394c4828254a3be1fd4c9797b9eae02ea3ed322f988a34c9"
+                "block_schema_checksum": "sha256:ac894e8f4bff58261c7072b7b2a6e4154622bf68aa38ebca2bce58fedfd54e06"
               }
             },
             "definitions": {
@@ -3117,11 +3132,25 @@
                     "title": "Username",
                     "description": "Identification name unique across entire BitBucket site.",
                     "type": "string"
+                  },
+                  "password": {
+                    "title": "Password",
+                    "description": "The password to authenticate to BitBucket.",
+                    "type": "string",
+                    "writeOnly": true,
+                    "format": "password"
+                  },
+                  "url": {
+                    "title": "URL",
+                    "description": "The base URL of your BitBucket instance.",
+                    "default": "https://api.bitbucket.org/",
+                    "type": "string"
                   }
                 },
                 "block_type_slug": "bitbucket-credentials",
                 "secret_fields": [
-                  "token"
+                  "token",
+                  "password"
                 ],
                 "block_schema_references": {}
               }
@@ -3130,7 +3159,7 @@
           "capabilities": [
             "get-directory"
           ],
-          "version": "0.1.0"
+          "version": "0.1.1"
         }
       }
     }
@@ -7961,7 +7990,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.2.3"
+          "version": "0.2.4"
         }
       },
       "sqlalchemy-connector": {
@@ -8111,7 +8140,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.2.3"
+          "version": "0.2.4"
         }
       }
     }
