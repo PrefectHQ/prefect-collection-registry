@@ -43,6 +43,25 @@ def generate_block_metadata(block_subcls: Type[Block]) -> Dict[str, Any]:
     return block_type_dict
 
 
+def generate_prefect_block_metadata():
+    """Generates block metadata from the prefect package."""
+    from prefect.utilities.dispatch import get_registry_for_type
+
+    block_registry = get_registry_for_type(Block) or {}
+
+    return {
+        "block_types": dict(
+            sorted(
+                {
+                    slug: generate_block_metadata(subcls)
+                    for slug, subcls in block_registry.items()
+                    if slug not in BLOCKS_BLACKLIST
+                }.items()
+            )
+        )
+    }
+
+
 def generate_block_metadata_for_module(module: ModuleType):
     block_subclasses = discover_block_subclasses(module)
     return dict(
@@ -69,6 +88,9 @@ def discover_block_subclasses(module: ModuleType) -> List[Type[Block]]:
 
 
 def generate_block_metadata_for_collection(collection_name: str):
+    if collection_name == "prefect":
+        return generate_prefect_block_metadata()
+
     # group is only available for Python 3.10+
     collections = safe_load_entrypoints(entry_points(group="prefect.collections"))
     output_dict = {}
