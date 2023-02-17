@@ -1,0 +1,61 @@
+{
+  "block_types": {
+    "kubernetes-credentials": {
+      "name": "Kubernetes Credentials",
+      "slug": "kubernetes-credentials",
+      "logo_url": "https://images.ctfassets.net/zscdif0zqppk/oYuHjIbc26oilfQSEMjRv/a61f5f6ef406eead2df5231835b4c4c2/logo.png?h=250",
+      "documentation_url": "https://prefecthq.github.io/prefect-kubernetes/credentials/#prefect_kubernetes.credentials.KubernetesCredentials",
+      "description": "Credentials block for generating configured Kubernetes API clients.",
+      "code_example": "Load stored Kubernetes credentials:\n```python\nfrom prefect_kubernetes.credentials import KubernetesCredentials\n\nkubernetes_credentials = KubernetesCredentials.load(\"BLOCK_NAME\")\n```",
+      "block_schema": {
+        "checksum": "sha256:957fa8dca90bd1b5fb9c575ee09e80b454116c0b134287fbc2eff47a72564c3b",
+        "fields": {
+          "title": "KubernetesCredentials",
+          "description": "Credentials block for generating configured Kubernetes API clients.",
+          "type": "object",
+          "properties": {
+            "cluster_config": {
+              "$ref": "#/definitions/KubernetesClusterConfig"
+            }
+          },
+          "block_type_slug": "kubernetes-credentials",
+          "secret_fields": [],
+          "block_schema_references": {
+            "cluster_config": {
+              "block_type_slug": "kubernetes-cluster-config",
+              "block_schema_checksum": "sha256:90d421e948bfbe4cdc98b124995f0edd0f84b0837549ad1390423bad8e31cf3b"
+            }
+          },
+          "definitions": {
+            "KubernetesClusterConfig": {
+              "title": "KubernetesClusterConfig",
+              "description": "Stores configuration for interaction with Kubernetes clusters.\n\nSee `from_file` for creation.",
+              "type": "object",
+              "properties": {
+                "config": {
+                  "title": "Config",
+                  "description": "The entire contents of a kubectl config file.",
+                  "type": "object"
+                },
+                "context_name": {
+                  "title": "Context Name",
+                  "description": "The name of the kubectl context to use.",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "config",
+                "context_name"
+              ],
+              "block_type_slug": "kubernetes-cluster-config",
+              "secret_fields": [],
+              "block_schema_references": {}
+            }
+          }
+        },
+        "capabilities": [],
+        "version": "0.2.1"
+      }
+    }
+  }
+}
