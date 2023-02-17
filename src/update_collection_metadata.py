@@ -23,14 +23,17 @@ def collection_needs_update(collection_name: str, github_token_name: str) -> boo
 
     collection_repo = gh.repository("PrefectHQ", collection_name)
     registry_repo = gh.repository("PrefectHQ", "prefect-collection-registry")
-    latest_recorded_release = sorted(
-        [
-            name
-            for name, _ in registry_repo.directory_contents(
-                directory_path=f"collections/{collection_name}/blocks", ref="main"
-            )
-        ]
-    )[-1].replace(".json", "")
+    try:
+        latest_recorded_release = sorted(
+            [
+                name
+                for name, _ in registry_repo.directory_contents(
+                    directory_path=f"collections/{collection_name}/blocks", ref="main"
+                )
+            ]
+        )[-1].replace(".json", "")
+    except github3.exceptions.NotFoundError:
+        return True
 
     latest_release = collection_repo.latest_release().tag_name.replace("v", "")
 
