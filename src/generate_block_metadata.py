@@ -53,11 +53,9 @@ def generate_prefect_block_metadata():
         "block_types": dict(
             sorted(
                 {
-                    block_subcls.get_block_type_slug(): generate_block_metadata(
-                        block_subcls
-                    )
-                    for block_subcls in block_registry.values()
-                    if block_subcls.get_block_type_slug() not in BLOCKS_BLACKLIST
+                    slug: generate_block_metadata(subcls)
+                    for slug, subcls in block_registry.items()
+                    if slug not in BLOCKS_BLACKLIST
                 }.items()
             )
         )
@@ -65,8 +63,6 @@ def generate_prefect_block_metadata():
 
 
 def generate_block_metadata_for_module(module: ModuleType):
-    if module.__name__ == "prefect":
-        return generate_prefect_block_metadata()
 
     block_subclasses = discover_block_subclasses(module)
     return dict(
@@ -94,6 +90,10 @@ def discover_block_subclasses(module: ModuleType) -> List[Type[Block]]:
 
 def generate_block_metadata_for_collection(collection_name: str):
     # group is only available for Python 3.10+
+
+    if collection_name == "prefect":
+        return generate_prefect_block_metadata()
+
     collections = safe_load_entrypoints(entry_points(group="prefect.collections"))
     output_dict = {}
     for ep_name, module in collections.items():
