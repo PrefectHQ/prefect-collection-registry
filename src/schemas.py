@@ -45,3 +45,56 @@ worker_schema = {
         "default_base_job_configuration",
     ],
 }
+
+block_type_schema = {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+        "name": {"type": "string"},
+        "slug": {"type": "string"},
+        "logo_url": {
+            "minLength": 1,
+            "maxLength": 2083,
+            "format": "uri",
+            "type": "string",
+        },
+        "documentation_url": {
+            "minLength": 1,
+            "maxLength": 2083,
+            "format": "uri",
+            "type": "string",
+        },
+        "description": {"type": "string"},
+        "code_example": {"type": "string"},
+        "block_schema": {"$ref": "#/components/schemas/block_schema"},
+    },
+    "required": [
+        "name",
+        "slug",
+        "logo_url",
+        "documentation_url",
+        "description",
+        "code_example",
+        "block_schema",
+    ],
+    "components": {
+        "schemas": {
+            "block_schema": {
+                "$schema": "http://json-schema.org/draft-07/schema#",
+                "type": "object",
+                "properties": {
+                    "checksum": {"type": "string"},
+                    "version": {"type": "string"},
+                    "capabilities": {"type": "array", "items": {"type": "string"}},
+                    "fields": {"type": "object"},
+                },
+                "required": [
+                    "checksum",
+                    "version",
+                    "capabilities",
+                    "fields",
+                ],
+            }
+        }
+    },
+}
