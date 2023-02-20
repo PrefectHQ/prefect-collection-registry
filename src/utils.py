@@ -96,7 +96,7 @@ def submit_updates(
         repo.create_file(
             path=f"collections/{collection_name}/{variety}s/{latest_release}.json",
             message=f"Add `{collection_name}` `{latest_release}` to {variety} records",
-            content=json.dumps(collection_metadata, indent=4).encode("utf-8"),
+            content=json.dumps(collection_metadata, indent=2).encode("utf-8"),
             branch=branch_name,
         )
         print(f"Added {collection_name} {latest_release} to {variety} records!")
@@ -111,7 +111,7 @@ def submit_updates(
             raise
 
     # create a new commit updating the aggregate flow metadata file
-    updated_metadata_content = json.dumps(updated_metadata_dict, indent=4)
+    updated_metadata_content = json.dumps(updated_metadata_dict, indent=2)
     if existing_metadata_content == updated_metadata_content:
         print(
             f"Aggregate {variety} metadata for {collection_name} {latest_release} already up to date!"
