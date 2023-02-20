@@ -3293,6 +3293,9 @@
       }
     }
   },
+  "prefect-dask": {
+    "block_types": {}
+  },
   "prefect-databricks": {
     "block_types": {
       "databricks-credentials": {
