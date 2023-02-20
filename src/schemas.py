@@ -72,7 +72,6 @@ block_type_schema = {
         "name",
         "slug",
         "logo_url",
-        "documentation_url",
         "description",
         "code_example",
         "block_schema",
