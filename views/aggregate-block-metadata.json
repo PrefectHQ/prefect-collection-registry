@@ -84,7 +84,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.8.2"
+          "version": "2.7.11"
         }
       },
       "date-time": {
@@ -116,7 +116,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.8.2"
+          "version": "2.7.11"
         }
       },
       "docker-container": {
@@ -317,7 +317,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.8.2"
+          "version": "2.7.11"
         }
       },
       "docker-registry": {
@@ -372,7 +372,7 @@
           "capabilities": [
             "docker-login"
           ],
-          "version": "2.8.2"
+          "version": "2.7.11"
         }
       },
       "gcs": {
@@ -423,7 +423,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.8.2"
+          "version": "2.7.11"
         }
       },
       "github": {
@@ -477,7 +477,7 @@
           "capabilities": [
             "get-directory"
           ],
-          "version": "2.8.2"
+          "version": "2.7.11"
         }
       },
       "json": {
@@ -507,7 +507,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.8.2"
+          "version": "2.7.11"
         }
       },
       "kubernetes-cluster-config": {
@@ -544,7 +544,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.8.2"
+          "version": "2.7.11"
         }
       },
       "kubernetes-job": {
@@ -718,7 +718,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.8.2"
+          "version": "2.7.11"
         }
       },
       "local-file-system": {
@@ -751,94 +751,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.8.2"
-        }
-      },
-      "mattermost-webhook": {
-        "name": "Mattermost Webhook",
-        "slug": "mattermost-webhook",
-        "logo_url": "https://images.ctfassets.net/zscdif0zqppk/3mlbsJDAmK402ER1sf0zUF/a48ac43fa38f395dd5f56c6ed29f22bb/mattermost-logo-png-transparent.png?h=250",
-        "documentation_url": "https://docs.prefect.io/api-ref/prefect/blocks/notifications/#prefect.blocks.notifications.MattermostWebhook",
-        "description": "Enables sending notifications via a provided Mattermost webhook.",
-        "code_example": "Load a saved Mattermost webhook and send a message:\n```python\nfrom prefect.blocks.notifications import MattermostWebhook\n\nmattermost_webhook_block = MattermostWebhook.load(\"BLOCK_NAME\")\n\nmattermost_webhook_block.notify(\"Hello from Prefect!\")\n```",
-        "block_schema": {
-          "checksum": "sha256:26d8cbaab33eb653eca72e8c403405d738ed3f1095aba4b64d06c6426253d6cb",
-          "fields": {
-            "title": "MattermostWebhook",
-            "description": "Enables sending notifications via a provided Mattermost webhook.",
-            "type": "object",
-            "properties": {
-              "notify_type": {
-                "title": "Notify Type",
-                "description": "The type of notification being performed; the prefect_default is a plain notification that does not attach an image.",
-                "default": "prefect_default",
-                "enum": [
-                  "prefect_default",
-                  "info",
-                  "success",
-                  "warning",
-                  "failure"
-                ],
-                "type": "string"
-              },
-              "hostname": {
-                "title": "Hostname",
-                "description": "The hostname of your Mattermost server.",
-                "example": "Mattermost.example.com",
-                "type": "string"
-              },
-              "token": {
-                "title": "Token",
-                "description": "The token associated with your Mattermost webhook.",
-                "type": "string",
-                "writeOnly": true,
-                "format": "password"
-              },
-              "botname": {
-                "title": "Bot name",
-                "description": "The name of the bot that will send the message.",
-                "type": "string"
-              },
-              "channels": {
-                "title": "Channels",
-                "description": "The channel(s) you wish to notify.",
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "include_image": {
-                "title": "Include Image",
-                "description": "Whether to include the Apprise status image in the message.",
-                "default": false,
-                "type": "boolean"
-              },
-              "path": {
-                "title": "Path",
-                "description": "An optional sub-path specification to append to the hostname.",
-                "type": "string"
-              },
-              "port": {
-                "title": "Port",
-                "description": "The port of your Mattermost server.",
-                "default": 8065,
-                "type": "integer"
-              }
-            },
-            "required": [
-              "hostname",
-              "token"
-            ],
-            "block_type_slug": "mattermost-webhook",
-            "secret_fields": [
-              "token"
-            ],
-            "block_schema_references": {}
-          },
-          "capabilities": [
-            "notify"
-          ],
-          "version": "2.8.2"
+          "version": "2.7.11"
         }
       },
       "ms-teams-webhook": {
@@ -889,7 +802,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.8.2"
+          "version": "2.7.11"
         }
       },
       "opsgenie-webhook": {
@@ -1011,7 +924,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.8.2"
+          "version": "2.7.11"
         }
       },
       "pager-duty-webhook": {
@@ -1124,7 +1037,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.8.2"
+          "version": "2.7.11"
         }
       },
       "process": {
@@ -1206,7 +1119,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.8.2"
+          "version": "2.7.11"
         }
       },
       "remote-file-system": {
@@ -1248,7 +1161,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.8.2"
+          "version": "2.7.11"
         }
       },
       "s3": {
@@ -1304,7 +1217,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.8.2"
+          "version": "2.7.11"
         }
       },
       "secret": {
@@ -1339,7 +1252,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.8.2"
+          "version": "2.7.11"
         }
       },
       "slack-webhook": {
@@ -1390,7 +1303,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.8.2"
+          "version": "2.7.11"
         }
       },
       "smb": {
@@ -1456,7 +1369,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.8.2"
+          "version": "2.7.11"
         }
       },
       "string": {
@@ -1487,7 +1400,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.8.2"
+          "version": "2.7.11"
         }
       },
       "twilio-sms": {
@@ -1560,62 +1473,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.8.2"
-        }
-      },
-      "webhook": {
-        "name": "Webhook",
-        "slug": "webhook",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/6ciCsTFsvUAiiIvTllMfOU/627e9513376ca457785118fbba6a858d/webhook_icon_138018.png?h=250",
-        "documentation_url": "https://docs.prefect.io/api-ref/prefect/blocks/webhook/#prefect.blocks.webhook.Webhook",
-        "description": "Block that enables calling webhooks.",
-        "code_example": "```python\nfrom prefect.blocks.webhook import Webhook\n\nwebhook_block = Webhook.load(\"BLOCK_NAME\")\n```",
-        "block_schema": {
-          "checksum": "sha256:0207cea0ff5b9d2b39e52007c3ba1d797f1aca7906fb3bf26dd409abae953a85",
-          "fields": {
-            "title": "Webhook",
-            "description": "Block that enables calling webhooks.",
-            "type": "object",
-            "properties": {
-              "method": {
-                "title": "Method",
-                "description": "The webhook request method. Defaults to `POST`.",
-                "default": "POST",
-                "enum": [
-                  "GET",
-                  "POST",
-                  "PUT",
-                  "PATCH",
-                  "DELETE"
-                ],
-                "type": "string"
-              },
-              "url": {
-                "title": "Webhook URL",
-                "description": "The webhook URL.",
-                "example": "https://hooks.slack.com/XXX",
-                "type": "string",
-                "writeOnly": true,
-                "format": "password"
-              },
-              "headers": {
-                "title": "Webhook Headers",
-                "description": "A dictionary of headers to send with the webhook request.",
-                "type": "object"
-              }
-            },
-            "required": [
-              "url"
-            ],
-            "block_type_slug": "webhook",
-            "secret_fields": [
-              "url",
-              "headers.*"
-            ],
-            "block_schema_references": {}
-          },
-          "capabilities": [],
-          "version": "2.8.2"
+          "version": "2.7.11"
         }
       }
     }
