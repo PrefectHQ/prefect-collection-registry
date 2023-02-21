@@ -177,7 +177,7 @@ def update_block_desc_with_collection_name():
 
         for block_type in block_types_dict["block_types"].keys():
             added_description = (
-                f"\nThis block is part of the {package_name} collection. "
+                f" This block is part of the {package_name} collection. "
                 f"Install {package_name} with `pip install {package_name}` "
                 "to use this block."
             )

@@ -114,7 +114,7 @@ def generate_block_metadata_for_collection(collection_name: str):
 
         # Add description to each block type of what collection it's from and how to install it.
         added_description = (
-            f"\nThis block is part of the {collection_name} collection. "
+            f" This block is part of the {collection_name} collection. "
             f"Install {collection_name} with `pip install {collection_name}` "
             "to use this block."
         )
