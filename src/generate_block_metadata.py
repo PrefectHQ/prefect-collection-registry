@@ -130,7 +130,7 @@ def write_block_metadata(collection_metadata: Dict[str, Any], collection_name: s
         json.dump(collection_metadata, f, indent=2)
 
 
-@flow(log_prints=True)
+@flow
 def update_block_metadata_for_collection(collection_name: str, branch_name: str):
     block_metadata = generate_block_metadata_for_collection(collection_name)
     utils.submit_updates(

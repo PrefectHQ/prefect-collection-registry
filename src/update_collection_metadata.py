@@ -97,7 +97,7 @@ async def create_ref_if_not_exists(branch_name: str) -> str:
 
 # create a deployment for this with
 # prefect deployment build update_collection_metadata.py:update_collection_metadata -n collections-updates ... -a
-@flow
+@flow(log_prints=True)
 def update_collection_metadata(
     collection_name: str,
     branch_name: str,

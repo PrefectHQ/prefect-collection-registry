@@ -79,7 +79,7 @@ def summarize_flow(flow: Flow, collection_name: str) -> Dict[str, Any]:
     return flow_summary
 
 
-@task(log_prints=True)
+@task
 def generate_flow_metadata(collection_name: str) -> Dict[str, Any]:
     """
     Generates a JSON file containing metadata about all flows in a given collection.
@@ -97,14 +97,13 @@ def generate_flow_metadata(collection_name: str) -> Dict[str, Any]:
     }
 
 
-@flow(log_prints=True)
+@flow
 def update_flow_metadata_for_collection(collection_name: str, branch_name: str):
     """Generates and submits flow metadata for a given collection."""
     if collection_name == "prefect":
         return Completed(message="No flow metadata to update for Prefect core.")
 
     collection_flow_metadata = generate_flow_metadata(collection_name)
-
     utils.submit_updates(
         collection_metadata=collection_flow_metadata,
         collection_name=collection_name,
