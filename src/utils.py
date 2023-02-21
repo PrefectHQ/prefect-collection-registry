@@ -84,7 +84,6 @@ def submit_updates(
         branch_name: name of the branch to submit updates to
         variety: the variety of metadata to submit
         repo_name: name of the collection registry repo
-        github_token_name: name of the Prefect Secret containing the GitHub token
     """
     if branch_name == "main":
         raise ValueError("Cannot submit updates directly to main!")
