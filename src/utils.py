@@ -8,7 +8,7 @@ import github3
 import httpx
 from prefect import Flow, task
 from prefect.blocks.system import Secret
-from prefect.utilities.asyncutils import sync_compatible
+from prefect.utilities.asyncutils import run_sync_in_worker_thread, sync_compatible
 from prefect.utilities.importtools import load_module, to_qualified_name
 from typing_extensions import Literal
 
@@ -188,5 +188,5 @@ async def get_repo(name: str) -> github3.repos.repo.Repository:
     """Returns a GitHub repository object for a given collection name."""
 
     github_token = await Secret.load("collection-registry-github-token")
-    gh = github3.login(token=github_token.get())
+    gh = await run_sync_in_worker_thread(github3.login, token=github_token.get())
     return gh.repository("PrefectHQ", name)
