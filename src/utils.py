@@ -69,9 +69,26 @@ def submit_updates(
     repo_name: str = "prefect-collection-registry",
     github_token_name: str = "collection-registry-github-token",
 ):
+    """
+    Submits updates to the collection registry.
+
+    This task will attempt to create a new file in the collection registry repo
+    at `collections/{collection_name}/{variety}s/{release_tag}.json` containing
+    the contents of `collection_metadata`. It will also update the
+    `views/aggregate-{variety}-metadata.json` file to include the new metadata for
+    `collection_name`.
+
+    Args:
+        collection_metadata: dict of metadata of a given `variety` for `collection_name`
+        collection_name: name of the collection
+        branch_name: name of the branch to submit updates to
+        variety: the variety of metadata to submit
+        repo_name: name of the collection registry repo
+        github_token_name: name of the Prefect Secret containing the GitHub token
+    """
     if branch_name == "main":
         raise ValueError("Cannot submit updates directly to main!")
-    
+
     metadata_file = f"views/aggregate-{variety}-metadata.json"
 
     # read the existing flow metadata from existing JSON file

@@ -50,7 +50,7 @@ async def collection_needs_update(
     return collection_name, True
 
 
-@task
+@task(name="Create Branch / PR if possible")
 async def create_ref_if_not_exists(
     branch_name: str, github_token_name: str = "collection-registry-github-token"
 ) -> str:
@@ -110,7 +110,7 @@ async def create_ref_if_not_exists(
 @flow
 def update_collection_metadata(
     collection_name: str,
-    branch_name: str = "update-metadata",
+    branch_name: str,
 ) -> State:
     """
     Updates each variety of metadata for a given package.
@@ -133,7 +133,7 @@ async def update_all_collections(
     """
     Checks all collections for releases and updates the metadata if needed.
     """
-    await create_ref_if_not_exists(branch_name)
+    branch_name = await create_ref_if_not_exists(branch_name)
 
     collections_to_update = [
         collection_name
@@ -149,13 +149,15 @@ async def update_all_collections(
     if not collections_to_update:
         return Completed(message="No new releases to record.")
 
-    print(f"Recording new releases for: {listrepr(collections_to_update)}...")
+    print(f"Recording new release(s) for: {listrepr(collections_to_update)}...")
 
     subflow_runs: list[FlowRun] = await asyncio.gather(
         *[
             run_deployment(
-                name="update-collection-metadata/collection-updates",
-                parameters=dict(collection_name=collection_name),
+                name="update-collection-metadata/update-a-collection",
+                parameters=dict(
+                    collection_name=collection_name, branch_name=branch_name
+                ),
                 flow_run_name=f"update-{collection_name}-{str(pendulum.now())}",
             )
             for collection_name in collections_to_update
@@ -168,3 +170,7 @@ async def update_all_collections(
         return Failed(message=f"Some subflows failed: {listrepr(failed_subflow_runs)} ")
 
     return Completed(message="All new releases have been recorded.")
+
+
+if __name__ == "__main__":
+    asyncio.run(update_all_collections())
