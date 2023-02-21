@@ -16,7 +16,7 @@ from prefect.blocks.core import Block
 from prefect.plugins import safe_load_entrypoints
 
 import utils
-from schemas import block_type_schema
+from metadata_schemas import block_type_schema
 
 # Some collection blocks share names with core blocks. We exclude them
 # from the registry for now to avoid confusion.
