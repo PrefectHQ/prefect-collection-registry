@@ -16,7 +16,7 @@ from generate_flow_metadata import update_flow_metadata_for_collection
 
 
 async def collection_needs_update(
-    collection_name: str, github_token_name: str
+    collection_name: str, github_token_name: str = "collection-registry-github-token"
 ) -> tuple[str, bool]:
     """
     Checks if the collection needs to be updated.
@@ -51,7 +51,9 @@ async def collection_needs_update(
 
 
 @task
-async def create_ref_if_not_exists(branch_name: str, github_token_name: str) -> str:
+async def create_ref_if_not_exists(
+    branch_name: str, github_token_name: str = "collection-registry-github-token"
+) -> str:
     """
     Creates a branch and PR for latest releases if they don't already exist.
     """
@@ -127,18 +129,17 @@ def update_collection_metadata(
 @flow(log_prints=True)
 async def update_all_collections(
     branch_name: str = "update-metadata",
-    github_token_name: str = "collection-registry-github-token",
 ):
     """
     Checks all collections for releases and updates the metadata if needed.
     """
-    await create_ref_if_not_exists(branch_name, github_token_name)
+    await create_ref_if_not_exists(branch_name)
 
     collections_to_update = [
         collection_name
         for collection_name, needs_update in await asyncio.gather(
             *[
-                collection_needs_update(collection_name, github_token_name)
+                collection_needs_update(collection_name)
                 for collection_name in utils.get_collection_names()
             ]
         )
