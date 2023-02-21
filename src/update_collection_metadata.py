@@ -85,13 +85,15 @@ def create_ref_if_not_exists(branch_name: str, github_token_name: str) -> str:
         print(f"PR for {new_branch_name!r} already exists!")
         return new_branch_name
 
-    repo.create_pull(
+    new_pr = repo.create_pull(
         title=PR_TITLE,
         body="Collection metadata updates are submitted to this PR by a Prefect flow.",
         head=new_branch_name,
         base="main",
         maintainer_can_modify=True,
     )
+
+    new_pr.issue().add_labels("automated-pr", "collection-metadata")
 
     print(f"Created PR for {new_branch_name!r} on {repo.full_name!r}!")
 
@@ -118,7 +120,7 @@ def update_collection_metadata(
         return Completed(message=f"{collection_name} is up to date!")
     else:
         # install the collection
-        subprocess.run(f"pip install {collection_name}".split())
+        subprocess.run(f"pip install -U {collection_name}".split())
 
         update_flow_metadata_for_collection(collection_name, branch)
         update_block_metadata_for_collection(collection_name, branch)
@@ -134,6 +136,7 @@ async def update_all_collections():
             run_deployment(
                 name="update-collection-metadata/collection-updates",
                 parameters=dict(collection_name=collection_name),
+                flow_run_name=f"update-{collection_name}-{str(pendulum.now())}",
             )
             for collection_name in utils.get_collection_names()
         ]

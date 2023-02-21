@@ -62,7 +62,7 @@ block_type_schema = {
             "minLength": 1,
             "maxLength": 2083,
             "format": "uri",
-            "type": "string",
+            "oneOf": [{"type": "string"}, {"type": "null"}],
         },
         "description": {"type": "string"},
         "code_example": {"type": "string"},
