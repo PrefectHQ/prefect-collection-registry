@@ -107,7 +107,7 @@ def update_collection_metadata(
     """
 
     # install the collection
-    subprocess.run(f"pip install -U {collection_name}".split())
+    subprocess.run(f"pip install -U '{collection_name}[dev]'".split())
 
     update_flow_metadata_for_collection(collection_name, branch_name)
 
@@ -160,3 +160,7 @@ async def update_all_collections(
         return Failed(message=f"Some subflows failed: {listrepr(failed_subflow_runs)} ")
 
     return Completed(message="All new releases have been recorded.")
+
+
+if __name__ == "__main__":
+    asyncio.run(update_all_collections())
