@@ -85,13 +85,15 @@ def create_ref_if_not_exists(branch_name: str, github_token_name: str) -> str:
         print(f"PR for {new_branch_name!r} already exists!")
         return new_branch_name
 
-    repo.create_pull(
+    new_pr = repo.create_pull(
         title=PR_TITLE,
         body="Collection metadata updates are submitted to this PR by a Prefect flow.",
         head=new_branch_name,
         base="main",
         maintainer_can_modify=True,
     )
+
+    new_pr.issue().add_labels("automated-pr", "collection-metadata")
 
     print(f"Created PR for {new_branch_name!r} on {repo.full_name!r}!")
 
