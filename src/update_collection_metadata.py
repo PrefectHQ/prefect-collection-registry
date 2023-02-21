@@ -42,7 +42,7 @@ async def collection_needs_update(
 
     if latest_release == latest_recorded_release:
         print(
-            f"Collection {collection_name} is up to date! - "
+            f"Package {collection_name!r} is up to date! - "
             f"(latest release: {latest_release})"
         )
         return collection_name, False
@@ -51,24 +51,20 @@ async def collection_needs_update(
 
 
 @task(name="Create Branch / PR if possible")
-async def create_ref_if_not_exists(
-    branch_name: str, github_token_name: str = "collection-registry-github-token"
-) -> str:
+async def create_ref_if_not_exists(branch_name: str) -> str:
     """
     Creates a branch and PR for latest releases if they don't already exist.
     """
-    github_token = await Secret.load(github_token_name)
-    gh = github3.login(token=github_token.get())
-    repo = gh.repository("PrefectHQ", "prefect-collection-registry")
+    registry_repo = await utils.get_repo("prefect-collection-registry")
     PR_TITLE = "Update metadata for collection releases"
     new_branch_name = f"{branch_name}-{pendulum.now().format('MM-DD-YYYY')}"
 
     try:
-        repo.create_ref(
+        registry_repo.create_ref(
             ref=f"refs/heads/{new_branch_name}",
-            sha=repo.commit(sha="main").sha,
+            sha=registry_repo.commit(sha="main").sha,
         )
-        print(f"Created ref {new_branch_name!r} on {repo.full_name!r}!")
+        print(f"Created ref {new_branch_name!r} on {registry_repo.full_name!r}!")
 
     except github3.exceptions.UnprocessableEntity as e:
         if "Reference already exists" in str(e):
@@ -76,11 +72,11 @@ async def create_ref_if_not_exists(
         else:
             raise
 
-    if repo.compare_commits("main", new_branch_name).ahead_by == 0:
+    if registry_repo.compare_commits("main", new_branch_name).ahead_by == 0:
         print(f"Cannot create PR - no difference between main and {new_branch_name!r}.")
         return new_branch_name
 
-    prs = list(repo.pull_requests(state="open"))
+    prs = list(registry_repo.pull_requests(state="open"))
 
     pr_already_exists = any(
         pr.title == PR_TITLE and pr.head.ref == new_branch_name for pr in prs
@@ -90,7 +86,7 @@ async def create_ref_if_not_exists(
         print(f"PR for {new_branch_name!r} already exists!")
         return new_branch_name
 
-    new_pr = repo.create_pull(
+    new_pr = registry_repo.create_pull(
         title=PR_TITLE,
         body="Collection metadata updates are submitted to this PR by a Prefect flow.",
         head=new_branch_name,
@@ -100,7 +96,7 @@ async def create_ref_if_not_exists(
 
     new_pr.issue().add_labels("automated-pr", "collection-metadata")
 
-    print(f"Created PR for {new_branch_name!r} on {repo.full_name!r}!")
+    print(f"Created PR for {new_branch_name!r} on {registry_repo.full_name!r}!")
 
     return new_branch_name
 

@@ -8,6 +8,7 @@ import github3
 import httpx
 from prefect import Flow, task
 from prefect.blocks.system import Secret
+from prefect.utilities.asyncutils import sync_compatible
 from prefect.utilities.importtools import load_module, to_qualified_name
 from typing_extensions import Literal
 
@@ -67,7 +68,6 @@ def submit_updates(
     branch_name: str,
     variety: Literal["block", "flow", "collection"],
     repo_name: str = "prefect-collection-registry",
-    github_token_name: str = "collection-registry-github-token",
 ):
     """
     Submits updates to the collection registry.
@@ -92,13 +92,12 @@ def submit_updates(
     metadata_file = f"views/aggregate-{variety}-metadata.json"
 
     # read the existing flow metadata from existing JSON file
-    github_token = Secret.load(github_token_name)
-    gh = github3.login(token=github_token.get())
-    repo = gh.repository("PrefectHQ", repo_name)
-    collection_repo = gh.repository("PrefectHQ", collection_name)
+    registry_repo = get_repo(repo_name)
+    collection_repo = get_repo(collection_name)
+
     latest_release = collection_repo.latest_release().tag_name
 
-    existing_metadata_content = repo.file_contents(
+    existing_metadata_content = registry_repo.file_contents(
         metadata_file, ref=branch_name
     ).decoded.decode()
 
@@ -110,7 +109,7 @@ def submit_updates(
 
     # create a new commit adding the collection version metadata
     try:
-        repo.create_file(
+        registry_repo.create_file(
             path=f"collections/{collection_name}/{variety}s/{latest_release}.json",
             message=f"Add `{collection_name}` `{latest_release}` to {variety} records",
             content=json.dumps(collection_metadata, indent=2).encode("utf-8"),
@@ -135,7 +134,7 @@ def submit_updates(
         )
         return
 
-    repo.file_contents(metadata_file, ref=branch_name).update(
+    registry_repo.file_contents(metadata_file, ref=branch_name).update(
         message=f"Update aggregate {variety} metadata with `{collection_name}` `{latest_release}`",
         content=updated_metadata_content.encode("utf-8"),
         branch=branch_name,
@@ -183,3 +182,12 @@ def read_view_content(view: Literal["block", "flow", "collection"]) -> Dict[str,
     resp = httpx.get(repo_url + f"/views/{view_filename}")
     resp.raise_for_status()
     return resp.json()
+
+
+@sync_compatible
+async def get_repo(name: str) -> github3.repos.repo.Repository:
+    """Returns a GitHub repository object for a given collection name."""
+
+    github_token = await Secret.load("collection-registry-github-token")
+    gh = github3.login(token=github_token.get())
+    return gh.repository("PrefectHQ", name)
