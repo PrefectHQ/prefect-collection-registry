@@ -14,9 +14,7 @@ from generate_block_metadata import update_block_metadata_for_collection
 from generate_flow_metadata import update_flow_metadata_for_collection
 
 
-async def collection_needs_update(
-    collection_name: str, github_token_name: str = "collection-registry-github-token"
-) -> tuple[str, bool]:
+async def collection_needs_update(collection_name: str) -> tuple[str, bool]:
     """
     Checks if the collection needs to be updated.
     """

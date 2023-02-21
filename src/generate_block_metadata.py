@@ -14,7 +14,6 @@ from jsonschema import validate
 from prefect import flow
 from prefect.blocks.core import Block
 from prefect.plugins import safe_load_entrypoints
-from prefect.states import Completed
 
 import utils
 from schemas import block_type_schema
@@ -133,15 +132,13 @@ def write_block_metadata(collection_metadata: Dict[str, Any], collection_name: s
 
 @flow(log_prints=True)
 def update_block_metadata_for_collection(collection_name: str, branch_name: str):
-    if block_metadata := generate_block_metadata_for_collection(collection_name):
-        print(f"Recording block metadata for {collection_name!r}...")
-        utils.submit_updates(
-            collection_metadata=block_metadata,
-            collection_name=collection_name,
-            branch_name=branch_name,
-            variety="block",
-        )
-    return Completed(message=f"No block metadata to update for {collection_name}.")
+    block_metadata = generate_block_metadata_for_collection(collection_name)
+    utils.submit_updates(
+        collection_metadata=block_metadata,
+        collection_name=collection_name,
+        branch_name=branch_name,
+        variety="block",
+    )
 
 
 if __name__ == "__main__":

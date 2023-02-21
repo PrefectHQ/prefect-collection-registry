@@ -103,13 +103,11 @@ def update_flow_metadata_for_collection(collection_name: str, branch_name: str):
     if collection_name == "prefect":
         return Completed(message="No flow metadata to update for Prefect core.")
 
-    if collection_flow_metadata := generate_flow_metadata(collection_name):
-        print(f"Recording flow metadata for {collection_name!r}...")
+    collection_flow_metadata = generate_flow_metadata(collection_name)
 
-        utils.submit_updates(
-            collection_metadata=collection_flow_metadata,
-            collection_name=collection_name,
-            branch_name=branch_name,
-            variety="flow",
-        )
-    return Completed(message=f"No flow metadata to update for {collection_name}.")
+    utils.submit_updates(
+        collection_metadata=collection_flow_metadata,
+        collection_name=collection_name,
+        branch_name=branch_name,
+        variety="flow",
+    )
