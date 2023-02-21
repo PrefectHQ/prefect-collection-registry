@@ -4,7 +4,6 @@ import subprocess
 import github3
 import pendulum
 from prefect import flow, task
-from prefect.blocks.system import Secret
 from prefect.deployments import run_deployment
 from prefect.server.schemas.core import FlowRun
 from prefect.states import Completed, Failed, State
@@ -21,11 +20,8 @@ async def collection_needs_update(
     """
     Checks if the collection needs to be updated.
     """
-    github_token = await Secret.load(github_token_name)
-    gh = github3.login(token=github_token.get())
-
-    collection_repo = gh.repository("PrefectHQ", collection_name)
-    registry_repo = gh.repository("PrefectHQ", "prefect-collection-registry")
+    collection_repo = await utils.get_repo(collection_name)
+    registry_repo = await utils.get_repo("prefect-collection-registry")
     try:
         latest_recorded_release = sorted(
             [
