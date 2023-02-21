@@ -71,7 +71,7 @@ def submit_updates(
 ):
     if branch_name == "main":
         raise ValueError("Cannot submit updates directly to main!")
-    
+
     metadata_file = f"views/aggregate-{variety}-metadata.json"
 
     # read the existing flow metadata from existing JSON file
@@ -166,3 +166,28 @@ def read_view_content(view: Literal["block", "flow", "collection"]) -> Dict[str,
     resp = httpx.get(repo_url + f"/views/{view_filename}")
     resp.raise_for_status()
     return resp.json()
+
+
+def update_block_desc_with_collection_name():
+    existing_block_view = read_view_content("block")
+    for package_name, block_types_dict in existing_block_view.items():
+
+        if "block_types" not in block_types_dict or package_name == "prefect":
+            continue
+
+        for block_type in block_types_dict["block_types"].keys():
+            added_description = (
+                f"\nThis block is part of the {package_name} collection. "
+                f"Install {package_name} with `pip install {package_name}` "
+                "to use this block."
+            )
+            block_types_dict["block_types"][block_type][
+                "description"
+            ] += added_description
+
+        block_types_dict["block_types"] = dict(
+            sorted(block_types_dict["block_types"].items())
+        )
+
+        with open(f"views/aggregate-block-metadata.json", "w") as f:
+            json.dump(existing_block_view, f, indent=2)
