@@ -111,6 +111,16 @@ def generate_block_metadata_for_collection(collection_name: str):
             **output_dict.get("block_types", {}),
             **generate_block_metadata_for_module(module),
         }
+
+        # Add description to each block type of what collection it's from and how to install it.
+        added_description = (
+            f"\nThis block is part of the {collection_name} collection. "
+            f"Install {collection_name} with `pip install {collection_name}` "
+            "to use this block."
+        )
+        for block_type in output_dict["block_types"].keys():
+            output_dict["block_types"][block_type]["description"] += added_description
+
     return output_dict
 
 
