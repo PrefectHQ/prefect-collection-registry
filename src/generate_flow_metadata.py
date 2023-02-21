@@ -11,7 +11,7 @@ from prefect.utilities.importtools import load_module
 import utils
 from schemas import flow_schema
 
-SKIP_SECTIONS = {"parameters", "raises"}
+SKIP_DOCSTRING_SECTIONS = {"parameters", "raises"}
 
 
 def parse_flow_docstring(flow: Flow) -> Dict[str, Any]:
@@ -25,7 +25,7 @@ def parse_flow_docstring(flow: Flow) -> Dict[str, Any]:
     for section in sections:
         section = section.as_dict()
         section_value = section.get("value", [])
-        if section["kind"] in SKIP_SECTIONS:
+        if section["kind"] in SKIP_DOCSTRING_SECTIONS:
             continue
         elif section["kind"] == "text":
             docstring_sections["summary"] = section_value
