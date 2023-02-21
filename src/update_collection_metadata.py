@@ -116,7 +116,7 @@ def update_collection_metadata(
     return Completed(message=f"Successfully updated {collection_name}")
 
 
-@flow(log_prints=True)
+@flow(log_prints=True, retries=2, retry_delay_seconds=10)
 async def update_all_collections(
     branch_name: str = "update-metadata",
 ):
@@ -160,7 +160,3 @@ async def update_all_collections(
         return Failed(message=f"Some subflows failed: {listrepr(failed_subflow_runs)} ")
 
     return Completed(message="All new releases have been recorded.")
-
-
-if __name__ == "__main__":
-    asyncio.run(update_all_collections())
