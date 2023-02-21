@@ -14,7 +14,7 @@ from prefect.experimental.workers.base import BaseWorker
 from prefect.plugins import safe_load_entrypoints
 from prefect.utilities.dispatch import get_registry_for_type
 
-from metadata_schemas import worker_schema
+from schemas import worker_schema
 
 
 @task

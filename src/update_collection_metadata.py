@@ -107,6 +107,10 @@ def update_collection_metadata(
     """
 
     # install the collection
+    subprocess.run(f"python -m venv temp".split())
+
+    subprocess.run("temp/bin/activate".split())
+
     subprocess.run(f"pip install -U {collection_name}[dev]".split())
 
     update_flow_metadata_for_collection(collection_name, branch_name)

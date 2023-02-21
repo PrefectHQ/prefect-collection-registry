@@ -9,7 +9,7 @@ from prefect.states import Completed
 from prefect.utilities.importtools import load_module
 
 import utils
-from metadata_schemas import flow_schema
+from schemas import flow_schema
 
 SKIP_DOCSTRING_SECTIONS = {"parameters", "raises"}
 
