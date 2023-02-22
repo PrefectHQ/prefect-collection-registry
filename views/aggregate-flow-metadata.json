@@ -146,7 +146,9 @@
   },
   "prefect-aws": {},
   "prefect-azure": {},
-  "prefect-bitbucket": {},
+  "prefect-bitbucket": {
+    "prefect-bitbucket": {}
+  },
   "prefect-census": {
     "run_census_sync": {
       "description": {
