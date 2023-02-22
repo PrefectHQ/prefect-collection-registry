@@ -8,6 +8,7 @@ import github3
 import httpx
 from prefect import Flow, task
 from prefect.blocks.system import Secret
+from prefect.utilities.asyncutils import run_sync_in_worker_thread, sync_compatible
 from prefect.utilities.importtools import load_module, to_qualified_name
 from typing_extensions import Literal
 
@@ -67,21 +68,35 @@ def submit_updates(
     branch_name: str,
     variety: Literal["block", "flow", "collection"],
     repo_name: str = "prefect-collection-registry",
-    github_token_name: str = "collection-registry-github-token",
 ):
+    """
+    Submits updates to the collection registry.
+
+    This task will attempt to create a new file in the collection registry repo
+    at `collections/{collection_name}/{variety}s/{release_tag}.json` containing
+    the contents of `collection_metadata`. It will also update the
+    `views/aggregate-{variety}-metadata.json` file to include the new metadata for
+    `collection_name`.
+
+    Args:
+        collection_metadata: dict of metadata of a given `variety` for `collection_name`
+        collection_name: name of the collection
+        branch_name: name of the branch to submit updates to
+        variety: the variety of metadata to submit
+        repo_name: name of the collection registry repo
+    """
     if branch_name == "main":
         raise ValueError("Cannot submit updates directly to main!")
 
     metadata_file = f"views/aggregate-{variety}-metadata.json"
 
     # read the existing flow metadata from existing JSON file
-    github_token = Secret.load(github_token_name)
-    gh = github3.login(token=github_token.get())
-    repo = gh.repository("PrefectHQ", repo_name)
-    collection_repo = gh.repository("PrefectHQ", collection_name)
+    registry_repo = get_repo(repo_name)
+    collection_repo = get_repo(collection_name)
+
     latest_release = collection_repo.latest_release().tag_name
 
-    existing_metadata_content = repo.file_contents(
+    existing_metadata_content = registry_repo.file_contents(
         metadata_file, ref=branch_name
     ).decoded.decode()
 
@@ -93,7 +108,7 @@ def submit_updates(
 
     # create a new commit adding the collection version metadata
     try:
-        repo.create_file(
+        registry_repo.create_file(
             path=f"collections/{collection_name}/{variety}s/{latest_release}.json",
             message=f"Add `{collection_name}` `{latest_release}` to {variety} records",
             content=json.dumps(collection_metadata, indent=2).encode("utf-8"),
@@ -118,7 +133,7 @@ def submit_updates(
         )
         return
 
-    repo.file_contents(metadata_file, ref=branch_name).update(
+    registry_repo.file_contents(metadata_file, ref=branch_name).update(
         message=f"Update aggregate {variety} metadata with `{collection_name}` `{latest_release}`",
         content=updated_metadata_content.encode("utf-8"),
         branch=branch_name,
@@ -167,27 +182,10 @@ def read_view_content(view: Literal["block", "flow", "collection"]) -> Dict[str,
     resp.raise_for_status()
     return resp.json()
 
+@sync_compatible
+async def get_repo(name: str) -> github3.repos.repo.Repository:
+    """Returns a GitHub repository object for a given collection name."""
 
-def update_block_desc_with_collection_name():
-    existing_block_view = read_view_content("block")
-    for package_name, block_types_dict in existing_block_view.items():
-
-        if "block_types" not in block_types_dict or package_name == "prefect":
-            continue
-
-        for block_type in block_types_dict["block_types"].keys():
-            added_description = (
-                f" This block is part of the {package_name} collection. "
-                f"Install {package_name} with `pip install {package_name}` "
-                "to use this block."
-            )
-            block_types_dict["block_types"][block_type][
-                "description"
-            ] += added_description
-
-        block_types_dict["block_types"] = dict(
-            sorted(block_types_dict["block_types"].items())
-        )
-
-        with open(f"views/aggregate-block-metadata.json", "w") as f:
-            json.dump(existing_block_view, f, indent=2)
+    github_token = await Secret.load("collection-registry-github-token")
+    gh = await run_sync_in_worker_thread(github3.login, token=github_token.get())
+    return gh.repository("PrefectHQ", name)

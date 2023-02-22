@@ -1,17 +1,17 @@
 from collections import defaultdict
 from typing import Any, Dict
 
+import fastjsonschema
 from griffe.dataclasses import Docstring
 from griffe.docstrings.parsers import Parser, parse
-from jsonschema import validate
 from prefect import Flow, flow, task
 from prefect.states import Completed
 from prefect.utilities.importtools import load_module
 
 import utils
-from schemas import flow_schema
+from metadata_schemas import flow_schema
 
-SKIP_SECTIONS = {"parameters", "raises"}
+SKIP_DOCSTRING_SECTIONS = {"parameters", "raises"}
 
 
 def parse_flow_docstring(flow: Flow) -> Dict[str, Any]:
@@ -25,7 +25,7 @@ def parse_flow_docstring(flow: Flow) -> Dict[str, Any]:
     for section in sections:
         section = section.as_dict()
         section_value = section.get("value", [])
-        if section["kind"] in SKIP_SECTIONS:
+        if section["kind"] in SKIP_DOCSTRING_SECTIONS:
             continue
         elif section["kind"] == "text":
             docstring_sections["summary"] = section_value
@@ -73,13 +73,12 @@ def summarize_flow(flow: Flow, collection_name: str) -> Dict[str, Any]:
             }.items()
         )
     )
-
-    validate(flow_summary, flow_schema)
-
+    validate = fastjsonschema.compile(flow_schema)
+    validate(flow_summary)
     return flow_summary
 
 
-@task(log_prints=True)
+@task
 def generate_flow_metadata(collection_name: str) -> Dict[str, Any]:
     """
     Generates a JSON file containing metadata about all flows in a given collection.
@@ -97,7 +96,7 @@ def generate_flow_metadata(collection_name: str) -> Dict[str, Any]:
     }
 
 
-@flow(log_prints=True)
+@flow
 def update_flow_metadata_for_collection(collection_name: str, branch_name: str):
     """Generates and submits flow metadata for a given collection."""
     if collection_name == "prefect":
