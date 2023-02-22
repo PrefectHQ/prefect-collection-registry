@@ -6104,7 +6104,7 @@
         "slug": "firebolt-credentials",
         "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/3loU17IXqVIWl4aWQfqc78/3c7eefe5e8cf4eec870856f10d7fdcce/5e8a264ceaf4870c90478037_Favicon_128.svg.png?h=250",
         "documentation_url": null,
-        "description": "Store credentials for authenticating with Firebolt.",
+        "description": "Store credentials for authenticating with Firebolt. This block is part of the prefect-firebolt collection. Install prefect-firebolt with `pip install prefect-firebolt` to use this block.",
         "code_example": "```python\nfrom prefect_firebolt.credentials import FireboltCredentials\n\nfirebolt_credentials_block = FireboltCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
           "checksum": "sha256:53828a6f4a50581376d806d30db9f87e8fc210297997385e80405076cce24ba4",
@@ -6160,7 +6160,7 @@
         "slug": "firebolt-database",
         "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/3loU17IXqVIWl4aWQfqc78/3c7eefe5e8cf4eec870856f10d7fdcce/5e8a264ceaf4870c90478037_Favicon_128.svg.png?h=250",
         "documentation_url": null,
-        "description": "Connects to a Firebolt database.",
+        "description": "Connects to a Firebolt database. This block is part of the prefect-firebolt collection. Install prefect-firebolt with `pip install prefect-firebolt` to use this block.",
         "code_example": "```python\nfrom prefect_firebolt.database import FireboltDatabase\n\nfirebolt_database_block = FireboltDatabase.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
           "checksum": "sha256:1fa771ec7a975bd6e9625f86bf6177acfd8e626a04e0c046b109d78a898e93ad",
