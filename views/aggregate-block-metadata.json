@@ -6012,7 +6012,7 @@
         "slug": "email-server-credentials",
         "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/3PcxFuO9XUqs7wU9MiUBMg/ca740e27815d15528373aced667f58b9/email__1_.png?h=250",
         "documentation_url": null,
-        "description": "Block used to manage generic email server authentication.\nIt is recommended you use a\n[Google App Password](https://support.google.com/accounts/answer/185833)\nif you use Gmail. This block is part of the prefect-email collection. Install prefect-email with `pip install prefect-email` to use this block.",
+        "description": "Block used to manage generic email server authentication.\nIt is recommended you use a\n[Google App Password](https://support.google.com/accounts/answer/185833)\nif you use Gmail.",
         "code_example": "Load stored email server credentials:\n```python\nfrom prefect_email import EmailServerCredentials\nemail_credentials_block = EmailServerCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
           "checksum": "sha256:6944137df7351ce55236c0b685c903460ed8f4609dafebf12f928ea166e1f1d2",
@@ -7678,7 +7678,7 @@
         "slug": "slack-credentials",
         "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/7dkzINU9r6j44giEFuHuUC/85d4cd321ad60c1b1e898bc3fbd28580/5cb480cd5f1b6d3fbadece79.png?h=250",
         "documentation_url": "https://prefecthq.github.io/prefect-slack/credentials/#prefect_slack.credentials.SlackCredentials",
-        "description": "Block holding Slack credentials for use in tasks and flows.",
+        "description": "Block holding Slack credentials for use in tasks and flows. This block is part of the prefect-slack collection. Install prefect-slack with `pip install prefect-slack` to use this block.",
         "code_example": "Load stored Slack credentials:\n```python\nfrom prefect_slack import SlackCredentials\nslack_credentials_block = SlackCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
           "checksum": "sha256:f79058d8fcf22ed575f824b27daa68a52fedaa0e40f7a8a542d4ac9cf3ee8317",
@@ -7713,7 +7713,7 @@
         "slug": "slack-incoming-webhook",
         "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/7dkzINU9r6j44giEFuHuUC/85d4cd321ad60c1b1e898bc3fbd28580/5cb480cd5f1b6d3fbadece79.png?h=250",
         "documentation_url": "https://prefecthq.github.io/prefect-slack/credentials/#prefect_slack.credentials.SlackWebhook",
-        "description": "Block holding a Slack webhook for use in tasks and flows.",
+        "description": "Block holding a Slack webhook for use in tasks and flows. This block is part of the prefect-slack collection. Install prefect-slack with `pip install prefect-slack` to use this block.",
         "code_example": "Load stored Slack webhook:\n```python\nfrom prefect_slack import SlackWebhook\nslack_webhook_block = SlackWebhook.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
           "checksum": "sha256:7e03b5158eed175ba9ae53275933944c9f9161b7b45748878701716857656a4a",
