@@ -3019,7 +3019,7 @@
         "slug": "bitbucket-credentials",
         "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/27LMR24ewTSDW238Lks1vH/34c5028659f4007528feadc8db8cecbd/500px-Bitbucket-blue-logomark-only.svg.png?h=250",
         "documentation_url": null,
-        "description": "Store BitBucket credentials to interact with private BitBucket repositories.",
+        "description": "Store BitBucket credentials to interact with private BitBucket repositories. This block is part of the prefect-bitbucket collection. Install prefect-bitbucket with `pip install prefect-bitbucket` to use this block.",
         "code_example": "Load stored BitBucket credentials:\n```python\nfrom prefect_bitbucket import BitBucketCredentials\nbitbucket_credentials_block = BitBucketCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
           "checksum": "sha256:ac894e8f4bff58261c7072b7b2a6e4154622bf68aa38ebca2bce58fedfd54e06",
@@ -3071,7 +3071,7 @@
         "slug": "bitbucket-repository",
         "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/27LMR24ewTSDW238Lks1vH/34c5028659f4007528feadc8db8cecbd/500px-Bitbucket-blue-logomark-only.svg.png?h=250",
         "documentation_url": null,
-        "description": "Interact with files stored in BitBucket repositories.",
+        "description": "Interact with files stored in BitBucket repositories. This block is part of the prefect-bitbucket collection. Install prefect-bitbucket with `pip install prefect-bitbucket` to use this block.",
         "code_example": "```python\nfrom prefect_bitbucket.repository import BitBucketRepository\n\nbitbucket_repository_block = BitBucketRepository.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
           "checksum": "sha256:5cb02c2fabf32f266105998c7261862992d7f912bc61fcc97d6e27fa7e588f26",
