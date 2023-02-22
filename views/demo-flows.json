@@ -7,7 +7,7 @@
                 "examples": []
             },
             "documentation_url": "https://github.com/PrefectHQ/prefect-recipes",
-            "entrypoint": "flows-simple/hello.py:hello",
+            "entrypoint": "flows-starter/hello.py:hello",
             "install_command": "",
             "logo_url": "",
             "name": "hello",
@@ -26,7 +26,7 @@
                 "required": null,
                 "definitions": null
             },
-            "path_containing_flow": "prefect_recipes/flows-simple/hello.py",
+            "path_containing_flow": "prefect_recipes/flows-starter/hello.py",
             "repo_url": "https://github.com/PrefectHQ/prefect-recipes",
             "slug": "hello"
         }
