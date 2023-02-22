@@ -35,7 +35,7 @@ async def collection_needs_update(collection_name: str) -> tuple[str, bool]:
     latest_release = collection_repo.latest_release().tag_name
 
     if collection_name == "prefect":
-        latest_recorded_release = "v" + latest_recorded_release
+        latest_release = "v" + latest_release
 
     if latest_release == latest_recorded_release:
         print(
