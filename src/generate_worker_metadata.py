@@ -8,7 +8,7 @@ from sys import argv
 from types import ModuleType
 from typing import Any, Dict, List, Type
 
-from jsonschema import validate
+import fastjsonschema
 from prefect import flow, task
 from prefect.experimental.workers.base import BaseWorker
 from prefect.plugins import safe_load_entrypoints
@@ -33,8 +33,8 @@ def generate_worker_metadata(worker_subcls: Type[BaseWorker], package_name: str)
             }.items()
         )
     )
-
-    validate(worker_metadata, worker_schema)
+    validate = fastjsonschema.compile(worker_schema)
+    validate(worker_schema)
 
     return worker_metadata
 

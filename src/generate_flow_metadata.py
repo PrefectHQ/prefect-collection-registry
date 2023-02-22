@@ -1,9 +1,9 @@
 from collections import defaultdict
 from typing import Any, Dict
 
+import fastjsonschema
 from griffe.dataclasses import Docstring
 from griffe.docstrings.parsers import Parser, parse
-from jsonschema import Draft7Validator
 from prefect import Flow, flow, task
 from prefect.states import Completed
 from prefect.utilities.importtools import load_module
@@ -73,7 +73,8 @@ def summarize_flow(flow: Flow, collection_name: str) -> Dict[str, Any]:
             }.items()
         )
     )
-    Draft7Validator(flow_schema).validate(flow_summary)
+    validate = fastjsonschema.compile(flow_schema)
+    validate(flow_summary)
     return flow_summary
 
 
