@@ -182,7 +182,6 @@ def read_view_content(view: Literal["block", "flow", "collection"]) -> Dict[str,
     resp.raise_for_status()
     return resp.json()
 
-
 @sync_compatible
 async def get_repo(name: str) -> github3.repos.repo.Repository:
     """Returns a GitHub repository object for a given collection name."""

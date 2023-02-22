@@ -32,7 +32,7 @@ async def collection_needs_update(collection_name: str) -> tuple[str, bool]:
     except github3.exceptions.NotFoundError:
         return collection_name, True
 
-    latest_release = collection_repo.latest_release().tag_name.replace("v", "")
+    latest_release = collection_repo.latest_release().tag_name
 
     if latest_release == latest_recorded_release:
         print(
