@@ -7755,7 +7755,7 @@
         "slug": "snowflake-connector",
         "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/2DxzAeTM9eHLDcRQx1FR34/f858a501cdff918d398b39365ec2150f/snowflake.png?h=250",
         "documentation_url": "https://prefecthq.github.io/prefect-snowflake/database/#prefect_snowflake.database.SnowflakeConnector",
-        "description": "Perform data operations against a Snowflake database.",
+        "description": "Perform data operations against a Snowflake database. This block is part of the prefect-snowflake collection. Install prefect-snowflake with `pip install prefect-snowflake` to use this block.",
         "code_example": "Load stored Snowflake connector as a context manager:\n```python\nfrom prefect_snowflake.database import SnowflakeConnector\n\nsnowflake_connector = SnowflakeConnector.load(\"BLOCK_NAME\"):\n```\n\nInsert data into database and fetch results.\n```python\nfrom prefect_snowflake.database import SnowflakeConnector\n\nwith SnowflakeConnector.load(\"BLOCK_NAME\") as conn:\n    conn.execute(\n        \"CREATE TABLE IF NOT EXISTS customers (name varchar, address varchar);\"\n    )\n    conn.execute_many(\n        \"INSERT INTO customers (name, address) VALUES (%(name)s, %(address)s);\",\n        seq_of_parameters=[\n            {\"name\": \"Ford\", \"address\": \"Highway 42\"},\n            {\"name\": \"Unknown\", \"address\": \"Space\"},\n            {\"name\": \"Me\", \"address\": \"Myway 88\"},\n        ],\n    )\n    results = conn.fetch_all(\n        \"SELECT * FROM customers WHERE address = %(address)s\",\n        parameters={\"address\": \"Space\"}\n    )\n    print(results)\n```",
         "block_schema": {
           "checksum": "sha256:dd0d36d69bbe0d44870fd754f3c00754e37e3f52209590083eaee4c585ce0bd0",
@@ -7925,7 +7925,7 @@
         "slug": "snowflake-credentials",
         "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/2DxzAeTM9eHLDcRQx1FR34/f858a501cdff918d398b39365ec2150f/snowflake.png?h=250",
         "documentation_url": "https://prefecthq.github.io/prefect-snowflake/credentials/#prefect_snowflake.credentials.SnowflakeCredentials",
-        "description": "Block used to manage authentication with Snowflake.",
+        "description": "Block used to manage authentication with Snowflake. This block is part of the prefect-snowflake collection. Install prefect-snowflake with `pip install prefect-snowflake` to use this block.",
         "code_example": "Load stored Snowflake credentials:\n```python\nfrom prefect_snowflake import SnowflakeCredentials\n\nsnowflake_credentials_block = SnowflakeCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
           "checksum": "sha256:b24edfb413527c951cb2a8b4b4c16aec096523f871d941889e29ac2e6e92e036",
