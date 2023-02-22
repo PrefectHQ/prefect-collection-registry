@@ -6012,7 +6012,7 @@
         "slug": "email-server-credentials",
         "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/3PcxFuO9XUqs7wU9MiUBMg/ca740e27815d15528373aced667f58b9/email__1_.png?h=250",
         "documentation_url": null,
-        "description": "Block used to manage generic email server authentication.\nIt is recommended you use a\n[Google App Password](https://support.google.com/accounts/answer/185833)\nif you use Gmail.",
+        "description": "Block used to manage generic email server authentication.\nIt is recommended you use a\n[Google App Password](https://support.google.com/accounts/answer/185833)\nif you use Gmail. This block is part of the prefect-email collection. Install prefect-email with `pip install prefect-email` to use this block.",
         "code_example": "Load stored email server credentials:\n```python\nfrom prefect_email import EmailServerCredentials\nemail_credentials_block = EmailServerCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
           "checksum": "sha256:6944137df7351ce55236c0b685c903460ed8f4609dafebf12f928ea166e1f1d2",
