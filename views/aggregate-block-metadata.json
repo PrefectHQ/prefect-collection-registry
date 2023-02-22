@@ -7298,7 +7298,7 @@
         "slug": "monte-carlo-credentials",
         "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5OqrPNRdLMvqZzxo9f6Z25/f920dff0f1201fc014b0b083a6d2fdb1/image.png?h=250",
         "documentation_url": null,
-        "description": "Block used to manage Monte Carlo authentication.",
+        "description": "Block used to manage Monte Carlo authentication. This block is part of the prefect-monte-carlo collection. Install prefect-monte-carlo with `pip install prefect-monte-carlo` to use this block.",
         "code_example": "Load stored Monte Carlo credentials:\n```python\nfrom prefect_monte_carlo.credentials import MonteCarloCredentials\nmontecarlo_credentials_block = MonteCarloCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
           "checksum": "sha256:f70c3146fd0e2dad64c8b2e89fa562c4e63d16268b61c4ba4917a88f14085df2",
