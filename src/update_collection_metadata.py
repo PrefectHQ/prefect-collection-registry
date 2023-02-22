@@ -109,8 +109,6 @@ def update_collection_metadata(
     # install the collection
     subprocess.run(f"pip install -U {collection_name}[dev]".split())
 
-    subprocess.run(f"pip install jsonschema<4.0".split())
-
     update_flow_metadata_for_collection(collection_name, branch_name)
 
     update_block_metadata_for_collection(collection_name, branch_name)
