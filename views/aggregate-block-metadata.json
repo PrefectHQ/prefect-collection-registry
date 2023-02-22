@@ -1627,7 +1627,7 @@
         "slug": "airbyte-connection",
         "logo_url": "https://images.ctfassets.net/zscdif0zqppk/6gm7wsC7ANnKYQsm7oiSYz/aac1ad5e054d35d9e24af8d6ed3aed5f/59758427?h=250",
         "documentation_url": null,
-        "description": "A block representing an existing Airbyte connection.",
+        "description": "A block representing an existing Airbyte connection. This block is part of the prefect-airbyte collection. Install prefect-airbyte with `pip install prefect-airbyte` to use this block.",
         "code_example": "Load an existing `AirbyteConnection` block:\n```python\nfrom prefect_airbyte import AirbyteConnection\n\nairbyte_connection = AirbyteConnection.load(\"BLOCK_NAME\")\n```\n\nRun an Airbyte connection sync as a flow:\n```python\nfrom prefect import flow\nfrom prefect_airbyte import AirbyteConnection\nfrom prefect_airbyte.flows import run_connection_sync # this is a flow\n\nairbyte_connection = AirbyteConnection.load(\"BLOCK_NAME\")\n\n@flow\ndef airbyte_orchestrator():\n    run_connection_sync(airbyte_connection) # now it's a subflow\n```",
         "block_schema": {
           "checksum": "sha256:b0d1479644a23659067536d89a7254ec7ab05101e225db74de165b90cd3a1d73",
@@ -1747,7 +1747,7 @@
         "slug": "airbyte-server",
         "logo_url": "https://images.ctfassets.net/zscdif0zqppk/6gm7wsC7ANnKYQsm7oiSYz/aac1ad5e054d35d9e24af8d6ed3aed5f/59758427?h=250",
         "documentation_url": null,
-        "description": "A block representing an Airbyte server for generating `AirbyteClient` instances.",
+        "description": "A block representing an Airbyte server for generating `AirbyteClient` instances. This block is part of the prefect-airbyte collection. Install prefect-airbyte with `pip install prefect-airbyte` to use this block.",
         "code_example": "```python\nfrom prefect_airbyte.server import AirbyteServer\n\nserver = AirbyteServer.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
           "checksum": "sha256:f0bc49c549405ef3e753b3cc0a81e0e13b1b036acfab571c76f4d198c4bb842a",
