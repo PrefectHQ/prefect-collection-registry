@@ -5904,7 +5904,7 @@
         "slug": "docker-host",
         "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/2IfXXfMq66mrzJBDFFCHTp/6d8f320d9e4fc4393f045673d61ab612/Moby-logo.png?h=250",
         "documentation_url": null,
-        "description": "Store settings for interacting with a Docker host.",
+        "description": "Store settings for interacting with a Docker host. This block is part of the prefect-docker collection. Install prefect-docker with `pip install prefect-docker` to use this block.",
         "code_example": "Get a Docker Host client.\n```python\nfrom prefect_docker import DockerHost\n\ndocker_host = DockerHost(\nbase_url=\"tcp://127.0.0.1:1234\",\n    max_pool_size=4\n)\nwith docker_host.get_client() as client:\n    ... # Use the client for Docker operations\n```",
         "block_schema": {
           "checksum": "sha256:bf0961e9f2d88fd81bca2c7b78c025bd289776ad84ae8ef22d8f3db8b9561478",
@@ -5954,7 +5954,7 @@
         "slug": "docker-registry-credentials",
         "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/2IfXXfMq66mrzJBDFFCHTp/6d8f320d9e4fc4393f045673d61ab612/Moby-logo.png?h=250",
         "documentation_url": null,
-        "description": "Store credentials for interacting with a Docker Registry.",
+        "description": "Store credentials for interacting with a Docker Registry. This block is part of the prefect-docker collection. Install prefect-docker with `pip install prefect-docker` to use this block.",
         "code_example": "Log into Docker Registry.\n```python\nfrom prefect_docker import DockerHost, DockerRegistryCredentials\n\ndocker_host = DockerHost()\ndocker_registry_credentials = DockerRegistryCredentials(\n    username=\"my_username\",\n    password=\"my_password\",\n    registry_url=\"registry.hub.docker.com\",\n)\nwith docker_host.get_client() as client:\n    docker_registry_credentials.login(client)\n```",
         "block_schema": {
           "checksum": "sha256:79c2e94bef9297ccd49000f66e7919ee915c97495720b41fba8420786dbf2c58",
