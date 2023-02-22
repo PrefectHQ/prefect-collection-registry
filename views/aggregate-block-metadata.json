@@ -3293,6 +3293,9 @@
       }
     }
   },
+  "prefect-dask": {
+    "block_types": {}
+  },
   "prefect-databricks": {
     "block_types": {
       "databricks-credentials": {
@@ -3353,7 +3356,7 @@
         "description": "dbt CLI target configs containing credentials and settings, specific to BigQuery.",
         "code_example": "Load stored BigQueryTargetConfigs.\n```python\nfrom prefect_dbt.cli.configs import BigQueryTargetConfigs\n\nbigquery_target_configs = BigQueryTargetConfigs.load(\"BLOCK_NAME\")\n```\n\nInstantiate BigQueryTargetConfigs.\n```python\nfrom prefect_dbt.cli.configs import BigQueryTargetConfigs\nfrom prefect_gcp.credentials import GcpCredentials\n\ncredentials = GcpCredentials.load(\"BLOCK-NAME-PLACEHOLDER\")\ntarget_configs = BigQueryTargetConfigs(\n    schema=\"schema\",  # also known as dataset\n    credentials=credentials,\n)\n```",
         "block_schema": {
-          "checksum": "sha256:bcf9267e33fd8a349653f9c187b11ad2eab7d57f46d7e622e017e7eacbd7eb37",
+          "checksum": "sha256:842c5dc7d4d1557eedff36982eafeda7b0803915942f72224a7f627efdbe5ff5",
           "fields": {
             "title": "BigQueryTargetConfigs",
             "description": "dbt CLI target configs containing credentials and settings, specific to BigQuery.",
@@ -3363,6 +3366,12 @@
                 "title": "Extras",
                 "description": "Extra target configs' keywords, not yet exposed in prefect-dbt, but available in dbt.",
                 "type": "object"
+              },
+              "allow_field_overrides": {
+                "title": "Allow Field Overrides",
+                "description": "If enabled, fields from dbt target configs will override fields provided in extras and credentials.",
+                "default": false,
+                "type": "boolean"
               },
               "type": {
                 "title": "Type",
@@ -3444,7 +3453,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.3.0"
+          "version": "0.3.1"
         }
       },
       "dbt-cli-global-configs": {
@@ -3455,7 +3464,7 @@
         "description": "Global configs control things like the visual output\nof logs, the manner in which dbt parses your project,\nand what to do when dbt finds a version mismatch\nor a failing model. Docs can be found [here](\nhttps://docs.getdbt.com/reference/global-configs).",
         "code_example": "Load stored GlobalConfigs:\n```python\nfrom prefect_dbt.cli.configs import GlobalConfigs\n\ndbt_cli_global_configs = GlobalConfigs.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:7432c371f3d7185b7d54cd7ece5d88ef3d69ef0fb724335cba54c6b87a6b48ad",
+          "checksum": "sha256:63df9d18a1aafde1cc8330cd49f81f6600b4ce6db92955973bbf341cc86e916d",
           "fields": {
             "title": "GlobalConfigs",
             "description": "Global configs control things like the visual output\nof logs, the manner in which dbt parses your project,\nand what to do when dbt finds a version mismatch\nor a failing model. Docs can be found [here](\nhttps://docs.getdbt.com/reference/global-configs).",
@@ -3465,6 +3474,12 @@
                 "title": "Extras",
                 "description": "Extra target configs' keywords, not yet exposed in prefect-dbt, but available in dbt.",
                 "type": "object"
+              },
+              "allow_field_overrides": {
+                "title": "Allow Field Overrides",
+                "description": "If enabled, fields from dbt target configs will override fields provided in extras and credentials.",
+                "default": false,
+                "type": "boolean"
               },
               "send_anonymous_usage_stats": {
                 "title": "Send Anonymous Usage Stats",
@@ -3532,7 +3547,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.3.0"
+          "version": "0.3.1"
         }
       },
       "dbt-cli-postgres-target-configs": {
@@ -3543,7 +3558,7 @@
         "description": "dbt CLI target configs containing credentials and settings specific to Postgres.",
         "code_example": "Load stored PostgresTargetConfigs:\n```python\nfrom prefect_dbt.cli.configs import PostgresTargetConfigs\n\npostgres_target_configs = PostgresTargetConfigs.load(\"BLOCK_NAME\")\n```\n\nInstantiate PostgresTargetConfigs with DatabaseCredentials.\n```python\nfrom prefect_dbt.cli.configs import PostgresTargetConfigs\nfrom prefect_sqlalchemy import DatabaseCredentials, SyncDriver\n\ncredentials = DatabaseCredentials(\n    driver=SyncDriver.POSTGRESQL_PSYCOPG2,\n    username=\"prefect\",\n    password=\"prefect_password\",\n    database=\"postgres\",\n    host=\"host\",\n    port=8080\n)\ntarget_configs = PostgresTargetConfigs(credentials=credentials, schema=\"schema\")\n```",
         "block_schema": {
-          "checksum": "sha256:74a71ee4244c16733134f174f5d6480e257b7c5ef843a6745aafab6fef31538d",
+          "checksum": "sha256:1552a2d5c102961df4082329f39c10b8a51e26ee687148efd6d71ce8be8850c0",
           "fields": {
             "title": "PostgresTargetConfigs",
             "description": "dbt CLI target configs containing credentials and settings specific to Postgres.",
@@ -3553,6 +3568,12 @@
                 "title": "Extras",
                 "description": "Extra target configs' keywords, not yet exposed in prefect-dbt, but available in dbt.",
                 "type": "object"
+              },
+              "allow_field_overrides": {
+                "title": "Allow Field Overrides",
+                "description": "If enabled, fields from dbt target configs will override fields provided in extras and credentials.",
+                "default": false,
+                "type": "boolean"
               },
               "type": {
                 "title": "Type",
@@ -3822,7 +3843,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.3.0"
+          "version": "0.3.1"
         }
       },
       "dbt-cli-profile": {
@@ -3833,7 +3854,7 @@
         "description": "Profile for use across dbt CLI tasks and flows.",
         "code_example": "Load stored dbt CLI profile:\n```python\nfrom prefect_dbt.cli import DbtCliProfile\ndbt_cli_profile = DbtCliProfile.load(\"BLOCK_NAME\").get_profile()\n```\n\nGet a dbt Snowflake profile from DbtCliProfile by using SnowflakeTargetConfigs:\n```python\nfrom prefect_dbt.cli import DbtCliProfile\nfrom prefect_dbt.cli.configs import SnowflakeTargetConfigs\nfrom prefect_snowflake.credentials import SnowflakeCredentials\nfrom prefect_snowflake.database import SnowflakeConnector\n\ncredentials = SnowflakeCredentials(\n    user=\"user\",\n    password=\"password\",\n    account=\"account.region.aws\",\n    role=\"role\",\n)\nconnector = SnowflakeConnector(\n    schema=\"public\",\n    database=\"database\",\n    warehouse=\"warehouse\",\n    credentials=credentials,\n)\ntarget_configs = SnowflakeTargetConfigs(\n    connector=connector\n)\ndbt_cli_profile = DbtCliProfile(\n    name=\"jaffle_shop\",\n    target=\"dev\",\n    target_configs=target_configs,\n)\nprofile = dbt_cli_profile.get_profile()\n```\n\nGet a dbt Redshift profile from DbtCliProfile by using generic TargetConfigs:\n```python\nfrom prefect_dbt.cli import DbtCliProfile\nfrom prefect_dbt.cli.configs import GlobalConfigs, TargetConfigs\n\ntarget_configs_extras = dict(\n    host=\"hostname.region.redshift.amazonaws.com\",\n    user=\"username\",\n    password=\"password1\",\n    port=5439,\n    dbname=\"analytics\",\n)\ntarget_configs = TargetConfigs(\n    type=\"redshift\",\n    schema=\"schema\",\n    threads=4,\n    extras=target_configs_extras\n)\ndbt_cli_profile = DbtCliProfile(\n    name=\"jaffle_shop\",\n    target=\"dev\",\n    target_configs=target_configs,\n)\nprofile = dbt_cli_profile.get_profile()\n```",
         "block_schema": {
-          "checksum": "sha256:7ad2bdc7683dc1a0def4643a05fe3c54d227d839cee81569db322411055aaa52",
+          "checksum": "sha256:f55b0f96cb9e1cf2f508bb882b25d9246b351be8b0ad18140a73281674a40d6d",
           "fields": {
             "title": "DbtCliProfile",
             "description": "Profile for use across dbt CLI tasks and flows.",
@@ -3896,24 +3917,24 @@
               "target_configs": [
                 {
                   "block_type_slug": "dbt-cli-snowflake-target-configs",
-                  "block_schema_checksum": "sha256:2135e02c95514a67c5900c7da211a267a72307a9e66656edfeedd87ea090cf54"
+                  "block_schema_checksum": "sha256:1e5be296bb63d7e2b04f0e9b99543db12521af269399d10e2bc290da4244a575"
                 },
                 {
                   "block_type_slug": "dbt-cli-bigquery-target-configs",
-                  "block_schema_checksum": "sha256:bcf9267e33fd8a349653f9c187b11ad2eab7d57f46d7e622e017e7eacbd7eb37"
+                  "block_schema_checksum": "sha256:842c5dc7d4d1557eedff36982eafeda7b0803915942f72224a7f627efdbe5ff5"
                 },
                 {
                   "block_type_slug": "dbt-cli-postgres-target-configs",
-                  "block_schema_checksum": "sha256:74a71ee4244c16733134f174f5d6480e257b7c5ef843a6745aafab6fef31538d"
+                  "block_schema_checksum": "sha256:1552a2d5c102961df4082329f39c10b8a51e26ee687148efd6d71ce8be8850c0"
                 },
                 {
                   "block_type_slug": "dbt-cli-target-configs",
-                  "block_schema_checksum": "sha256:04fe042c176570f71f224c480cac73e7fb8e038ed6eff27c5f48e2ee831ffd47"
+                  "block_schema_checksum": "sha256:85f7476977e725617af89930889b843147320b2df37df911e24806dd6dacc870"
                 }
               ],
               "global_configs": {
                 "block_type_slug": "dbt-cli-global-configs",
-                "block_schema_checksum": "sha256:7432c371f3d7185b7d54cd7ece5d88ef3d69ef0fb724335cba54c6b87a6b48ad"
+                "block_schema_checksum": "sha256:63df9d18a1aafde1cc8330cd49f81f6600b4ce6db92955973bbf341cc86e916d"
               }
             },
             "definitions": {
@@ -4082,6 +4103,12 @@
                     "description": "Extra target configs' keywords, not yet exposed in prefect-dbt, but available in dbt.",
                     "type": "object"
                   },
+                  "allow_field_overrides": {
+                    "title": "Allow Field Overrides",
+                    "description": "If enabled, fields from dbt target configs will override fields provided in extras and credentials.",
+                    "default": false,
+                    "type": "boolean"
+                  },
                   "type": {
                     "title": "Type",
                     "description": "The type of the target configs.",
@@ -4166,6 +4193,12 @@
                     "title": "Extras",
                     "description": "Extra target configs' keywords, not yet exposed in prefect-dbt, but available in dbt.",
                     "type": "object"
+                  },
+                  "allow_field_overrides": {
+                    "title": "Allow Field Overrides",
+                    "description": "If enabled, fields from dbt target configs will override fields provided in extras and credentials.",
+                    "default": false,
+                    "type": "boolean"
                   },
                   "type": {
                     "title": "Type",
@@ -4436,6 +4469,12 @@
                     "description": "Extra target configs' keywords, not yet exposed in prefect-dbt, but available in dbt.",
                     "type": "object"
                   },
+                  "allow_field_overrides": {
+                    "title": "Allow Field Overrides",
+                    "description": "If enabled, fields from dbt target configs will override fields provided in extras and credentials.",
+                    "default": false,
+                    "type": "boolean"
+                  },
                   "type": {
                     "title": "Type",
                     "description": "The type of the target.",
@@ -4501,6 +4540,12 @@
                     "description": "Extra target configs' keywords, not yet exposed in prefect-dbt, but available in dbt.",
                     "type": "object"
                   },
+                  "allow_field_overrides": {
+                    "title": "Allow Field Overrides",
+                    "description": "If enabled, fields from dbt target configs will override fields provided in extras and credentials.",
+                    "default": false,
+                    "type": "boolean"
+                  },
                   "type": {
                     "title": "Type",
                     "description": "The name of the database warehouse.",
@@ -4535,6 +4580,12 @@
                     "title": "Extras",
                     "description": "Extra target configs' keywords, not yet exposed in prefect-dbt, but available in dbt.",
                     "type": "object"
+                  },
+                  "allow_field_overrides": {
+                    "title": "Allow Field Overrides",
+                    "description": "If enabled, fields from dbt target configs will override fields provided in extras and credentials.",
+                    "default": false,
+                    "type": "boolean"
                   },
                   "send_anonymous_usage_stats": {
                     "title": "Send Anonymous Usage Stats",
@@ -4604,7 +4655,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.3.0"
+          "version": "0.3.1"
         }
       },
       "dbt-cli-snowflake-target-configs": {
@@ -4615,7 +4666,7 @@
         "description": "Target configs contain credentials and\nsettings, specific to Snowflake.\nTo find valid keys, head to the [Snowflake Profile](\nhttps://docs.getdbt.com/reference/warehouse-profiles/snowflake-profile)\npage.",
         "code_example": "Load stored SnowflakeTargetConfigs:\n```python\nfrom prefect_dbt.cli.configs import SnowflakeTargetConfigs\n\nsnowflake_target_configs = SnowflakeTargetConfigs.load(\"BLOCK_NAME\")\n```\n\nInstantiate SnowflakeTargetConfigs.\n```python\nfrom prefect_dbt.cli.configs import SnowflakeTargetConfigs\nfrom prefect_snowflake.credentials import SnowflakeCredentials\nfrom prefect_snowflake.database import SnowflakeConnector\n\ncredentials = SnowflakeCredentials(\n    user=\"user\",\n    password=\"password\",\n    account=\"account.region.aws\",\n    role=\"role\",\n)\nconnector = SnowflakeConnector(\n    schema=\"public\",\n    database=\"database\",\n    warehouse=\"warehouse\",\n    credentials=credentials,\n)\ntarget_configs = SnowflakeTargetConfigs(\n    connector=connector,\n    extras={\"retry_on_database_errors\": True},\n)\n```",
         "block_schema": {
-          "checksum": "sha256:2135e02c95514a67c5900c7da211a267a72307a9e66656edfeedd87ea090cf54",
+          "checksum": "sha256:1e5be296bb63d7e2b04f0e9b99543db12521af269399d10e2bc290da4244a575",
           "fields": {
             "title": "SnowflakeTargetConfigs",
             "description": "Target configs contain credentials and\nsettings, specific to Snowflake.\nTo find valid keys, head to the [Snowflake Profile](\nhttps://docs.getdbt.com/reference/warehouse-profiles/snowflake-profile)\npage.",
@@ -4625,6 +4676,12 @@
                 "title": "Extras",
                 "description": "Extra target configs' keywords, not yet exposed in prefect-dbt, but available in dbt.",
                 "type": "object"
+              },
+              "allow_field_overrides": {
+                "title": "Allow Field Overrides",
+                "description": "If enabled, fields from dbt target configs will override fields provided in extras and credentials.",
+                "default": false,
+                "type": "boolean"
               },
               "type": {
                 "title": "Type",
@@ -4831,7 +4888,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.3.0"
+          "version": "0.3.1"
         }
       },
       "dbt-cli-target-configs": {
@@ -4842,7 +4899,7 @@
         "description": "Target configs contain credentials and\nsettings, specific to the warehouse you're connecting to.\nTo find valid keys, head to the [Available adapters](\nhttps://docs.getdbt.com/docs/available-adapters) page and\nclick the desired adapter's \"Profile Setup\" hyperlink.",
         "code_example": "Load stored TargetConfigs:\n```python\nfrom prefect_dbt.cli.configs import TargetConfigs\n\ndbt_cli_target_configs = TargetConfigs.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:04fe042c176570f71f224c480cac73e7fb8e038ed6eff27c5f48e2ee831ffd47",
+          "checksum": "sha256:85f7476977e725617af89930889b843147320b2df37df911e24806dd6dacc870",
           "fields": {
             "title": "TargetConfigs",
             "description": "Target configs contain credentials and\nsettings, specific to the warehouse you're connecting to.\nTo find valid keys, head to the [Available adapters](\nhttps://docs.getdbt.com/docs/available-adapters) page and\nclick the desired adapter's \"Profile Setup\" hyperlink.",
@@ -4852,6 +4909,12 @@
                 "title": "Extras",
                 "description": "Extra target configs' keywords, not yet exposed in prefect-dbt, but available in dbt.",
                 "type": "object"
+              },
+              "allow_field_overrides": {
+                "title": "Allow Field Overrides",
+                "description": "If enabled, fields from dbt target configs will override fields provided in extras and credentials.",
+                "default": false,
+                "type": "boolean"
               },
               "type": {
                 "title": "Type",
@@ -4879,7 +4942,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.3.0"
+          "version": "0.3.1"
         }
       },
       "dbt-cloud-credentials": {
@@ -4926,7 +4989,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.3.0"
+          "version": "0.3.1"
         }
       },
       "dbt-core-operation": {
@@ -4937,7 +5000,7 @@
         "description": "A block representing a dbt operation, containing multiple dbt and shell commands.\n\nFor long-lasting operations, use the trigger method and utilize the block as a\ncontext manager for automatic closure of processes when context is exited.\nIf not, manually call the close method to close processes.\n\nFor short-lasting operations, use the run method. Context is automatically managed\nwith this method.",
         "code_example": "Load a configured block.\n```python\nfrom prefect_dbt import DbtCoreOperation\n\ndbt_op = DbtCoreOperation.load(\"BLOCK_NAME\")\n```\n\nExecute short-lasting dbt debug and list with a custom DbtCliProfile.\n```python\nfrom prefect_dbt import DbtCoreOperation, DbtCliProfile\nfrom prefect_dbt.cli.configs import SnowflakeTargetConfigs\nfrom prefect_snowflake import SnowflakeConnector\n\nsnowflake_connector = await SnowflakeConnector.load(\"snowflake-connector\")\ntarget_configs = SnowflakeTargetConfigs(connector=snowflake_connector)\ndbt_cli_profile = DbtCliProfile(\n    name=\"jaffle_shop\",\n    target=\"dev\",\n    target_configs=target_configs,\n)\nprofile = dbt_cli_profile.get_profile()\ndbt_init = DbtCoreOperation(\n    commands=[\"dbt debug\", \"dbt list\"],\n    dbt_cli_profile=dbt_cli_profile,\n    overwrite_profiles=True\n)\ndbt_init.run()\n```\n\nExecute a longer-lasting dbt run as a context manager.\n```python\nwith DbtCoreOperation(commands=[\"dbt run\"]) as dbt_run:\n    dbt_process = dbt_run.trigger()\n    # do other things\n    dbt_process.wait_for_completion()\n    dbt_output = dbt_process.fetch_result()\n```",
         "block_schema": {
-          "checksum": "sha256:1bd0ce8e0ca5e1a3c30852abc9be723c17ab1f61a56376cac178d2bfaa444b58",
+          "checksum": "sha256:0f685bc693353f66d1fc83687c8af67511feba052b5343506033141c9a2441c7",
           "fields": {
             "title": "DbtCoreOperation",
             "description": "A block representing a dbt operation, containing multiple dbt and shell commands.\n\nFor long-lasting operations, use the trigger method and utilize the block as a\ncontext manager for automatic closure of processes when context is exited.\nIf not, manually call the close method to close processes.\n\nFor short-lasting operations, use the run method. Context is automatically managed\nwith this method.",
@@ -5025,7 +5088,7 @@
             "block_schema_references": {
               "dbt_cli_profile": {
                 "block_type_slug": "dbt-cli-profile",
-                "block_schema_checksum": "sha256:7ad2bdc7683dc1a0def4643a05fe3c54d227d839cee81569db322411055aaa52"
+                "block_schema_checksum": "sha256:f55b0f96cb9e1cf2f508bb882b25d9246b351be8b0ad18140a73281674a40d6d"
               }
             },
             "definitions": {
@@ -5194,6 +5257,12 @@
                     "description": "Extra target configs' keywords, not yet exposed in prefect-dbt, but available in dbt.",
                     "type": "object"
                   },
+                  "allow_field_overrides": {
+                    "title": "Allow Field Overrides",
+                    "description": "If enabled, fields from dbt target configs will override fields provided in extras and credentials.",
+                    "default": false,
+                    "type": "boolean"
+                  },
                   "type": {
                     "title": "Type",
                     "description": "The type of the target configs.",
@@ -5278,6 +5347,12 @@
                     "title": "Extras",
                     "description": "Extra target configs' keywords, not yet exposed in prefect-dbt, but available in dbt.",
                     "type": "object"
+                  },
+                  "allow_field_overrides": {
+                    "title": "Allow Field Overrides",
+                    "description": "If enabled, fields from dbt target configs will override fields provided in extras and credentials.",
+                    "default": false,
+                    "type": "boolean"
                   },
                   "type": {
                     "title": "Type",
@@ -5548,6 +5623,12 @@
                     "description": "Extra target configs' keywords, not yet exposed in prefect-dbt, but available in dbt.",
                     "type": "object"
                   },
+                  "allow_field_overrides": {
+                    "title": "Allow Field Overrides",
+                    "description": "If enabled, fields from dbt target configs will override fields provided in extras and credentials.",
+                    "default": false,
+                    "type": "boolean"
+                  },
                   "type": {
                     "title": "Type",
                     "description": "The type of the target.",
@@ -5613,6 +5694,12 @@
                     "description": "Extra target configs' keywords, not yet exposed in prefect-dbt, but available in dbt.",
                     "type": "object"
                   },
+                  "allow_field_overrides": {
+                    "title": "Allow Field Overrides",
+                    "description": "If enabled, fields from dbt target configs will override fields provided in extras and credentials.",
+                    "default": false,
+                    "type": "boolean"
+                  },
                   "type": {
                     "title": "Type",
                     "description": "The name of the database warehouse.",
@@ -5647,6 +5734,12 @@
                     "title": "Extras",
                     "description": "Extra target configs' keywords, not yet exposed in prefect-dbt, but available in dbt.",
                     "type": "object"
+                  },
+                  "allow_field_overrides": {
+                    "title": "Allow Field Overrides",
+                    "description": "If enabled, fields from dbt target configs will override fields provided in extras and credentials.",
+                    "default": false,
+                    "type": "boolean"
                   },
                   "send_anonymous_usage_stats": {
                     "title": "Send Anonymous Usage Stats",
@@ -5775,31 +5868,31 @@
                   "target_configs": [
                     {
                       "block_type_slug": "dbt-cli-snowflake-target-configs",
-                      "block_schema_checksum": "sha256:2135e02c95514a67c5900c7da211a267a72307a9e66656edfeedd87ea090cf54"
+                      "block_schema_checksum": "sha256:1e5be296bb63d7e2b04f0e9b99543db12521af269399d10e2bc290da4244a575"
                     },
                     {
                       "block_type_slug": "dbt-cli-bigquery-target-configs",
-                      "block_schema_checksum": "sha256:bcf9267e33fd8a349653f9c187b11ad2eab7d57f46d7e622e017e7eacbd7eb37"
+                      "block_schema_checksum": "sha256:842c5dc7d4d1557eedff36982eafeda7b0803915942f72224a7f627efdbe5ff5"
                     },
                     {
                       "block_type_slug": "dbt-cli-postgres-target-configs",
-                      "block_schema_checksum": "sha256:74a71ee4244c16733134f174f5d6480e257b7c5ef843a6745aafab6fef31538d"
+                      "block_schema_checksum": "sha256:1552a2d5c102961df4082329f39c10b8a51e26ee687148efd6d71ce8be8850c0"
                     },
                     {
                       "block_type_slug": "dbt-cli-target-configs",
-                      "block_schema_checksum": "sha256:04fe042c176570f71f224c480cac73e7fb8e038ed6eff27c5f48e2ee831ffd47"
+                      "block_schema_checksum": "sha256:85f7476977e725617af89930889b843147320b2df37df911e24806dd6dacc870"
                     }
                   ],
                   "global_configs": {
                     "block_type_slug": "dbt-cli-global-configs",
-                    "block_schema_checksum": "sha256:7432c371f3d7185b7d54cd7ece5d88ef3d69ef0fb724335cba54c6b87a6b48ad"
+                    "block_schema_checksum": "sha256:63df9d18a1aafde1cc8330cd49f81f6600b4ce6db92955973bbf341cc86e916d"
                   }
                 }
               }
             }
           },
           "capabilities": [],
-          "version": "0.3.0"
+          "version": "0.3.1"
         }
       }
     }
