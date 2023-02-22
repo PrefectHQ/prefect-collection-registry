@@ -1,5 +1,7 @@
+from jsonschema import Draft7Validator
+
 flow_schema = {
-    # "$schema": "http://json-schema.org/draft-07/schema#",
+    "$schema": Draft7Validator.META_SCHEMA["$id"],
     "type": "object",
     "properties": {
         "name": {"type": "string"},
