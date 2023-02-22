@@ -7202,7 +7202,7 @@
         "slug": "kubernetes-credentials",
         "logo_url": "https://images.ctfassets.net/zscdif0zqppk/oYuHjIbc26oilfQSEMjRv/a61f5f6ef406eead2df5231835b4c4c2/logo.png?h=250",
         "documentation_url": "https://prefecthq.github.io/prefect-kubernetes/credentials/#prefect_kubernetes.credentials.KubernetesCredentials",
-        "description": "Credentials block for generating configured Kubernetes API clients.",
+        "description": "Credentials block for generating configured Kubernetes API clients. This block is part of the prefect-kubernetes collection. Install prefect-kubernetes with `pip install prefect-kubernetes` to use this block.",
         "code_example": "Load stored Kubernetes credentials:\n```python\nfrom prefect_kubernetes.credentials import KubernetesCredentials\n\nkubernetes_credentials = KubernetesCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
           "checksum": "sha256:957fa8dca90bd1b5fb9c575ee09e80b454116c0b134287fbc2eff47a72564c3b",
