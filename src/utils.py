@@ -232,9 +232,10 @@ def validate_view_content(view_dict: dict, variety: CollectionViewVariety) -> No
     schema = getattr(metadata_schemas, f"{variety}_schema")
     validate = fastjsonschema.compile(schema)
 
-    print(pad_text(json.dumps(view_dict, indent=2)))
-
     for collection_name, collection_metadata in view_dict.items():
+        print(pad_text(collection_name))
+        print(pad_text(json.dumps(collection_metadata, indent=2)))
+        
         if variety == "block":
             collection_metadata = collection_metadata["block_types"]
         try:
