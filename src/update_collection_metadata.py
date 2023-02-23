@@ -4,8 +4,8 @@ import subprocess
 import github3
 import pendulum
 from prefect import flow, task
-from prefect.deployments import run_deployment
 from prefect.filesystems import S3
+from prefect.deployments import run_deployment
 from prefect.server.schemas.core import FlowRun
 from prefect.states import Completed, Failed, State
 from prefect.utilities.collections import listrepr
@@ -14,7 +14,8 @@ import utils
 from generate_block_metadata import update_block_metadata_for_collection
 from generate_flow_metadata import update_flow_metadata_for_collection
 
-update_all_collections_description = """
+
+UPDATE_ALL_DESCRIPTION = """
 The `update_all_collections` triggers many instances of `update_collection_metadata` in order to
 update the [`prefect-collection-registry`](https://github.com/PrefectHQ/prefect-collection-registry)
 with metadata generated from new releases of select packages (prefect collections + prefect core).
@@ -130,9 +131,9 @@ def update_collection_metadata(
 
 
 @flow(
-    description=update_all_collections_description,
+    description=UPDATE_ALL_DESCRIPTION,
     log_prints=True,
-    result_storage=S3.load("integrations-result-storage-aws"),
+    result_storage=S3.load("flow-script-storage"),
     retries=2,
     retry_delay_seconds=10,
 )
