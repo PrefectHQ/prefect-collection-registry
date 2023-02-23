@@ -137,23 +137,25 @@ def submit_updates(
         else:
             raise
 
-    # create a new commit updating the aggregate flow metadata file
-    updated_metadata_content = json.dumps(updated_metadata_dict, indent=2)
-    if existing_metadata_content == updated_metadata_content:
-        print(
-            f"Aggregate {variety} metadata for {collection_name} {latest_release} already up to date!"
+    # don't update the aggregate metadata with keys that have empty values
+    if updated_metadata_dict:
+        # create a new commit updating the aggregate flow metadata file
+        updated_metadata_content = json.dumps(updated_metadata_dict, indent=2)
+        if existing_metadata_content == updated_metadata_content:
+            print(
+                f"Aggregate {variety} metadata for {collection_name} {latest_release} already up to date!"
+            )
+            return
+
+        registry_repo.file_contents(metadata_file, ref=branch_name).update(
+            message=f"Update aggregate {variety} metadata with `{collection_name}` `{latest_release}`",
+            content=updated_metadata_content.encode("utf-8"),
+            branch=branch_name,
         )
-        return
 
-    registry_repo.file_contents(metadata_file, ref=branch_name).update(
-        message=f"Update aggregate {variety} metadata with `{collection_name}` `{latest_release}`",
-        content=updated_metadata_content.encode("utf-8"),
-        branch=branch_name,
-    )
-
-    print(
-        f"Updated aggregate {variety} metadata for {collection_name} {latest_release}!"
-    )
+        print(
+            f"Updated aggregate {variety} metadata for {collection_name} {latest_release}!"
+        )
 
 
 def get_collection_names():
