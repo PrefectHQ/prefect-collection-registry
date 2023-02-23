@@ -89,10 +89,8 @@ def generate_flow_metadata(collection_name: str) -> Dict[str, Any]:
     print(f"Loaded collection {collection_module.__name__}...")
 
     return {
-        collection_name: {
-            flow.fn.__name__: summarize_flow(flow, collection_name)
-            for flow in utils.find_flows_in_module(collection_slug)
-        }
+        flow.fn.__name__: summarize_flow(flow, collection_name)
+        for flow in utils.find_flows_in_module(collection_slug)
     }
 
 
