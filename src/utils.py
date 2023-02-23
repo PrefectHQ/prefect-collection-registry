@@ -122,7 +122,9 @@ def submit_updates(
 
     existing_metadata_dict = json.loads(existing_metadata_content)
 
-    existing_metadata_dict.update({collection_name: collection_metadata})
+    collection_metadata_with_outer_key = {collection_name: collection_metadata}
+
+    existing_metadata_dict.update(collection_metadata_with_outer_key)
 
     updated_metadata_dict = dict(sorted(existing_metadata_dict.items()))
 
@@ -131,7 +133,9 @@ def submit_updates(
         registry_repo.create_file(
             path=f"collections/{collection_name}/{variety}s/{latest_release}.json",
             message=f"Add `{collection_name}` `{latest_release}` to {variety} records",
-            content=json.dumps(collection_metadata, indent=2).encode("utf-8"),
+            content=json.dumps(collection_metadata_with_outer_key, indent=2).encode(
+                "utf-8"
+            ),
             branch=branch_name,
         )
         print(f"Added {collection_name} {latest_release} to {variety} records!")
