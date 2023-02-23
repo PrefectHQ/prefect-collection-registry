@@ -120,16 +120,25 @@ def update_collection_metadata(
     """
 
     # install the collection
-    output = subprocess.run(
+    PIP_INSTALL_OUTPUT = subprocess.run(
         f"pip install -U {collection_name}[dev]".split(), stdout=subprocess.PIPE
+    ).stdout.decode("utf-8")
+
+    print(utils.pad_text(PIP_INSTALL_OUTPUT))
+
+    update_flow_metadata_for_collection.with_options(
+        flow_run_name=f"Gather / Submit FLOW metadata for {collection_name}"
+    )(
+        collection_name=collection_name,
+        branch_name=branch_name,
     )
 
-    print(output.stdout.decode("utf-8"))
-
-    update_flow_metadata_for_collection(collection_name, branch_name)
-
-    update_block_metadata_for_collection(collection_name, branch_name)
-
+    update_block_metadata_for_collection.with_options(
+        flow_run_name=f"Gather / Submit BLOCK metadata for {collection_name}"
+    )(
+        collection_name=collection_name,
+        branch_name=branch_name,
+    )
     return Completed(message=f"Successfully updated {collection_name}")
 
 

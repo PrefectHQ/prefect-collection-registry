@@ -2,7 +2,7 @@ import inspect
 import json
 from pkgutil import iter_modules
 from types import ModuleType
-from typing import Any, Callable, Dict, Generator, Union
+from typing import Any, Callable, Dict, Generator, List, Union
 
 import github3
 import httpx
@@ -18,6 +18,26 @@ exclude_collections = {
         "prefect-ray",
     ]
 }
+
+
+def pad_text(
+    text: str | List[str],
+    header: str = None,
+    padding_character: str = "\n",
+    n_padding: int = 3,
+) -> str:
+    """
+    Adds padding characters to either side of `text` and an optional header
+    padded with the same spacing.
+
+    Defaults to 3 newlines and no header.
+    """
+    padding = padding_character * n_padding
+    padded_header = (header + padding if header else None) or ""
+
+    text = "".join(text) if isinstance(text, list) else text
+
+    return f"{padding}{padded_header}{text}{padding}"
 
 
 def skip_parsing(name: str, obj: Union[ModuleType, Callable], module_nesting: str):
