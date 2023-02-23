@@ -5,6 +5,7 @@ import github3
 import pendulum
 from prefect import flow, task
 from prefect.deployments import run_deployment
+from prefect.filesystems import S3
 from prefect.server.schemas.core import FlowRun
 from prefect.states import Completed, Failed, State
 from prefect.utilities.collections import listrepr
@@ -12,6 +13,15 @@ from prefect.utilities.collections import listrepr
 import utils
 from generate_block_metadata import update_block_metadata_for_collection
 from generate_flow_metadata import update_flow_metadata_for_collection
+
+update_all_collections_description = """
+The `update_all_collections` triggers many instances of `update_collection_metadata` in order to
+update the [`prefect-collection-registry`](https://github.com/PrefectHQ/prefect-collection-registry)
+with metadata generated from new releases of select packages (prefect collections + prefect core).
+
+`update_all_collections` flow will check if any packages have a release not recorded by the registry repo,
+and will trigger a run of `update_collection_metadata` for each such package.
+"""
 
 
 async def collection_needs_update(collection_name: str) -> tuple[str, bool]:
@@ -119,7 +129,13 @@ def update_collection_metadata(
     return Completed(message=f"Successfully updated {collection_name}")
 
 
-@flow(log_prints=True, retries=2, retry_delay_seconds=10)
+@flow(
+    description=update_all_collections_description,
+    log_prints=True,
+    result_storage=S3.load("integrations-result-storage-aws"),
+    retries=2,
+    retry_delay_seconds=10,
+)
 async def update_all_collections(
     branch_name: str = "update-metadata",
 ):
