@@ -3293,9 +3293,6 @@
       }
     }
   },
-  "prefect-dask": {
-    "block_types": {}
-  },
   "prefect-databricks": {
     "block_types": {
       "databricks-credentials": {
@@ -7098,7 +7095,6 @@
       }
     }
   },
-  "prefect-great-expectations": {},
   "prefect-hex": {
     "block_types": {
       "hex-credentials": {
@@ -7194,7 +7190,6 @@
       }
     }
   },
-  "prefect-jupyter": {},
   "prefect-kubernetes": {
     "block_types": {
       "kubernetes-credentials": {
@@ -7602,7 +7597,6 @@
       }
     }
   },
-  "prefect-openmetadata": {},
   "prefect-shell": {
     "block_types": {
       "shell-operation": {
