@@ -133,9 +133,6 @@ def submit_updates(
 
     updated_metadata_dict = dict(sorted(existing_metadata_dict.items()))
 
-    # validate the new metadata
-    validate_view_content(updated_metadata_dict, variety)
-
     # create a new commit adding the collection version metadata
     try:
         registry_repo.create_file(
@@ -159,6 +156,10 @@ def submit_updates(
 
     # don't update the aggregate metadata with keys that have empty values
     if collection_metadata:
+
+        # validate the new metadata
+        validate_view_content(updated_metadata_dict, variety)
+
         # create a new commit updating the aggregate flow metadata file
         updated_metadata_content = json.dumps(updated_metadata_dict, indent=2)
         if existing_metadata_content == updated_metadata_content:
