@@ -144,9 +144,6 @@
       "slug": "run_connection_sync"
     }
   },
-  "prefect-aws": {},
-  "prefect-azure": {},
-  "prefect-bitbucket": {},
   "prefect-census": {
     "run_census_sync": {
       "description": {
@@ -419,9 +416,6 @@
       "repo_url": "https://github.com/PrefectHQ/prefect-census",
       "slug": "trigger_census_sync_run_and_wait_for_completion"
     }
-  },
-  "prefect-dask": {
-    "prefect-dask": {}
   },
   "prefect-databricks": {
     "jobs_runs_submit_and_wait_for_completion": {
@@ -2350,13 +2344,6 @@
       "slug": "wait_for_dbt_cloud_job_run"
     }
   },
-  "prefect-docker": {},
-  "prefect-email": {},
-  "prefect-firebolt": {},
-  "prefect-gcp": {},
-  "prefect-github": {},
-  "prefect-gitlab": {},
-  "prefect-great-expectations": {},
   "prefect-hex": {
     "trigger_project_run_and_wait_for_completion": {
       "description": {
@@ -2734,7 +2721,6 @@
       "slug": "wait_for_sync_run_completion"
     }
   },
-  "prefect-jupyter": {},
   "prefect-kubernetes": {
     "run_namespaced_job": {
       "description": {
@@ -2881,7 +2867,6 @@
       "slug": "run_namespaced_job"
     }
   },
-  "prefect-monday": {},
   "prefect-monte-carlo": {
     "create_or_update_lineage": {
       "description": {
@@ -3026,12 +3011,5 @@
       "repo_url": "https://github.com/PrefectHQ/prefect-monte-carlo",
       "slug": "create_or_update_lineage"
     }
-  },
-  "prefect-openai": {},
-  "prefect-openmetadata": {},
-  "prefect-shell": {},
-  "prefect-slack": {},
-  "prefect-snowflake": {},
-  "prefect-sqlalchemy": {},
-  "prefect-twitter": {}
+  }
 }
