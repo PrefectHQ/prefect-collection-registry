@@ -22,7 +22,7 @@ exclude_collections = {
     ]
 }
 
-CollectionViewName = Literal["block", "flow", "worker"]
+CollectionViewVariety = Literal["block", "flow", "worker"]
 
 
 def pad_text(
@@ -91,7 +91,7 @@ def submit_updates(
     collection_metadata: Dict[str, Any],
     collection_name: str,
     branch_name: str,
-    variety: CollectionViewName,
+    variety: CollectionViewVariety,
     repo_name: str = "prefect-collection-registry",
 ):
     """
@@ -202,7 +202,7 @@ def get_logo_url_for_collection(collection_name: str) -> str:
     return block_types_from_collection.popitem()[1]["logo_url"]
 
 
-def read_view_content(view: CollectionViewName) -> Dict[str, Any]:
+def read_view_content(view: CollectionViewVariety) -> Dict[str, Any]:
     """Reads the content of a view from the views directory."""
 
     repo_organization = "PrefectHQ"
@@ -226,12 +226,14 @@ async def get_repo(name: str) -> github3.repos.repo.Repository:
     return gh.repository("PrefectHQ", name)
 
 
-def validate_view_content(view_dict: dict, variety: CollectionViewName) -> None:
+def validate_view_content(view_dict: dict, variety: CollectionViewVariety) -> None:
     """Raises an error if the view content is not valid."""
     schema = getattr(metadata_schemas, f"{variety}_schema")
     validate = fastjsonschema.compile(schema)
 
     for collection_name, collection_metadata in view_dict.items():
+        if variety == "block":
+            collection_metadata = collection_metadata["block_types"]
         try:
             validate(list(collection_metadata.values())[0])
         except IndexError:
