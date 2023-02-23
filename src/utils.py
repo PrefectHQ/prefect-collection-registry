@@ -215,7 +215,7 @@ def validate_view_content(view_dict: dict, variety: CollectionViewVariety) -> No
         if variety == "block":
             collection_metadata = collection_metadata["block_types"]
         try:
-            map(validate, collection_metadata.values())
+            list(map(validate, collection_metadata.values()))
         except IndexError:
             raise ValueError("There's a key with no value in this view!")
         print(f"Validated {collection_name} {variety} view!")
