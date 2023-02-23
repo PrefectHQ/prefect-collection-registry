@@ -4,8 +4,8 @@ import subprocess
 import github3
 import pendulum
 from prefect import flow, task
-from prefect.filesystems import S3
 from prefect.deployments import run_deployment
+from prefect.filesystems import S3
 from prefect.server.schemas.core import FlowRun
 from prefect.states import Completed, Failed, State
 from prefect.utilities.collections import listrepr
@@ -13,7 +13,6 @@ from prefect.utilities.collections import listrepr
 import utils
 from generate_block_metadata import update_block_metadata_for_collection
 from generate_flow_metadata import update_flow_metadata_for_collection
-
 
 UPDATE_ALL_DESCRIPTION = """
 The `update_all_collections` triggers many instances of `update_collection_metadata` in order to
@@ -121,7 +120,11 @@ def update_collection_metadata(
     """
 
     # install the collection
-    subprocess.run(f"pip install -U {collection_name}[dev]".split())
+    output = subprocess.run(
+        f"pip install -U {collection_name}[dev]".split(), stdout=subprocess.PIPE
+    )
+
+    print(output.stdout.decode("utf-8"))
 
     update_flow_metadata_for_collection(collection_name, branch_name)
 
