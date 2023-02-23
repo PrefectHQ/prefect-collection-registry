@@ -138,7 +138,7 @@ def submit_updates(
             raise
 
     # don't update the aggregate metadata with keys that have empty values
-    if updated_metadata_dict:
+    if collection_metadata:
         # create a new commit updating the aggregate flow metadata file
         updated_metadata_content = json.dumps(updated_metadata_dict, indent=2)
         if existing_metadata_content == updated_metadata_content:
