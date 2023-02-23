@@ -1,3 +1,5 @@
+# --- FLOW SCHEMAS ---
+
 flow_schema = {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "type": "object",
@@ -27,6 +29,8 @@ flow_schema = {
     ],
 }
 
+# --- WORKER SCHEMAS ---
+
 worker_schema = {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "type": "object",
@@ -46,7 +50,9 @@ worker_schema = {
     ],
 }
 
-block_type_schema = {
+# --- BLOCK SCHEMAS ---
+
+block_schema = {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "type": "object",
     "properties": {
