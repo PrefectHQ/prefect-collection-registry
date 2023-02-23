@@ -2,28 +2,27 @@
     "prefect-recipes": {
         "hello": {
             "description": {
-                "summary": "A simple flow that says hello.",
-                "returns": "",
-                "examples": []
+                "summary": "A simple flow that creates a `String` block with a name\nand greets that `name`."
             },
             "documentation_url": "https://github.com/PrefectHQ/prefect-recipes",
             "entrypoint": "flows-starter/hello.py:hello",
-            "install_command": "",
-            "logo_url": "",
+            "install_command": "n/a",
+            "logo_url": "n/a",
             "name": "hello",
             "parameters": {
                 "title": "Parameters",
                 "type": "object",
                 "properties": {
-                    "block_name": {
-                        "title": "block_name",
-                        "description": "The name of the block to load. Defaults to \"name\".",
-                        "default": "name",
+                    "name": {
+                        "title": "name",
+                        "description": "subject of the greeting",
                         "position": 0,
                         "type": "string"
                     }
                 },
-                "required": null,
+                "required": [
+                    "name"
+                ],
                 "definitions": null
             },
             "path_containing_flow": "prefect_recipes/flows-starter/hello.py",

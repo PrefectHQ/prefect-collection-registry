@@ -15,7 +15,7 @@ from prefect.blocks.core import Block
 from prefect.plugins import safe_load_entrypoints
 
 import utils
-from metadata_schemas import block_type_schema
+from metadata_schemas import block_schema
 
 # Some collection blocks share names with core blocks. We exclude them
 # from the registry for now to avoid confusion.
@@ -41,8 +41,8 @@ def generate_block_metadata(block_subcls: Type[Block]) -> Dict[str, Any]:
     block_type_dict["block_schema"]["capabilities"] = sorted(
         block_type_dict["block_schema"]["capabilities"]
     )
-    validate = fastjsonschema.compile(block_type_schema)
-    validate(block_type_dict, block_type_schema)
+    validate = fastjsonschema.compile(block_schema)
+    validate(block_type_dict)
 
     return block_type_dict
 

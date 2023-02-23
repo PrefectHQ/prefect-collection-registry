@@ -4,6 +4,7 @@ from pkgutil import iter_modules
 from types import ModuleType
 from typing import Any, Callable, Dict, Generator, List, Union
 
+import fastjsonschema
 import github3
 import httpx
 from prefect import Flow, task
@@ -12,12 +13,16 @@ from prefect.utilities.asyncutils import run_sync_in_worker_thread, sync_compati
 from prefect.utilities.importtools import load_module, to_qualified_name
 from typing_extensions import Literal
 
+import metadata_schemas
+
 exclude_collections = {
     f"https://prefecthq.github.io/{collection}/"
     for collection in [
         "prefect-ray",
     ]
 }
+
+CollectionViewVariety = Literal["block", "flow", "worker"]
 
 
 def pad_text(
@@ -86,7 +91,7 @@ def submit_updates(
     collection_metadata: Dict[str, Any],
     collection_name: str,
     branch_name: str,
-    variety: Literal["block", "flow", "collection"],
+    variety: CollectionViewVariety,
     repo_name: str = "prefect-collection-registry",
 ):
     """
@@ -122,16 +127,23 @@ def submit_updates(
 
     existing_metadata_dict = json.loads(existing_metadata_content)
 
-    existing_metadata_dict.update({collection_name: collection_metadata})
+    collection_metadata_with_outer_key = {collection_name: collection_metadata}
+
+    existing_metadata_dict.update(collection_metadata_with_outer_key)
 
     updated_metadata_dict = dict(sorted(existing_metadata_dict.items()))
+
+    # validate the new metadata
+    validate_view_content(updated_metadata_dict, variety)
 
     # create a new commit adding the collection version metadata
     try:
         registry_repo.create_file(
             path=f"collections/{collection_name}/{variety}s/{latest_release}.json",
             message=f"Add `{collection_name}` `{latest_release}` to {variety} records",
-            content=json.dumps(collection_metadata, indent=2).encode("utf-8"),
+            content=json.dumps(collection_metadata_with_outer_key, indent=2).encode(
+                "utf-8"
+            ),
             branch=branch_name,
         )
         print(f"Added {collection_name} {latest_release} to {variety} records!")
@@ -145,23 +157,25 @@ def submit_updates(
         else:
             raise
 
-    # create a new commit updating the aggregate flow metadata file
-    updated_metadata_content = json.dumps(updated_metadata_dict, indent=2)
-    if existing_metadata_content == updated_metadata_content:
-        print(
-            f"Aggregate {variety} metadata for {collection_name} {latest_release} already up to date!"
+    # don't update the aggregate metadata with keys that have empty values
+    if collection_metadata:
+        # create a new commit updating the aggregate flow metadata file
+        updated_metadata_content = json.dumps(updated_metadata_dict, indent=2)
+        if existing_metadata_content == updated_metadata_content:
+            print(
+                f"Aggregate {variety} metadata for {collection_name} {latest_release} already up to date!"
+            )
+            return
+
+        registry_repo.file_contents(metadata_file, ref=branch_name).update(
+            message=f"Update aggregate {variety} metadata with `{collection_name}` `{latest_release}`",
+            content=updated_metadata_content.encode("utf-8"),
+            branch=branch_name,
         )
-        return
 
-    registry_repo.file_contents(metadata_file, ref=branch_name).update(
-        message=f"Update aggregate {variety} metadata with `{collection_name}` `{latest_release}`",
-        content=updated_metadata_content.encode("utf-8"),
-        branch=branch_name,
-    )
-
-    print(
-        f"Updated aggregate {variety} metadata for {collection_name} {latest_release}!"
-    )
+        print(
+            f"Updated aggregate {variety} metadata for {collection_name} {latest_release}!"
+        )
 
 
 def get_collection_names():
@@ -188,7 +202,7 @@ def get_logo_url_for_collection(collection_name: str) -> str:
     return block_types_from_collection.popitem()[1]["logo_url"]
 
 
-def read_view_content(view: Literal["block", "flow", "collection"]) -> Dict[str, Any]:
+def read_view_content(view: CollectionViewVariety) -> Dict[str, Any]:
     """Reads the content of a view from the views directory."""
 
     repo_organization = "PrefectHQ"
@@ -210,3 +224,18 @@ async def get_repo(name: str) -> github3.repos.repo.Repository:
     github_token = await Secret.load("collection-registry-github-token")
     gh = await run_sync_in_worker_thread(github3.login, token=github_token.get())
     return gh.repository("PrefectHQ", name)
+
+
+def validate_view_content(view_dict: dict, variety: CollectionViewVariety) -> None:
+    """Raises an error if the view content is not valid."""
+    schema = getattr(metadata_schemas, f"{variety}_schema")
+    validate = fastjsonschema.compile(schema)
+
+    for collection_name, collection_metadata in view_dict.items():
+        if variety == "block":
+            collection_metadata = collection_metadata["block_types"]
+        try:
+            list(map(validate, collection_metadata.values()))
+        except IndexError:
+            raise ValueError("There's a key with no value in this view!")
+        print(f"Validated {collection_name} {variety} view!")
