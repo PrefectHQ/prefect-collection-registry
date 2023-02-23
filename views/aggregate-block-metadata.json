@@ -84,7 +84,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.8.2"
+          "version": "2.8.3"
         }
       },
       "date-time": {
@@ -116,7 +116,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.8.2"
+          "version": "2.8.3"
         }
       },
       "docker-container": {
@@ -317,7 +317,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.8.2"
+          "version": "2.8.3"
         }
       },
       "docker-registry": {
@@ -372,7 +372,7 @@
           "capabilities": [
             "docker-login"
           ],
-          "version": "2.8.2"
+          "version": "2.8.3"
         }
       },
       "gcs": {
@@ -423,7 +423,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.8.2"
+          "version": "2.8.3"
         }
       },
       "github": {
@@ -431,13 +431,13 @@
         "slug": "github",
         "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/187oCWsD18m5yooahq1vU0/ace41e99ab6dc40c53e5584365a33821/github.png?h=250",
         "documentation_url": "https://docs.prefect.io/concepts/filesystems/#github",
-        "description": "Interact with files stored on public GitHub repositories.",
+        "description": "Interact with files stored on GitHub repositories.",
         "code_example": "```python\nfrom prefect.filesystems import GitHub\n\ngithub_block = GitHub.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:70535b63f8283abfaa857d8456be263798a6cd89672b4e2d912e09e7fc71542c",
+          "checksum": "sha256:91675c8041736a4086eee462cad180ef2032b2edadcfda032f7a51e80dcbcca6",
           "fields": {
             "title": "GitHub",
-            "description": "Interact with files stored on public GitHub repositories.",
+            "description": "Interact with files stored on GitHub repositories.",
             "type": "object",
             "properties": {
               "repository": {
@@ -477,7 +477,7 @@
           "capabilities": [
             "get-directory"
           ],
-          "version": "2.8.2"
+          "version": "2.8.3"
         }
       },
       "json": {
@@ -507,7 +507,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.8.2"
+          "version": "2.8.3"
         }
       },
       "kubernetes-cluster-config": {
@@ -544,7 +544,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.8.2"
+          "version": "2.8.3"
         }
       },
       "kubernetes-job": {
@@ -718,7 +718,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.8.2"
+          "version": "2.8.3"
         }
       },
       "local-file-system": {
@@ -751,7 +751,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.8.2"
+          "version": "2.8.3"
         }
       },
       "mattermost-webhook": {
@@ -838,7 +838,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.8.2"
+          "version": "2.8.3"
         }
       },
       "ms-teams-webhook": {
@@ -889,7 +889,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.8.2"
+          "version": "2.8.3"
         }
       },
       "opsgenie-webhook": {
@@ -1011,7 +1011,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.8.2"
+          "version": "2.8.3"
         }
       },
       "pager-duty-webhook": {
@@ -1124,7 +1124,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.8.2"
+          "version": "2.8.3"
         }
       },
       "process": {
@@ -1206,7 +1206,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.8.2"
+          "version": "2.8.3"
         }
       },
       "remote-file-system": {
@@ -1248,7 +1248,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.8.2"
+          "version": "2.8.3"
         }
       },
       "s3": {
@@ -1304,7 +1304,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.8.2"
+          "version": "2.8.3"
         }
       },
       "secret": {
@@ -1339,7 +1339,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.8.2"
+          "version": "2.8.3"
         }
       },
       "slack-webhook": {
@@ -1390,7 +1390,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.8.2"
+          "version": "2.8.3"
         }
       },
       "smb": {
@@ -1456,7 +1456,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.8.2"
+          "version": "2.8.3"
         }
       },
       "string": {
@@ -1487,7 +1487,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.8.2"
+          "version": "2.8.3"
         }
       },
       "twilio-sms": {
@@ -1560,7 +1560,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.8.2"
+          "version": "2.8.3"
         }
       },
       "webhook": {
@@ -1615,7 +1615,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.8.2"
+          "version": "2.8.3"
         }
       }
     }
