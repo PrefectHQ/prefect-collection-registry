@@ -121,7 +121,7 @@ def submit_updates(
 
     latest_release = collection_repo.latest_release().tag_name
 
-    if collection_name == "prefect":
+    if not latest_release.startswith("v"):
         latest_release = "v" + latest_release
 
     existing_metadata_content = registry_repo.file_contents(
