@@ -94,7 +94,7 @@ def generate_flow_metadata(collection_name: str) -> Dict[str, Any]:
     }
 
 
-@flow
+@flow(name="Update flow metadata for collection")
 def update_flow_metadata_for_collection(collection_name: str, branch_name: str):
     """Generates and submits flow metadata for a given collection."""
     if collection_name == "prefect":

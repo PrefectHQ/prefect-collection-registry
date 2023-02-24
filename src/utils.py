@@ -2,7 +2,7 @@ import inspect
 import json
 from pkgutil import iter_modules
 from types import ModuleType
-from typing import Any, Callable, Dict, Generator, Union
+from typing import Any, Callable, Dict, Generator, List, Union
 
 import fastjsonschema
 import github3
@@ -23,6 +23,26 @@ exclude_collections = {
 }
 
 CollectionViewVariety = Literal["block", "flow", "worker"]
+
+
+def pad_text(
+    text: str | List[str],
+    header: str = None,
+    padding_character: str = "\n",
+    n_padding: int = 3,
+) -> str:
+    """
+    Adds padding characters to either side of `text` and an optional header
+    padded with the same spacing.
+
+    Defaults to 3 newlines and no header.
+    """
+    padding = padding_character * n_padding
+    padded_header = (header + padding if header else None) or ""
+
+    text = "".join(text) if isinstance(text, list) else text
+
+    return f"{padding}{padded_header}{text}{padding}"
 
 
 def skip_parsing(name: str, obj: Union[ModuleType, Callable], module_nesting: str):
@@ -101,6 +121,9 @@ def submit_updates(
 
     latest_release = collection_repo.latest_release().tag_name
 
+    if not latest_release.startswith("v"):
+        latest_release = "v" + latest_release
+
     existing_metadata_content = registry_repo.file_contents(
         metadata_file, ref=branch_name
     ).decoded.decode()
@@ -112,9 +135,6 @@ def submit_updates(
     existing_metadata_dict.update(collection_metadata_with_outer_key)
 
     updated_metadata_dict = dict(sorted(existing_metadata_dict.items()))
-
-    # validate the new metadata
-    validate_view_content(updated_metadata_dict, variety)
 
     # create a new commit adding the collection version metadata
     try:
@@ -139,6 +159,10 @@ def submit_updates(
 
     # don't update the aggregate metadata with keys that have empty values
     if collection_metadata:
+
+        # validate the new metadata
+        validate_view_content(updated_metadata_dict, variety)
+
         # create a new commit updating the aggregate flow metadata file
         updated_metadata_content = json.dumps(updated_metadata_dict, indent=2)
         if existing_metadata_content == updated_metadata_content:

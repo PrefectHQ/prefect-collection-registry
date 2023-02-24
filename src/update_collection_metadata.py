@@ -5,6 +5,7 @@ import github3
 import pendulum
 from prefect import flow, task
 from prefect.deployments import run_deployment
+from prefect.filesystems import GCS
 from prefect.server.schemas.core import FlowRun
 from prefect.states import Completed, Failed, State
 from prefect.utilities.collections import listrepr
@@ -12,6 +13,15 @@ from prefect.utilities.collections import listrepr
 import utils
 from generate_block_metadata import update_block_metadata_for_collection
 from generate_flow_metadata import update_flow_metadata_for_collection
+
+UPDATE_ALL_DESCRIPTION = """
+The `update_all_collections` triggers many instances of `update_collection_metadata` in order to
+update the [`prefect-collection-registry`](https://github.com/PrefectHQ/prefect-collection-registry)
+with metadata generated from new releases of select packages (prefect collections + prefect core).
+
+`update_all_collections` flow will check if any packages have a release not recorded by the registry repo,
+and will trigger a run of `update_collection_metadata` for each such package.
+"""
 
 
 async def collection_needs_update(collection_name: str) -> tuple[str, bool]:
@@ -110,16 +120,35 @@ def update_collection_metadata(
     """
 
     # install the collection
-    subprocess.run(f"pip install -U {collection_name}[dev]".split())
+    PIP_INSTALL_OUTPUT = subprocess.run(
+        f"pip install -U {collection_name}[dev]".split(), stdout=subprocess.PIPE
+    ).stdout.decode("utf-8")
 
-    update_flow_metadata_for_collection(collection_name, branch_name)
+    print(utils.pad_text(PIP_INSTALL_OUTPUT))
 
-    update_block_metadata_for_collection(collection_name, branch_name)
+    update_flow_metadata_for_collection.with_options(
+        flow_run_name=f"Gather / Submit FLOW metadata for {collection_name}"
+    )(
+        collection_name=collection_name,
+        branch_name=branch_name,
+    )
 
+    update_block_metadata_for_collection.with_options(
+        flow_run_name=f"Gather / Submit BLOCK metadata for {collection_name}"
+    )(
+        collection_name=collection_name,
+        branch_name=branch_name,
+    )
     return Completed(message=f"Successfully updated {collection_name}")
 
 
-@flow(log_prints=True, retries=2, retry_delay_seconds=10)
+@flow(
+    description=UPDATE_ALL_DESCRIPTION,
+    log_prints=True,
+    result_storage=GCS.load("collection-registry-result-storage"),
+    retries=2,
+    retry_delay_seconds=10,
+)
 async def update_all_collections(
     branch_name: str = "update-metadata",
 ):

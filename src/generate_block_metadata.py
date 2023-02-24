@@ -5,7 +5,6 @@ import logging
 from abc import ABC
 from importlib.metadata import entry_points
 from pathlib import Path
-from sys import argv
 from types import ModuleType
 from typing import Any, Dict, List, Type
 from uuid import uuid4
@@ -140,7 +139,7 @@ def write_block_metadata(collection_metadata: Dict[str, Any], collection_name: s
         json.dump(collection_metadata, f, indent=2)
 
 
-@flow
+@flow(name="Update block metadata for collection")
 def update_block_metadata_for_collection(collection_name: str, branch_name: str):
     block_metadata = generate_block_metadata_for_collection(collection_name)
     utils.submit_updates(
@@ -149,9 +148,3 @@ def update_block_metadata_for_collection(collection_name: str, branch_name: str)
         branch_name=branch_name,
         variety="block",
     )
-
-
-if __name__ == "__main__":
-    collection_name = argv[1]
-    block_metadata = generate_block_metadata_for_collection(collection_name)
-    write_block_metadata(block_metadata, collection_name)
