@@ -1,0 +1,3 @@
+prefect>=2.8.2
+fastjsonschema
+github3.py

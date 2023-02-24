@@ -1,22 +1,46 @@
+import json
 import os
 import sys
-
-from prefect import Flow
-from prefect.utilities.importtools import load_module
+from pathlib import Path
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
+import fastjsonschema
+import pytest
 
-from src.utils import find_flows_in_module
+from src import metadata_schemas, utils
+
+
+@pytest.fixture
+def flow_summary():
+    content = Path("collections/prefect-airbyte/flows/v0.2.0.json").read_text()
+    return json.loads(content)
 
 
 class TestFindFlowsInModule:
-    def test_find_flows_in_module(self):
-        majewel = load_module("prefect_airbyte")
+    @pytest.mark.xfail(reason="need to make fake collection with __path__")
+    def test_finds_flows_in_module(self):
+        assert len(list(utils.find_flows_in_module("test_module"))) == 2
 
-        flow = list(find_flows_in_module(majewel.__name__))[0]
 
-        assert isinstance(flow, Flow)
-        assert flow.name == "run-connection-sync"
-        assert flow.fn.__name__ == "run_connection_sync"
-        assert flow.fn.__module__ == "prefect_airbyte.flows"
+class TestJsonSchemaValidation:
+    @pytest.fixture
+    def individual_flow_summary(self):
+        content = Path("collections/prefect-airbyte/flows/v0.2.0.json").read_text()
+        return json.loads(content)["prefect-airbyte"]["run_connection_sync"]
+
+    def test_individual_valid_flow_schema_passes(self, individual_flow_summary):
+        validate = fastjsonschema.compile(metadata_schemas.flow_schema)
+
+        validate(individual_flow_summary)
+
+    @pytest.mark.parametrize(
+        "incorrect_kwargs", [{"name": 42}, {"slug": True}, {"parameters": "Marvin"}]
+    )
+    def test_individual_invalid_flow_schema_fails(
+        self, individual_flow_summary, incorrect_kwargs
+    ):
+        validate = fastjsonschema.compile(metadata_schemas.flow_schema)
+
+        with pytest.raises(fastjsonschema.JsonSchemaException):
+            validate({**individual_flow_summary, **incorrect_kwargs})
