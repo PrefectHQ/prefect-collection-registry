@@ -1,10 +1,25 @@
-[tool.poetry]
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
 name = "prefect-collection-registry"
-version = "0.1.0"
+authors = [
+    {name = "Prefect Technologies", email = "help@prefect.io"},
+]
+description = "Maintaining the Prefect Collection Registry"
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+]
+dependencies = [
+    "prefect>=2.8.2",
+    "fastjsonschema==2.16.2",
+    "github3.py>=3.2.0",
 
-[tool.poetry.dependencies]
-prefect = "^2.7.12"
+]
+dynamic = ["version"]
 
-[tool.poetry.dev-dependencies]
-fastjsonschema = "2.16.2"
-pytest = "^6.1.0"
+[project.optional-dependencies]
+dev = ["pytest", "coverage"]

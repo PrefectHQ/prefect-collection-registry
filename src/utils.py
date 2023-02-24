@@ -8,12 +8,14 @@ import fastjsonschema
 import github3
 import httpx
 from prefect import Flow, task
+from prefect.blocks.core import Block
 from prefect.blocks.system import Secret
-from prefect.utilities.asyncutils import run_sync_in_worker_thread, sync_compatible
+from prefect.client.cloud import get_cloud_client
+from prefect.settings import PREFECT_API_URL
+from prefect.utilities.asyncutils import run_sync_in_worker_thread  # noqa
+from prefect.utilities.asyncutils import sync_compatible
 from prefect.utilities.importtools import load_module, to_qualified_name
 from typing_extensions import Literal
-
-import metadata_schemas
 
 exclude_collections = {
     f"https://prefecthq.github.io/{collection}/"
@@ -38,7 +40,7 @@ def pad_text(
     Defaults to 3 newlines and no header.
     """
     padding = padding_character * n_padding
-    padded_header = (header + padding if header else None) or ""
+    padded_header = header + padding if header else ""
 
     text = "".join(text) if isinstance(text, list) else text
 
@@ -232,6 +234,8 @@ async def get_repo(name: str) -> github3.repos.repo.Repository:
 
 def validate_view_content(view_dict: dict, variety: CollectionViewVariety) -> None:
     """Raises an error if the view content is not valid."""
+    import metadata_schemas
+
     schema = getattr(metadata_schemas, f"{variety}_schema")
     validate = fastjsonschema.compile(schema)
 
@@ -239,7 +243,26 @@ def validate_view_content(view_dict: dict, variety: CollectionViewVariety) -> No
         if variety == "block":
             collection_metadata = collection_metadata["block_types"]
         try:
+            # raise validation errors if any metadata doesn't match the schema
             list(map(validate, collection_metadata.values()))
-        except IndexError:
-            raise ValueError("There's a key with no value in this view!")
-        print(f"Validated {collection_name} {variety} view!")
+        except IndexError:  # to catch something like {"prefect-X": {}}
+            raise ValueError("There's a key with empty value in this view!")
+        print(f"  Validated {collection_name} summary in {variety} view!")
+
+
+@sync_compatible
+async def result_storage_from_env() -> Block | None:
+    env_to_storage_block_name = {
+        "inconspicuous-pond": "s3/flow-script-storage",
+        "prefect-prd-internal-tools": "gcs/collection-registry-result-storage",
+    }
+
+    async with get_cloud_client() as client:
+        current_workspace_id = PREFECT_API_URL.value().split("/")[-1]
+
+        for workspace in await client.read_workspaces():
+            if str(workspace.workspace_id) == current_workspace_id:
+                result_storage_name = env_to_storage_block_name[
+                    workspace.workspace_name
+                ]
+                return await Block.load(name=result_storage_name)

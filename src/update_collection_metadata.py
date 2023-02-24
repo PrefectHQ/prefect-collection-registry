@@ -5,7 +5,6 @@ import github3
 import pendulum
 from prefect import flow, task
 from prefect.deployments import run_deployment
-from prefect.filesystems import GCS
 from prefect.server.schemas.core import FlowRun
 from prefect.states import Completed, Failed, State
 from prefect.utilities.collections import listrepr
@@ -145,7 +144,7 @@ def update_collection_metadata(
 @flow(
     description=UPDATE_ALL_DESCRIPTION,
     log_prints=True,
-    result_storage=GCS.load("collection-registry-result-storage"),
+    result_storage=utils.result_storage_from_env(),
     retries=2,
     retry_delay_seconds=10,
 )
