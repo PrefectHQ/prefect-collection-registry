@@ -1,5 +1,5 @@
 {
-  "prefect": {
+  "workers": {
     "prefect-agent": {
       "type": "prefect-agent",
       "install_command": "pip install prefect",
@@ -28,13 +28,12 @@
             },
             "working_dir": {
               "title": "Working Directory",
-              "description": "If provided, workers will open flow run processes within the specified path as the working directory. Otherwise, a temporary directory will be created.",
+              "description": "If provided, workers will open flow run processes within the specified path as the working directory. Otherwise, a temporarydirectory will be created.",
               "type": "string",
               "format": "path"
             }
           },
-          "required": [],
-          "type": "object"
+          "required": []
         }
       },
       "description": "Worker that executes flow runs within processes.",

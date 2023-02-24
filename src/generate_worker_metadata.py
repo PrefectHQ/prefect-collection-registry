@@ -34,7 +34,7 @@ def generate_worker_metadata(worker_subcls: Type[BaseWorker], package_name: str)
         )
     )
     validate = fastjsonschema.compile(worker_schema)
-    validate(worker_schema)
+    validate(worker_metadata)
 
     return worker_metadata
 
