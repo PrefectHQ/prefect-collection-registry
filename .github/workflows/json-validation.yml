@@ -5,6 +5,7 @@ on:
       - main
     paths:
       - 'views/**'
+      - '.github/workflows/json-validation.yml'
 
 jobs:
   submit-update-pr:
@@ -28,4 +29,4 @@ jobs:
 
       - name: Run JSON schema validation
         run: |
-          python src/view_schema_validation.py
+          python scripts/view_schema_validation.py

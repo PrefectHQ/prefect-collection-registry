@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-from utils import validate_view_content
+from src.utils import validate_view_content
 
 EXCLUDE_TYPES = {"worker-metadata", "demo-flow"}
 
