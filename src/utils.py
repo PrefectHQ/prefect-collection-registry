@@ -17,13 +17,6 @@ from prefect.utilities.asyncutils import sync_compatible
 from prefect.utilities.importtools import load_module, to_qualified_name
 from typing_extensions import Literal
 
-exclude_collections = {
-    f"https://prefecthq.github.io/{collection}/"
-    for collection in [
-        "prefect-ray",
-    ]
-}
-
 CollectionViewVariety = Literal["block", "flow", "worker"]
 
 
@@ -189,11 +182,10 @@ def get_collection_names():
     repo_name = "prefect-collection-registry"
     path = "collections"
 
-    url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/contents/{path}"
-
-    headers = {"Accept": "application/vnd.github+json"}
-
-    response = httpx.get(url, headers=headers)
+    response = httpx.get(
+        url=f"https://api.github.com/repos/{repo_owner}/{repo_name}/contents/{path}",
+        headers={"Accept": "application/vnd.github+json"},
+    )
 
     return [item["name"] for item in response.json() if item["type"] == "dir"]
 
