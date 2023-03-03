@@ -2559,7 +2559,10 @@
     "trigger_sync_run_and_wait_for_completion": {
       "description": {
         "summary": "Flow that triggers a sync run and waits for the triggered run to complete.",
-        "returns": "- `id`: `str`<br>\n- `slug`: `str`<br>\n- `workspace_id`: `str`<br>\n- `created_at`: `str`<br>\n- `updated_at`: `str`<br>\n- `destination_id`: `str`<br>\n- `model_id`: `str`<br>\n- `configuration`: `Dict`<br>\n- `schedule`: `Dict`<br>\n- `status`: `\"models.SyncStatus\"`<br>\n- `disabled`: `bool`<br>\n- `last_run_at`: `str`<br>\n- `referenced_columns`: `List[str]`<br>\n- `primary_key`: `str`<br>"
+        "returns": "- `id`: `str`<br>\n- `slug`: `str`<br>\n- `workspace_id`: `str`<br>\n- `created_at`: `str`<br>\n- `updated_at`: `str`<br>\n- `destination_id`: `str`<br>\n- `model_id`: `str`<br>\n- `configuration`: `Dict`<br>\n- `schedule`: `Dict`<br>\n- `status`: `\"models.SyncStatus\"`<br>\n- `disabled`: `bool`<br>\n- `last_run_at`: `str`<br>\n- `referenced_columns`: `List[str]`<br>\n- `primary_key`: `str`<br>",
+        "examples": [
+          "Trigger a Hightouch sync run and wait for completion as a stand alone flow.\n```python\nimport asyncio\n\nfrom prefect_hightouch import HightouchCredentials\nfrom prefect_hightouch.syncs import trigger_sync_run_and_wait_for_completion\n\nasyncio.run(\n    trigger_sync_run_and_wait_for_completion(\n        hightouch_credentials=HightouchCredentials(\n            token=\"1abc0d23-1234-1a2b-abc3-12ab456c7d8e\"\n        ),\n        sync_id=12345,\n        full_resync=True,\n        max_wait_seconds=1800,\n        poll_frequency_seconds=5,\n    )\n)\n```\n\nTrigger a Hightouch sync run and wait for completion as a subflow.\n```python\nfrom prefect import flow\n\nfrom prefect_hightouch import HightouchCredentials\nfrom prefect_hightouch.syncs import trigger_sync_run_and_wait_for_completion\n\n@flow\ndef sync_flow():\n    hightouch_credentials = HightouchCredentials.load(\"hightouch-token\")\n    sync_metadata = trigger_sync_run_and_wait_for_completion(\n        hightouch_credentials=hightouch_credentials,\n        sync_id=12345,\n        full_resync=True,\n        max_wait_seconds=1800,\n        poll_frequency_seconds=10,\n    )\n    return sync_metadata\n\nsync_flow()\n```"
+        ]
       },
       "documentation_url": "https://prefecthq.github.io/prefect-hightouch/syncs/flows/#prefect_hightouch.syncs.flows.trigger_sync_run_and_wait_for_completion",
       "entrypoint": "prefect_hightouch/syncs/flows.py:trigger_sync_run_and_wait_for_completion",
@@ -2655,7 +2658,10 @@
     "wait_for_sync_run_completion": {
       "description": {
         "summary": "Flow that waits for the triggered sync run to complete.",
-        "returns": "- `value`\n- `id`: `str`<br>\n- `slug`: `str`<br>\n- `workspace_id`: `str`<br>\n- `created_at`: `str`<br>\n- `updated_at`: `str`<br>\n- `destination_id`: `str`<br>\n- `model_id`: `str`<br>\n- `configuration`: `Dict`<br>\n- `schedule`: `Dict`<br>\n- `status`: `\"api_models.SyncStatus\"`<br>\n- `disabled`: `bool`<br>\n- `last_run_at`: `str`<br>\n- `referenced_columns`: `List[str]`<br>\n- `primary_key`: `str`<br>"
+        "returns": "- `value`\n- `id`: `str`<br>\n- `slug`: `str`<br>\n- `workspace_id`: `str`<br>\n- `created_at`: `str`<br>\n- `updated_at`: `str`<br>\n- `destination_id`: `str`<br>\n- `model_id`: `str`<br>\n- `configuration`: `Dict`<br>\n- `schedule`: `Dict`<br>\n- `status`: `\"api_models.SyncStatus\"`<br>\n- `disabled`: `bool`<br>\n- `last_run_at`: `str`<br>\n- `referenced_columns`: `List[str]`<br>\n- `primary_key`: `str`<br>",
+        "examples": [
+          "Wait for completion as a subflow.\n```python\nfrom prefect import flow\n\nfrom prefect_hightouch import HightouchCredentials\nfrom prefect_hightouch.syncs import wait_for_sync_run_completion\n\n@flow\ndef wait_flow():\n    hightouch_credentials = HightouchCredentials.load(\"hightouch-token\")\n    sync_status, sync_metadata = wait_for_sync_run_completion(\n        hightouch_credentials=hightouch_credentials,\n        sync_id=12345,\n        max_wait_seconds=1800,\n        poll_frequency_seconds=20,\n    )\n    return sync_metadata\n\nwait_flow()\n```"
+        ]
       },
       "documentation_url": "https://prefecthq.github.io/prefect-hightouch/syncs/flows/#prefect_hightouch.syncs.flows.wait_for_sync_run_completion",
       "entrypoint": "prefect_hightouch/syncs/flows.py:wait_for_sync_run_completion",
