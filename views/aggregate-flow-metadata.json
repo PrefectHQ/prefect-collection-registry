@@ -148,7 +148,8 @@
     "run_census_sync": {
       "description": {
         "summary": "A flow for triggering a Census sync run and waiting for completion.",
-        "returns": "The result of the sync run."
+        "returns": "The result of the sync run.",
+        "examples": []
       },
       "documentation_url": "https://prefecthq.github.io/prefect-census/flows/#prefect_census.flows.run_census_sync",
       "entrypoint": "prefect_census/flows.py:run_census_sync",
@@ -257,7 +258,8 @@
     },
     "wait_census_sync_completion": {
       "description": {
-        "summary": "Waits for the Census sync run to finish running."
+        "summary": "Waits for the Census sync run to finish running.",
+        "examples": []
       },
       "documentation_url": "https://prefecthq.github.io/prefect-census/runs/#prefect_census.runs.wait_census_sync_completion",
       "entrypoint": "prefect_census/runs.py:wait_census_sync_completion",
@@ -334,7 +336,10 @@
     },
     "trigger_census_sync_run_and_wait_for_completion": {
       "description": {
-        "summary": "Triggers a Census sync run and waits for thetriggered run to complete."
+        "summary": "Triggers a Census sync run and waits for thetriggered run to complete.",
+        "examples": [
+          "Trigger a Census sync using CensusCredentials instance and wait\nfor completion as a standalone flow:\n```python\nimport asyncio\n\nfrom prefect_census import CensusCredentials\nfrom prefect_census.syncs import trigger_census_sync_run_and_wait_for_completion\n\nasyncio.run(\n    trigger_census_sync_run_and_wait_for_completion(\n        credentials=CensusCredentials(\n            api_key=\"my_api_key\"\n        ),\n        sync_id=42\n    )\n)\n```\n\nTrigger a Census sync and wait for completion as a subflow:\n```python\nfrom prefect import flow\n\nfrom prefect_census import CensusCredentials\nfrom prefect_census.syncs import trigger_census_sync_run_and_wait_for_completion\n\n@flow\ndef my_flow():\n    ...\n    creds = CensusCredentials(api_key=\"my_api_key\")\n    run_result = trigger_census_sync_run_and_wait_for_completion(\n        credentials=creds,\n        sync_id=42\n    )\n    ...\n\nmy_flow()\n```"
+        ]
       },
       "documentation_url": "https://prefecthq.github.io/prefect-census/syncs/#prefect_census.syncs.trigger_census_sync_run_and_wait_for_completion",
       "entrypoint": "prefect_census/syncs.py:trigger_census_sync_run_and_wait_for_completion",
