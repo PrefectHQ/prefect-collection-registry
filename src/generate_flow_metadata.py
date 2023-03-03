@@ -1,8 +1,9 @@
 from collections import defaultdict
-from typing import Any, Dict
+from typing import Any, Callable, Dict, List
 
 import fastjsonschema
 from griffe.dataclasses import Docstring
+from griffe.docstrings.dataclasses import DocstringSectionKind
 from griffe.docstrings.parsers import Parser, parse
 from prefect import Flow, flow, task
 from prefect.states import Completed
@@ -12,6 +13,28 @@ import utils
 from metadata_schemas import flow_schema
 
 SKIP_DOCSTRING_SECTIONS = {"parameters", "raises"}
+
+
+def get_code_examples(obj: Callable) -> List[str]:
+    """
+    Gathers all code examples within a callable that has a Google style docstring.
+    """
+    code_examples = set()
+    docstring = Docstring(obj.__doc__)
+    parsed_sections = parse(docstring, Parser.google)
+
+    for section in parsed_sections:
+        if section.kind == DocstringSectionKind.examples:
+            code_example = "\n".join(
+                (part[1] for part in section.as_dict().get("value", []))
+            )
+            code_examples.add(code_example)
+        if section.kind == DocstringSectionKind.admonition:
+            value = section.as_dict().get("value", {})
+            if value.get("annotation") == "example":
+                code_examples.add(value.get("description"))
+
+    return list(code_examples)
 
 
 def parse_flow_docstring(flow: Flow) -> Dict[str, Any]:
@@ -33,10 +56,7 @@ def parse_flow_docstring(flow: Flow) -> Dict[str, Any]:
             docstring_sections[section["kind"]] = "\n".join(
                 return_obj.description for return_obj in section_value
             )
-        elif (
-            section["kind"] == "admonition" and section_value["annotation"] == "example"
-        ):
-            docstring_sections["examples"].append(section_value["description"])
+    docstring_sections["examples"] = get_code_examples(flow)
 
     return docstring_sections
 

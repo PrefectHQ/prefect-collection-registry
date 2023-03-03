@@ -148,7 +148,8 @@
     "run_census_sync": {
       "description": {
         "summary": "A flow for triggering a Census sync run and waiting for completion.",
-        "returns": "The result of the sync run."
+        "returns": "The result of the sync run.",
+        "examples": []
       },
       "documentation_url": "https://prefecthq.github.io/prefect-census/flows/#prefect_census.flows.run_census_sync",
       "entrypoint": "prefect_census/flows.py:run_census_sync",
@@ -257,7 +258,8 @@
     },
     "wait_census_sync_completion": {
       "description": {
-        "summary": "Waits for the Census sync run to finish running."
+        "summary": "Waits for the Census sync run to finish running.",
+        "examples": []
       },
       "documentation_url": "https://prefecthq.github.io/prefect-census/runs/#prefect_census.runs.wait_census_sync_completion",
       "entrypoint": "prefect_census/runs.py:wait_census_sync_completion",
@@ -334,7 +336,10 @@
     },
     "trigger_census_sync_run_and_wait_for_completion": {
       "description": {
-        "summary": "Triggers a Census sync run and waits for thetriggered run to complete."
+        "summary": "Triggers a Census sync run and waits for thetriggered run to complete.",
+        "examples": [
+          "Trigger a Census sync using CensusCredentials instance and wait\nfor completion as a standalone flow:\n```python\nimport asyncio\n\nfrom prefect_census import CensusCredentials\nfrom prefect_census.syncs import trigger_census_sync_run_and_wait_for_completion\n\nasyncio.run(\n    trigger_census_sync_run_and_wait_for_completion(\n        credentials=CensusCredentials(\n            api_key=\"my_api_key\"\n        ),\n        sync_id=42\n    )\n)\n```\n\nTrigger a Census sync and wait for completion as a subflow:\n```python\nfrom prefect import flow\n\nfrom prefect_census import CensusCredentials\nfrom prefect_census.syncs import trigger_census_sync_run_and_wait_for_completion\n\n@flow\ndef my_flow():\n    ...\n    creds = CensusCredentials(api_key=\"my_api_key\")\n    run_result = trigger_census_sync_run_and_wait_for_completion(\n        credentials=creds,\n        sync_id=42\n    )\n    ...\n\nmy_flow()\n```"
+        ]
       },
       "documentation_url": "https://prefecthq.github.io/prefect-census/syncs/#prefect_census.syncs.trigger_census_sync_run_and_wait_for_completion",
       "entrypoint": "prefect_census/syncs.py:trigger_census_sync_run_and_wait_for_completion",
@@ -420,7 +425,10 @@
   "prefect-databricks": {
     "jobs_runs_submit_and_wait_for_completion": {
       "description": {
-        "summary": "Triggers a Databricks jobs runs and waits for the triggered runs to complete."
+        "summary": "Triggers a Databricks jobs runs and waits for the triggered runs to complete.",
+        "examples": [
+          "Submit jobs runs and wait.\n```python\nfrom prefect import flow\nfrom prefect_databricks import DatabricksCredentials\nfrom prefect_databricks.flows import jobs_runs_submit_and_wait_for_completion\nfrom prefect_databricks.models.jobs import (\n    AutoScale,\n    AwsAttributes,\n    JobTaskSettings,\n    NotebookTask,\n    NewCluster,\n)\n\n@flow\ndef jobs_runs_submit_and_wait_for_completion_flow(notebook_path, **base_parameters):\n    databricks_credentials = await DatabricksCredentials.load(\"BLOCK_NAME\")\n\n    # specify new cluster settings\n    aws_attributes = AwsAttributes(\n        availability=\"SPOT\",\n        zone_id=\"us-west-2a\",\n        ebs_volume_type=\"GENERAL_PURPOSE_SSD\",\n        ebs_volume_count=3,\n        ebs_volume_size=100,\n    )\n    auto_scale = AutoScale(min_workers=1, max_workers=2)\n    new_cluster = NewCluster(\n        aws_attributes=aws_attributes,\n        autoscale=auto_scale,\n        node_type_id=\"m4.large\",\n        spark_version=\"10.4.x-scala2.12\",\n        spark_conf={\"spark.speculation\": True},\n    )\n\n    # specify notebook to use and parameters to pass\n    notebook_task = NotebookTask(\n        notebook_path=notebook_path,\n        base_parameters=base_parameters,\n    )\n\n    # compile job task settings\n    job_task_settings = JobTaskSettings(\n        new_cluster=new_cluster,\n        notebook_task=notebook_task,\n        task_key=\"prefect-task\"\n    )\n\n    multi_task_runs = jobs_runs_submit_and_wait_for_completion(\n        databricks_credentials=databricks_credentials,\n        run_name=\"prefect-job\",\n        tasks=[job_task_settings]\n    )\n\n    return multi_task_runs\n```"
+        ]
       },
       "documentation_url": "https://prefecthq.github.io/prefect-databricks/flows/#prefect_databricks.flows.jobs_runs_submit_and_wait_for_completion",
       "entrypoint": "prefect_databricks/flows.py:jobs_runs_submit_and_wait_for_completion",
@@ -1645,7 +1653,10 @@
     },
     "jobs_runs_wait_for_completion": {
       "description": {
-        "summary": "Waits for the jobs runs to finish running"
+        "summary": "Waits for the jobs runs to finish running",
+        "examples": [
+          "Waits for completion on jobs runs.\n```python\nfrom prefect import flow\nfrom prefect_databricks import DatabricksCredentials\nfrom prefect_databricks.flows import jobs_runs_wait_for_completion\n\n@flow\ndef jobs_runs_wait_for_completion_flow():\n    databricks_credentials = DatabricksCredentials.load(\"BLOCK_NAME\")\n    return jobs_runs_wait_for_completion(\n        multi_task_jobs_run_id=45429,\n        databricks_credentials=databricks_credentials,\n        run_name=\"my_run_name\",\n        max_wait_seconds=1800,  # 30 minutes\n        poll_frequency_seconds=120,  # 2 minutes\n    )\n```"
+        ]
       },
       "documentation_url": "https://prefecthq.github.io/prefect-databricks/flows/#prefect_databricks.flows.jobs_runs_wait_for_completion",
       "entrypoint": "prefect_databricks/flows.py:jobs_runs_wait_for_completion",
@@ -1740,7 +1751,10 @@
   "prefect-dbt": {
     "retry_dbt_cloud_job_run_subset_and_wait_for_completion": {
       "description": {
-        "summary": "Retries a subset of dbt Cloud job run, filtered by select statuses, and waits for the triggered retry to complete."
+        "summary": "Retries a subset of dbt Cloud job run, filtered by select statuses, and waits for the triggered retry to complete.",
+        "examples": [
+          "Retry a subset of models in a dbt Cloud job run and wait for completion:\n```python\nfrom prefect import flow\n\nfrom prefect_dbt.cloud import DbtCloudCredentials\nfrom prefect_dbt.cloud.jobs import retry_dbt_cloud_job_run_subset_and_wait_for_completion\n\n@flow\ndef retry_dbt_cloud_job_run_subset_and_wait_for_completion_flow():\n    credentials = DbtCloudCredentials.load(\"MY_BLOCK_NAME\")\n    retry_dbt_cloud_job_run_subset_and_wait_for_completion(\n        dbt_cloud_credentials=credentials,\n        run_id=88640123,\n    )\n\nretry_dbt_cloud_job_run_subset_and_wait_for_completion_flow()\n```"
+        ]
       },
       "documentation_url": "https://prefecthq.github.io/prefect-dbt/cloud/jobs/#prefect_dbt.cloud.jobs.retry_dbt_cloud_job_run_subset_and_wait_for_completion",
       "entrypoint": "prefect_dbt/cloud/jobs.py:retry_dbt_cloud_job_run_subset_and_wait_for_completion",
@@ -1899,7 +1913,10 @@
     },
     "run_dbt_cloud_job": {
       "description": {
-        "summary": "Flow that triggers and waits for a dbt Cloud job run, retrying a\nsubset of failed nodes if necessary."
+        "summary": "Flow that triggers and waits for a dbt Cloud job run, retrying a\nsubset of failed nodes if necessary.",
+        "examples": [
+          "```python\nfrom prefect import flow\nfrom prefect_dbt.cloud import DbtCloudCredentials, DbtCloudJob\nfrom prefect_dbt.cloud.jobs import run_dbt_cloud_job\n\n@flow\ndef run_dbt_cloud_job_flow():\n    dbt_cloud_credentials = DbtCloudCredentials.load(\"dbt-token\")\n    dbt_cloud_job = DbtCloudJob(\n        dbt_cloud_credentials=dbt_cloud_credentials, job_id=154217\n    )\n    return run_dbt_cloud_job(dbt_cloud_job=dbt_cloud_job)\n\nrun_dbt_cloud_job_flow()\n```"
+        ]
       },
       "documentation_url": "https://prefecthq.github.io/prefect-dbt/cloud/jobs/#prefect_dbt.cloud.jobs.run_dbt_cloud_job",
       "entrypoint": "prefect_dbt/cloud/jobs.py:run_dbt_cloud_job",
@@ -2090,7 +2107,10 @@
     },
     "trigger_dbt_cloud_job_run_and_wait_for_completion": {
       "description": {
-        "summary": "Triggers a dbt Cloud job run and waits for thetriggered run to complete."
+        "summary": "Triggers a dbt Cloud job run and waits for thetriggered run to complete.",
+        "examples": [
+          "Trigger a dbt Cloud job and wait for completion as a stand alone flow:\n```python\nimport asyncio\nfrom prefect_dbt.cloud import DbtCloudCredentials\nfrom prefect_dbt.cloud.jobs import trigger_dbt_cloud_job_run_and_wait_for_completion\n\nasyncio.run(\n    trigger_dbt_cloud_job_run_and_wait_for_completion(\n        dbt_cloud_credentials=DbtCloudCredentials(\n            api_key=\"my_api_key\",\n            account_id=123456789\n        ),\n        job_id=1\n    )\n)\n```\n\nTrigger a dbt Cloud job and wait for completion as a sub-flow:\n```python\nfrom prefect import flow\nfrom prefect_dbt.cloud import DbtCloudCredentials\nfrom prefect_dbt.cloud.jobs import trigger_dbt_cloud_job_run_and_wait_for_completion\n\n@flow\ndef my_flow():\n    ...\n    run_result = trigger_dbt_cloud_job_run_and_wait_for_completion(\n        dbt_cloud_credentials=DbtCloudCredentials(\n            api_key=\"my_api_key\",\n            account_id=123456789\n        ),\n        job_id=1\n    )\n    ...\n\nmy_flow()\n```\n\nTrigger a dbt Cloud job with overrides:\n```python\nimport asyncio\nfrom prefect_dbt.cloud import DbtCloudCredentials\nfrom prefect_dbt.cloud.jobs import trigger_dbt_cloud_job_run_and_wait_for_completion\nfrom prefect_dbt.cloud.models import TriggerJobRunOptions\n\nasyncio.run(\n    trigger_dbt_cloud_job_run_and_wait_for_completion(\n        dbt_cloud_credentials=DbtCloudCredentials(\n            api_key=\"my_api_key\",\n            account_id=123456789\n        ),\n        job_id=1,\n        trigger_job_run_options=TriggerJobRunOptions(\n            git_branch=\"staging\",\n            schema_override=\"dbt_cloud_pr_123\",\n            dbt_version_override=\"0.18.0\",\n            target_name_override=\"staging\",\n            timeout_seconds_override=3000,\n            generate_docs_override=True,\n            threads_override=8,\n            steps_override=[\n                \"dbt seed\",\n                \"dbt run --fail-fast\",\n                \"dbt test --fail fast\",\n            ],\n        ),\n    )\n)\n```"
+        ]
       },
       "documentation_url": "https://prefecthq.github.io/prefect-dbt/cloud/jobs/#prefect_dbt.cloud.jobs.trigger_dbt_cloud_job_run_and_wait_for_completion",
       "entrypoint": "prefect_dbt/cloud/jobs.py:trigger_dbt_cloud_job_run_and_wait_for_completion",
@@ -2256,7 +2276,8 @@
     },
     "wait_for_dbt_cloud_job_run": {
       "description": {
-        "summary": "Waits for a dbt Cloud job run to finish running."
+        "summary": "Waits for a dbt Cloud job run to finish running.",
+        "examples": []
       },
       "documentation_url": "https://prefecthq.github.io/prefect-dbt/cloud/runs/#prefect_dbt.cloud.runs.wait_for_dbt_cloud_job_run",
       "entrypoint": "prefect_dbt/cloud/runs.py:wait_for_dbt_cloud_job_run",
@@ -2348,7 +2369,10 @@
     "trigger_project_run_and_wait_for_completion": {
       "description": {
         "summary": "Flow that triggers a project run and waits for the triggered run to complete.",
-        "returns": "Information about the triggered project run."
+        "returns": "Information about the triggered project run.",
+        "examples": [
+          "Trigger a Hex project run and wait for completion as a stand-alone flow.\n```python\nimport asyncio\nfrom prefect_hex import HexCredentials\nfrom prefect_hex.project import trigger_project_run_and_wait_for_completion\n\nasyncio.run(\n    trigger_sync_run_and_wait_for_completion(\n        hex_credentials=HexCredentials(\n            token=\"1abc0d23-1234-1a2b-abc3-12ab456c7d8e\"\n        ),\n        project_id=\"012345c6-b67c-1234-1b2c-66e4ad07b9f3\",\n        max_wait_seconds=1800,\n        poll_frequency_seconds=5,\n    )\n)\n```\n\nTrigger a Hex project run and wait for completion as a subflow.\n```python\nfrom prefect import flow\nfrom prefect_hex import HexCredentials\nfrom prefect_hex.project import trigger_project_run_and_wait_for_completion\n\n@flow\ndef trigger_project_run_and_wait_for_completion_flow(project_id: str):\n    hex_credentials = HexCredentials.load(\"hex-token\")\n    project_metadata = trigger_project_run_and_wait_for_completion(\n        project_id=project_id,\n        hex_credentials=hex_credentials\n    )\n    return project_metadata\n\ntrigger_project_run_and_wait_for_completion_flow(\n    project_id=\"012345c6-b67c-1234-1b2c-66e4ad07b9f3\"\n)\n```"
+        ]
       },
       "documentation_url": "https://prefecthq.github.io/prefect-hex/project/#prefect_hex.project.trigger_project_run_and_wait_for_completion",
       "entrypoint": "prefect_hex/project.py:trigger_project_run_and_wait_for_completion",
@@ -2445,7 +2469,10 @@
     "wait_for_project_run_completion": {
       "description": {
         "summary": "Flow that waits for the triggered project run to complete.",
-        "returns": "The status of the project run and the metadata associated with the run."
+        "returns": "The status of the project run and the metadata associated with the run.",
+        "examples": [
+          "Wait for completion of a project run as a subflow.\n```python\nfrom prefect import flow\nfrom prefect_hex import HexCredentials\nfrom prefect_hex.project import wait_for_project_run_completion\n\n@flow\ndef wait_for_project_run_completion_flow(project_id: str, run_id: str):\n    hex_credentials = HexCredentials.load(\"hex-token\")\n    project_status, project_metadata = wait_for_project_run_completion(\n        project_id=project_id,\n        run_id=run_id,\n        hex_credentials=hex_credentials\n    )\n    return project_status, project_metadata\n\nwait_for_project_run_completion_flow(\n    project_id=\"012345c6-b67c-1234-1b2c-66e4ad07b9f3\",\n    run_id=\"654321c6-b67c-1234-1b2c-66e4ad07b9f3\",\n)\n```"
+        ]
       },
       "documentation_url": "https://prefecthq.github.io/prefect-hex/project/#prefect_hex.project.wait_for_project_run_completion",
       "entrypoint": "prefect_hex/project.py:wait_for_project_run_completion",
@@ -2538,7 +2565,10 @@
     "trigger_sync_run_and_wait_for_completion": {
       "description": {
         "summary": "Flow that triggers a sync run and waits for the triggered run to complete.",
-        "returns": "- `id`: `str`<br>\n- `slug`: `str`<br>\n- `workspace_id`: `str`<br>\n- `created_at`: `str`<br>\n- `updated_at`: `str`<br>\n- `destination_id`: `str`<br>\n- `model_id`: `str`<br>\n- `configuration`: `Dict`<br>\n- `schedule`: `Dict`<br>\n- `status`: `\"models.SyncStatus\"`<br>\n- `disabled`: `bool`<br>\n- `last_run_at`: `str`<br>\n- `referenced_columns`: `List[str]`<br>\n- `primary_key`: `str`<br>"
+        "returns": "- `id`: `str`<br>\n- `slug`: `str`<br>\n- `workspace_id`: `str`<br>\n- `created_at`: `str`<br>\n- `updated_at`: `str`<br>\n- `destination_id`: `str`<br>\n- `model_id`: `str`<br>\n- `configuration`: `Dict`<br>\n- `schedule`: `Dict`<br>\n- `status`: `\"models.SyncStatus\"`<br>\n- `disabled`: `bool`<br>\n- `last_run_at`: `str`<br>\n- `referenced_columns`: `List[str]`<br>\n- `primary_key`: `str`<br>",
+        "examples": [
+          "Trigger a Hightouch sync run and wait for completion as a stand alone flow.\n```python\nimport asyncio\n\nfrom prefect_hightouch import HightouchCredentials\nfrom prefect_hightouch.syncs import trigger_sync_run_and_wait_for_completion\n\nasyncio.run(\n    trigger_sync_run_and_wait_for_completion(\n        hightouch_credentials=HightouchCredentials(\n            token=\"1abc0d23-1234-1a2b-abc3-12ab456c7d8e\"\n        ),\n        sync_id=12345,\n        full_resync=True,\n        max_wait_seconds=1800,\n        poll_frequency_seconds=5,\n    )\n)\n```\n\nTrigger a Hightouch sync run and wait for completion as a subflow.\n```python\nfrom prefect import flow\n\nfrom prefect_hightouch import HightouchCredentials\nfrom prefect_hightouch.syncs import trigger_sync_run_and_wait_for_completion\n\n@flow\ndef sync_flow():\n    hightouch_credentials = HightouchCredentials.load(\"hightouch-token\")\n    sync_metadata = trigger_sync_run_and_wait_for_completion(\n        hightouch_credentials=hightouch_credentials,\n        sync_id=12345,\n        full_resync=True,\n        max_wait_seconds=1800,\n        poll_frequency_seconds=10,\n    )\n    return sync_metadata\n\nsync_flow()\n```"
+        ]
       },
       "documentation_url": "https://prefecthq.github.io/prefect-hightouch/syncs/flows/#prefect_hightouch.syncs.flows.trigger_sync_run_and_wait_for_completion",
       "entrypoint": "prefect_hightouch/syncs/flows.py:trigger_sync_run_and_wait_for_completion",
@@ -2634,7 +2664,10 @@
     "wait_for_sync_run_completion": {
       "description": {
         "summary": "Flow that waits for the triggered sync run to complete.",
-        "returns": "- `value`\n- `id`: `str`<br>\n- `slug`: `str`<br>\n- `workspace_id`: `str`<br>\n- `created_at`: `str`<br>\n- `updated_at`: `str`<br>\n- `destination_id`: `str`<br>\n- `model_id`: `str`<br>\n- `configuration`: `Dict`<br>\n- `schedule`: `Dict`<br>\n- `status`: `\"api_models.SyncStatus\"`<br>\n- `disabled`: `bool`<br>\n- `last_run_at`: `str`<br>\n- `referenced_columns`: `List[str]`<br>\n- `primary_key`: `str`<br>"
+        "returns": "- `value`\n- `id`: `str`<br>\n- `slug`: `str`<br>\n- `workspace_id`: `str`<br>\n- `created_at`: `str`<br>\n- `updated_at`: `str`<br>\n- `destination_id`: `str`<br>\n- `model_id`: `str`<br>\n- `configuration`: `Dict`<br>\n- `schedule`: `Dict`<br>\n- `status`: `\"api_models.SyncStatus\"`<br>\n- `disabled`: `bool`<br>\n- `last_run_at`: `str`<br>\n- `referenced_columns`: `List[str]`<br>\n- `primary_key`: `str`<br>",
+        "examples": [
+          "Wait for completion as a subflow.\n```python\nfrom prefect import flow\n\nfrom prefect_hightouch import HightouchCredentials\nfrom prefect_hightouch.syncs import wait_for_sync_run_completion\n\n@flow\ndef wait_flow():\n    hightouch_credentials = HightouchCredentials.load(\"hightouch-token\")\n    sync_status, sync_metadata = wait_for_sync_run_completion(\n        hightouch_credentials=hightouch_credentials,\n        sync_id=12345,\n        max_wait_seconds=1800,\n        poll_frequency_seconds=20,\n    )\n    return sync_metadata\n\nwait_flow()\n```"
+        ]
       },
       "documentation_url": "https://prefecthq.github.io/prefect-hightouch/syncs/flows/#prefect_hightouch.syncs.flows.wait_for_sync_run_completion",
       "entrypoint": "prefect_hightouch/syncs/flows.py:wait_for_sync_run_completion",
@@ -2870,7 +2903,10 @@
   "prefect-monte-carlo": {
     "create_or_update_lineage": {
       "description": {
-        "summary": "Create or update a `source` node, `destination` node, and the edge that connects them."
+        "summary": "Create or update a `source` node, `destination` node, and the edge that connects them.",
+        "examples": [
+          "Create or update a lineage edge between a source and destination node.\n```python\nfrom prefect import flow\nfrom prefect.context import get_run_context\nfrom prefect_monte_carlo.credentials import MonteCarloCredentials\nfrom prefect_monte_carlo.lineage import (\n    create_or_update_lineage, MonteCarloLineageNode\n)\n\n@flow\ndef monte_carlo_orchestrator():\n    flow_run_name = get_run_context().flow_run.name\n\n    source = MonteCarloLineageNode(\n        node_name=\"source_dataset\",\n        object_id=\"source_dataset\",\n        object_type=\"table\",\n        resource_name=\"some_resource_name\",\n        tags=[{\"propertyName\": \"dataset_owner\", \"propertyValue\": \"owner_name\"}],\n    )\n\n    destination = MonteCarloLineageNode(\n        node_name=\"destination_dataset\",\n        object_id=\"destination_dataset\",\n        object_type=\"table\",\n        resource_name=\"some_resource_name\",\n        tags=[{\"propertyName\": \"dataset_owner\", \"propertyValue\": \"owner_name\"}],\n    )\n\n    # `create_or_update_lineage` is a flow, so this will be a subflow run\n    # `extra_tags` are added to both the `source` and `destination` nodes\n    create_or_update_lineage(\n        monte_carlo_credentials=MonteCarloCredentials.load(\"my-mc-creds)\n        source=source,\n        destination=destination,\n        expire_at=datetime.now() + timedelta(days=10),\n        extra_tags=[\n            {\"propertyName\": \"flow_run_name\", \"propertyValue\": flow_run_name}\n        ]\n    )\n\n```"
+        ]
       },
       "documentation_url": "https://prefecthq.github.io/prefect-monte-carlo/lineage/#prefect_monte_carlo.lineage.create_or_update_lineage",
       "entrypoint": "prefect_monte_carlo/lineage.py:create_or_update_lineage",
