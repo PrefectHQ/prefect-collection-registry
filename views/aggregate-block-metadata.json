@@ -6992,7 +6992,7 @@
         "description": "Store a GitLab personal access token to interact with private GitLab\nrepositories. This block is part of the prefect-gitlab collection. Install prefect-gitlab with `pip install prefect-gitlab` to use this block.",
         "code_example": "Load stored GitLab credentials:\n```python\nfrom prefect_gitlab import GitLabCredentials\ngitlab_credentials_block = GitLabCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:b07a18be8375744f34dcb2353c34ec2839f0f50bac369ff94f9a290dfe6822d8",
+          "checksum": "sha256:7d8d6317127bc66afe9e97ae5658ee8e1decdc598350eb292fb62be379f0246c",
           "fields": {
             "title": "GitLabCredentials",
             "description": "Store a GitLab personal access token to interact with private GitLab\nrepositories.",
@@ -7000,11 +7000,16 @@
             "properties": {
               "token": {
                 "title": "Token",
-                "description": "A GitLab Personal Access Token with repo scope.",
+                "description": "A GitLab Personal Access Token with read_repository scope.",
                 "name": "Personal Access Token",
                 "type": "string",
                 "writeOnly": true,
                 "format": "password"
+              },
+              "url": {
+                "title": "URL",
+                "description": "URL to self-hosted GitLab instances.",
+                "type": "string"
               }
             },
             "block_type_slug": "gitlab-credentials",
@@ -7014,7 +7019,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.1.0"
+          "version": "0.1.1"
         }
       },
       "gitlab-repository": {
@@ -7025,7 +7030,7 @@
         "description": "Interact with files stored in GitLab repositories. This block is part of the prefect-gitlab collection. Install prefect-gitlab with `pip install prefect-gitlab` to use this block.",
         "code_example": "```python\nfrom prefect_gitlab.repositories import GitLabRepository\n\ngitlab_repository_block = GitLabRepository.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:63a31456076d9bb84456e6cd2710c5579df5341d5da192d443873249e30dbff4",
+          "checksum": "sha256:ac874a97e2ff2403a4b63181b6ae85dd51b4a0df0337d290d922627f5123af44",
           "fields": {
             "title": "GitLabRepository",
             "description": "Interact with files stored in GitLab repositories.",
@@ -7033,7 +7038,7 @@
             "properties": {
               "repository": {
                 "title": "Repository",
-                "description": "The URL of a GitLab repository to read from, in either HTTPS or SSH format.",
+                "description": "The URL of a GitLab repository to read from, in either HTTP/HTTPS or SSH format.",
                 "type": "string"
               },
               "reference": {
@@ -7061,7 +7066,7 @@
             "block_schema_references": {
               "credentials": {
                 "block_type_slug": "gitlab-credentials",
-                "block_schema_checksum": "sha256:b07a18be8375744f34dcb2353c34ec2839f0f50bac369ff94f9a290dfe6822d8"
+                "block_schema_checksum": "sha256:7d8d6317127bc66afe9e97ae5658ee8e1decdc598350eb292fb62be379f0246c"
               }
             },
             "definitions": {
@@ -7072,11 +7077,16 @@
                 "properties": {
                   "token": {
                     "title": "Token",
-                    "description": "A GitLab Personal Access Token with repo scope.",
+                    "description": "A GitLab Personal Access Token with read_repository scope.",
                     "name": "Personal Access Token",
                     "type": "string",
                     "writeOnly": true,
                     "format": "password"
+                  },
+                  "url": {
+                    "title": "URL",
+                    "description": "URL to self-hosted GitLab instances.",
+                    "type": "string"
                   }
                 },
                 "block_type_slug": "gitlab-credentials",
@@ -7090,7 +7100,7 @@
           "capabilities": [
             "get-directory"
           ],
-          "version": "0.1.0"
+          "version": "0.1.1"
         }
       }
     }
