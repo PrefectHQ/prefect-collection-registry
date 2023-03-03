@@ -2369,7 +2369,10 @@
     "trigger_project_run_and_wait_for_completion": {
       "description": {
         "summary": "Flow that triggers a project run and waits for the triggered run to complete.",
-        "returns": "Information about the triggered project run."
+        "returns": "Information about the triggered project run.",
+        "examples": [
+          "Trigger a Hex project run and wait for completion as a stand-alone flow.\n```python\nimport asyncio\nfrom prefect_hex import HexCredentials\nfrom prefect_hex.project import trigger_project_run_and_wait_for_completion\n\nasyncio.run(\n    trigger_sync_run_and_wait_for_completion(\n        hex_credentials=HexCredentials(\n            token=\"1abc0d23-1234-1a2b-abc3-12ab456c7d8e\"\n        ),\n        project_id=\"012345c6-b67c-1234-1b2c-66e4ad07b9f3\",\n        max_wait_seconds=1800,\n        poll_frequency_seconds=5,\n    )\n)\n```\n\nTrigger a Hex project run and wait for completion as a subflow.\n```python\nfrom prefect import flow\nfrom prefect_hex import HexCredentials\nfrom prefect_hex.project import trigger_project_run_and_wait_for_completion\n\n@flow\ndef trigger_project_run_and_wait_for_completion_flow(project_id: str):\n    hex_credentials = HexCredentials.load(\"hex-token\")\n    project_metadata = trigger_project_run_and_wait_for_completion(\n        project_id=project_id,\n        hex_credentials=hex_credentials\n    )\n    return project_metadata\n\ntrigger_project_run_and_wait_for_completion_flow(\n    project_id=\"012345c6-b67c-1234-1b2c-66e4ad07b9f3\"\n)\n```"
+        ]
       },
       "documentation_url": "https://prefecthq.github.io/prefect-hex/project/#prefect_hex.project.trigger_project_run_and_wait_for_completion",
       "entrypoint": "prefect_hex/project.py:trigger_project_run_and_wait_for_completion",
@@ -2466,7 +2469,10 @@
     "wait_for_project_run_completion": {
       "description": {
         "summary": "Flow that waits for the triggered project run to complete.",
-        "returns": "The status of the project run and the metadata associated with the run."
+        "returns": "The status of the project run and the metadata associated with the run.",
+        "examples": [
+          "Wait for completion of a project run as a subflow.\n```python\nfrom prefect import flow\nfrom prefect_hex import HexCredentials\nfrom prefect_hex.project import wait_for_project_run_completion\n\n@flow\ndef wait_for_project_run_completion_flow(project_id: str, run_id: str):\n    hex_credentials = HexCredentials.load(\"hex-token\")\n    project_status, project_metadata = wait_for_project_run_completion(\n        project_id=project_id,\n        run_id=run_id,\n        hex_credentials=hex_credentials\n    )\n    return project_status, project_metadata\n\nwait_for_project_run_completion_flow(\n    project_id=\"012345c6-b67c-1234-1b2c-66e4ad07b9f3\",\n    run_id=\"654321c6-b67c-1234-1b2c-66e4ad07b9f3\",\n)\n```"
+        ]
       },
       "documentation_url": "https://prefecthq.github.io/prefect-hex/project/#prefect_hex.project.wait_for_project_run_completion",
       "entrypoint": "prefect_hex/project.py:wait_for_project_run_completion",
