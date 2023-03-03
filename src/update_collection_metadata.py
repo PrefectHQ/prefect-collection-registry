@@ -191,11 +191,3 @@ async def update_all_collections(
         return Failed(message=f"Some subflows failed: {listrepr(failed_subflow_runs)} ")
 
     return Completed(message="All new releases have been recorded.")
-
-
-if __name__ == "__main__":
-    for collection_name in utils.get_collection_names():
-        update_collection_metadata(
-            collection_name=collection_name,
-            branch_name="improve-docstring-parsing",
-        )
