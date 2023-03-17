@@ -90,7 +90,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.8.5"
+          "version": "2.8.6"
         }
       },
       "date-time": {
@@ -122,7 +122,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.8.5"
+          "version": "2.8.6"
         }
       },
       "docker-container": {
@@ -323,7 +323,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.8.5"
+          "version": "2.8.6"
         }
       },
       "docker-registry": {
@@ -378,7 +378,7 @@
           "capabilities": [
             "docker-login"
           ],
-          "version": "2.8.5"
+          "version": "2.8.6"
         }
       },
       "gcs": {
@@ -429,7 +429,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.8.5"
+          "version": "2.8.6"
         }
       },
       "github": {
@@ -483,7 +483,7 @@
           "capabilities": [
             "get-directory"
           ],
-          "version": "2.8.5"
+          "version": "2.8.6"
         }
       },
       "json": {
@@ -513,7 +513,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.8.5"
+          "version": "2.8.6"
         }
       },
       "kubernetes-cluster-config": {
@@ -550,7 +550,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.8.5"
+          "version": "2.8.6"
         }
       },
       "kubernetes-job": {
@@ -558,13 +558,13 @@
         "slug": "kubernetes-job",
         "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/1zrSeY8DZ1MJZs2BAyyyGk/20445025358491b8b72600b8f996125b/Kubernetes_logo_without_workmark.svg.png?h=250",
         "documentation_url": "https://docs.prefect.io/api-ref/prefect/infrastructure/#prefect.infrastructure.KubernetesJob",
-        "description": "Runs a command as a Kubernetes Job.\n\nClick [here](https://medium.com/the-prefect-blog/how-to-use-kubernetes-with-prefect-419b2e8b8cb2/) to see a tutorial.",
+        "description": "Runs a command as a Kubernetes Job.\n\nFor a guided tutorial, see [How to use Kubernetes with Prefect](https://medium.com/the-prefect-blog/how-to-use-kubernetes-with-prefect-419b2e8b8cb2/).\nFor more information, including examples for customizing the resulting manifest, see [`KubernetesJob` infrastructure concepts](https://docs.prefect.io/concepts/infrastructure/#kubernetesjob).",
         "code_example": "```python\nfrom prefect.infrastructure.kubernetes import KubernetesJob\n\nkubernetes_job_block = KubernetesJob.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:1a553852c1bcc9cd95645917bdbaaae9e28cbcc1270ff5b43b45bbd87564f5cc",
+          "checksum": "sha256:d366f15d529c230ee8bfa36c165bc659243a0452ca220b5e68d3dec2b3c4f533",
           "fields": {
             "title": "KubernetesJob",
-            "description": "Runs a command as a Kubernetes Job.\n\nClick [here](https://medium.com/the-prefect-blog/how-to-use-kubernetes-with-prefect-419b2e8b8cb2/) to see a tutorial.",
+            "description": "Runs a command as a Kubernetes Job.\n\nFor a guided tutorial, see [How to use Kubernetes with Prefect](https://medium.com/the-prefect-blog/how-to-use-kubernetes-with-prefect-419b2e8b8cb2/).\nFor more information, including examples for customizing the resulting manifest, see [`KubernetesJob` infrastructure concepts](https://docs.prefect.io/concepts/infrastructure/#kubernetesjob).",
             "type": "object",
             "properties": {
               "type": {
@@ -724,7 +724,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.8.5"
+          "version": "2.8.6"
         }
       },
       "local-file-system": {
@@ -757,7 +757,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.8.5"
+          "version": "2.8.6"
         }
       },
       "mattermost-webhook": {
@@ -844,7 +844,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.8.5"
+          "version": "2.8.6"
         }
       },
       "ms-teams-webhook": {
@@ -895,7 +895,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.8.5"
+          "version": "2.8.6"
         }
       },
       "opsgenie-webhook": {
@@ -1017,7 +1017,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.8.5"
+          "version": "2.8.6"
         }
       },
       "pager-duty-webhook": {
@@ -1130,7 +1130,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.8.5"
+          "version": "2.8.6"
         }
       },
       "process": {
@@ -1212,7 +1212,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.8.5"
+          "version": "2.8.6"
         }
       },
       "remote-file-system": {
@@ -1254,7 +1254,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.8.5"
+          "version": "2.8.6"
         }
       },
       "s3": {
@@ -1310,7 +1310,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.8.5"
+          "version": "2.8.6"
         }
       },
       "secret": {
@@ -1345,7 +1345,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.8.5"
+          "version": "2.8.6"
         }
       },
       "slack-webhook": {
@@ -1396,7 +1396,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.8.5"
+          "version": "2.8.6"
         }
       },
       "smb": {
@@ -1462,7 +1462,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.8.5"
+          "version": "2.8.6"
         }
       },
       "string": {
@@ -1493,7 +1493,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.8.5"
+          "version": "2.8.6"
         }
       },
       "twilio-sms": {
@@ -1566,7 +1566,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.8.5"
+          "version": "2.8.6"
         }
       },
       "webhook": {
@@ -1621,7 +1621,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.8.5"
+          "version": "2.8.6"
         }
       }
     }
