@@ -29,7 +29,7 @@ def generate_worker_metadata(worker_subcls: Type[BaseWorker], package_name: str)
                 "description": worker_subcls.get_description(),
                 "logo_url": worker_subcls.get_logo_url(),
                 "documentation_url": worker_subcls.get_documentation_url(),
-                "default_base_job_configuration": worker_subcls.get_default_base_job_configuration(),
+                "default_base_job_configuration": worker_subcls.get_default_base_job_template(),
             }.items()
         )
     )
