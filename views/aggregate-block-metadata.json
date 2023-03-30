@@ -90,7 +90,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.8.7"
+          "version": "2.9.0"
         }
       },
       "date-time": {
@@ -122,7 +122,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.8.7"
+          "version": "2.9.0"
         }
       },
       "docker-container": {
@@ -323,7 +323,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.8.7"
+          "version": "2.9.0"
         }
       },
       "docker-registry": {
@@ -378,7 +378,7 @@
           "capabilities": [
             "docker-login"
           ],
-          "version": "2.8.7"
+          "version": "2.9.0"
         }
       },
       "gcs": {
@@ -429,7 +429,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.8.7"
+          "version": "2.9.0"
         }
       },
       "github": {
@@ -440,7 +440,7 @@
         "description": "Interact with files stored on GitHub repositories.",
         "code_example": "```python\nfrom prefect.filesystems import GitHub\n\ngithub_block = GitHub.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:91675c8041736a4086eee462cad180ef2032b2edadcfda032f7a51e80dcbcca6",
+          "checksum": "sha256:2ef39d2f6324c4fd0fc1be8c4203e16b4c4f7479cb90c8babadfdcb7116b0155",
           "fields": {
             "title": "GitHub",
             "description": "Interact with files stored on GitHub repositories.",
@@ -458,7 +458,7 @@
               },
               "access_token": {
                 "title": "Access Token",
-                "description": "A GitHub Personal Access Token (PAT) with repo scope.",
+                "description": "A GitHub Personal Access Token (PAT) with repo scope. To use a fine-grained PAT, provide '{username}:{PAT}' as the value.",
                 "name": "Personal Access Token",
                 "type": "string",
                 "writeOnly": true,
@@ -483,7 +483,7 @@
           "capabilities": [
             "get-directory"
           ],
-          "version": "2.8.7"
+          "version": "2.9.0"
         }
       },
       "json": {
@@ -513,7 +513,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.8.7"
+          "version": "2.9.0"
         }
       },
       "kubernetes-cluster-config": {
@@ -550,7 +550,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.8.7"
+          "version": "2.9.0"
         }
       },
       "kubernetes-job": {
@@ -561,7 +561,7 @@
         "description": "Runs a command as a Kubernetes Job.\n\nFor a guided tutorial, see [How to use Kubernetes with Prefect](https://medium.com/the-prefect-blog/how-to-use-kubernetes-with-prefect-419b2e8b8cb2/).\nFor more information, including examples for customizing the resulting manifest, see [`KubernetesJob` infrastructure concepts](https://docs.prefect.io/concepts/infrastructure/#kubernetesjob).",
         "code_example": "```python\nfrom prefect.infrastructure.kubernetes import KubernetesJob\n\nkubernetes_job_block = KubernetesJob.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:d366f15d529c230ee8bfa36c165bc659243a0452ca220b5e68d3dec2b3c4f533",
+          "checksum": "sha256:6323febcd3533e86e1a062793f3ce17d40a132388e1ddc16d3bb1a30d3ea0a6b",
           "fields": {
             "title": "KubernetesJob",
             "description": "Runs a command as a Kubernetes Job.\n\nFor a guided tutorial, see [How to use Kubernetes with Prefect](https://medium.com/the-prefect-blog/how-to-use-kubernetes-with-prefect-419b2e8b8cb2/).\nFor more information, including examples for customizing the resulting manifest, see [`KubernetesJob` infrastructure concepts](https://docs.prefect.io/concepts/infrastructure/#kubernetesjob).",
@@ -656,7 +656,7 @@
               },
               "job_watch_timeout_seconds": {
                 "title": "Job Watch Timeout Seconds",
-                "description": "Number of seconds to wait for each event emitted by the job before timing out. Defaults to `None`, which means no timeout will be enforced while waiting for each event in the job lifecycle.",
+                "description": "Number of seconds to wait for the job to complete before marking it as crashed. Defaults to `None`, which means no timeout will be enforced.",
                 "type": "integer"
               },
               "pod_watch_timeout_seconds": {
@@ -724,7 +724,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.8.7"
+          "version": "2.9.0"
         }
       },
       "local-file-system": {
@@ -757,7 +757,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.8.7"
+          "version": "2.9.0"
         }
       },
       "mattermost-webhook": {
@@ -844,7 +844,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.8.7"
+          "version": "2.9.0"
         }
       },
       "ms-teams-webhook": {
@@ -895,7 +895,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.8.7"
+          "version": "2.9.0"
         }
       },
       "opsgenie-webhook": {
@@ -1017,7 +1017,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.8.7"
+          "version": "2.9.0"
         }
       },
       "pager-duty-webhook": {
@@ -1130,7 +1130,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.8.7"
+          "version": "2.9.0"
         }
       },
       "process": {
@@ -1212,7 +1212,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.8.7"
+          "version": "2.9.0"
         }
       },
       "remote-file-system": {
@@ -1254,7 +1254,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.8.7"
+          "version": "2.9.0"
         }
       },
       "s3": {
@@ -1310,7 +1310,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.8.7"
+          "version": "2.9.0"
         }
       },
       "secret": {
@@ -1345,7 +1345,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.8.7"
+          "version": "2.9.0"
         }
       },
       "slack-webhook": {
@@ -1396,7 +1396,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.8.7"
+          "version": "2.9.0"
         }
       },
       "smb": {
@@ -1462,7 +1462,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.8.7"
+          "version": "2.9.0"
         }
       },
       "string": {
@@ -1493,7 +1493,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.8.7"
+          "version": "2.9.0"
         }
       },
       "twilio-sms": {
@@ -1566,7 +1566,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.8.7"
+          "version": "2.9.0"
         }
       },
       "webhook": {
@@ -1621,7 +1621,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.8.7"
+          "version": "2.9.0"
         }
       }
     }
