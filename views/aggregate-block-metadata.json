@@ -2612,7 +2612,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.2.4"
+          "version": "0.2.5"
         }
       },
       "azure-container-instance-credentials": {
@@ -2659,7 +2659,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.2.4"
+          "version": "0.2.5"
         }
       },
       "azure-container-instance-job": {
@@ -2670,7 +2670,7 @@
         "description": "Run tasks using Azure Container Instances. Note this block is experimental. The interface may change without notice. This block is part of the prefect-azure collection. Install prefect-azure with `pip install prefect-azure` to use this block.",
         "code_example": "```python\nfrom prefect_azure.container_instance import AzureContainerInstanceJob\n\nazure_container_instance_job_block = AzureContainerInstanceJob.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:d34fc49003f14c302ab5c10d9cda276bfd5571a32ca777fb641fff0dc199271b",
+          "checksum": "sha256:367f8171cce7f4937a49fe19febd1752cb95a2eed83e91ec40dd6120d90eff2f",
           "fields": {
             "title": "AzureContainerInstanceJob",
             "description": "Run tasks using Azure Container Instances. Note this block is experimental. The interface may change without notice.",
@@ -2755,7 +2755,16 @@
                 "type": "string"
               },
               "image_registry": {
-                "$ref": "#/definitions/DockerRegistry"
+                "title": "Image Registry (Optional)",
+                "description": "To use any private container registry with a username and password, choose DockerRegistry. To use a private Azure Container Registry with a managed identity, choose ACRManagedIdentity.",
+                "anyOf": [
+                  {
+                    "$ref": "#/definitions/DockerRegistry"
+                  },
+                  {
+                    "$ref": "#/definitions/ACRManagedIdentity"
+                  }
+                ]
               },
               "cpu": {
                 "title": "CPU",
@@ -2907,13 +2916,34 @@
                   "password"
                 ],
                 "block_schema_references": {}
+              },
+              "ACRManagedIdentity": {
+                "title": "ACRManagedIdentity",
+                "description": "Use a Managed Identity to access Azure Container registry. Requires the\nuser-assigned managed identity be available to the ACI container group.",
+                "type": "object",
+                "properties": {
+                  "registry_url": {
+                    "title": "Registry URL",
+                    "description": "The URL to the registry, such as myregistry.azurecr.io. Generally, 'http' or 'https' can be omitted.",
+                    "type": "string"
+                  },
+                  "identity": {
+                    "title": "Identity",
+                    "description": "The user-assigned Azure managed identity for the private registry.",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "registry_url",
+                  "identity"
+                ]
               }
             }
           },
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "0.2.4"
+          "version": "0.2.5"
         }
       },
       "azure-cosmos-db-credentials": {
@@ -2948,7 +2978,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.2.4"
+          "version": "0.2.5"
         }
       },
       "azureml-credentials": {
@@ -3013,7 +3043,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.2.4"
+          "version": "0.2.5"
         }
       }
     }
