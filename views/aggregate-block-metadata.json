@@ -1924,7 +1924,147 @@
             }
           },
           "capabilities": [],
-          "version": "0.2.5"
+          "version": "0.3.0"
+        }
+      },
+      "aws-secret": {
+        "name": "AWS Secret",
+        "slug": "aws-secret",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/1jbV4lceHOjGgunX15lUwT/db88e184d727f721575aeb054a37e277/aws.png?h=250",
+        "documentation_url": "https://prefecthq.github.io/prefect-aws/secrets_manager/#prefect_aws.secrets_manager.AwsSecret",
+        "description": "Manages a secret in AWS's Secrets Manager. This block is part of the prefect-aws collection. Install prefect-aws with `pip install prefect-aws` to use this block.",
+        "code_example": "```python\nfrom prefect_aws.secrets_manager import AwsSecret\n\naws_secret_block = AwsSecret.load(\"BLOCK_NAME\")\n```",
+        "block_schema": {
+          "checksum": "sha256:d10fde5ac25b10edca4859c4d0bf61b4a9106215cd79ab80997f29859b190b7d",
+          "fields": {
+            "title": "AwsSecret",
+            "description": "Manages a secret in AWS's Secrets Manager.",
+            "type": "object",
+            "properties": {
+              "aws_credentials": {
+                "$ref": "#/definitions/AwsCredentials"
+              },
+              "secret_name": {
+                "title": "Secret Name",
+                "description": "The name of the secret.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "aws_credentials",
+              "secret_name"
+            ],
+            "block_type_slug": "aws-secret",
+            "secret_fields": [
+              "aws_credentials.aws_secret_access_key"
+            ],
+            "block_schema_references": {
+              "aws_credentials": {
+                "block_type_slug": "aws-credentials",
+                "block_schema_checksum": "sha256:17b73297ed60f080fb235b3a5a145a6d9b28a09b3ff2d9d17810b5e2c2075ebe"
+              }
+            },
+            "definitions": {
+              "AwsClientParameters": {
+                "title": "AwsClientParameters",
+                "description": "Model used to manage extra parameters that you can pass when you initialize\nthe Client. If you want to find more information, see\n[boto3 docs](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/core/session.html)\nfor more info about the possible client configurations.\n\nAttributes:\n    api_version: The API version to use. By default, botocore will\n        use the latest API version when creating a client. You only need\n        to specify this parameter if you want to use a previous API version\n        of the client.\n    use_ssl: Whether or not to use SSL. By default, SSL is used.\n        Note that not all services support non-ssl connections.\n    verify: Whether or not to verify SSL certificates. By default\n        SSL certificates are verified. If False, SSL will still be used\n        (unless use_ssl is False), but SSL certificates\n        will not be verified. Passing a file path to this is deprecated.\n    verify_cert_path: A filename of the CA cert bundle to\n        use. You can specify this argument if you want to use a\n        different CA cert bundle than the one used by botocore.\n    endpoint_url: The complete URL to use for the constructed\n        client. Normally, botocore will automatically construct the\n        appropriate URL to use when communicating with a service. You\n        can specify a complete URL (including the \"http/https\" scheme)\n        to override this behavior. If this value is provided,\n        then ``use_ssl`` is ignored.\n    config: Advanced configuration for Botocore clients. See\n        [botocore docs](https://botocore.amazonaws.com/v1/documentation/api/latest/reference/config.html)\n        for more details.",
+                "type": "object",
+                "properties": {
+                  "api_version": {
+                    "title": "API Version",
+                    "description": "The API version to use.",
+                    "type": "string"
+                  },
+                  "use_ssl": {
+                    "title": "Use SSL",
+                    "description": "Whether or not to use SSL.",
+                    "default": true,
+                    "type": "boolean"
+                  },
+                  "verify": {
+                    "title": "Verify",
+                    "description": "Whether or not to verify SSL certificates.",
+                    "default": true,
+                    "anyOf": [
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "string",
+                        "format": "file-path"
+                      }
+                    ]
+                  },
+                  "verify_cert_path": {
+                    "title": "Certificate Authority Bundle File Path",
+                    "description": "Path to the CA cert bundle to use.",
+                    "format": "file-path",
+                    "type": "string"
+                  },
+                  "endpoint_url": {
+                    "title": "Endpoint URL",
+                    "description": "The complete URL to use for the constructed client.",
+                    "type": "string"
+                  },
+                  "config": {
+                    "title": "Botocore Config",
+                    "description": "Advanced configuration for Botocore clients.",
+                    "type": "object"
+                  }
+                }
+              },
+              "AwsCredentials": {
+                "title": "AwsCredentials",
+                "description": "Block used to manage authentication with AWS. AWS authentication is\nhandled via the `boto3` module. Refer to the\n[boto3 docs](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html)\nfor more info about the possible credential configurations.",
+                "type": "object",
+                "properties": {
+                  "aws_access_key_id": {
+                    "title": "AWS Access Key ID",
+                    "description": "A specific AWS access key ID.",
+                    "type": "string"
+                  },
+                  "aws_secret_access_key": {
+                    "title": "AWS Access Key Secret",
+                    "description": "A specific AWS secret access key.",
+                    "type": "string",
+                    "writeOnly": true,
+                    "format": "password"
+                  },
+                  "aws_session_token": {
+                    "title": "AWS Session Token",
+                    "description": "The session key for your AWS account. This is only needed when you are using temporary credentials.",
+                    "type": "string"
+                  },
+                  "profile_name": {
+                    "title": "Profile Name",
+                    "description": "The profile to use when creating your session.",
+                    "type": "string"
+                  },
+                  "region_name": {
+                    "title": "Region Name",
+                    "description": "The AWS Region where you want to create new connections.",
+                    "type": "string"
+                  },
+                  "aws_client_parameters": {
+                    "title": "AWS Client Parameters",
+                    "description": "Extra parameters to initialize the Client.",
+                    "allOf": [
+                      {
+                        "$ref": "#/definitions/AwsClientParameters"
+                      }
+                    ]
+                  }
+                },
+                "block_type_slug": "aws-credentials",
+                "secret_fields": [
+                  "aws_secret_access_key"
+                ],
+                "block_schema_references": {}
+              }
+            }
+          },
+          "capabilities": [],
+          "version": "0.3.0"
         }
       },
       "ecs-task": {
@@ -1935,7 +2075,7 @@
         "description": "Run a command as an ECS task. This block is part of the prefect-aws collection. Install prefect-aws with `pip install prefect-aws` to use this block.",
         "code_example": "```python\nfrom prefect_aws.ecs import ECSTask\n\necs_task_block = ECSTask.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:c86b71920b0e9522c2dd310e6b9da9ff323f49e9a324799502c66f2808efc8cb",
+          "checksum": "sha256:19d0187ed1eb07b8473fb2d8a5aa7dbfff5995df37775c2e1eea891e24c46b93",
           "fields": {
             "title": "ECSTask",
             "description": "Run a command as an ECS task.",
@@ -2076,7 +2216,7 @@
               },
               "task_customizations": {
                 "title": "Task Customizations",
-                "description": "A list of JSON 6902 patches to apply to the task run request.",
+                "description": "A list of JSON 6902 patches to apply to the task run request. If a string is given, it will parsed as a JSON expression.",
                 "type": "array",
                 "format": "rfc6902",
                 "items": {
@@ -2211,7 +2351,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "0.2.5"
+          "version": "0.3.0"
         }
       },
       "minio-credentials": {
@@ -2316,7 +2456,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.2.5"
+          "version": "0.3.0"
         }
       },
       "s3-bucket": {
@@ -2327,7 +2467,7 @@
         "description": "Block used to store data using AWS S3 or S3-compatible object storage like MinIO. This block is part of the prefect-aws collection. Install prefect-aws with `pip install prefect-aws` to use this block.",
         "code_example": "```python\nfrom prefect_aws.s3 import S3Bucket\n\ns3_bucket_block = S3Bucket.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:6aaadd460a122fd8472dec40920803dbbfe4d408bb9a3716d40aafb1cde6bbb8",
+          "checksum": "sha256:673e66bfc61bd548f0868df89675e13686756fdca11d284331a2a8ae8f08c9d6",
           "fields": {
             "title": "S3Bucket",
             "description": "Block used to store data using AWS S3 or S3-compatible object storage like MinIO.",
@@ -2336,43 +2476,6 @@
               "bucket_name": {
                 "title": "Bucket Name",
                 "description": "Name of your bucket.",
-                "type": "string"
-              },
-              "minio_credentials": {
-                "title": "Minio Credentials",
-                "description": "[DEPRECATED; use the credentials field instead] A block containing your credentials (choose this or AWS Credentials)",
-                "allOf": [
-                  {
-                    "$ref": "#/definitions/MinIOCredentials"
-                  }
-                ]
-              },
-              "aws_credentials": {
-                "title": "Aws Credentials",
-                "description": "[DEPRECATED; use the credentials field instead] A block containing your credentials (choose this or MinIO Credentials).",
-                "allOf": [
-                  {
-                    "$ref": "#/definitions/AwsCredentials"
-                  }
-                ]
-              },
-              "basepath": {
-                "title": "Basepath",
-                "description": "[DEPRECATED; use the bucket_folder field instead] A default location to write to and read from in the S3 bucket. Defaults to the root of the bucket.",
-                "default": "",
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "string",
-                    "format": "path"
-                  }
-                ]
-              },
-              "endpoint_url": {
-                "title": "Endpoint Url",
-                "description": "[DEPRECATED; pass AwsClientParameters in AwsCredentials instead] URL endpoint to use for S3 compatible storage. Defaults to standard AWS S3 endpoint.",
                 "type": "string"
               },
               "credentials": {
@@ -2399,20 +2502,10 @@
             ],
             "block_type_slug": "s3-bucket",
             "secret_fields": [
-              "minio_credentials.minio_root_password",
-              "aws_credentials.aws_secret_access_key",
               "credentials.aws_secret_access_key",
               "credentials.minio_root_password"
             ],
             "block_schema_references": {
-              "minio_credentials": {
-                "block_type_slug": "minio-credentials",
-                "block_schema_checksum": "sha256:5b4f1e5270f3a3670ff3d06b7e6e8246d54dacba976321dec42abe51c33415fb"
-              },
-              "aws_credentials": {
-                "block_type_slug": "aws-credentials",
-                "block_schema_checksum": "sha256:17b73297ed60f080fb235b3a5a145a6d9b28a09b3ff2d9d17810b5e2c2075ebe"
-              },
               "credentials": [
                 {
                   "block_type_slug": "aws-credentials",
@@ -2473,48 +2566,6 @@
                   }
                 }
               },
-              "MinIOCredentials": {
-                "title": "MinIOCredentials",
-                "description": "Block used to manage authentication with MinIO. Refer to the MinIO docs: https://docs.min.io/docs/minio-server-configuration-guide.html for more info about the possible credential configurations.",
-                "type": "object",
-                "properties": {
-                  "minio_root_user": {
-                    "title": "Minio Root User",
-                    "description": "Admin or root user.",
-                    "type": "string"
-                  },
-                  "minio_root_password": {
-                    "title": "Minio Root Password",
-                    "description": "Admin or root password.",
-                    "type": "string",
-                    "writeOnly": true,
-                    "format": "password"
-                  },
-                  "region_name": {
-                    "title": "Region Name",
-                    "description": "The AWS Region where you want to create new connections.",
-                    "type": "string"
-                  },
-                  "aws_client_parameters": {
-                    "title": "Aws Client Parameters",
-                    "description": "Extra parameters to initialize the Client.",
-                    "allOf": [
-                      {
-                        "$ref": "#/definitions/AwsClientParameters"
-                      }
-                    ]
-                  }
-                },
-                "required": [
-                  "minio_root_user",
-                  "minio_root_password"
-                ],
-                "block_type_slug": "minio-credentials",
-                "secret_fields": [
-                  "minio_root_password"
-                ],
-                "block_schema_references": {}
-              },
               "AwsCredentials": {
                 "title": "AwsCredentials",
                 "description": "Block used to manage authentication with AWS. AWS authentication is\nhandled via the `boto3` module. Refer to the\n[boto3 docs](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html)\nfor more info about the possible credential configurations.",
@@ -2562,6 +2613,48 @@
                   "aws_secret_access_key"
                 ],
                 "block_schema_references": {}
+              },
+              "MinIOCredentials": {
+                "title": "MinIOCredentials",
+                "description": "Block used to manage authentication with MinIO. Refer to the MinIO docs: https://docs.min.io/docs/minio-server-configuration-guide.html for more info about the possible credential configurations.",
+                "type": "object",
+                "properties": {
+                  "minio_root_user": {
+                    "title": "Minio Root User",
+                    "description": "Admin or root user.",
+                    "type": "string"
+                  },
+                  "minio_root_password": {
+                    "title": "Minio Root Password",
+                    "description": "Admin or root password.",
+                    "type": "string",
+                    "writeOnly": true,
+                    "format": "password"
+                  },
+                  "region_name": {
+                    "title": "Region Name",
+                    "description": "The AWS Region where you want to create new connections.",
+                    "type": "string"
+                  },
+                  "aws_client_parameters": {
+                    "title": "Aws Client Parameters",
+                    "description": "Extra parameters to initialize the Client.",
+                    "allOf": [
+                      {
+                        "$ref": "#/definitions/AwsClientParameters"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "minio_root_user",
+                  "minio_root_password"
+                ],
+                "block_type_slug": "minio-credentials",
+                "secret_fields": [
+                  "minio_root_password"
+                ],
+                "block_schema_references": {}
               }
             }
           },
@@ -2571,7 +2664,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "0.2.5"
+          "version": "0.3.0"
         }
       }
     }
