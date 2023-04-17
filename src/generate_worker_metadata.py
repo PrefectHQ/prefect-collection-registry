@@ -15,6 +15,7 @@ from prefect.plugins import safe_load_entrypoints
 from prefect.utilities.dispatch import get_registry_for_type
 
 from metadata_schemas import worker_schema
+from src import utils
 
 
 @task
@@ -115,7 +116,7 @@ def write_worker_metadata(worker_metadata: Dict[str, Any], package_name: str):
     package_slug = package_name.replace("-", "_")
     package_version = importlib.import_module(package_slug).__version__
     collection_metadata_path = (
-        Path("collections") / package_name / "workers" / f"{package_version}.json"
+        Path("collections") / package_name / "workers" / f"v{package_version}.json"
     )
     collection_metadata_path.parent.mkdir(parents=True, exist_ok=True)
     with open(collection_metadata_path, "w") as f:
@@ -132,11 +133,17 @@ def generate_worker_metadata_for_package(package_name: str):
 
 
 @flow
-def update_worker_metadata_for_package(package_name: str):
+def update_worker_metadata_for_package(package_name: str, branch_name: str):
     worker_metadata = generate_worker_metadata_for_package(package_name=package_name)
-    write_worker_metadata(worker_metadata=worker_metadata, package_name=package_name)
+    utils.submit_updates(
+        collection_metadata=worker_metadata,
+        collection_name=package_name,
+        branch_name=branch_name,
+        variety="worker",
+    )
 
 
 if __name__ == "__main__":
     package_name = argv[1]
-    update_worker_metadata_for_package(package_name=package_name)
+    worker_metadata = generate_worker_metadata_for_package(package_name=argv[1])
+    write_worker_metadata(worker_metadata=worker_metadata, package_name=argv[1])
