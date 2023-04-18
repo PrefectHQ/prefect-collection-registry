@@ -3,7 +3,7 @@ from pathlib import Path
 
 from utils import validate_view_content
 
-EXCLUDE_TYPES = {"worker-metadata", "demo-flow"}
+EXCLUDE_TYPES = {"demo-flow"}
 
 if __name__ == "__main__":
     for file in Path("views").glob("*.json"):
