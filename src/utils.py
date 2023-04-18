@@ -146,7 +146,8 @@ def submit_updates(
         if '"sha" wasn\'t supplied' in str(e):
             # file already exists so nothing to update
             print(
-                f"{variety} metadata for {collection_name} {latest_release} already exists!"
+                f"{variety} metadata for {collection_name} {latest_release} already"
+                " exists!"
             )
             return
         else:
@@ -154,7 +155,6 @@ def submit_updates(
 
     # don't update the aggregate metadata with keys that have empty values
     if collection_metadata:
-
         # validate the new metadata
         validate_view_content(updated_metadata_dict, variety)
 
@@ -162,18 +162,23 @@ def submit_updates(
         updated_metadata_content = json.dumps(updated_metadata_dict, indent=2)
         if existing_metadata_content == updated_metadata_content:
             print(
-                f"Aggregate {variety} metadata for {collection_name} {latest_release} already up to date!"
+                f"Aggregate {variety} metadata for"
+                f" {collection_name} {latest_release} already up to date!"
             )
             return
 
         registry_repo.file_contents(metadata_file, ref=branch_name).update(
-            message=f"Update aggregate {variety} metadata with `{collection_name}` `{latest_release}`",
+            message=(
+                f"Update aggregate {variety} metadata with `{collection_name}`"
+                f" `{latest_release}`"
+            ),
             content=updated_metadata_content.encode("utf-8"),
             branch=branch_name,
         )
 
         print(
-            f"Updated aggregate {variety} metadata for {collection_name} {latest_release}!"
+            f"Updated aggregate {variety} metadata for"
+            f" {collection_name} {latest_release}!"
         )
 
 

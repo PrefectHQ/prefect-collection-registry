@@ -7,7 +7,6 @@ EXCLUDE_TYPES = {"worker-metadata", "demo-flow"}
 
 if __name__ == "__main__":
     for file in Path("views").glob("*.json"):
-
         if any(exclude in file.name for exclude in EXCLUDE_TYPES):
             continue
 

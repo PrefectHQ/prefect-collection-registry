@@ -10,9 +10,9 @@ from typing import Any, Dict, List, Type
 
 import fastjsonschema
 from prefect import flow, task
-from prefect.experimental.workers.base import BaseWorker
 from prefect.plugins import safe_load_entrypoints
 from prefect.utilities.dispatch import get_registry_for_type
+from prefect.workers.base import BaseWorker
 
 from metadata_schemas import worker_schema
 from src import utils
@@ -30,7 +30,7 @@ def generate_worker_metadata(worker_subcls: Type[BaseWorker], package_name: str)
                 "description": worker_subcls.get_description(),
                 "logo_url": worker_subcls.get_logo_url(),
                 "documentation_url": worker_subcls.get_documentation_url(),
-                "default_base_job_configuration": worker_subcls.get_default_base_job_template(),
+                "default_base_job_configuration": worker_subcls.get_default_base_job_template(),  # noqa E501
             }.items()
         )
     )
@@ -52,7 +52,9 @@ def get_worker_metadata_from_prefect():
                 "type": "prefect-agent",
                 "install_command": "pip install prefect",
                 "default_base_job_configuration": {},
-                "description": "A Prefect agent that executes flow runs via infrastructure blocks.",
+                "description": (
+                    "A Prefect agent that executes flow runs via infrastructure blocks."
+                ),
             }
         }
     }
