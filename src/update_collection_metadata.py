@@ -12,7 +12,7 @@ from prefect.utilities.collections import listrepr
 import utils
 from generate_block_metadata import update_block_metadata_for_collection
 from generate_flow_metadata import update_flow_metadata_for_collection
-from src.generate_worker_metadata import get_worker_metadata_from_collection
+from src.generate_worker_metadata import update_worker_metadata_for_package
 
 UPDATE_ALL_DESCRIPTION = """
 The `update_all_collections` triggers many instances of `update_collection_metadata` in order to
@@ -21,7 +21,7 @@ with metadata generated from new releases of select packages (prefect collection
 
 `update_all_collections` flow will check if any packages have a release not recorded by the registry repo,
 and will trigger a run of `update_collection_metadata` for each such package.
-"""
+"""  # noqa
 
 
 async def collection_needs_update(collection_name: str) -> tuple[str, bool]:
@@ -109,7 +109,10 @@ async def create_ref_if_not_exists(branch_name: str) -> str:
 
 
 # create a deployment for this with
-# prefect deployment build update_collection_metadata.py:update_collection_metadata -n collections-updates ... -a
+# prefect deployment build \
+# update_collection_metadata.py:update_collection_metadata \
+# -n collections-updates
+# \... -a
 @flow(log_prints=True)
 def update_collection_metadata(
     collection_name: str,
@@ -140,10 +143,10 @@ def update_collection_metadata(
         branch_name=branch_name,
     )
 
-    get_worker_metadata_from_collection.with_options(
+    update_worker_metadata_for_package.with_options(
         flow_run_name=f"Gather / Submit WORKER metadata for {collection_name}"
     )(
-        collection_name=collection_name,
+        package_name=collection_name,
         branch_name=branch_name,
     )
     return Completed(message=f"Successfully updated {collection_name}")
