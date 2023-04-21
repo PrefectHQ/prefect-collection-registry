@@ -12,10 +12,11 @@ import fastjsonschema
 from prefect import flow, task
 from prefect.plugins import safe_load_entrypoints
 from prefect.utilities.dispatch import get_registry_for_type
+from prefect.utilities.importtools import to_qualified_name
 from prefect.workers.base import BaseWorker
 
 from metadata_schemas import worker_schema
-from src import utils
+import utils
 
 
 @task
@@ -30,7 +31,9 @@ def generate_worker_metadata(worker_subcls: Type[BaseWorker], package_name: str)
                 "description": worker_subcls.get_description(),
                 "logo_url": worker_subcls.get_logo_url(),
                 "documentation_url": worker_subcls.get_documentation_url(),
-                "default_base_job_configuration": worker_subcls.get_default_base_job_template(),  # noqa E501
+                "default_base_job_configuration": (
+                    worker_subcls.get_default_base_job_template()
+                ),  # noqa E501
             }.items()
         )
     )
@@ -47,15 +50,13 @@ def get_worker_metadata_from_prefect():
     worker_registry = get_registry_for_type(BaseWorker) or {}
 
     output = {
-        "workers": {
-            "prefect-agent": {
-                "type": "prefect-agent",
-                "install_command": "pip install prefect",
-                "default_base_job_configuration": {},
-                "description": (
-                    "A Prefect agent that executes flow runs via infrastructure blocks."
-                ),
-            }
+        "prefect-agent": {
+            "type": "prefect-agent",
+            "install_command": "pip install prefect",
+            "default_base_job_configuration": {},
+            "description": (
+                "A Prefect agent that executes flow runs via infrastructure blocks."
+            ),
         }
     }
 
@@ -64,10 +65,11 @@ def get_worker_metadata_from_prefect():
             worker_subcls=worker_subcls, package_name="prefect"
         )
         for worker_subcls in worker_registry.values()
+        if to_qualified_name(worker_subcls).startswith("prefect.")
     }
 
-    output["workers"].update(metadata)
-    output["workers"] = dict(sorted(output["workers"].items()))
+    output.update(metadata)
+    output = dict(sorted(output.items()))
     return output
 
 
@@ -76,7 +78,7 @@ def get_worker_metadata_from_collection(collection_name: str):
     """Gets worker metadata from a given collection."""
     collections = safe_load_entrypoints(entry_points(group="prefect.collections"))
 
-    output = {"workers": {}}
+    output = {}
     for ep_name, module in collections.items():
         if isinstance(module, Exception):
             logging.warning(f"Error loading collection entrypoint {ep_name} - skipping")
@@ -87,13 +89,11 @@ def get_worker_metadata_from_collection(collection_name: str):
 
         worker_subclasses = discover_base_worker_subclasses(module)
         for worker_subcls in worker_subclasses:
-            output["workers"].update(
-                generate_worker_metadata(
-                    worker_subcls=worker_subcls, package_name=collection_name
-                )
+            output[worker_subcls.type] = generate_worker_metadata(
+                worker_subcls=worker_subcls, package_name=collection_name
             )
 
-    output["workers"] = dict(sorted(output["workers"].items()))
+    output = dict(sorted(output.items()))
     return output
 
 
@@ -108,7 +108,6 @@ def discover_base_worker_subclasses(module: ModuleType) -> List[Type[BaseWorker]
     ]
 
 
-@task
 def write_worker_metadata(worker_metadata: Dict[str, Any], package_name: str):
     if "_" in package_name:
         raise ValueError(
