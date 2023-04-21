@@ -22,4 +22,4 @@ dependencies = [
 dynamic = ["version"]
 
 [project.optional-dependencies]
-dev = ["pytest", "coverage"]
+dev = ["pytest", "coverage", "prefect-kubernetes"]

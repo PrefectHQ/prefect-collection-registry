@@ -12,10 +12,11 @@ import fastjsonschema
 from prefect import flow, task
 from prefect.plugins import safe_load_entrypoints
 from prefect.utilities.dispatch import get_registry_for_type
+from prefect.utilities.importtools import to_qualified_name
 from prefect.workers.base import BaseWorker
 
 from metadata_schemas import worker_schema
-from src import utils
+import utils
 
 
 @task
@@ -49,15 +50,13 @@ def get_worker_metadata_from_prefect():
     worker_registry = get_registry_for_type(BaseWorker) or {}
 
     output = {
-        "workers": {
-            "prefect-agent": {
-                "type": "prefect-agent",
-                "install_command": "pip install prefect",
-                "default_base_job_configuration": {},
-                "description": (
-                    "A Prefect agent that executes flow runs via infrastructure blocks."
-                ),
-            }
+        "prefect-agent": {
+            "type": "prefect-agent",
+            "install_command": "pip install prefect",
+            "default_base_job_configuration": {},
+            "description": (
+                "A Prefect agent that executes flow runs via infrastructure blocks."
+            ),
         }
     }
 
@@ -66,10 +65,11 @@ def get_worker_metadata_from_prefect():
             worker_subcls=worker_subcls, package_name="prefect"
         )
         for worker_subcls in worker_registry.values()
+        if to_qualified_name(worker_subcls).startswith("prefect.")
     }
 
-    output["workers"].update(metadata)
-    output["workers"] = dict(sorted(output["workers"].items()))
+    output.update(metadata)
+    output = dict(sorted(output.items()))
     return output
 
 
@@ -108,7 +108,6 @@ def discover_base_worker_subclasses(module: ModuleType) -> List[Type[BaseWorker]
     ]
 
 
-@task
 def write_worker_metadata(worker_metadata: Dict[str, Any], package_name: str):
     if "_" in package_name:
         raise ValueError(
