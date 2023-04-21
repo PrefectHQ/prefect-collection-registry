@@ -68,7 +68,7 @@
     }
   },
   "prefect-docker": {
-    "docker": {
+    "workers": {
       "default_base_job_configuration": {
         "job_configuration": {
           "command": "{{ command }}",
