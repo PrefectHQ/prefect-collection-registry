@@ -1924,7 +1924,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.3.0"
+          "version": "0.3.1"
         }
       },
       "aws-secret": {
@@ -2064,7 +2064,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.3.0"
+          "version": "0.3.1"
         }
       },
       "ecs-task": {
@@ -2351,7 +2351,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "0.3.0"
+          "version": "0.3.1"
         }
       },
       "minio-credentials": {
@@ -2456,7 +2456,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.3.0"
+          "version": "0.3.1"
         }
       },
       "s3-bucket": {
@@ -2664,7 +2664,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "0.3.0"
+          "version": "0.3.1"
         }
       }
     }
@@ -6075,7 +6075,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.1.0"
+          "version": "0.2.2"
         }
       },
       "docker-registry-credentials": {
@@ -6129,7 +6129,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.1.0"
+          "version": "0.2.2"
         }
       }
     }
@@ -6460,7 +6460,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.4.0"
+          "version": "0.4.1"
         }
       },
       "cloud-run-job": {
@@ -6626,7 +6626,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "0.4.0"
+          "version": "0.4.1"
         }
       },
       "gcp-credentials": {
@@ -6667,7 +6667,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.4.0"
+          "version": "0.4.1"
         }
       },
       "gcpsecret": {
@@ -6745,7 +6745,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.4.0"
+          "version": "0.4.1"
         }
       },
       "gcs-bucket": {
@@ -6833,7 +6833,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "0.4.0"
+          "version": "0.4.1"
         }
       },
       "vertex-ai-custom-training-job": {
@@ -6998,7 +6998,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "0.4.0"
+          "version": "0.4.1"
         }
       }
     }
@@ -7388,7 +7388,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.2.4"
+          "version": "0.2.5"
         }
       }
     }
