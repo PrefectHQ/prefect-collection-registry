@@ -30,7 +30,9 @@ def generate_worker_metadata(worker_subcls: Type[BaseWorker], package_name: str)
                 "description": worker_subcls.get_description(),
                 "logo_url": worker_subcls.get_logo_url(),
                 "documentation_url": worker_subcls.get_documentation_url(),
-                "default_base_job_configuration": worker_subcls.get_default_base_job_template(),  # noqa E501
+                "default_base_job_configuration": (
+                    worker_subcls.get_default_base_job_template()
+                ),  # noqa E501
             }.items()
         )
     )
@@ -76,7 +78,7 @@ def get_worker_metadata_from_collection(collection_name: str):
     """Gets worker metadata from a given collection."""
     collections = safe_load_entrypoints(entry_points(group="prefect.collections"))
 
-    output = {"workers": {}}
+    output = {}
     for ep_name, module in collections.items():
         if isinstance(module, Exception):
             logging.warning(f"Error loading collection entrypoint {ep_name} - skipping")
@@ -87,13 +89,11 @@ def get_worker_metadata_from_collection(collection_name: str):
 
         worker_subclasses = discover_base_worker_subclasses(module)
         for worker_subcls in worker_subclasses:
-            output["workers"].update(
-                generate_worker_metadata(
-                    worker_subcls=worker_subcls, package_name=collection_name
-                )
+            output[worker_subcls.type] = generate_worker_metadata(
+                worker_subcls=worker_subcls, package_name=collection_name
             )
 
-    output["workers"] = dict(sorted(output["workers"].items()))
+    output = dict(sorted(output.items()))
     return output
 
 
