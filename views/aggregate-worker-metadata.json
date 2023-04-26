@@ -359,7 +359,7 @@
       "documentation_url": "",
       "install_command": "pip install prefect-aws",
       "logo_url": "",
-      "type": "ecs"
+      "type": "elastic-container-service"
     }
   },
   "prefect-azure": {
