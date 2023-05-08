@@ -1,3 +1,12 @@
+definitions:
+  work_pools:
+    kubernetes_prd_internal_tools: &kubernetes_prd_internal_tools
+      name: kubernetes-prd-internal-tools
+      job_variables:
+        image: prefecthq/prefect:2-latest
+        env: 
+        EXTRA_PIP_PACKAGES: github3.py fastjsonschema gcsfs
+
 deployments:
   - name: update-a-collection
     version: null
@@ -7,10 +16,7 @@ deployments:
     flow_name: null
     entrypoint: src/update_collection_metadata.py:update_collection_metadata
     parameters: {}
-    work_pool:
-      name: kubernetes-prd-internal-tools
-      job_variables:
-        image: "{{ image_name }}"
+    work_pool: *kubernetes_prd_internal_tools
 
   - name: update-all-collections
     version: null
@@ -28,7 +34,4 @@ deployments:
     flow_name: null
     entrypoint: src/update_collection_metadata.py:update_all_collections
     parameters: {}
-    work_pool:
-      name: kubernetes-prd-internal-tools
-      job_variables:
-        image: "{{ image_name }}"
+    work_pool: *kubernetes_prd_internal_tools

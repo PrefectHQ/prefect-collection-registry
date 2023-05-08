@@ -12,7 +12,7 @@ from prefect.utilities.collections import listrepr
 import utils
 from generate_block_metadata import update_block_metadata_for_collection
 from generate_flow_metadata import update_flow_metadata_for_collection
-from src.generate_worker_metadata import update_worker_metadata_for_package
+from generate_worker_metadata import update_worker_metadata_for_package
 
 UPDATE_ALL_DESCRIPTION = """
 The `update_all_collections` triggers many instances of `update_collection_metadata` in order to
@@ -197,3 +197,7 @@ async def update_all_collections(
         return Failed(message=f"Some subflows failed: {listrepr(failed_subflow_runs)} ")
 
     return Completed(message="All new releases have been recorded.")
+
+if __name__ == "__main__":
+   import asyncio
+   asyncio.run(update_all_collections())

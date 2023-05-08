@@ -5,13 +5,7 @@ name: prefect-collection-registry
 prefect-version: 2.10.6
 
 # build section allows you to manage and build docker images
-build: 
-  - prefect_docker.projects.steps.build_docker_image:
-      dockerfile: Dockerfile
-      image_name: us-docker.pkg.dev/prefect-prd-internal-tools/prefect-collection-registry/update-all-collections
-      push: true
-      requires: prefect-docker>=0.2.2
-      tag: latest
+build: null
 
 # push section allows you to manage if and how this project is uploaded to remote locations
 push: null
