@@ -20,5 +20,5 @@ push: null
 pull:
   - prefect.projects.steps.git_clone_project:
       repository: https://github.com/PrefectHQ/prefect-collection-registry
-      branch: jamie/migrate-to-projects
+      branch: main
       access_token: "{{ prefect.blocks.secret.prefect-collection-registry-contents-ro-pat }}"
