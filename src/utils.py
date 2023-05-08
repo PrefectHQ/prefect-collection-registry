@@ -224,7 +224,7 @@ def read_view_content(view: CollectionViewVariety) -> Dict[str, Any]:
 async def get_repo(name: str) -> github3.repos.repo.Repository:
     """Returns a GitHub repository object for a given collection name."""
 
-    github_token = await Secret.load("collection-registry-github-token")
+    github_token = await Secret.load("collection-registry-contents-prs-rw-pat")
     gh = await run_sync_in_worker_thread(github3.login, token=github_token.get())
     return gh.repository("PrefectHQ", name)
 
@@ -251,7 +251,7 @@ def validate_view_content(view_dict: dict, variety: CollectionViewVariety) -> No
 async def result_storage_from_env() -> Block | None:
     env_to_storage_block_name = {
         "inconspicuous-pond": "s3/flow-script-storage",
-        "internal-tools": "gcs/collection-registry-result-storage",
+        "integrations": "gcs/collection-registry-result-storage",
     }
 
     async with get_cloud_client() as client:
