@@ -107,6 +107,7 @@ async def create_ref_if_not_exists(branch_name: str) -> str:
 
     return new_branch_name
 
+
 @flow(log_prints=True, name="update-collection-metadata")
 def update_collection_metadata(
     collection_name: str,
