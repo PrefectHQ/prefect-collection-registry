@@ -251,7 +251,7 @@ def validate_view_content(view_dict: dict, variety: CollectionViewVariety) -> No
 async def result_storage_from_env() -> Block | None:
     env_to_storage_block_name = {
         "inconspicuous-pond": "s3/flow-script-storage",
-        "internal-tools": "gcs/collection-registry-result-storage",
+        "integrations": "gcs/collection-registry-result-storage",
     }
 
     async with get_cloud_client() as client:

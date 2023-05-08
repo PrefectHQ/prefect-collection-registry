@@ -1,0 +1,3 @@
+{
+  "update-all-collections": "src/update_collection_metadata.py:update_all_collections"
+}
