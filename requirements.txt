@@ -1,4 +1,4 @@
-prefect>=2.8.2
-gcsfs
 fastjsonschema
-github3.py
+gcsfs
+github3.py==3.2.0
+prefect>=2.10.6

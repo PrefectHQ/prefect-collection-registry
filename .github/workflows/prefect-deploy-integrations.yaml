@@ -42,7 +42,7 @@ jobs:
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v1
         with:
-          workload_identity_provider: ${{ vars.GHA_WORKLOAD_IDENTITY_PROVIDER }}
+          workload_identity_provider: ${{ secrets.GHA_WORKLOAD_IDENTITY_PROVIDER }}
           service_account: collection-registry-gen-main@prefect-org-github-actions.iam.gserviceaccount.com
 
       - name: Configure Google Cloud credential helper
@@ -57,7 +57,6 @@ jobs:
       - name: Install requirements 
         run: |
           pip install prefect
-          pip install -r requirements.txt
 
       - name: Auth to Prefect Cloud
         uses: PrefectHQ/actions-prefect-auth@v1

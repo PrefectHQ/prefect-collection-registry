@@ -198,3 +198,7 @@ async def update_all_collections(
         return Failed(message=f"Some subflows failed: {listrepr(failed_subflow_runs)} ")
 
     return Completed(message="All new releases have been recorded.")
+
+if __name__ == "__main__":
+   import asyncio
+   asyncio.run(update_all_collections())
