@@ -12,7 +12,7 @@ from prefect.utilities.collections import listrepr
 import utils
 from generate_block_metadata import update_block_metadata_for_collection
 from generate_flow_metadata import update_flow_metadata_for_collection
-from src.generate_worker_metadata import update_worker_metadata_for_package
+from generate_worker_metadata import update_worker_metadata_for_package
 
 UPDATE_ALL_DESCRIPTION = """
 The `update_all_collections` triggers many instances of `update_collection_metadata` in order to
@@ -106,6 +106,7 @@ async def create_ref_if_not_exists(branch_name: str) -> str:
     print(f"Created PR for {new_branch_name!r} on {registry_repo.full_name!r}!")
 
     return new_branch_name
+
 
 @flow(log_prints=True, name="update-collection-metadata")
 def update_collection_metadata(
