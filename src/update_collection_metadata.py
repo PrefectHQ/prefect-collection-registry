@@ -113,7 +113,7 @@ async def create_ref_if_not_exists(branch_name: str) -> str:
 # update_collection_metadata.py:update_collection_metadata \
 # -n collections-updates
 # \... -a
-@flow(log_prints=True)
+@flow(log_prints=True, name="update-all-collections")
 def update_collection_metadata(
     collection_name: str,
     branch_name: str,
