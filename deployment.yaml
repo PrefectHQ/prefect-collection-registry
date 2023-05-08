@@ -5,7 +5,7 @@ definitions:
       job_variables:
         image: prefecthq/prefect:2-latest
         env: 
-        EXTRA_PIP_PACKAGES: github3.py fastjsonschema gcsfs
+          EXTRA_PIP_PACKAGES: github3.py fastjsonschema gcsfs
 
 deployments:
   - name: update-a-collection
