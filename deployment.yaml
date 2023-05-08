@@ -1,5 +1,5 @@
 deployments:
-  - name: Update A Collection
+  - name: update-a-collection
     version: null
     tags: []
     description: Updates each variety of metadata for a given package.
@@ -12,7 +12,7 @@ deployments:
       job_variables:
         image: "{{ image_name }}"
 
-  - name: Update All Collections
+  - name: update-all-collections
     version: null
     tags: []
     description: |-
