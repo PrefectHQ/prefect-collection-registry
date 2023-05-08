@@ -1,4 +1,17 @@
 deployments:
+  - name: Update A Collection
+    version: null
+    tags: []
+    description: Updates each variety of metadata for a given package.
+    schedule: {}
+    flow_name: null
+    entrypoint: src/update_collection_metadata.py:update_collection_metadata
+    parameters: {}
+    work_pool:
+      name: kubernetes-prd-internal-tools
+      job_variables:
+        image: "{{ image_name }}"
+
   - name: Update All Collections
     version: null
     tags: []
