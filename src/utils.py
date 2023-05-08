@@ -224,7 +224,7 @@ def read_view_content(view: CollectionViewVariety) -> Dict[str, Any]:
 async def get_repo(name: str) -> github3.repos.repo.Repository:
     """Returns a GitHub repository object for a given collection name."""
 
-    github_token = await Secret.load("collection-registry-github-token")
+    github_token = await Secret.load("collection-registry-contents-prs-rw-pat")
     gh = await run_sync_in_worker_thread(github3.login, token=github_token.get())
     return gh.repository("PrefectHQ", name)
 
