@@ -1,3 +1,4 @@
 prefect>=2.8.2
+gcsfs
 fastjsonschema
 github3.py
