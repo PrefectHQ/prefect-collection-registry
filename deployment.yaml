@@ -1,0 +1,21 @@
+deployments:
+  - name: Update All Collections
+    version: null
+    tags: []
+    description: |-
+      `update-all-collections` triggers many instances of `update-collection-metadata` 
+      in order to update the [prefect-collection-registry](https://github.com/PrefectHQ/prefect-collection-registry) 
+      with metadata generated from new releases of select packages (prefect collections + prefect core).
+
+      `update-all-collections` flow will check if any packages have a release and are not 
+      recorded by the registry repo, and will trigger a run of `update_collection_metadata` for each such package.
+    schedule:
+      cron: 0 6,12,18 * * 1-5
+      timezone: EST
+    flow_name: null
+    entrypoint: src/update_collection_metadata.py:update_all_collections
+    parameters: {}
+    work_pool:
+      name: kubernetes-prd-internal-tools
+      job_variables:
+        image: "{{ image_name }}"
