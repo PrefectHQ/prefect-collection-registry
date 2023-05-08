@@ -155,7 +155,7 @@ def update_collection_metadata(
 @flow(
     description=UPDATE_ALL_DESCRIPTION,
     log_prints=True,
-    name="update-all-collections"
+    name="update-all-collections",
     result_storage=utils.result_storage_from_env(),
     retries=2,
     retry_delay_seconds=10,
