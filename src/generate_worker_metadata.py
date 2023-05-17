@@ -52,10 +52,16 @@ def get_worker_metadata_from_prefect():
     output = {
         "prefect-agent": {
             "type": "prefect-agent",
+            "documentation_url": (
+                "https://docs.prefect.io/latest/concepts/work-pools/#agent-overview"
+            ),
+            "display_name": "Prefect Agent",
+            "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/3xff6sYjtyYKgqtalUdnDr/22812da2b176be8a7b2e50cde745d5ee/agent.svg",
             "install_command": "pip install prefect",
             "default_base_job_configuration": {},
             "description": (
-                "A Prefect agent that executes flow runs via infrastructure blocks."
+                "Execute flow runs on heterogenous infrastructure using infrastructure"
+                " blocks."
             ),
         }
     }
