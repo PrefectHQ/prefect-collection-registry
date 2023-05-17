@@ -2,9 +2,11 @@
   "prefect": {
     "prefect-agent": {
       "type": "prefect-agent",
+      "display_name": "Prefect Agent",
+      "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/3xff6sYjtyYKgqtalUdnDr/22812da2b176be8a7b2e50cde745d5ee/agent.svg",
       "install_command": "pip install prefect",
       "default_base_job_configuration": {},
-      "description": "A Prefect agent that executes flow runs via infrastructure blocks."
+      "description": "Execute flow runs on heterogenous infrastructure using infrastructure blocks."
     },
     "process": {
       "default_base_job_configuration": {
@@ -60,11 +62,13 @@
           }
         }
       },
-      "description": "Worker that executes flow runs within processes.",
-      "documentation_url": "",
+      "description": "Execute flow runs as subprocesses on a worker. Works well for local execution when first getting started.",
+      "display_name": "Local Subprocess",
+      "documentation_url": "https://docs.prefect.io/latest/api-ref/prefect/workers/process/",
       "install_command": "pip install prefect",
       "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/39WQhVu4JK40rZWltGqhuC/d15be6189a0cb95949a6b43df00dcb9b/image5.png?h=250",
-      "type": "process"
+      "type": "process",
+      "is_beta": true
     }
   },
   "prefect-aws": {
@@ -355,11 +359,13 @@
           }
         }
       },
-      "description": "",
-      "documentation_url": "",
+      "description": "Execute flow runs within containers on AWS ECS. Works with existing ECS clusters and serverless execution via AWS Fargate. Requires an AWS account.",
+      "display_name": "AWS Elastic Container Service",
+      "documentation_url": "https://prefecthq.github.io/prefect-aws/ecs_worker/",
       "install_command": "pip install prefect-aws",
-      "logo_url": "",
-      "type": "ecs"
+      "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/1jbV4lceHOjGgunX15lUwT/db88e184d727f721575aeb054a37e277/aws.png?h=250",
+      "type": "ecs",
+      "is_beta": true
     }
   },
   "prefect-azure": {
@@ -669,11 +675,13 @@
           }
         }
       },
-      "description": "",
-      "documentation_url": "",
+      "description": "Execute flow runs within containers on Azure's Container Instances service. Requires an Azure account.",
+      "display_name": "Azure Container Instances",
+      "documentation_url": "https://prefecthq.github.io/prefect-azure/container_instance_worker/",
       "install_command": "pip install prefect-azure",
-      "logo_url": "",
-      "type": "azure-container-instance"
+      "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/6AiQ6HRIft8TspZH7AfyZg/39fd82bdbb186db85560f688746c8cdd/azure.png?h=250",
+      "type": "azure-container-instance",
+      "is_beta": true
     }
   },
   "prefect-docker": {
@@ -796,11 +804,13 @@
           }
         }
       },
-      "description": "",
-      "documentation_url": "",
+      "description": "Execute flow runs within Docker containers. Works well if you manage flow execution environments via Docker images. Requires access to a running Docker daemon.",
+      "display_name": "Docker",
+      "documentation_url": "https://prefecthq.github.io/prefect-docker/worker/",
       "install_command": "pip install prefect-docker",
-      "logo_url": "",
-      "type": "docker"
+      "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/2IfXXfMq66mrzJBDFFCHTp/6d8f320d9e4fc4393f045673d61ab612/Moby-logo.png?h=250",
+      "type": "docker",
+      "is_beta": true
     }
   },
   "prefect-gcp": {
@@ -979,11 +989,13 @@
           }
         }
       },
-      "description": "",
-      "documentation_url": "",
+      "description": "Execute flow runs within containers on Google Cloud Run. Requires a Google Cloud account.",
+      "display_name": "Google Cloud Run",
+      "documentation_url": "https://prefecthq.github.io/prefect-gcp/worker/",
       "install_command": "pip install prefect-gcp",
-      "logo_url": "",
-      "type": "cloud-run"
+      "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/4SpnOBvMYkHp6z939MDKP6/549a91bc1ce9afd4fb12c68db7b68106/social-icon-google-cloud-1200-630.png?h=250",
+      "type": "cloud-run",
+      "is_beta": true
     }
   },
   "prefect-kubernetes": {
@@ -1147,11 +1159,13 @@
           }
         }
       },
-      "description": "",
-      "documentation_url": "",
+      "description": "Execute Flow runs within jobs scheduled on a Kubernetes cluster. Requires a Kubernetes cluster.",
+      "display_name": "Kubernetes",
+      "documentation_url": "https://prefecthq.github.io/prefect-kubernetes/worker/",
       "install_command": "pip install prefect-kubernetes",
-      "logo_url": "",
-      "type": "kubernetes"
+      "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/1zrSeY8DZ1MJZs2BAyyyGk/20445025358491b8b72600b8f996125b/Kubernetes_logo_without_workmark.svg.png?h=250",
+      "type": "kubernetes",
+      "is_beta": true
     }
   }
 }
