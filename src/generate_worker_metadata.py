@@ -29,11 +29,15 @@ def generate_worker_metadata(worker_subcls: Type[BaseWorker], package_name: str)
                 "type": worker_subcls.type,
                 "install_command": f"pip install {package_name}",
                 "description": worker_subcls.get_description(),
+                "display_name": getattr(
+                    worker_subcls, "display_name", worker_subcls.type
+                ),
                 "logo_url": worker_subcls.get_logo_url(),
                 "documentation_url": worker_subcls.get_documentation_url(),
                 "default_base_job_configuration": (
                     worker_subcls.get_default_base_job_template()
                 ),  # noqa E501
+                "is_beta": getattr(worker_subcls, "is_beta", False),
             }.items()
         )
     )
@@ -52,10 +56,16 @@ def get_worker_metadata_from_prefect():
     output = {
         "prefect-agent": {
             "type": "prefect-agent",
+            "documentation_url": (
+                "https://docs.prefect.io/latest/concepts/work-pools/#agent-overview"
+            ),
+            "display_name": "Prefect Agent",
+            "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/3xff6sYjtyYKgqtalUdnDr/22812da2b176be8a7b2e50cde745d5ee/agent.svg",
             "install_command": "pip install prefect",
             "default_base_job_configuration": {},
             "description": (
-                "A Prefect agent that executes flow runs via infrastructure blocks."
+                "Execute flow runs on heterogenous infrastructure using infrastructure"
+                " blocks."
             ),
         }
     }

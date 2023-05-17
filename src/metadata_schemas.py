@@ -33,10 +33,12 @@ worker_schema = {
     "properties": {
         "type": {"type": "string"},
         "description": {"type": "string"},
+        "display_name": {"type": "string"},
         "documentation_url": {"type": "string"},
         "logo_url": {"type": "string"},
         "install_command": {"type": "string"},
         "default_base_job_configuration": {"type": "object"},
+        "is_beta": {"type": "boolean"},
     },
     "required": [
         "type",
