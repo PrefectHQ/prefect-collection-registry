@@ -124,6 +124,7 @@
           "cluster": "{{ cluster }}"
         },
         "variables": {
+          "description": "Variables for templating an ECS job.",
           "type": "object",
           "properties": {
             "name": {
@@ -361,12 +362,12 @@
         }
       },
       "description": "Execute flow runs within containers on AWS ECS. Works with existing ECS clusters and serverless execution via AWS Fargate. Requires an AWS account.",
-      "display_name": "AWS Elastic Container Service",
+      "display_name": "ecs",
       "documentation_url": "https://prefecthq.github.io/prefect-aws/ecs_worker/",
       "install_command": "pip install prefect-aws",
+      "is_beta": false,
       "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/1jbV4lceHOjGgunX15lUwT/db88e184d727f721575aeb054a37e277/aws.png?h=250",
-      "type": "ecs",
-      "is_beta": true
+      "type": "ecs"
     }
   },
   "prefect-azure": {
