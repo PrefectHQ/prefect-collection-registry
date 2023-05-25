@@ -990,13 +990,13 @@
           }
         }
       },
-      "description": "Execute flow runs within containers on Google Cloud Run. Requires a Google Cloud account.",
-      "display_name": "Google Cloud Run",
+      "description": "Execute flow runs within containers on Google Cloud Run. Requires a Google Cloud Platform account.",
+      "display_name": "cloud-run",
       "documentation_url": "https://prefecthq.github.io/prefect-gcp/worker/",
       "install_command": "pip install prefect-gcp",
+      "is_beta": false,
       "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/4SpnOBvMYkHp6z939MDKP6/549a91bc1ce9afd4fb12c68db7b68106/social-icon-google-cloud-1200-630.png?h=250",
-      "type": "cloud-run",
-      "is_beta": true
+      "type": "cloud-run"
     }
   },
   "prefect-kubernetes": {
