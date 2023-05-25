@@ -6460,7 +6460,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.4.1"
+          "version": "0.4.2"
         }
       },
       "cloud-run-job": {
@@ -6626,7 +6626,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "0.4.1"
+          "version": "0.4.2"
         }
       },
       "gcp-credentials": {
@@ -6667,7 +6667,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.4.1"
+          "version": "0.4.2"
         }
       },
       "gcpsecret": {
@@ -6745,7 +6745,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.4.1"
+          "version": "0.4.2"
         }
       },
       "gcs-bucket": {
@@ -6833,7 +6833,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "0.4.1"
+          "version": "0.4.2"
         }
       },
       "vertex-ai-custom-training-job": {
@@ -6844,7 +6844,7 @@
         "description": "Infrastructure block used to run Vertex AI custom training jobs. This block is part of the prefect-gcp collection. Install prefect-gcp with `pip install prefect-gcp` to use this block.",
         "code_example": "```python\nfrom prefect_gcp.aiplatform import VertexAICustomTrainingJob\n\nvertex_ai_custom_training_job_block = VertexAICustomTrainingJob.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:f8f79ad13d7ac3c0eb5c02eb63db445bf458c9a5df79de71b7cf136c56b20760",
+          "checksum": "sha256:3cfb58eddef311b9ed90e4c4a35605882c543b1ae51b32d770880ae4dd9af59f",
           "fields": {
             "title": "VertexAICustomTrainingJob",
             "description": "Infrastructure block used to run Vertex AI custom training jobs.",
@@ -6917,6 +6917,23 @@
                 "title": "Accelerator Type",
                 "description": "The type of accelerator to attach to the machine.",
                 "type": "string"
+              },
+              "accelerator_count": {
+                "title": "Accelerator Count",
+                "description": "The number of accelerators to attach to the machine.",
+                "type": "integer"
+              },
+              "boot_disk_type": {
+                "title": "Boot Disk Type",
+                "description": "The type of boot disk to attach to the machine.",
+                "default": "pd-ssd",
+                "type": "string"
+              },
+              "boot_disk_size_gb": {
+                "title": "Boot Disk Size",
+                "description": "The size of the boot disk to attach to the machine, in gigabytes.",
+                "default": 100,
+                "type": "integer"
               },
               "maximum_run_time": {
                 "title": "Maximum Run Time",
@@ -6998,7 +7015,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "0.4.1"
+          "version": "0.4.2"
         }
       }
     }
