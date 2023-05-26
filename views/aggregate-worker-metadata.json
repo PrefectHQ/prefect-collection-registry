@@ -1160,13 +1160,13 @@
           }
         }
       },
-      "description": "Execute Flow runs within jobs scheduled on a Kubernetes cluster. Requires a Kubernetes cluster.",
-      "display_name": "Kubernetes",
+      "description": "Execute flow runs within jobs scheduled on a Kubernetes cluster. Requires a Kubernetes cluster.",
+      "display_name": "kubernetes",
       "documentation_url": "https://prefecthq.github.io/prefect-kubernetes/worker/",
       "install_command": "pip install prefect-kubernetes",
+      "is_beta": false,
       "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/1zrSeY8DZ1MJZs2BAyyyGk/20445025358491b8b72600b8f996125b/Kubernetes_logo_without_workmark.svg.png?h=250",
-      "type": "kubernetes",
-      "is_beta": true
+      "type": "kubernetes"
     }
   }
 }
