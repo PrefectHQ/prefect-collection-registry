@@ -63,13 +63,13 @@
           }
         }
       },
-      "description": "Execute flow runs as subprocesses on a worker. Works well for local execution when first getting started.",
-      "display_name": "Local Subprocess",
-      "documentation_url": "https://docs.prefect.io/latest/api-ref/prefect/workers/process/",
+      "description": "Worker that executes flow runs within processes.",
+      "display_name": "process",
+      "documentation_url": "",
       "install_command": "pip install prefect",
+      "is_beta": false,
       "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/39WQhVu4JK40rZWltGqhuC/d15be6189a0cb95949a6b43df00dcb9b/image5.png?h=250",
-      "type": "process",
-      "is_beta": true
+      "type": "process"
     }
   },
   "prefect-aws": {
