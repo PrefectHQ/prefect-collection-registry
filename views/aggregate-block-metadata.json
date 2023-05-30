@@ -90,7 +90,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.10.9"
+          "version": "2.10.10"
         }
       },
       "date-time": {
@@ -122,7 +122,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.10.9"
+          "version": "2.10.10"
         }
       },
       "docker-container": {
@@ -323,7 +323,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.10.9"
+          "version": "2.10.10"
         }
       },
       "docker-registry": {
@@ -378,7 +378,7 @@
           "capabilities": [
             "docker-login"
           ],
-          "version": "2.10.9"
+          "version": "2.10.10"
         }
       },
       "gcs": {
@@ -429,7 +429,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.10.9"
+          "version": "2.10.10"
         }
       },
       "github": {
@@ -483,7 +483,7 @@
           "capabilities": [
             "get-directory"
           ],
-          "version": "2.10.9"
+          "version": "2.10.10"
         }
       },
       "json": {
@@ -513,7 +513,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.10.9"
+          "version": "2.10.10"
         }
       },
       "kubernetes-cluster-config": {
@@ -550,7 +550,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.10.9"
+          "version": "2.10.10"
         }
       },
       "kubernetes-job": {
@@ -724,7 +724,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.10.9"
+          "version": "2.10.10"
         }
       },
       "local-file-system": {
@@ -757,7 +757,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.10.9"
+          "version": "2.10.10"
         }
       },
       "mattermost-webhook": {
@@ -844,7 +844,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.10.9"
+          "version": "2.10.10"
         }
       },
       "ms-teams-webhook": {
@@ -895,7 +895,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.10.9"
+          "version": "2.10.10"
         }
       },
       "opsgenie-webhook": {
@@ -1017,7 +1017,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.10.9"
+          "version": "2.10.10"
         }
       },
       "pager-duty-webhook": {
@@ -1130,7 +1130,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.10.9"
+          "version": "2.10.10"
         }
       },
       "process": {
@@ -1212,7 +1212,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.10.9"
+          "version": "2.10.10"
         }
       },
       "remote-file-system": {
@@ -1254,7 +1254,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.10.9"
+          "version": "2.10.10"
         }
       },
       "s3": {
@@ -1310,7 +1310,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.10.9"
+          "version": "2.10.10"
         }
       },
       "secret": {
@@ -1345,7 +1345,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.10.9"
+          "version": "2.10.10"
         }
       },
       "slack-webhook": {
@@ -1396,7 +1396,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.10.9"
+          "version": "2.10.10"
         }
       },
       "smb": {
@@ -1462,7 +1462,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.10.9"
+          "version": "2.10.10"
         }
       },
       "string": {
@@ -1493,7 +1493,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.10.9"
+          "version": "2.10.10"
         }
       },
       "twilio-sms": {
@@ -1566,7 +1566,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.10.9"
+          "version": "2.10.10"
         }
       },
       "webhook": {
@@ -1621,7 +1621,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.10.9"
+          "version": "2.10.10"
         }
       }
     }
@@ -1924,7 +1924,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.3.1"
+          "version": "0.3.2"
         }
       },
       "aws-secret": {
@@ -2064,7 +2064,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.3.1"
+          "version": "0.3.2"
         }
       },
       "ecs-task": {
@@ -2351,7 +2351,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "0.3.1"
+          "version": "0.3.2"
         }
       },
       "minio-credentials": {
@@ -2456,7 +2456,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.3.1"
+          "version": "0.3.2"
         }
       },
       "s3-bucket": {
@@ -2664,7 +2664,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "0.3.1"
+          "version": "0.3.2"
         }
       }
     }
@@ -6460,7 +6460,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.4.1"
+          "version": "0.4.2"
         }
       },
       "cloud-run-job": {
@@ -6626,7 +6626,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "0.4.1"
+          "version": "0.4.2"
         }
       },
       "gcp-credentials": {
@@ -6667,7 +6667,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.4.1"
+          "version": "0.4.2"
         }
       },
       "gcpsecret": {
@@ -6745,7 +6745,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.4.1"
+          "version": "0.4.2"
         }
       },
       "gcs-bucket": {
@@ -6833,7 +6833,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "0.4.1"
+          "version": "0.4.2"
         }
       },
       "vertex-ai-custom-training-job": {
@@ -6844,7 +6844,7 @@
         "description": "Infrastructure block used to run Vertex AI custom training jobs. This block is part of the prefect-gcp collection. Install prefect-gcp with `pip install prefect-gcp` to use this block.",
         "code_example": "```python\nfrom prefect_gcp.aiplatform import VertexAICustomTrainingJob\n\nvertex_ai_custom_training_job_block = VertexAICustomTrainingJob.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:f8f79ad13d7ac3c0eb5c02eb63db445bf458c9a5df79de71b7cf136c56b20760",
+          "checksum": "sha256:3cfb58eddef311b9ed90e4c4a35605882c543b1ae51b32d770880ae4dd9af59f",
           "fields": {
             "title": "VertexAICustomTrainingJob",
             "description": "Infrastructure block used to run Vertex AI custom training jobs.",
@@ -6917,6 +6917,23 @@
                 "title": "Accelerator Type",
                 "description": "The type of accelerator to attach to the machine.",
                 "type": "string"
+              },
+              "accelerator_count": {
+                "title": "Accelerator Count",
+                "description": "The number of accelerators to attach to the machine.",
+                "type": "integer"
+              },
+              "boot_disk_type": {
+                "title": "Boot Disk Type",
+                "description": "The type of boot disk to attach to the machine.",
+                "default": "pd-ssd",
+                "type": "string"
+              },
+              "boot_disk_size_gb": {
+                "title": "Boot Disk Size",
+                "description": "The size of the boot disk to attach to the machine, in gigabytes.",
+                "default": 100,
+                "type": "integer"
               },
               "maximum_run_time": {
                 "title": "Maximum Run Time",
@@ -6998,7 +7015,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "0.4.1"
+          "version": "0.4.2"
         }
       }
     }
@@ -7388,7 +7405,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.2.7"
+          "version": "0.2.8"
         }
       }
     }
