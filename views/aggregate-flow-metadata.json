@@ -427,7 +427,7 @@
       "description": {
         "summary": "Triggers a Databricks jobs runs and waits for the triggered runs to complete.",
         "examples": [
-          "Submit jobs runs and wait.\n```python\nfrom prefect import flow\nfrom prefect_databricks import DatabricksCredentials\nfrom prefect_databricks.flows import jobs_runs_submit_and_wait_for_completion\nfrom prefect_databricks.models.jobs import (\n    AutoScale,\n    AwsAttributes,\n    JobTaskSettings,\n    NotebookTask,\n    NewCluster,\n)\n\n@flow\ndef jobs_runs_submit_and_wait_for_completion_flow(notebook_path, **base_parameters):\n    databricks_credentials = await DatabricksCredentials.load(\"BLOCK_NAME\")\n\n    # specify new cluster settings\n    aws_attributes = AwsAttributes(\n        availability=\"SPOT\",\n        zone_id=\"us-west-2a\",\n        ebs_volume_type=\"GENERAL_PURPOSE_SSD\",\n        ebs_volume_count=3,\n        ebs_volume_size=100,\n    )\n    auto_scale = AutoScale(min_workers=1, max_workers=2)\n    new_cluster = NewCluster(\n        aws_attributes=aws_attributes,\n        autoscale=auto_scale,\n        node_type_id=\"m4.large\",\n        spark_version=\"10.4.x-scala2.12\",\n        spark_conf={\"spark.speculation\": True},\n    )\n\n    # specify notebook to use and parameters to pass\n    notebook_task = NotebookTask(\n        notebook_path=notebook_path,\n        base_parameters=base_parameters,\n    )\n\n    # compile job task settings\n    job_task_settings = JobTaskSettings(\n        new_cluster=new_cluster,\n        notebook_task=notebook_task,\n        task_key=\"prefect-task\"\n    )\n\n    multi_task_runs = jobs_runs_submit_and_wait_for_completion(\n        databricks_credentials=databricks_credentials,\n        run_name=\"prefect-job\",\n        tasks=[job_task_settings]\n    )\n\n    return multi_task_runs\n```"
+          "Submit jobs runs and wait.\n```python\nfrom prefect import flow\nfrom prefect_databricks import DatabricksCredentials\nfrom prefect_databricks.flows import jobs_runs_submit_and_wait_for_completion\nfrom prefect_databricks.models.jobs import (\n    AutoScale,\n    AwsAttributes,\n    JobTaskSettings,\n    NotebookTask,\n    NewCluster,\n)\n@flow\ndef jobs_runs_submit_and_wait_for_completion_flow(notebook_path, **base_parameters):\n    databricks_credentials = await DatabricksCredentials.load(\"BLOCK_NAME\")\n    # specify new cluster settings\n    aws_attributes = AwsAttributes(\n        availability=\"SPOT\",\n        zone_id=\"us-west-2a\",\n        ebs_volume_type=\"GENERAL_PURPOSE_SSD\",\n        ebs_volume_count=3,\n        ebs_volume_size=100,\n    )\n    auto_scale = AutoScale(min_workers=1, max_workers=2)\n    new_cluster = NewCluster(\n        aws_attributes=aws_attributes,\n        autoscale=auto_scale,\n        node_type_id=\"m4.large\",\n        spark_version=\"10.4.x-scala2.12\",\n        spark_conf={\"spark.speculation\": True},\n    )\n    # specify notebook to use and parameters to pass\n    notebook_task = NotebookTask(\n        notebook_path=notebook_path,\n        base_parameters=base_parameters,\n    )\n    # compile job task settings\n    job_task_settings = JobTaskSettings(\n        new_cluster=new_cluster,\n        notebook_task=notebook_task,\n        task_key=\"prefect-task\"\n    )\n    multi_task_runs = jobs_runs_submit_and_wait_for_completion(\n        databricks_credentials=databricks_credentials,\n        run_name=\"prefect-job\",\n        tasks=[job_task_settings]\n    )\n    return multi_task_runs\n```"
         ]
       },
       "documentation_url": "https://prefecthq.github.io/prefect-databricks/flows/#prefect_databricks.flows.jobs_runs_submit_and_wait_for_completion",
@@ -984,6 +984,15 @@
             "type": "object",
             "properties": {}
           },
+          "RuntimeEngine": {
+            "title": "RuntimeEngine",
+            "description": "Decides which runtime engine to be use, e.g. Standard vs. Photon. If unspecified, the runtime engine is inferred from spark_version.",
+            "enum": [
+              "STANDARD",
+              "PHOTON"
+            ],
+            "type": "string"
+          },
           "NewCluster": {
             "title": "NewCluster",
             "description": "See source code for the fields' description.",
@@ -1095,6 +1104,14 @@
                 "title": "Spark Version",
                 "description": "The Spark version of the cluster. A list of available Spark versions can be retrieved by using the [Runtime versions](https://docs.databricks.com/dev-tools/api/latest/clusters.html#runtime-versions) API call.",
                 "type": "string"
+              },
+              "runtime_engine": {
+                "description": "Decides which runtime engine to be use, e.g. Standard vs. Photon. If unspecified, the runtime engine is inferred from spark_version. see https://docs.databricks.com/api-explorer/workspace/jobs/create  for more details",
+                "allOf": [
+                  {
+                    "$ref": "#/definitions/RuntimeEngine"
+                  }
+                ]
               },
               "ssh_public_keys": {
                 "title": "Ssh Public Keys",
@@ -1650,6 +1667,167 @@
       "path_containing_flow": "prefect_databricks/flows.py",
       "repo_url": "https://github.com/PrefectHQ/prefect-databricks",
       "slug": "jobs_runs_submit_and_wait_for_completion"
+    },
+    "jobs_runs_submit_by_id_and_wait_for_completion": {
+      "description": {
+        "summary": "Triggers a Databricks jobs runs and waits for the triggered runs to complete.",
+        "examples": [
+          "```python\nfrom prefect import flow\nfrom prefect_databricks import DatabricksCredentials\nfrom prefect_databricks.flows import (\n    jobs_runs_submit_by_id_and_wait_for_completion,\n)\n\n\n@flow\ndef submit_existing_job(block_name: str, job_id):\n    databricks_credentials = DatabricksCredentials.load(block_name)\n\n    run = jobs_runs_submit_by_id_and_wait_for_completion(\n        databricks_credentials=databricks_credentials, job_id=job_id\n    )\n\n    return run\n\n\nsubmit_existing_job(block_name=\"db-creds\", job_id=db_job_id)\n```"
+        ]
+      },
+      "documentation_url": "https://prefecthq.github.io/prefect-databricks/flows/#prefect_databricks.flows.jobs_runs_submit_by_id_and_wait_for_completion",
+      "entrypoint": "prefect_databricks/flows.py:jobs_runs_submit_by_id_and_wait_for_completion",
+      "install_command": "pip install prefect-databricks",
+      "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5GTHI1PH2dTiantfps6Fnc/1c750fab7f4c14ea1b93a62b9fea6a94/databricks_logo_icon_170295.png?h=250",
+      "name": "Submit existing job runs and wait for completion",
+      "parameters": {
+        "title": "Parameters",
+        "type": "object",
+        "properties": {
+          "databricks_credentials": {
+            "title": "databricks_credentials",
+            "description": "Credentials to use for authentication with Databricks.",
+            "position": 0,
+            "allOf": [
+              {
+                "$ref": "#/definitions/DatabricksCredentials"
+              }
+            ]
+          },
+          "job_id": {
+            "title": "job_id",
+            "description": "Id of the databricks job.",
+            "position": 1,
+            "type": "integer"
+          },
+          "idempotency_token": {
+            "title": "idempotency_token",
+            "description": "\nAn optional token that can be used to guarantee the idempotency of job\nrun requests. If a run with the provided token already\nexists, the request does not create a new run but returns\nthe ID of the existing run instead. If a run with the\nprovided token is deleted, an error is returned.  If you\nspecify the idempotency token, upon failure you can retry\nuntil the request succeeds. Databricks guarantees that\nexactly one run is launched with that idempotency token.\nThis token must have at most 64 characters.  For more\ninformation, see [How to ensure idempotency for\njobs](https://kb.databricks.com/jobs/jobs-idempotency.html),\ne.g. `8f018174-4792-40d5-bcbc-3e6a527352c8`.",
+            "position": 2,
+            "type": "string"
+          },
+          "jar_params": {
+            "title": "jar_params",
+            "description": "\nA list of parameters for jobs with Spark JAR tasks, for example \"jar_params\"\n: [\"john doe\", \"35\"]. The parameters are used to invoke the main function of\nthe main class specified in the Spark JAR task. If not specified upon run-\nnow, it defaults to an empty list. jar_params cannot be specified in\nconjunction with notebook_params. The JSON representation of this field (for\nexample {\"jar_params\": [\"john doe\",\"35\"]}) cannot exceed 10,000 bytes.",
+            "position": 3,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "max_wait_seconds": {
+            "title": "max_wait_seconds",
+            "description": "\nMaximum number of seconds to wait for the entire flow to complete.",
+            "default": 900,
+            "position": 4,
+            "type": "integer"
+          },
+          "poll_frequency_seconds": {
+            "title": "poll_frequency_seconds",
+            "description": "Number of seconds to wait in between checks for\nrun completion.",
+            "default": 10,
+            "position": 5,
+            "type": "integer"
+          },
+          "notebook_params": {
+            "title": "notebook_params",
+            "description": "\nA map from keys to values for jobs with notebook task, for example\n\"notebook_params\": {\"name\": \"john doe\", \"age\": \"35\"}. The map is\npassed to the notebook and is accessible through the dbutils.widgets.get\nfunction. If not specified upon run-now, the triggered run uses the job\u2019s\nbase parameters. notebook_params cannot be specified in conjunction with\njar_params. Use Task parameter variables to set parameters containing\ninformation about job runs. The JSON representation of this field\n(for example {\"notebook_params\":{\"name\":\"john doe\",\"age\":\"35\"}}) cannot\nexceed 10,000 bytes.",
+            "position": 6,
+            "type": "object"
+          },
+          "python_params": {
+            "title": "python_params",
+            "description": "\nA list of parameters for jobs with Python tasks, for example \"python_params\"\n:[\"john doe\", \"35\"]. The parameters are passed to Python file as command-\nline parameters. If specified upon run-now, it would overwrite the\nparameters specified in job setting. The JSON representation of this field\n(for example {\"python_params\":[\"john doe\",\"35\"]}) cannot exceed 10,000 bytes\nUse Task parameter variables to set parameters containing information\nabout job runs. These parameters accept only Latin characters (ASCII\ncharacter set). Using non-ASCII characters returns an error. Examples of\ninvalid, non-ASCII characters are Chinese, Japanese kanjis, and emojis.",
+            "position": 7,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "spark_submit_params": {
+            "title": "spark_submit_params",
+            "description": "\nA list of parameters for jobs with spark submit task, for example\n\"spark_submit_params\": [\"--class\", \"org.apache.spark.examples.SparkPi\"].\nThe parameters are passed to spark-submit script as command-line parameters.\nIf specified upon run-now, it would overwrite the parameters specified in\njob setting. The JSON representation of this field (for example\n{\"python_params\":[\"john doe\",\"35\"]}) cannot exceed 10,000 bytes.\nUse Task parameter variables to set parameters containing information about\njob runs. These parameters accept only Latin characters (ASCII character\nset). Using non-ASCII characters returns an error. Examples of invalid,\nnon-ASCII characters are Chinese, Japanese kanjis, and emojis.",
+            "position": 8,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "python_named_params": {
+            "title": "python_named_params",
+            "description": "\nA map from keys to values for jobs with Python wheel task, for example\n\"python_named_params\": {\"name\": \"task\", \"data\": \"dbfs:/path/to/data.json\"}.",
+            "position": 9,
+            "type": "object"
+          },
+          "pipeline_params": {
+            "title": "pipeline_params",
+            "description": "\nIf `full_refresh` is set to true, trigger a full refresh on the\ndelta live table e.g.\n```\n    \"pipeline_params\": {\"full_refresh\": true}\n```",
+            "position": 10,
+            "type": "string"
+          },
+          "sql_params": {
+            "title": "sql_params",
+            "description": "\nA map from keys to values for SQL tasks, for example \"sql_params\":\n{\"name\": \"john doe\", \"age\": \"35\"}. The SQL alert task does not support\ncustom parameters.",
+            "position": 11,
+            "type": "object"
+          },
+          "dbt_commands": {
+            "title": "dbt_commands",
+            "description": "\nAn array of commands to execute for jobs with the dbt task,\nfor example \"dbt_commands\": [\"dbt deps\", \"dbt seed\", \"dbt run\"]",
+            "position": 12,
+            "type": "array",
+            "items": {}
+          },
+          "jobs_runs_submit_kwargs": {
+            "title": "jobs_runs_submit_kwargs",
+            "position": 13,
+            "type": "object"
+          }
+        },
+        "required": [
+          "databricks_credentials",
+          "job_id",
+          "jobs_runs_submit_kwargs"
+        ],
+        "definitions": {
+          "DatabricksCredentials": {
+            "title": "DatabricksCredentials",
+            "description": "Block used to manage Databricks authentication.",
+            "type": "object",
+            "properties": {
+              "databricks_instance": {
+                "title": "Databricks Instance",
+                "description": "Databricks instance used in formatting the endpoint URL.",
+                "type": "string"
+              },
+              "token": {
+                "title": "Token",
+                "description": "The token to authenticate with Databricks.",
+                "type": "string",
+                "writeOnly": true,
+                "format": "password"
+              },
+              "client_kwargs": {
+                "title": "Client Kwargs",
+                "description": "Additional keyword arguments to pass to AsyncClient.",
+                "type": "object"
+              }
+            },
+            "required": [
+              "databricks_instance",
+              "token"
+            ],
+            "block_type_slug": "databricks-credentials",
+            "secret_fields": [
+              "token"
+            ],
+            "block_schema_references": {}
+          }
+        }
+      },
+      "path_containing_flow": "prefect_databricks/flows.py",
+      "repo_url": "https://github.com/PrefectHQ/prefect-databricks",
+      "slug": "jobs_runs_submit_by_id_and_wait_for_completion"
     },
     "jobs_runs_wait_for_completion": {
       "description": {
