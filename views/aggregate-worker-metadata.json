@@ -63,11 +63,11 @@
           }
         }
       },
-      "description": "Worker that executes flow runs within processes.",
-      "display_name": "process",
-      "documentation_url": "",
+      "description": "Execute flow runs as subprocesses on a worker. Works well for local execution when first getting started.",
+      "display_name": "Local Subprocess",
+      "documentation_url": "https://docs.prefect.io/latest/api-ref/prefect/workers/process/",
       "install_command": "pip install prefect",
-      "is_beta": false,
+      "is_beta": true,
       "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/39WQhVu4JK40rZWltGqhuC/d15be6189a0cb95949a6b43df00dcb9b/image5.png?h=250",
       "type": "process"
     }
@@ -362,10 +362,10 @@
         }
       },
       "description": "Execute flow runs within containers on AWS ECS. Works with existing ECS clusters and serverless execution via AWS Fargate. Requires an AWS account.",
-      "display_name": "ecs",
+      "display_name": "AWS Elastic Container Service",
       "documentation_url": "https://prefecthq.github.io/prefect-aws/ecs_worker/",
       "install_command": "pip install prefect-aws",
-      "is_beta": false,
+      "is_beta": true,
       "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/1jbV4lceHOjGgunX15lUwT/db88e184d727f721575aeb054a37e277/aws.png?h=250",
       "type": "ecs"
     }
@@ -992,10 +992,10 @@
         }
       },
       "description": "Execute flow runs within containers on Google Cloud Run. Requires a Google Cloud Platform account.",
-      "display_name": "cloud-run",
+      "display_name": "Google Cloud Run",
       "documentation_url": "https://prefecthq.github.io/prefect-gcp/worker/",
       "install_command": "pip install prefect-gcp",
-      "is_beta": false,
+      "is_beta": true,
       "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/4SpnOBvMYkHp6z939MDKP6/549a91bc1ce9afd4fb12c68db7b68106/social-icon-google-cloud-1200-630.png?h=250",
       "type": "cloud-run"
     }
@@ -1162,10 +1162,10 @@
         }
       },
       "description": "Execute flow runs within jobs scheduled on a Kubernetes cluster. Requires a Kubernetes cluster.",
-      "display_name": "kubernetes",
+      "display_name": "Kubernetes",
       "documentation_url": "https://prefecthq.github.io/prefect-kubernetes/worker/",
       "install_command": "pip install prefect-kubernetes",
-      "is_beta": false,
+      "is_beta": true,
       "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/1zrSeY8DZ1MJZs2BAyyyGk/20445025358491b8b72600b8f996125b/Kubernetes_logo_without_workmark.svg.png?h=250",
       "type": "kubernetes"
     }
