@@ -90,7 +90,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.10.10"
+          "version": "2.10.11"
         }
       },
       "date-time": {
@@ -122,7 +122,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.10.10"
+          "version": "2.10.11"
         }
       },
       "docker-container": {
@@ -131,7 +131,7 @@
         "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/2IfXXfMq66mrzJBDFFCHTp/6d8f320d9e4fc4393f045673d61ab612/Moby-logo.png?h=250",
         "documentation_url": "https://docs.prefect.io/api-ref/prefect/infrastructure/#prefect.infrastructure.DockerContainer",
         "description": "Runs a command in a container.\n\nRequires a Docker Engine to be connectable. Docker settings will be retrieved from\nthe environment.\n\nClick [here](https://docs.prefect.io/tutorials/docker/) to see a tutorial.",
-        "code_example": "```python\nfrom prefect.infrastructure.docker import DockerContainer\n\ndocker_container_block = DockerContainer.load(\"BLOCK_NAME\")\n```",
+        "code_example": "```python\nfrom prefect.infrastructure.container import DockerContainer\n\ndocker_container_block = DockerContainer.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
           "checksum": "sha256:78f682fc53eeb9a7c4917f621b9afccc039842c432701f07abaef3ba5f1ff752",
           "fields": {
@@ -323,7 +323,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.10.10"
+          "version": "2.10.11"
         }
       },
       "docker-registry": {
@@ -332,7 +332,7 @@
         "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/2IfXXfMq66mrzJBDFFCHTp/6d8f320d9e4fc4393f045673d61ab612/Moby-logo.png?h=250",
         "documentation_url": "https://docs.prefect.io/api-ref/prefect/infrastructure/#prefect.infrastructure.docker.DockerRegistry",
         "description": "Connects to a Docker registry.\n\nRequires a Docker Engine to be connectable.",
-        "code_example": "```python\nfrom prefect.infrastructure.docker import DockerRegistry\n\ndocker_registry_block = DockerRegistry.load(\"BLOCK_NAME\")\n```",
+        "code_example": "```python\nfrom prefect.infrastructure.container import DockerRegistry\n\ndocker_registry_block = DockerRegistry.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
           "checksum": "sha256:6db1457676eee0b54ca2834b06f80a80f7c90112e64f1bdd26afb2e62fcceed9",
           "fields": {
@@ -378,7 +378,7 @@
           "capabilities": [
             "docker-login"
           ],
-          "version": "2.10.10"
+          "version": "2.10.11"
         }
       },
       "gcs": {
@@ -429,7 +429,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.10.10"
+          "version": "2.10.11"
         }
       },
       "github": {
@@ -483,7 +483,7 @@
           "capabilities": [
             "get-directory"
           ],
-          "version": "2.10.10"
+          "version": "2.10.11"
         }
       },
       "json": {
@@ -513,7 +513,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.10.10"
+          "version": "2.10.11"
         }
       },
       "kubernetes-cluster-config": {
@@ -550,7 +550,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.10.10"
+          "version": "2.10.11"
         }
       },
       "kubernetes-job": {
@@ -724,7 +724,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.10.10"
+          "version": "2.10.11"
         }
       },
       "local-file-system": {
@@ -757,7 +757,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.10.10"
+          "version": "2.10.11"
         }
       },
       "mattermost-webhook": {
@@ -844,7 +844,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.10.10"
+          "version": "2.10.11"
         }
       },
       "ms-teams-webhook": {
@@ -895,7 +895,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.10.10"
+          "version": "2.10.11"
         }
       },
       "opsgenie-webhook": {
@@ -1017,7 +1017,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.10.10"
+          "version": "2.10.11"
         }
       },
       "pager-duty-webhook": {
@@ -1130,7 +1130,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.10.10"
+          "version": "2.10.11"
         }
       },
       "process": {
@@ -1212,7 +1212,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.10.10"
+          "version": "2.10.11"
         }
       },
       "remote-file-system": {
@@ -1254,7 +1254,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.10.10"
+          "version": "2.10.11"
         }
       },
       "s3": {
@@ -1310,7 +1310,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.10.10"
+          "version": "2.10.11"
         }
       },
       "secret": {
@@ -1345,7 +1345,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.10.10"
+          "version": "2.10.11"
         }
       },
       "slack-webhook": {
@@ -1396,7 +1396,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.10.10"
+          "version": "2.10.11"
         }
       },
       "smb": {
@@ -1462,7 +1462,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.10.10"
+          "version": "2.10.11"
         }
       },
       "string": {
@@ -1493,7 +1493,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.10.10"
+          "version": "2.10.11"
         }
       },
       "twilio-sms": {
@@ -1566,7 +1566,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.10.10"
+          "version": "2.10.11"
         }
       },
       "webhook": {
@@ -1621,7 +1621,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.10.10"
+          "version": "2.10.11"
         }
       }
     }
