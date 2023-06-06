@@ -199,6 +199,6 @@ async def update_all_collections(
 
     return Completed(message="All new releases have been recorded.")
 
+
 if __name__ == "__main__":
-   import asyncio
-   asyncio.run(update_all_collections())
+    asyncio.run(update_collection_metadata("prefect", "update-metadata-test"))
