@@ -201,4 +201,4 @@ async def update_all_collections(
 
 
 if __name__ == "__main__":
-    asyncio.run(update_collection_metadata("prefect", "update-metadata-test"))
+    asyncio.run(update_all_collections())
