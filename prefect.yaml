@@ -12,7 +12,7 @@ push: null
 
 # pull section allows you to provide instructions for cloning this project in remote locations
 pull:
-  - prefect.projects.steps.clone_project:
+  - prefect.projects.steps.git_clone:
       repository: https://github.com/PrefectHQ/prefect-collection-registry
       branch: main
       access_token: "{{ prefect.blocks.secret.prefect-collection-registry-contents-ro-pat }}"
