@@ -2676,25 +2676,25 @@
         "slug": "azure-blob-storage-credentials",
         "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/6AiQ6HRIft8TspZH7AfyZg/39fd82bdbb186db85560f688746c8cdd/azure.png?h=250",
         "documentation_url": "https://prefecthq.github.io/prefect-azure/credentials/#prefect_azure.credentials.AzureBlobStorageCredentials",
-        "description": "Block used to manage Blob Storage authentication with Azure.\nAzure authentication is handled via the `azure` module through\na connection string. This block is part of the prefect-azure collection. Install prefect-azure with `pip install prefect-azure` to use this block.",
-        "code_example": "Load stored Azure Blob Storage credentials:\n```python\nfrom prefect_azure import AzureBlobStorageCredentials\nazure_credentials_block = AzureBlobStorageCredentials.load(\"BLOCK_NAME\")\n```",
+        "description": "Stores credentials for authenticating with Azure Blob Storage. This block is part of the prefect-azure collection. Install prefect-azure with `pip install prefect-azure` to use this block.",
+        "code_example": "Load stored Azure Blob Storage credentials and retrieve a blob service client:\n```python\nfrom prefect_azure import AzureBlobStorageCredentials\n\nazure_credentials_block = AzureBlobStorageCredentials.load(\"BLOCK_NAME\")\n\nblob_service_client = azure_credentials_block.get_blob_client()\n```",
         "block_schema": {
-          "checksum": "sha256:9bf39d40868a19b338176231b83556e7273373293fa16862a970014525001242",
+          "checksum": "sha256:73e835b6cb9a1902fd869037fb7f8a90f974508dda7a168e748a1206e7c325eb",
           "fields": {
             "title": "AzureBlobStorageCredentials",
-            "description": "Block used to manage Blob Storage authentication with Azure.\nAzure authentication is handled via the `azure` module through\na connection string.",
+            "description": "Stores credentials for authenticating with Azure Blob Storage.",
             "type": "object",
             "properties": {
               "connection_string": {
                 "title": "Connection String",
-                "description": "If account_url is not provided, the connection string to authenticate.",
+                "description": "The connection string to your Azure storage account. If provided, the connection string will take precedence over the account URL.",
                 "type": "string",
                 "writeOnly": true,
                 "format": "password"
               },
               "account_url": {
-                "title": "Account Url",
-                "description": "If a connection string is not provided, the URL to the Blob Storage account; will use DefaultAzureCredential to authenticate.",
+                "title": "Account URL",
+                "description": "The URL for your Azure storage account. If provided, the account URL will be used to authenticate with the discovered default Azure credentials.",
                 "type": "string"
               }
             },
@@ -2705,7 +2705,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.2.6"
+          "version": "0.2.8"
         }
       },
       "azure-container-instance-credentials": {
@@ -2752,7 +2752,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.2.6"
+          "version": "0.2.8"
         }
       },
       "azure-container-instance-job": {
@@ -3036,7 +3036,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "0.2.6"
+          "version": "0.2.8"
         }
       },
       "azure-cosmos-db-credentials": {
@@ -3071,7 +3071,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.2.6"
+          "version": "0.2.8"
         }
       },
       "azureml-credentials": {
@@ -3136,7 +3136,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.2.6"
+          "version": "0.2.8"
         }
       }
     }
