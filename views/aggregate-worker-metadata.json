@@ -395,7 +395,7 @@
           "task_start_timeout_seconds": "{{ task_start_timeout_seconds }}",
           "task_watch_poll_interval": "{{ task_watch_poll_interval }}",
           "arm_template": {
-            "$schema": "https://schema.management.azure.com/schemas/2022-09-01/deploymentTemplate.json#",
+            "$schema": "https://schema.management.azure.com/schemas/2019-08-01/deploymentTemplate.json#",
             "contentVersion": "1.0.0.0",
             "parameters": {
               "location": {
@@ -423,7 +423,7 @@
             "resources": [
               {
                 "type": "Microsoft.ContainerInstance/containerGroups",
-                "apiVersion": "2021-09-01",
+                "apiVersion": "2022-09-01",
                 "name": "[parameters('container_group_name')]",
                 "location": "[parameters('location')]",
                 "properties": {
@@ -575,8 +575,7 @@
           },
           "required": [
             "resource_group_name",
-            "subscription_id",
-            "aci_credentials"
+            "subscription_id"
           ],
           "definitions": {
             "DockerRegistry": {
@@ -681,9 +680,9 @@
       "display_name": "Azure Container Instances",
       "documentation_url": "https://prefecthq.github.io/prefect-azure/container_instance_worker/",
       "install_command": "pip install prefect-azure",
+      "is_beta": true,
       "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/6AiQ6HRIft8TspZH7AfyZg/39fd82bdbb186db85560f688746c8cdd/azure.png?h=250",
-      "type": "azure-container-instance",
-      "is_beta": true
+      "type": "azure-container-instance"
     }
   },
   "prefect-docker": {
