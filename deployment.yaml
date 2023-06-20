@@ -3,7 +3,6 @@ definitions:
     kubernetes_prd_internal_tools: &kubernetes_prd_internal_tools
       name: kubernetes-prd-internal-tools
       job_variables:
-        image: prefecthq/prefect:2-latest
         env: 
           EXTRA_PIP_PACKAGES: github3.py fastjsonschema gcsfs
 
