@@ -1568,61 +1568,6 @@
           ],
           "version": "2.10.15"
         }
-      },
-      "webhook": {
-        "name": "Webhook",
-        "slug": "webhook",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/6ciCsTFsvUAiiIvTllMfOU/627e9513376ca457785118fbba6a858d/webhook_icon_138018.png?h=250",
-        "documentation_url": "https://docs.prefect.io/api-ref/prefect/blocks/webhook/#prefect.blocks.webhook.Webhook",
-        "description": "Block that enables calling webhooks.",
-        "code_example": "```python\nfrom prefect.blocks.webhook import Webhook\n\nwebhook_block = Webhook.load(\"BLOCK_NAME\")\n```",
-        "block_schema": {
-          "checksum": "sha256:0207cea0ff5b9d2b39e52007c3ba1d797f1aca7906fb3bf26dd409abae953a85",
-          "fields": {
-            "title": "Webhook",
-            "description": "Block that enables calling webhooks.",
-            "type": "object",
-            "properties": {
-              "method": {
-                "title": "Method",
-                "description": "The webhook request method. Defaults to `POST`.",
-                "default": "POST",
-                "enum": [
-                  "GET",
-                  "POST",
-                  "PUT",
-                  "PATCH",
-                  "DELETE"
-                ],
-                "type": "string"
-              },
-              "url": {
-                "title": "Webhook URL",
-                "description": "The webhook URL.",
-                "example": "https://hooks.slack.com/XXX",
-                "type": "string",
-                "writeOnly": true,
-                "format": "password"
-              },
-              "headers": {
-                "title": "Webhook Headers",
-                "description": "A dictionary of headers to send with the webhook request.",
-                "type": "object"
-              }
-            },
-            "required": [
-              "url"
-            ],
-            "block_type_slug": "webhook",
-            "secret_fields": [
-              "url",
-              "headers.*"
-            ],
-            "block_schema_references": {}
-          },
-          "capabilities": [],
-          "version": "2.10.15"
-        }
       }
     }
   },
