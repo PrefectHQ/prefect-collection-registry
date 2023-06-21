@@ -19,7 +19,7 @@ from metadata_schemas import block_schema
 
 # Some collection blocks share names with core blocks. We exclude them
 # from the registry for now to avoid confusion.
-BLOCKS_BLACKLIST = {"k8s-job", "custom-webhook"}
+BLOCKS_BLOCKLIST = {"k8s-job", "custom-webhook"}
 
 
 def generate_block_metadata(block_subcls: Type[Block]) -> Dict[str, Any]:
@@ -59,7 +59,7 @@ def generate_prefect_block_metadata():
                 {
                     slug: generate_block_metadata(subcls)
                     for slug, subcls in block_registry.items()
-                    if slug not in BLOCKS_BLACKLIST
+                    if slug not in BLOCKS_BLOCKLIST
                 }.items()
             )
         )
@@ -75,7 +75,7 @@ def generate_block_metadata_for_module(module: ModuleType):
                     block_subcls
                 )
                 for block_subcls in block_subclasses
-                if block_subcls.get_block_type_slug() not in BLOCKS_BLACKLIST
+                if block_subcls.get_block_type_slug() not in BLOCKS_BLOCKLIST
             }.items()
         )
     )
