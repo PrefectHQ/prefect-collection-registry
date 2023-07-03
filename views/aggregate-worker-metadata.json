@@ -1017,6 +1017,7 @@
               "generateName": "{{ name }}-"
             },
             "spec": {
+              "backoffLimit": 0,
               "ttlSecondsAfterFinished": "{{ finished_job_ttl }}",
               "template": {
                 "spec": {
