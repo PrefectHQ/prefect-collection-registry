@@ -90,7 +90,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.10.18"
+          "version": "2.10.21"
         }
       },
       "date-time": {
@@ -122,7 +122,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.10.18"
+          "version": "2.10.21"
         }
       },
       "docker-container": {
@@ -323,7 +323,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.10.18"
+          "version": "2.10.21"
         }
       },
       "docker-registry": {
@@ -378,7 +378,7 @@
           "capabilities": [
             "docker-login"
           ],
-          "version": "2.10.18"
+          "version": "2.10.21"
         }
       },
       "gcs": {
@@ -429,7 +429,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.10.18"
+          "version": "2.10.21"
         }
       },
       "github": {
@@ -483,7 +483,7 @@
           "capabilities": [
             "get-directory"
           ],
-          "version": "2.10.18"
+          "version": "2.10.21"
         }
       },
       "json": {
@@ -513,7 +513,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.10.18"
+          "version": "2.10.21"
         }
       },
       "kubernetes-cluster-config": {
@@ -550,7 +550,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.10.18"
+          "version": "2.10.21"
         }
       },
       "kubernetes-job": {
@@ -724,7 +724,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.10.18"
+          "version": "2.10.21"
         }
       },
       "local-file-system": {
@@ -757,7 +757,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.10.18"
+          "version": "2.10.21"
         }
       },
       "mattermost-webhook": {
@@ -844,7 +844,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.10.18"
+          "version": "2.10.21"
         }
       },
       "ms-teams-webhook": {
@@ -895,7 +895,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.10.18"
+          "version": "2.10.21"
         }
       },
       "opsgenie-webhook": {
@@ -1017,7 +1017,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.10.18"
+          "version": "2.10.21"
         }
       },
       "pager-duty-webhook": {
@@ -1130,7 +1130,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.10.18"
+          "version": "2.10.21"
         }
       },
       "process": {
@@ -1212,7 +1212,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.10.18"
+          "version": "2.10.21"
         }
       },
       "remote-file-system": {
@@ -1254,7 +1254,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.10.18"
+          "version": "2.10.21"
         }
       },
       "s3": {
@@ -1310,7 +1310,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.10.18"
+          "version": "2.10.21"
         }
       },
       "secret": {
@@ -1345,7 +1345,74 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.10.18"
+          "version": "2.10.21"
+        }
+      },
+      "sendgrid-email": {
+        "name": "Sendgrid Email",
+        "slug": "sendgrid-email",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/3PcxFuO9XUqs7wU9MiUBMg/af6affa646899cc1712d14b7fc4c0f1f/email__1_.png?h=250",
+        "documentation_url": "https://docs.prefect.io/api-ref/prefect/blocks/notifications/#prefect.blocks.notifications.SendgridEmail",
+        "description": "Enables sending notifications via Sendgrid email service.",
+        "code_example": "Load a saved Sendgrid and send a email message:\n```python\nfrom prefect.blocks.notifications import SendgridEmail\n\nsendgrid_block = SendgridEmail.load(\"BLOCK_NAME\")\n\nsendgrid_block.notify(\"Hello from Prefect!\")",
+        "block_schema": {
+          "checksum": "sha256:f5af5a31ade25700afb28ccba14083fbff0cd5d093e03bfa4ec1960dd33209bd",
+          "fields": {
+            "title": "SendgridEmail",
+            "description": "Enables sending notifications via Sendgrid email service.",
+            "type": "object",
+            "properties": {
+              "notify_type": {
+                "title": "Notify Type",
+                "description": "The type of notification being performed; the prefect_default is a plain notification that does not attach an image.",
+                "default": "prefect_default",
+                "enum": [
+                  "prefect_default",
+                  "info",
+                  "success",
+                  "warning",
+                  "failure"
+                ],
+                "type": "string"
+              },
+              "api_key": {
+                "title": "API Key",
+                "description": "The API Key associated with your sendgrid account.",
+                "type": "string",
+                "writeOnly": true,
+                "format": "password"
+              },
+              "sender_email": {
+                "title": "Sender email id",
+                "description": "The sender email id.",
+                "example": "test-support@gmail.com",
+                "type": "string"
+              },
+              "to_emails": {
+                "title": "Recipient emails",
+                "description": "Email ids of all recipients.",
+                "example": "recipient1@gmail.com",
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": [
+              "api_key",
+              "sender_email",
+              "to_emails"
+            ],
+            "block_type_slug": "sendgrid-email",
+            "secret_fields": [
+              "api_key"
+            ],
+            "block_schema_references": {}
+          },
+          "capabilities": [
+            "notify"
+          ],
+          "version": "2.10.21"
         }
       },
       "slack-webhook": {
@@ -1396,7 +1463,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.10.18"
+          "version": "2.10.21"
         }
       },
       "smb": {
@@ -1462,7 +1529,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.10.18"
+          "version": "2.10.21"
         }
       },
       "string": {
@@ -1493,7 +1560,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.10.18"
+          "version": "2.10.21"
         }
       },
       "twilio-sms": {
@@ -1566,7 +1633,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.10.18"
+          "version": "2.10.21"
         }
       },
       "webhook": {
@@ -1621,7 +1688,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.10.18"
+          "version": "2.10.21"
         }
       }
     }
