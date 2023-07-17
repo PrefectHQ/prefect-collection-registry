@@ -361,7 +361,7 @@
           }
         }
       },
-      "description": "Execute flow runs within containers on AWS ECS. Works with existing ECS clusters and serverless execution via AWS Fargate. Requires an AWS account.",
+      "description": "Execute flow runs within containers on AWS ECS. Works with EC2 and Fargate clusters. Requires an AWS account.",
       "display_name": "AWS Elastic Container Service",
       "documentation_url": "https://prefecthq.github.io/prefect-aws/ecs_worker/",
       "install_command": "pip install prefect-aws",
