@@ -1991,7 +1991,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.3.4"
+          "version": "0.3.5"
         }
       },
       "aws-secret": {
@@ -2131,7 +2131,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.3.4"
+          "version": "0.3.5"
         }
       },
       "ecs-task": {
@@ -2418,7 +2418,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "0.3.4"
+          "version": "0.3.5"
         }
       },
       "minio-credentials": {
@@ -2523,7 +2523,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.3.4"
+          "version": "0.3.5"
         }
       },
       "s3-bucket": {
@@ -2731,7 +2731,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "0.3.4"
+          "version": "0.3.5"
         }
       }
     }
