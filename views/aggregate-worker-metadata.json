@@ -680,7 +680,7 @@
       "display_name": "Azure Container Instances",
       "documentation_url": "https://prefecthq.github.io/prefect-azure/container_instance_worker/",
       "install_command": "pip install prefect-azure",
-      "is_beta": true,
+      "is_beta": false,
       "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/6AiQ6HRIft8TspZH7AfyZg/39fd82bdbb186db85560f688746c8cdd/azure.png?h=250",
       "type": "azure-container-instance"
     }
