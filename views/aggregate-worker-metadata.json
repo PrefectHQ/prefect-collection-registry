@@ -67,7 +67,7 @@
       "display_name": "Local Subprocess",
       "documentation_url": "https://docs.prefect.io/latest/api-ref/prefect/workers/process/",
       "install_command": "pip install prefect",
-      "is_beta": true,
+      "is_beta": false,
       "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/39WQhVu4JK40rZWltGqhuC/d15be6189a0cb95949a6b43df00dcb9b/image5.png?h=250",
       "type": "process"
     }
