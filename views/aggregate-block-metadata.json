@@ -6142,7 +6142,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.3.1"
+          "version": "0.3.11"
         }
       },
       "docker-registry-credentials": {
@@ -6196,7 +6196,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.3.1"
+          "version": "0.3.11"
         }
       }
     }
