@@ -1991,7 +1991,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.3.5"
+          "version": "0.3.6"
         }
       },
       "aws-secret": {
@@ -2131,7 +2131,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.3.5"
+          "version": "0.3.6"
         }
       },
       "ecs-task": {
@@ -2418,7 +2418,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "0.3.5"
+          "version": "0.3.6"
         }
       },
       "minio-credentials": {
@@ -2523,7 +2523,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.3.5"
+          "version": "0.3.6"
         }
       },
       "s3-bucket": {
@@ -2731,7 +2731,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "0.3.5"
+          "version": "0.3.6"
         }
       }
     }
@@ -2772,7 +2772,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.2.10"
+          "version": "0.2.11"
         }
       },
       "azure-container-instance-credentials": {
@@ -2819,7 +2819,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.2.10"
+          "version": "0.2.11"
         }
       },
       "azure-container-instance-job": {
@@ -3103,7 +3103,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "0.2.10"
+          "version": "0.2.11"
         }
       },
       "azure-cosmos-db-credentials": {
@@ -3138,7 +3138,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.2.10"
+          "version": "0.2.11"
         }
       },
       "azureml-credentials": {
@@ -3203,7 +3203,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.2.10"
+          "version": "0.2.11"
         }
       }
     }
@@ -6142,7 +6142,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.3.1"
+          "version": "0.3.11"
         }
       },
       "docker-registry-credentials": {
@@ -6196,7 +6196,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.3.1"
+          "version": "0.3.11"
         }
       }
     }
@@ -6527,7 +6527,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.4.4"
+          "version": "0.4.5"
         }
       },
       "cloud-run-job": {
@@ -6693,7 +6693,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "0.4.4"
+          "version": "0.4.5"
         }
       },
       "gcp-credentials": {
@@ -6734,7 +6734,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.4.4"
+          "version": "0.4.5"
         }
       },
       "gcpsecret": {
@@ -6812,7 +6812,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.4.4"
+          "version": "0.4.5"
         }
       },
       "gcs-bucket": {
@@ -6900,7 +6900,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "0.4.4"
+          "version": "0.4.5"
         }
       },
       "vertex-ai-custom-training-job": {
@@ -7082,7 +7082,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "0.4.4"
+          "version": "0.4.5"
         }
       }
     }
@@ -7472,7 +7472,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.2.10"
+          "version": "0.2.11"
         }
       }
     }
