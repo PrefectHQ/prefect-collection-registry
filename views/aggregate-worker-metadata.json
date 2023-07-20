@@ -809,7 +809,7 @@
       "display_name": "Docker",
       "documentation_url": "https://prefecthq.github.io/prefect-docker/worker/",
       "install_command": "pip install prefect-docker",
-      "is_beta": true,
+      "is_beta": false,
       "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/2IfXXfMq66mrzJBDFFCHTp/6d8f320d9e4fc4393f045673d61ab612/Moby-logo.png?h=250",
       "type": "docker"
     }
