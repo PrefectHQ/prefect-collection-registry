@@ -545,6 +545,18 @@
               "default": 1.0,
               "type": "number"
             },
+            "subnet_ids": {
+              "title": "Subnet IDs",
+              "description": "A list of Azure subnet IDs to use for the ACI task.",
+              "type": "array",
+              "items": {"type": "string"}
+            },
+            "dns_servers": {
+              "title": "DNS Servers",
+              "description": "A list of DNS servers to use for the ACI task.",
+              "type": "array",
+              "items": {"type": "string"}
+            },
             "aci_credentials": {
               "title": "Aci Credentials",
               "description": "The credentials to use to authenticate with Azure.",
