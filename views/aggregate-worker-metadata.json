@@ -549,13 +549,17 @@
               "title": "Subnet IDs",
               "description": "A list of Azure subnet IDs to use for the ACI task.",
               "type": "array",
-              "items": {"type": "string"}
+              "items": {
+                "type": "string"
+              }
             },
             "dns_servers": {
               "title": "DNS Servers",
               "description": "A list of DNS servers to use for the ACI task.",
               "type": "array",
-              "items": {"type": "string"}
+              "items": {
+                "type": "string"
+              }
             },
             "aci_credentials": {
               "title": "Aci Credentials",
