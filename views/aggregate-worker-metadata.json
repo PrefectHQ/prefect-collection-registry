@@ -547,7 +547,7 @@
             },
             "subnet_ids": {
               "title": "Subnet IDs",
-              "description": "A list of Azure subnet IDs to use for the ACI task.",
+              "description": "A list of subnet IDs to associate with the container group. ",
               "type": "array",
               "items": {
                 "type": "string"
@@ -555,7 +555,7 @@
             },
             "dns_servers": {
               "title": "DNS Servers",
-              "description": "A list of DNS servers to use for the ACI task.",
+              "description": "A list of DNS servers to associate with the container group.",
               "type": "array",
               "items": {
                 "type": "string"
