@@ -90,7 +90,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.11.4"
+          "version": "2.11.5"
         }
       },
       "date-time": {
@@ -122,7 +122,95 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.11.4"
+          "version": "2.11.5"
+        }
+      },
+      "discord-webhook": {
+        "name": "Discord Webhook",
+        "slug": "discord-webhook",
+        "logo_url": "https://images.ctfassets.net/keir3zrx8eg0/64fsff0qm7st33BqViEpqY/e177db0d1ada88a7ee6c9433576b98d5/icons8-discord-new-480.png?h=250",
+        "documentation_url": "https://docs.prefect.io/api-ref/prefect/blocks/notifications/#prefect.blocks.notifications.DiscordWebhook",
+        "description": "Enables sending notifications via a provided Discord webhook.",
+        "code_example": "Load a saved Discord webhook and send a message:\n```python\nfrom prefect.blocks.notifications import DiscordWebhook\n\ndiscord_webhook_block = DiscordWebhook.load(\"BLOCK_NAME\")\n\ndiscord_webhook_block.notify(\"Hello from Prefect!\")\n```",
+        "block_schema": {
+          "checksum": "sha256:d618d2f8553ac78a1d23fbcda4080e2b2e22bc38d45da21dc1f074cb85384e11",
+          "fields": {
+            "title": "DiscordWebhook",
+            "description": "Enables sending notifications via a provided Discord webhook.",
+            "type": "object",
+            "properties": {
+              "notify_type": {
+                "title": "Notify Type",
+                "description": "The type of notification being performed; the prefect_default is a plain notification that does not attach an image.",
+                "default": "prefect_default",
+                "enum": [
+                  "prefect_default",
+                  "info",
+                  "success",
+                  "warning",
+                  "failure"
+                ],
+                "type": "string"
+              },
+              "webhook_id": {
+                "title": "Webhook Id",
+                "description": "The first part of 2 tokens provided to you after creating a incoming-webhook.",
+                "type": "string",
+                "writeOnly": true,
+                "format": "password"
+              },
+              "webhook_token": {
+                "title": "Webhook Token",
+                "description": "The second part of 2 tokens provided to you after creating a incoming-webhook.",
+                "type": "string",
+                "writeOnly": true,
+                "format": "password"
+              },
+              "botname": {
+                "title": "Bot name",
+                "description": "Identify the name of the bot that should issue the message. If one isn't specified then the default is to just use your account (associated with the incoming-webhook).",
+                "type": "string"
+              },
+              "tts": {
+                "title": "Tts",
+                "description": "Whether to enable Text-To-Speech.",
+                "default": false,
+                "type": "boolean"
+              },
+              "include_image": {
+                "title": "Include Image",
+                "description": "Whether to include an image in-line with the message describing the notification type.",
+                "default": false,
+                "type": "boolean"
+              },
+              "avatar": {
+                "title": "Avatar",
+                "description": "Whether to override the default discord avatar icon.",
+                "default": false,
+                "type": "boolean"
+              },
+              "avatar_url": {
+                "title": "Avatar URL",
+                "description": "Over-ride the default discord avatar icon URL. By default this is not set and Apprise chooses the URL dynamically based on the type of message (info, success, warning, or error).",
+                "default": false,
+                "type": "string"
+              }
+            },
+            "required": [
+              "webhook_id",
+              "webhook_token"
+            ],
+            "block_type_slug": "discord-webhook",
+            "secret_fields": [
+              "webhook_id",
+              "webhook_token"
+            ],
+            "block_schema_references": {}
+          },
+          "capabilities": [
+            "notify"
+          ],
+          "version": "2.11.5"
         }
       },
       "docker-container": {
@@ -323,7 +411,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.11.4"
+          "version": "2.11.5"
         }
       },
       "docker-registry": {
@@ -378,7 +466,7 @@
           "capabilities": [
             "docker-login"
           ],
-          "version": "2.11.4"
+          "version": "2.11.5"
         }
       },
       "gcs": {
@@ -429,7 +517,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.11.4"
+          "version": "2.11.5"
         }
       },
       "github": {
@@ -483,7 +571,7 @@
           "capabilities": [
             "get-directory"
           ],
-          "version": "2.11.4"
+          "version": "2.11.5"
         }
       },
       "json": {
@@ -513,7 +601,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.11.4"
+          "version": "2.11.5"
         }
       },
       "kubernetes-cluster-config": {
@@ -550,7 +638,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.11.4"
+          "version": "2.11.5"
         }
       },
       "kubernetes-job": {
@@ -724,7 +812,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.11.4"
+          "version": "2.11.5"
         }
       },
       "local-file-system": {
@@ -757,7 +845,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.11.4"
+          "version": "2.11.5"
         }
       },
       "mattermost-webhook": {
@@ -844,7 +932,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.11.4"
+          "version": "2.11.5"
         }
       },
       "ms-teams-webhook": {
@@ -895,7 +983,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.11.4"
+          "version": "2.11.5"
         }
       },
       "opsgenie-webhook": {
@@ -1017,7 +1105,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.11.4"
+          "version": "2.11.5"
         }
       },
       "pager-duty-webhook": {
@@ -1130,7 +1218,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.11.4"
+          "version": "2.11.5"
         }
       },
       "process": {
@@ -1212,7 +1300,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.11.4"
+          "version": "2.11.5"
         }
       },
       "remote-file-system": {
@@ -1254,7 +1342,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.11.4"
+          "version": "2.11.5"
         }
       },
       "s3": {
@@ -1310,7 +1398,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.11.4"
+          "version": "2.11.5"
         }
       },
       "secret": {
@@ -1345,7 +1433,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.11.4"
+          "version": "2.11.5"
         }
       },
       "sendgrid-email": {
@@ -1412,7 +1500,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.11.4"
+          "version": "2.11.5"
         }
       },
       "slack-webhook": {
@@ -1463,7 +1551,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.11.4"
+          "version": "2.11.5"
         }
       },
       "smb": {
@@ -1529,7 +1617,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.11.4"
+          "version": "2.11.5"
         }
       },
       "string": {
@@ -1560,7 +1648,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.11.4"
+          "version": "2.11.5"
         }
       },
       "twilio-sms": {
@@ -1633,7 +1721,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.11.4"
+          "version": "2.11.5"
         }
       },
       "webhook": {
@@ -1688,7 +1776,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.11.4"
+          "version": "2.11.5"
         }
       }
     }
