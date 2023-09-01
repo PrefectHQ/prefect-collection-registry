@@ -90,7 +90,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.11.5"
+          "version": "2.12.0"
         }
       },
       "date-time": {
@@ -122,7 +122,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.11.5"
+          "version": "2.12.0"
         }
       },
       "discord-webhook": {
@@ -210,7 +210,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.11.5"
+          "version": "2.12.0"
         }
       },
       "docker-container": {
@@ -411,7 +411,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.11.5"
+          "version": "2.12.0"
         }
       },
       "docker-registry": {
@@ -466,7 +466,7 @@
           "capabilities": [
             "docker-login"
           ],
-          "version": "2.11.5"
+          "version": "2.12.0"
         }
       },
       "gcs": {
@@ -517,7 +517,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.11.5"
+          "version": "2.12.0"
         }
       },
       "github": {
@@ -571,7 +571,7 @@
           "capabilities": [
             "get-directory"
           ],
-          "version": "2.11.5"
+          "version": "2.12.0"
         }
       },
       "json": {
@@ -601,7 +601,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.11.5"
+          "version": "2.12.0"
         }
       },
       "kubernetes-cluster-config": {
@@ -638,7 +638,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.11.5"
+          "version": "2.12.0"
         }
       },
       "kubernetes-job": {
@@ -812,7 +812,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.11.5"
+          "version": "2.12.0"
         }
       },
       "local-file-system": {
@@ -845,7 +845,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.11.5"
+          "version": "2.12.0"
         }
       },
       "mattermost-webhook": {
@@ -932,7 +932,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.11.5"
+          "version": "2.12.0"
         }
       },
       "ms-teams-webhook": {
@@ -983,7 +983,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.11.5"
+          "version": "2.12.0"
         }
       },
       "opsgenie-webhook": {
@@ -1105,7 +1105,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.11.5"
+          "version": "2.12.0"
         }
       },
       "pager-duty-webhook": {
@@ -1218,7 +1218,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.11.5"
+          "version": "2.12.0"
         }
       },
       "process": {
@@ -1300,7 +1300,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.11.5"
+          "version": "2.12.0"
         }
       },
       "remote-file-system": {
@@ -1342,7 +1342,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.11.5"
+          "version": "2.12.0"
         }
       },
       "s3": {
@@ -1398,7 +1398,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.11.5"
+          "version": "2.12.0"
         }
       },
       "secret": {
@@ -1433,7 +1433,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.11.5"
+          "version": "2.12.0"
         }
       },
       "sendgrid-email": {
@@ -1500,7 +1500,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.11.5"
+          "version": "2.12.0"
         }
       },
       "slack-webhook": {
@@ -1551,7 +1551,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.11.5"
+          "version": "2.12.0"
         }
       },
       "smb": {
@@ -1559,13 +1559,13 @@
         "slug": "smb",
         "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/6J444m3vW6ukgBOCinSxLk/025f5562d3c165feb7a5df599578a6a8/samba_2010_logo_transparent_151x27.png?h=250",
         "documentation_url": "https://docs.prefect.io/concepts/filesystems/#smb",
-        "description": "Store data as a file on a SMB share.",
-        "code_example": "Load stored SMB config:\n\n```python\nfrom prefect.filesystems import SMB\nsmb_block = SMB.load(\"BLOCK_NAME\")\n```",
+        "description": "Store data as a file on a SMB share.\n\nExample:\n\n    Load stored SMB config:\n\n    ```python\n    from prefect.filesystems import SMB\n    smb_block = SMB.load(\"BLOCK_NAME\")\n    ```",
+        "code_example": "```python\nfrom prefect.filesystems import SMB\n\nsmb_block = SMB.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:d5746a564cf05bec13770a882f76ca8e8f562c8bdc7a6d2d45732b079bf72045",
+          "checksum": "sha256:50cada832e90e97618b92a2129ea5c80857fc67fa427fe2a8904a0b091186154",
           "fields": {
             "title": "SMB",
-            "description": "Store data as a file on a SMB share.",
+            "description": "Store data as a file on a SMB share.\n\nExample:\n\n    Load stored SMB config:\n\n    ```python\n    from prefect.filesystems import SMB\n    smb_block = SMB.load(\"BLOCK_NAME\")\n    ```",
             "type": "object",
             "properties": {
               "share_path": {
@@ -1617,7 +1617,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.11.5"
+          "version": "2.12.0"
         }
       },
       "string": {
@@ -1648,7 +1648,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.11.5"
+          "version": "2.12.0"
         }
       },
       "twilio-sms": {
@@ -1721,7 +1721,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.11.5"
+          "version": "2.12.0"
         }
       },
       "webhook": {
@@ -1776,7 +1776,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.11.5"
+          "version": "2.12.0"
         }
       }
     }
