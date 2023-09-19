@@ -2935,11 +2935,9 @@
   "prefect-kubernetes": {
     "run_namespaced_job": {
       "description": {
-        "summary": "Flow for running a namespaced Kubernetes job.",
+        "summary": "Example:\n\n    ```python\n    from prefect_kubernetes import KubernetesJob, run_namespaced_job\n    from prefect_kubernetes.credentials import KubernetesCredentials\n\n    run_namespaced_job(\n        kubernetes_job=KubernetesJob.from_yaml_file(\n            credentials=KubernetesCredentials.load(\"k8s-creds\"),\n            manifest_path=\"path/to/job.yaml\",\n        )\n    )\n    ```",
         "returns": "The a dict of logs from each pod in the job, e.g. {'pod_name': 'pod_log_str'}.",
-        "examples": [
-          "```python\nfrom prefect_kubernetes import KubernetesJob, run_namespaced_job\nfrom prefect_kubernetes.credentials import KubernetesCredentials\n\nrun_namespaced_job(\n    kubernetes_job=KubernetesJob.from_yaml_file(\n        credentials=KubernetesCredentials.load(\"k8s-creds\"),\n        manifest_path=\"path/to/job.yaml\",\n    )\n)\n```"
-        ]
+        "examples": []
       },
       "documentation_url": "https://prefecthq.github.io/prefect-kubernetes/flows/#prefect_kubernetes.flows.run_namespaced_job",
       "entrypoint": "prefect_kubernetes/flows.py:run_namespaced_job",
