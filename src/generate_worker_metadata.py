@@ -60,7 +60,7 @@ def get_worker_metadata_from_prefect():
                 "https://docs.prefect.io/latest/concepts/work-pools/#agent-overview"
             ),
             "display_name": "Prefect Agent",
-            "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/3xff6sYjtyYKgqtalUdnDr/22812da2b176be8a7b2e50cde745d5ee/agent.svg",
+            "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/c771bb53894c877e169c8db158c5598558b8f175-24x24.svg",
             "install_command": "pip install prefect",
             "default_base_job_configuration": {},
             "description": (
