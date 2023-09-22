@@ -4,7 +4,7 @@
       "type": "prefect-agent",
       "documentation_url": "https://docs.prefect.io/latest/concepts/work-pools/#agent-overview",
       "display_name": "Prefect Agent",
-      "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/3xff6sYjtyYKgqtalUdnDr/22812da2b176be8a7b2e50cde745d5ee/agent.svg",
+      "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/c771bb53894c877e169c8db158c5598558b8f175-24x24.svg",
       "install_command": "pip install prefect",
       "default_base_job_configuration": {},
       "description": "Execute flow runs on heterogenous infrastructure using infrastructure blocks."
@@ -68,7 +68,7 @@
       "documentation_url": "https://docs.prefect.io/latest/api-ref/prefect/workers/process/",
       "install_command": "pip install prefect",
       "is_beta": false,
-      "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/39WQhVu4JK40rZWltGqhuC/d15be6189a0cb95949a6b43df00dcb9b/image5.png?h=250",
+      "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/356e6766a91baf20e1d08bbe16e8b5aaef4d8643-48x48.png",
       "type": "process"
     }
   },
@@ -372,7 +372,7 @@
       "documentation_url": "https://prefecthq.github.io/prefect-aws/ecs_worker/",
       "install_command": "pip install prefect-aws",
       "is_beta": false,
-      "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/1jbV4lceHOjGgunX15lUwT/db88e184d727f721575aeb054a37e277/aws.png?h=250",
+      "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/d74b16fe84ce626345adf235a47008fea2869a60-225x225.png",
       "type": "ecs"
     }
   },
@@ -703,7 +703,7 @@
       "documentation_url": "https://prefecthq.github.io/prefect-azure/container_instance_worker/",
       "install_command": "pip install prefect-azure",
       "is_beta": false,
-      "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/6AiQ6HRIft8TspZH7AfyZg/39fd82bdbb186db85560f688746c8cdd/azure.png?h=250",
+      "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/54e3fa7e00197a4fbd1d82ed62494cb58d08c96a-250x250.png",
       "type": "azure-container-instance"
     }
   },
@@ -832,7 +832,7 @@
       "documentation_url": "https://prefecthq.github.io/prefect-docker/worker/",
       "install_command": "pip install prefect-docker",
       "is_beta": false,
-      "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/2IfXXfMq66mrzJBDFFCHTp/6d8f320d9e4fc4393f045673d61ab612/Moby-logo.png?h=250",
+      "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/14a315b79990200db7341e42553e23650b34bb96-250x250.png",
       "type": "docker"
     }
   },
@@ -1017,8 +1017,185 @@
       "documentation_url": "https://prefecthq.github.io/prefect-gcp/worker/",
       "install_command": "pip install prefect-gcp",
       "is_beta": false,
-      "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/4SpnOBvMYkHp6z939MDKP6/549a91bc1ce9afd4fb12c68db7b68106/social-icon-google-cloud-1200-630.png?h=250",
+      "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/10424e311932e31c477ac2b9ef3d53cefbaad708-250x250.png",
       "type": "cloud-run"
+    },
+    "vertex-ai": {
+      "default_base_job_configuration": {
+        "job_configuration": {
+          "command": "{{ command }}",
+          "env": "{{ env }}",
+          "labels": "{{ labels }}",
+          "name": "{{ name }}",
+          "region": "{{ region }}",
+          "credentials": "{{ credentials }}",
+          "job_spec": {
+            "service_account_name": "{{ service_account_name }}",
+            "network": "{{ network }}",
+            "reserved_ip_ranges": "{{ reserved_ip_ranges }}",
+            "maximum_run_time_hours": "{{ maximum_run_time_hours }}",
+            "worker_pool_specs": [
+              {
+                "replica_count": 1,
+                "container_spec": {
+                  "image_uri": "{{ image }}",
+                  "command": "{{ command }}",
+                  "args": []
+                },
+                "machine_spec": {
+                  "machine_type": "{{ machine_type }}",
+                  "accelerator_type": "{{ accelerator_type }}",
+                  "accelerator_count": "{{ accelerator_count }}"
+                },
+                "disk_spec": {
+                  "boot_disk_type": "{{ boot_disk_type }}",
+                  "boot_disk_size_gb": "{{ boot_disk_size_gb }}"
+                }
+              }
+            ]
+          },
+          "job_watch_poll_interval": "{{ job_watch_poll_interval }}"
+        },
+        "variables": {
+          "description": "Default variables for the Vertex AI worker.\\n\\nThe schema for this class is used to populate the `variables` section of the default\\nbase job template.",
+          "type": "object",
+          "properties": {
+            "name": {
+              "title": "Name",
+              "description": "Name given to infrastructure created by a worker.",
+              "type": "string"
+            },
+            "env": {
+              "title": "Environment Variables",
+              "description": "Environment variables to set when starting a flow run.",
+              "type": "object",
+              "additionalProperties": { "type": "string" }
+            },
+            "labels": {
+              "title": "Labels",
+              "description": "Labels applied to infrastructure created by a worker.",
+              "type": "object",
+              "additionalProperties": { "type": "string" }
+            },
+            "command": {
+              "title": "Command",
+              "description": "The command to use when starting a flow run. In most cases, this should be left blank and the command will be automatically generated by the worker.",
+              "type": "string"
+            },
+            "region": {
+              "title": "Region",
+              "description": "The region where the Vertex AI Job resides.",
+              "example": "us-central1",
+              "type": "string"
+            },
+            "image": {
+              "title": "Image Name",
+              "description": "The URI of a container image in the Container or Artifact Registry, used to run your Vertex AI Job. Note that Vertex AI will need accessto the project and region where the container image is stored. See https://cloud.google.com/vertex-ai/docs/training/create-custom-container",
+              "example": "gcr.io/your-project/your-repo:latest",
+              "type": "string"
+            },
+            "credentials": {
+              "title": "GCP Credentials",
+              "description": "The GCP Credentials used to initiate the Vertex AI Job. If not provided credentials will be inferred from the local environment.",
+              "allOf": [{ "$ref": "#/definitions/GcpCredentials" }]
+            },
+            "machine_type": {
+              "title": "Machine Type",
+              "description": "The machine type to use for the run, which controls the available CPU and memory. See https://cloud.google.com/vertex-ai/docs/reference/rest/v1/MachineSpec",
+              "default": "n1-standard-4",
+              "type": "string"
+            },
+            "accelerator_type": {
+              "title": "Accelerator Type",
+              "description": "The type of accelerator to attach to the machine. See https://cloud.google.com/vertex-ai/docs/reference/rest/v1/MachineSpec",
+              "example": "NVIDIA_TESLA_K80",
+              "type": "string"
+            },
+            "accelerator_count": {
+              "title": "Accelerator Count",
+              "description": "The number of accelerators to attach to the machine. See https://cloud.google.com/vertex-ai/docs/reference/rest/v1/MachineSpec",
+              "example": 1,
+              "type": "integer"
+            },
+            "boot_disk_type": {
+              "title": "Boot Disk Type",
+              "description": "The type of boot disk to attach to the machine.",
+              "default": "pd-ssd",
+              "type": "string"
+            },
+            "boot_disk_size_gb": {
+              "title": "Boot Disk Size (GB)",
+              "description": "The size of the boot disk to attach to the machine, in gigabytes.",
+              "default": 100,
+              "type": "integer"
+            },
+            "maximum_run_time_hours": {
+              "title": "Maximum Run Time (Hours)",
+              "description": "The maximum job running time, in hours",
+              "default": 1,
+              "type": "integer"
+            },
+            "network": {
+              "title": "Network",
+              "description": "The full name of the Compute Engine networkto which the Job should be peered. Private services access must already be configured for the network. If left unspecified, the job is not peered with any network. For example: projects/12345/global/networks/myVPC",
+              "type": "string"
+            },
+            "reserved_ip_ranges": {
+              "title": "Reserved IP Ranges",
+              "description": "A list of names for the reserved ip ranges under the VPC network that can be used for this job. If set, we will deploy the job within the provided ip ranges. Otherwise, the job will be deployed to any ip ranges under the provided VPC network.",
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "service_account_name": {
+              "title": "Service Account Name",
+              "description": "Specifies the service account to use as the run-as account in Vertex AI. The worker submitting jobs must have act-as permission on this run-as account. If unspecified, the AI Platform Custom Code Service Agent for the CustomJob's project is used. Takes precedence over the service account found in GCP credentials, and required if a service account cannot be detected in GCP credentials.",
+              "type": "string"
+            },
+            "job_watch_poll_interval": {
+              "title": "Poll Interval (Seconds)",
+              "description": "The amount of time to wait between GCP API calls while monitoring the state of a Vertex AI Job.",
+              "default": 5.0,
+              "type": "number"
+            }
+          },
+          "required": ["region", "image"],
+          "definitions": {
+            "GcpCredentials": {
+              "title": "GcpCredentials",
+              "description": "Block used to manage authentication with GCP. Google authentication is\\nhandled via the `google.oauth2` module or through the CLI.\\nSpecify either one of service `account_file` or `service_account_info`; if both\\nare not specified, the client will try to detect the credentials following Google's\\n[Application Default Credentials](https://cloud.google.com/docs/authentication/application-default-credentials).\\nSee Google's [Authentication documentation](https://cloud.google.com/docs/authentication#service-accounts)\\nfor details on inference and recommended authentication patterns.",
+              "type": "object",
+              "properties": {
+                "service_account_file": {
+                  "title": "Service Account File",
+                  "description": "Path to the service account JSON keyfile.",
+                  "type": "string",
+                  "format": "path"
+                },
+                "service_account_info": {
+                  "title": "Service Account Info",
+                  "description": "The contents of the keyfile as a dict.",
+                  "type": "object"
+                },
+                "project": {
+                  "title": "Project",
+                  "description": "The GCP project to use for the client.",
+                  "type": "string"
+                }
+              },
+              "block_type_slug": "gcp-credentials",
+              "secret_fields": ["service_account_info.*"],
+              "block_schema_references": {}
+            }
+          }
+        }
+      },
+      "description": "Execute flow runs within containers on Google Vertex AI. Requires a Google Cloud Platform account.",
+      "display_name": "Google Vertex AI",
+      "documentation_url": "https://prefecthq.github.io/prefect-gcp/vertex_worker/",
+      "install_command": "pip install prefect-gcp",
+      "is_beta": false,
+      "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/10424e311932e31c477ac2b9ef3d53cefbaad708-250x250.png",
+      "type": "vertex-ai"
     }
   },
   "prefect-kubernetes": {
@@ -1188,7 +1365,7 @@
       "documentation_url": "https://prefecthq.github.io/prefect-kubernetes/worker/",
       "install_command": "pip install prefect-kubernetes",
       "is_beta": false,
-      "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/1zrSeY8DZ1MJZs2BAyyyGk/20445025358491b8b72600b8f996125b/Kubernetes_logo_without_workmark.svg.png?h=250",
+      "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/2d0b896006ad463b49c28aaac14f31e00e32cfab-250x250.png",
       "type": "kubernetes"
     }
   }
