@@ -4,7 +4,7 @@
       "azure": {
         "name": "Azure",
         "slug": "azure",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/6AiQ6HRIft8TspZH7AfyZg/39fd82bdbb186db85560f688746c8cdd/azure.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/54e3fa7e00197a4fbd1d82ed62494cb58d08c96a-250x250.png",
         "documentation_url": "https://docs.prefect.io/concepts/filesystems/#azure",
         "description": "Store data as a file on Azure Datalake and Azure Blob Storage.",
         "code_example": "Load stored Azure config:\n```python\nfrom prefect.filesystems import Azure\n\naz_block = Azure.load(\"BLOCK_NAME\")\n```",
@@ -90,13 +90,13 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.13.1"
+          "version": "2.13.2"
         }
       },
       "date-time": {
         "name": "Date Time",
         "slug": "date-time",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/1gmljt5UBcAwEXHPnIofcE/0f3cf1da45b8b2df846e142ab52b1778/image21.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/8b3da9a6621e92108b8e6a75b82e15374e170ff7-48x48.png",
         "documentation_url": "https://docs.prefect.io/api-ref/prefect/blocks/system/#prefect.blocks.system.DateTime",
         "description": "A block that represents a datetime",
         "code_example": "Load a stored JSON value:\n```python\nfrom prefect.blocks.system import DateTime\n\ndata_time_block = DateTime.load(\"BLOCK_NAME\")\n```",
@@ -122,13 +122,13 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.13.1"
+          "version": "2.13.2"
         }
       },
       "discord-webhook": {
         "name": "Discord Webhook",
         "slug": "discord-webhook",
-        "logo_url": "https://images.ctfassets.net/keir3zrx8eg0/64fsff0qm7st33BqViEpqY/e177db0d1ada88a7ee6c9433576b98d5/icons8-discord-new-480.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/9e94976c80ef925b66d24e5d14f0d47baa6b8f88-250x250.png",
         "documentation_url": "https://docs.prefect.io/api-ref/prefect/blocks/notifications/#prefect.blocks.notifications.DiscordWebhook",
         "description": "Enables sending notifications via a provided Discord webhook.",
         "code_example": "Load a saved Discord webhook and send a message:\n```python\nfrom prefect.blocks.notifications import DiscordWebhook\n\ndiscord_webhook_block = DiscordWebhook.load(\"BLOCK_NAME\")\n\ndiscord_webhook_block.notify(\"Hello from Prefect!\")\n```",
@@ -210,13 +210,13 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.13.1"
+          "version": "2.13.2"
         }
       },
       "docker-container": {
         "name": "Docker Container",
         "slug": "docker-container",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/2IfXXfMq66mrzJBDFFCHTp/6d8f320d9e4fc4393f045673d61ab612/Moby-logo.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/14a315b79990200db7341e42553e23650b34bb96-250x250.png",
         "documentation_url": "https://docs.prefect.io/api-ref/prefect/infrastructure/#prefect.infrastructure.DockerContainer",
         "description": "Runs a command in a container.\n\nRequires a Docker Engine to be connectable. Docker settings will be retrieved from\nthe environment.\n\nClick [here](https://docs.prefect.io/guides/deployment/docker) to see a tutorial.",
         "code_example": "```python\nfrom prefect.infrastructure.container import DockerContainer\n\ndocker_container_block = DockerContainer.load(\"BLOCK_NAME\")\n```",
@@ -411,13 +411,13 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.13.1"
+          "version": "2.13.2"
         }
       },
       "docker-registry": {
         "name": "Docker Registry",
         "slug": "docker-registry",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/2IfXXfMq66mrzJBDFFCHTp/6d8f320d9e4fc4393f045673d61ab612/Moby-logo.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/14a315b79990200db7341e42553e23650b34bb96-250x250.png",
         "documentation_url": "https://docs.prefect.io/api-ref/prefect/infrastructure/#prefect.infrastructure.docker.DockerRegistry",
         "description": "Connects to a Docker registry.\n\nRequires a Docker Engine to be connectable.",
         "code_example": "```python\nfrom prefect.infrastructure.container import DockerRegistry\n\ndocker_registry_block = DockerRegistry.load(\"BLOCK_NAME\")\n```",
@@ -466,13 +466,13 @@
           "capabilities": [
             "docker-login"
           ],
-          "version": "2.13.1"
+          "version": "2.13.2"
         }
       },
       "gcs": {
         "name": "GCS",
         "slug": "gcs",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/4CD4wwbiIKPkZDt4U3TEuW/c112fe85653da054b6d5334ef662bec4/gcp.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/422d13bb838cf247eb2b2cf229ce6a2e717d601b-256x256.png",
         "documentation_url": "https://docs.prefect.io/concepts/filesystems/#gcs",
         "description": "Store data as a file on Google Cloud Storage.",
         "code_example": "Load stored GCS config:\n```python\nfrom prefect.filesystems import GCS\n\ngcs_block = GCS.load(\"BLOCK_NAME\")\n```",
@@ -517,13 +517,13 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.13.1"
+          "version": "2.13.2"
         }
       },
       "github": {
         "name": "GitHub",
         "slug": "github",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/187oCWsD18m5yooahq1vU0/ace41e99ab6dc40c53e5584365a33821/github.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/41971cfecfea5f79ff334164f06ecb34d1038dd4-250x250.png",
         "documentation_url": "https://docs.prefect.io/concepts/filesystems/#github",
         "description": "Interact with files stored on GitHub repositories.",
         "code_example": "```python\nfrom prefect.filesystems import GitHub\n\ngithub_block = GitHub.load(\"BLOCK_NAME\")\n```",
@@ -571,13 +571,13 @@
           "capabilities": [
             "get-directory"
           ],
-          "version": "2.13.1"
+          "version": "2.13.2"
         }
       },
       "json": {
         "name": "JSON",
         "slug": "json",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/19W3Di10hhb4oma2Qer0x6/764d1e7b4b9974cd268c775a488b9d26/image16.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/4fcef2294b6eeb423b1332d1ece5156bf296ff96-48x48.png",
         "documentation_url": "https://docs.prefect.io/api-ref/prefect/blocks/system/#prefect.blocks.system.JSON",
         "description": "A block that represents JSON",
         "code_example": "Load a stored JSON value:\n```python\nfrom prefect.blocks.system import JSON\n\njson_block = JSON.load(\"BLOCK_NAME\")\n```",
@@ -601,13 +601,13 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.13.1"
+          "version": "2.13.2"
         }
       },
       "kubernetes-cluster-config": {
         "name": "Kubernetes Cluster Config",
         "slug": "kubernetes-cluster-config",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/1zrSeY8DZ1MJZs2BAyyyGk/20445025358491b8b72600b8f996125b/Kubernetes_logo_without_workmark.svg.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/2d0b896006ad463b49c28aaac14f31e00e32cfab-250x250.png",
         "documentation_url": "https://docs.prefect.io/api-ref/prefect/blocks/kubernetes/#prefect.blocks.kubernetes.KubernetesClusterConfig",
         "description": "Stores configuration for interaction with Kubernetes clusters.\n\nSee `from_file` for creation.",
         "code_example": "Load a saved Kubernetes cluster config:\n```python\nfrom prefect.blocks.kubernetes import KubernetesClusterConfig\n\ncluster_config_block = KubernetesClusterConfig.load(\"BLOCK_NAME\")\n```",
@@ -638,13 +638,13 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.13.1"
+          "version": "2.13.2"
         }
       },
       "kubernetes-job": {
         "name": "Kubernetes Job",
         "slug": "kubernetes-job",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/1zrSeY8DZ1MJZs2BAyyyGk/20445025358491b8b72600b8f996125b/Kubernetes_logo_without_workmark.svg.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/2d0b896006ad463b49c28aaac14f31e00e32cfab-250x250.png",
         "documentation_url": "https://docs.prefect.io/api-ref/prefect/infrastructure/#prefect.infrastructure.KubernetesJob",
         "description": "Runs a command as a Kubernetes Job.\n\nFor a guided tutorial, see [How to use Kubernetes with Prefect](https://medium.com/the-prefect-blog/how-to-use-kubernetes-with-prefect-419b2e8b8cb2/).\nFor more information, including examples for customizing the resulting manifest, see [`KubernetesJob` infrastructure concepts](https://docs.prefect.io/concepts/infrastructure/#kubernetesjob).",
         "code_example": "```python\nfrom prefect.infrastructure.kubernetes import KubernetesJob\n\nkubernetes_job_block = KubernetesJob.load(\"BLOCK_NAME\")\n```",
@@ -812,13 +812,13 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.13.1"
+          "version": "2.13.2"
         }
       },
       "local-file-system": {
         "name": "Local File System",
         "slug": "local-file-system",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/EVKjxM7fNyi4NGUSkeTEE/95c958c5dd5a56c59ea5033e919c1a63/image1.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/ad39089fa66d273b943394a68f003f7a19aa850e-48x48.png",
         "documentation_url": "https://docs.prefect.io/concepts/filesystems/#local-filesystem",
         "description": "Store data as a file on a local file system.",
         "code_example": "Load stored local file system config:\n```python\nfrom prefect.filesystems import LocalFileSystem\n\nlocal_file_system_block = LocalFileSystem.load(\"BLOCK_NAME\")\n```",
@@ -845,13 +845,13 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.13.1"
+          "version": "2.13.2"
         }
       },
       "mattermost-webhook": {
         "name": "Mattermost Webhook",
         "slug": "mattermost-webhook",
-        "logo_url": "https://images.ctfassets.net/zscdif0zqppk/3mlbsJDAmK402ER1sf0zUF/a48ac43fa38f395dd5f56c6ed29f22bb/mattermost-logo-png-transparent.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/1350a147130bf82cbc799a5f868d2c0116207736-250x250.png",
         "documentation_url": "https://docs.prefect.io/api-ref/prefect/blocks/notifications/#prefect.blocks.notifications.MattermostWebhook",
         "description": "Enables sending notifications via a provided Mattermost webhook.",
         "code_example": "Load a saved Mattermost webhook and send a message:\n```python\nfrom prefect.blocks.notifications import MattermostWebhook\n\nmattermost_webhook_block = MattermostWebhook.load(\"BLOCK_NAME\")\n\nmattermost_webhook_block.notify(\"Hello from Prefect!\")\n```",
@@ -932,13 +932,13 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.13.1"
+          "version": "2.13.2"
         }
       },
       "ms-teams-webhook": {
         "name": "Microsoft Teams Webhook",
         "slug": "ms-teams-webhook",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/6n0dSTBzwoVPhX8Vgg37i7/9040e07a62def4f48242be3eae6d3719/teams_logo.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/817efe008a57f0a24f3587414714b563e5e23658-250x250.png",
         "documentation_url": "https://docs.prefect.io/api-ref/prefect/blocks/notifications/#prefect.blocks.notifications.MicrosoftTeamsWebhook",
         "description": "Enables sending notifications via a provided Microsoft Teams webhook.",
         "code_example": "Load a saved Teams webhook and send a message:\n```python\nfrom prefect.blocks.notifications import MicrosoftTeamsWebhook\nteams_webhook_block = MicrosoftTeamsWebhook.load(\"BLOCK_NAME\")\nteams_webhook_block.notify(\"Hello from Prefect!\")\n```",
@@ -983,13 +983,13 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.13.1"
+          "version": "2.13.2"
         }
       },
       "opsgenie-webhook": {
         "name": "Opsgenie Webhook",
         "slug": "opsgenie-webhook",
-        "logo_url": "https://images.ctfassets.net/sahxz1jinscj/3habq8fTzmplh7Ctkppk4/590cecb73f766361fcea9223cd47bad8/opsgenie.png",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/d8b5bc6244ae6cd83b62ec42f10d96e14d6e9113-280x280.png",
         "documentation_url": "https://docs.prefect.io/api-ref/prefect/blocks/notifications/#prefect.blocks.notifications.OpsgenieWebhook",
         "description": "Enables sending notifications via a provided Opsgenie webhook.",
         "code_example": "Load a saved Opsgenie webhook and send a message:\n```python\nfrom prefect.blocks.notifications import OpsgenieWebhook\nopsgenie_webhook_block = OpsgenieWebhook.load(\"BLOCK_NAME\")\nopsgenie_webhook_block.notify(\"Hello from Prefect!\")\n```",
@@ -1105,13 +1105,13 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.13.1"
+          "version": "2.13.2"
         }
       },
       "pager-duty-webhook": {
         "name": "Pager Duty Webhook",
         "slug": "pager-duty-webhook",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/6FHJ4Lcozjfl1yDPxCvQDT/c2f6bdf47327271c068284897527f3da/PagerDuty-Logo.wine.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/8dbf37d17089c1ce531708eac2e510801f7b3aee-250x250.png",
         "documentation_url": "https://docs.prefect.io/api-ref/prefect/blocks/notifications/#prefect.blocks.notifications.PagerDutyWebHook",
         "description": "Enables sending notifications via a provided PagerDuty webhook.",
         "code_example": "Load a saved PagerDuty webhook and send a message:\n```python\nfrom prefect.blocks.notifications import PagerDutyWebHook\npagerduty_webhook_block = PagerDutyWebHook.load(\"BLOCK_NAME\")\npagerduty_webhook_block.notify(\"Hello from Prefect!\")\n```",
@@ -1218,13 +1218,13 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.13.1"
+          "version": "2.13.2"
         }
       },
       "process": {
         "name": "Process",
         "slug": "process",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/39WQhVu4JK40rZWltGqhuC/d15be6189a0cb95949a6b43df00dcb9b/image5.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/356e6766a91baf20e1d08bbe16e8b5aaef4d8643-48x48.png",
         "documentation_url": "https://docs.prefect.io/concepts/infrastructure/#process",
         "description": "Run a command in a new process.\n\nCurrent environment variables and Prefect settings will be included in the created\nprocess. Configured environment variables will override any current environment\nvariables.",
         "code_example": "```python\nfrom prefect.infrastructure.process import Process\n\nprocess_block = Process.load(\"BLOCK_NAME\")\n```",
@@ -1300,13 +1300,13 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.13.1"
+          "version": "2.13.2"
         }
       },
       "remote-file-system": {
         "name": "Remote File System",
         "slug": "remote-file-system",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/4CxjycqILlT9S9YchI7o1q/ee62e2089dfceb19072245c62f0c69d2/image12.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/e86b41bc0f9c99ba9489abeee83433b43d5c9365-48x48.png",
         "documentation_url": "https://docs.prefect.io/concepts/filesystems/#remote-file-system",
         "description": "Store data as a file on a remote file system.\n\nSupports any remote file system supported by `fsspec`. The file system is specified\nusing a protocol. For example, \"s3://my-bucket/my-folder/\" will use S3.",
         "code_example": "Load stored remote file system config:\n```python\nfrom prefect.filesystems import RemoteFileSystem\n\nremote_file_system_block = RemoteFileSystem.load(\"BLOCK_NAME\")\n```",
@@ -1342,13 +1342,13 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.13.1"
+          "version": "2.13.2"
         }
       },
       "s3": {
         "name": "S3",
         "slug": "s3",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/1jbV4lceHOjGgunX15lUwT/db88e184d727f721575aeb054a37e277/aws.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/d74b16fe84ce626345adf235a47008fea2869a60-225x225.png",
         "documentation_url": "https://docs.prefect.io/concepts/filesystems/#s3",
         "description": "Store data as a file on AWS S3.",
         "code_example": "Load stored S3 config:\n```python\nfrom prefect.filesystems import S3\n\ns3_block = S3.load(\"BLOCK_NAME\")\n```",
@@ -1398,13 +1398,13 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.13.1"
+          "version": "2.13.2"
         }
       },
       "secret": {
         "name": "Secret",
         "slug": "secret",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5uUmyGBjRejYuGTWbTxz6E/3003e1829293718b3a5d2e909643a331/image8.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/c6f20e556dd16effda9df16551feecfb5822092b-48x48.png",
         "documentation_url": "https://docs.prefect.io/api-ref/prefect/blocks/system/#prefect.blocks.system.Secret",
         "description": "A block that represents a secret value. The value stored in this block will be obfuscated when\nthis block is logged or shown in the UI.",
         "code_example": "```python\nfrom prefect.blocks.system import Secret\n\nsecret_block = Secret.load(\"BLOCK_NAME\")\n\n# Access the stored secret\nsecret_block.get()\n```",
@@ -1433,13 +1433,13 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.13.1"
+          "version": "2.13.2"
         }
       },
       "sendgrid-email": {
         "name": "Sendgrid Email",
         "slug": "sendgrid-email",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/3PcxFuO9XUqs7wU9MiUBMg/af6affa646899cc1712d14b7fc4c0f1f/email__1_.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/82bc6ed16ca42a2252a5512c72233a253b8a58eb-250x250.png",
         "documentation_url": "https://docs.prefect.io/api-ref/prefect/blocks/notifications/#prefect.blocks.notifications.SendgridEmail",
         "description": "Enables sending notifications via Sendgrid email service.",
         "code_example": "Load a saved Sendgrid and send a email message:\n```python\nfrom prefect.blocks.notifications import SendgridEmail\n\nsendgrid_block = SendgridEmail.load(\"BLOCK_NAME\")\n\nsendgrid_block.notify(\"Hello from Prefect!\")",
@@ -1500,13 +1500,13 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.13.1"
+          "version": "2.13.2"
         }
       },
       "slack-webhook": {
         "name": "Slack Webhook",
         "slug": "slack-webhook",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/7dkzINU9r6j44giEFuHuUC/85d4cd321ad60c1b1e898bc3fbd28580/5cb480cd5f1b6d3fbadece79.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/c1965ecbf8704ee1ea20d77786de9a41ce1087d1-500x500.png",
         "documentation_url": "https://docs.prefect.io/api-ref/prefect/blocks/notifications/#prefect.blocks.notifications.SlackWebhook",
         "description": "Enables sending notifications via a provided Slack webhook.",
         "code_example": "Load a saved Slack webhook and send a message:\n```python\nfrom prefect.blocks.notifications import SlackWebhook\n\nslack_webhook_block = SlackWebhook.load(\"BLOCK_NAME\")\nslack_webhook_block.notify(\"Hello from Prefect!\")\n```",
@@ -1551,21 +1551,21 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.13.1"
+          "version": "2.13.2"
         }
       },
       "smb": {
         "name": "SMB",
         "slug": "smb",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/6J444m3vW6ukgBOCinSxLk/025f5562d3c165feb7a5df599578a6a8/samba_2010_logo_transparent_151x27.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/3f624663f7beb97d011d011bffd51ecf6c499efc-195x195.png",
         "documentation_url": "https://docs.prefect.io/concepts/filesystems/#smb",
-        "description": "Store data as a file on a SMB share.\n\nExample:\n\n    Load stored SMB config:\n\n    ```python\n    from prefect.filesystems import SMB\n    smb_block = SMB.load(\"BLOCK_NAME\")\n    ```",
-        "code_example": "```python\nfrom prefect.filesystems import SMB\n\nsmb_block = SMB.load(\"BLOCK_NAME\")\n```",
+        "description": "Store data as a file on a SMB share.",
+        "code_example": "Load stored SMB config:\n\n```python\nfrom prefect.filesystems import SMB\nsmb_block = SMB.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:50cada832e90e97618b92a2129ea5c80857fc67fa427fe2a8904a0b091186154",
+          "checksum": "sha256:d5746a564cf05bec13770a882f76ca8e8f562c8bdc7a6d2d45732b079bf72045",
           "fields": {
             "title": "SMB",
-            "description": "Store data as a file on a SMB share.\n\nExample:\n\n    Load stored SMB config:\n\n    ```python\n    from prefect.filesystems import SMB\n    smb_block = SMB.load(\"BLOCK_NAME\")\n    ```",
+            "description": "Store data as a file on a SMB share.",
             "type": "object",
             "properties": {
               "share_path": {
@@ -1617,13 +1617,13 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.13.1"
+          "version": "2.13.2"
         }
       },
       "string": {
         "name": "String",
         "slug": "string",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/4zjrZmh9tBrFiikeB44G4O/2ce1dbbac1c8e356f7c429e0f8bbb58d/image10.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/c262ea2c80a2c043564e8763f3370c3db5a6b3e6-48x48.png",
         "documentation_url": "https://docs.prefect.io/api-ref/prefect/blocks/system/#prefect.blocks.system.String",
         "description": "A block that represents a string",
         "code_example": "Load a stored string value:\n```python\nfrom prefect.blocks.system import String\n\nstring_block = String.load(\"BLOCK_NAME\")\n```",
@@ -1648,13 +1648,13 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.13.1"
+          "version": "2.13.2"
         }
       },
       "twilio-sms": {
         "name": "Twilio SMS",
         "slug": "twilio-sms",
-        "logo_url": "https://images.ctfassets.net/zscdif0zqppk/YTCgPL6bnK3BczP2gV9md/609283105a7006c57dbfe44ee1a8f313/58482bb9cef1014c0b5e4a31.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/8bd8777999f82112c09b9c8d57083ac75a4a0d65-250x250.png",
         "documentation_url": "https://docs.prefect.io/api-ref/prefect/blocks/notifications/#prefect.blocks.notifications.TwilioSMS",
         "description": "Enables sending notifications via Twilio SMS.",
         "code_example": "Load a saved `TwilioSMS` block and send a message:\n```python\nfrom prefect.blocks.notifications import TwilioSMS\ntwilio_webhook_block = TwilioSMS.load(\"BLOCK_NAME\")\ntwilio_webhook_block.notify(\"Hello from Prefect!\")\n```",
@@ -1721,13 +1721,13 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.13.1"
+          "version": "2.13.2"
         }
       },
       "webhook": {
         "name": "Webhook",
         "slug": "webhook",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/6ciCsTFsvUAiiIvTllMfOU/627e9513376ca457785118fbba6a858d/webhook_icon_138018.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/c7247cb359eb6cf276734d4b1fbf00fb8930e89e-250x250.png",
         "documentation_url": "https://docs.prefect.io/api-ref/prefect/blocks/webhook/#prefect.blocks.webhook.Webhook",
         "description": "Block that enables calling webhooks.",
         "code_example": "```python\nfrom prefect.blocks.webhook import Webhook\n\nwebhook_block = Webhook.load(\"BLOCK_NAME\")\n```",
@@ -1776,7 +1776,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.13.1"
+          "version": "2.13.2"
         }
       }
     }
