@@ -19,7 +19,7 @@ from metadata_schemas import block_schema
 
 # Some collection blocks share names with core blocks. We exclude them
 # from the registry for now to avoid confusion.
-BLOCKS_BLOCKLIST = {"k8s-job", "custom-webhook"}
+BLOCKS_BLOCKLIST = {"k8s-job", "custom-webhook", "slack-incoming-webhook"}
 
 
 def generate_block_metadata(block_subcls: Type[Block]) -> Dict[str, Any]:
