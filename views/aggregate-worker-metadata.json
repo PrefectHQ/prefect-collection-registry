@@ -1069,13 +1069,17 @@
               "title": "Environment Variables",
               "description": "Environment variables to set when starting a flow run.",
               "type": "object",
-              "additionalProperties": { "type": "string" }
+              "additionalProperties": {
+                "type": "string"
+              }
             },
             "labels": {
               "title": "Labels",
               "description": "Labels applied to infrastructure created by a worker.",
               "type": "object",
-              "additionalProperties": { "type": "string" }
+              "additionalProperties": {
+                "type": "string"
+              }
             },
             "command": {
               "title": "Command",
@@ -1097,7 +1101,11 @@
             "credentials": {
               "title": "GCP Credentials",
               "description": "The GCP Credentials used to initiate the Vertex AI Job. If not provided credentials will be inferred from the local environment.",
-              "allOf": [{ "$ref": "#/definitions/GcpCredentials" }]
+              "allOf": [
+                {
+                  "$ref": "#/definitions/GcpCredentials"
+                }
+              ]
             },
             "machine_type": {
               "title": "Machine Type",
@@ -1144,7 +1152,9 @@
               "title": "Reserved IP Ranges",
               "description": "A list of names for the reserved ip ranges under the VPC network that can be used for this job. If set, we will deploy the job within the provided ip ranges. Otherwise, the job will be deployed to any ip ranges under the provided VPC network.",
               "type": "array",
-              "items": { "type": "string" }
+              "items": {
+                "type": "string"
+              }
             },
             "service_account_name": {
               "title": "Service Account Name",
@@ -1158,7 +1168,10 @@
               "type": "number"
             }
           },
-          "required": ["region", "image"],
+          "required": [
+            "region",
+            "image"
+          ],
           "definitions": {
             "GcpCredentials": {
               "title": "GcpCredentials",
@@ -1183,7 +1196,9 @@
                 }
               },
               "block_type_slug": "gcp-credentials",
-              "secret_fields": ["service_account_info.*"],
+              "secret_fields": [
+                "service_account_info.*"
+              ],
               "block_schema_references": {}
             }
           }
