@@ -1,0 +1,41 @@
+{
+  "prefect-slack": {
+    "block_types": {
+      "slack-credentials": {
+        "name": "Slack Credentials",
+        "slug": "slack-credentials",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/7dkzINU9r6j44giEFuHuUC/85d4cd321ad60c1b1e898bc3fbd28580/5cb480cd5f1b6d3fbadece79.png?h=250",
+        "documentation_url": "https://prefecthq.github.io/prefect-slack/credentials/#prefect_slack.credentials.SlackCredentials",
+        "description": "Block holding Slack credentials for use in tasks and flows. This block is part of the prefect-slack collection. Install prefect-slack with `pip install prefect-slack` to use this block.",
+        "code_example": "Load stored Slack credentials:\n```python\nfrom prefect_slack import SlackCredentials\nslack_credentials_block = SlackCredentials.load(\"BLOCK_NAME\")\n```\n\nGet a Slack client:\n```python\nfrom prefect_slack import SlackCredentials\nslack_credentials_block = SlackCredentials.load(\"BLOCK_NAME\")\nclient = slack_credentials_block.get_client()\n```",
+        "block_schema": {
+          "checksum": "sha256:f79058d8fcf22ed575f824b27daa68a52fedaa0e40f7a8a542d4ac9cf3ee8317",
+          "fields": {
+            "title": "SlackCredentials",
+            "description": "Block holding Slack credentials for use in tasks and flows.",
+            "type": "object",
+            "properties": {
+              "token": {
+                "title": "Token",
+                "description": "Bot user OAuth token for the Slack app used to perform actions.",
+                "type": "string",
+                "writeOnly": true,
+                "format": "password"
+              }
+            },
+            "required": [
+              "token"
+            ],
+            "block_type_slug": "slack-credentials",
+            "secret_fields": [
+              "token"
+            ],
+            "block_schema_references": {}
+          },
+          "capabilities": [],
+          "version": "0.2.0"
+        }
+      }
+    }
+  }
+}
