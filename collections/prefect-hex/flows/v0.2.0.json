@@ -1,0 +1,198 @@
+{
+  "prefect-hex": {
+    "trigger_project_run_and_wait_for_completion": {
+      "description": {
+        "summary": "Flow that triggers a project run and waits for the triggered run to complete.",
+        "returns": "Information about the triggered project run.",
+        "examples": [
+          "Trigger a Hex project run and wait for completion as a stand-alone flow.\n```python\nimport asyncio\nfrom prefect_hex import HexCredentials\nfrom prefect_hex.project import trigger_project_run_and_wait_for_completion\n\nasyncio.run(\n    trigger_sync_run_and_wait_for_completion(\n        hex_credentials=HexCredentials(\n            token=\"1abc0d23-1234-1a2b-abc3-12ab456c7d8e\"\n        ),\n        project_id=\"012345c6-b67c-1234-1b2c-66e4ad07b9f3\",\n        max_wait_seconds=1800,\n        poll_frequency_seconds=5,\n    )\n)\n```\n\nTrigger a Hex project run and wait for completion as a subflow.\n```python\nfrom prefect import flow\nfrom prefect_hex import HexCredentials\nfrom prefect_hex.project import trigger_project_run_and_wait_for_completion\n\n@flow\ndef trigger_project_run_and_wait_for_completion_flow(project_id: str):\n    hex_credentials = HexCredentials.load(\"hex-token\")\n    project_metadata = trigger_project_run_and_wait_for_completion(\n        project_id=project_id,\n        hex_credentials=hex_credentials\n    )\n    return project_metadata\n\ntrigger_project_run_and_wait_for_completion_flow(\n    project_id=\"012345c6-b67c-1234-1b2c-66e4ad07b9f3\"\n)\n```"
+        ]
+      },
+      "documentation_url": "https://prefecthq.github.io/prefect-hex/project/#prefect_hex.project.trigger_project_run_and_wait_for_completion",
+      "entrypoint": "prefect_hex/project.py:trigger_project_run_and_wait_for_completion",
+      "install_command": "pip install prefect-hex",
+      "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/59acfd21aae4732c0046a18e44da08db78822baf-250x250.png",
+      "name": "trigger-project-run-and-wait-for-completion",
+      "parameters": {
+        "title": "Parameters",
+        "type": "object",
+        "properties": {
+          "project_id": {
+            "title": "project_id",
+            "description": "\nProject ID to run.",
+            "position": 0,
+            "type": "string"
+          },
+          "hex_credentials": {
+            "title": "hex_credentials",
+            "description": "\nCredentials to use for authentication with Hex.",
+            "position": 1,
+            "allOf": [
+              {
+                "$ref": "#/definitions/HexCredentials"
+              }
+            ]
+          },
+          "input_params": {
+            "title": "input_params",
+            "description": "\nOptional input parameter value map for this project run, e.g.\n```\n{\"text_input_1\": \"Hello World\", \"numeric_input_1\": 123}\n```",
+            "position": 2,
+            "type": "object"
+          },
+          "update_cache": {
+            "title": "update_cache",
+            "description": "\nWhen true, this run will update the cached state of the published app\nwith the latest run results. Additionally, any SQL cells\nthat have caching enabled will be re-executed as part of\nthis run. Note that this cannot be set to true if custom\ninput parameters are provided.",
+            "default": false,
+            "position": 3,
+            "type": "boolean"
+          },
+          "max_wait_seconds": {
+            "title": "max_wait_seconds",
+            "description": "Maximum number of seconds to wait for the entire\nflow to complete.",
+            "default": 900,
+            "position": 4,
+            "type": "integer"
+          },
+          "poll_frequency_seconds": {
+            "title": "poll_frequency_seconds",
+            "description": "Number of seconds to wait in between checks for\nrun completion.",
+            "default": 10,
+            "position": 5,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "project_id",
+          "hex_credentials"
+        ],
+        "definitions": {
+          "HexCredentials": {
+            "title": "HexCredentials",
+            "description": "Block used to manage Hex authentication.",
+            "type": "object",
+            "properties": {
+              "domain": {
+                "title": "Domain",
+                "description": "Domain to make API requests against.",
+                "default": "app.hex.tech",
+                "type": "string"
+              },
+              "token": {
+                "title": "Token",
+                "description": "Token used for authentication.",
+                "type": "string",
+                "writeOnly": true,
+                "format": "password"
+              }
+            },
+            "required": [
+              "token"
+            ],
+            "block_type_slug": "hex-credentials",
+            "secret_fields": [
+              "token"
+            ],
+            "block_schema_references": {}
+          }
+        }
+      },
+      "path_containing_flow": "prefect_hex/project.py",
+      "repo_url": "https://github.com/PrefectHQ/prefect-hex",
+      "slug": "trigger_project_run_and_wait_for_completion"
+    },
+    "wait_for_project_run_completion": {
+      "description": {
+        "summary": "Flow that waits for the triggered project run to complete.",
+        "returns": "The status of the project run and the metadata associated with the run.",
+        "examples": [
+          "Wait for completion of a project run as a subflow.\n```python\nfrom prefect import flow\nfrom prefect_hex import HexCredentials\nfrom prefect_hex.project import wait_for_project_run_completion\n\n@flow\ndef wait_for_project_run_completion_flow(project_id: str, run_id: str):\n    hex_credentials = HexCredentials.load(\"hex-token\")\n    project_status, project_metadata = wait_for_project_run_completion(\n        project_id=project_id,\n        run_id=run_id,\n        hex_credentials=hex_credentials\n    )\n    return project_status, project_metadata\n\nwait_for_project_run_completion_flow(\n    project_id=\"012345c6-b67c-1234-1b2c-66e4ad07b9f3\",\n    run_id=\"654321c6-b67c-1234-1b2c-66e4ad07b9f3\",\n)\n```"
+        ]
+      },
+      "documentation_url": "https://prefecthq.github.io/prefect-hex/project/#prefect_hex.project.wait_for_project_run_completion",
+      "entrypoint": "prefect_hex/project.py:wait_for_project_run_completion",
+      "install_command": "pip install prefect-hex",
+      "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/59acfd21aae4732c0046a18e44da08db78822baf-250x250.png",
+      "name": "wait-for-project-run-completion",
+      "parameters": {
+        "title": "Parameters",
+        "type": "object",
+        "properties": {
+          "project_id": {
+            "title": "project_id",
+            "description": "\nProject ID to watch.",
+            "position": 0,
+            "type": "string"
+          },
+          "run_id": {
+            "title": "run_id",
+            "description": "\nRun ID to wait for.",
+            "position": 1,
+            "type": "string"
+          },
+          "hex_credentials": {
+            "title": "hex_credentials",
+            "description": "\nCredentials to use for authentication with Hex.",
+            "position": 2,
+            "allOf": [
+              {
+                "$ref": "#/definitions/HexCredentials"
+              }
+            ]
+          },
+          "max_wait_seconds": {
+            "title": "max_wait_seconds",
+            "description": "Maximum number of seconds to wait for the entire\nflow to complete.",
+            "default": 900,
+            "position": 3,
+            "type": "integer"
+          },
+          "poll_frequency_seconds": {
+            "title": "poll_frequency_seconds",
+            "description": "Number of seconds to wait in between checks for\nrun completion.",
+            "default": 10,
+            "position": 4,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "project_id",
+          "run_id",
+          "hex_credentials"
+        ],
+        "definitions": {
+          "HexCredentials": {
+            "title": "HexCredentials",
+            "description": "Block used to manage Hex authentication.",
+            "type": "object",
+            "properties": {
+              "domain": {
+                "title": "Domain",
+                "description": "Domain to make API requests against.",
+                "default": "app.hex.tech",
+                "type": "string"
+              },
+              "token": {
+                "title": "Token",
+                "description": "Token used for authentication.",
+                "type": "string",
+                "writeOnly": true,
+                "format": "password"
+              }
+            },
+            "required": [
+              "token"
+            ],
+            "block_type_slug": "hex-credentials",
+            "secret_fields": [
+              "token"
+            ],
+            "block_schema_references": {}
+          }
+        }
+      },
+      "path_containing_flow": "prefect_hex/project.py",
+      "repo_url": "https://github.com/PrefectHQ/prefect-hex",
+      "slug": "wait_for_project_run_completion"
+    }
+  }
+}
