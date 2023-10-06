@@ -426,9 +426,7 @@
     "jobs_runs_submit_and_wait_for_completion": {
       "description": {
         "summary": "Triggers a Databricks jobs runs and waits for the triggered runs to complete.",
-        "examples": [
-          "Submit jobs runs and wait.\n```python\nfrom prefect import flow\nfrom prefect_databricks import DatabricksCredentials\nfrom prefect_databricks.flows import jobs_runs_submit_and_wait_for_completion\nfrom prefect_databricks.models.jobs import (\n    AutoScale,\n    AwsAttributes,\n    JobTaskSettings,\n    NotebookTask,\n    NewCluster,\n)\n@flow\ndef jobs_runs_submit_and_wait_for_completion_flow(notebook_path, **base_parameters):\n    databricks_credentials = await DatabricksCredentials.load(\"BLOCK_NAME\")\n    # specify new cluster settings\n    aws_attributes = AwsAttributes(\n        availability=\"SPOT\",\n        zone_id=\"us-west-2a\",\n        ebs_volume_type=\"GENERAL_PURPOSE_SSD\",\n        ebs_volume_count=3,\n        ebs_volume_size=100,\n    )\n    auto_scale = AutoScale(min_workers=1, max_workers=2)\n    new_cluster = NewCluster(\n        aws_attributes=aws_attributes,\n        autoscale=auto_scale,\n        node_type_id=\"m4.large\",\n        spark_version=\"10.4.x-scala2.12\",\n        spark_conf={\"spark.speculation\": True},\n    )\n    # specify notebook to use and parameters to pass\n    notebook_task = NotebookTask(\n        notebook_path=notebook_path,\n        base_parameters=base_parameters,\n    )\n    # compile job task settings\n    job_task_settings = JobTaskSettings(\n        new_cluster=new_cluster,\n        notebook_task=notebook_task,\n        task_key=\"prefect-task\"\n    )\n    multi_task_runs = jobs_runs_submit_and_wait_for_completion(\n        databricks_credentials=databricks_credentials,\n        run_name=\"prefect-job\",\n        tasks=[job_task_settings]\n    )\n    return multi_task_runs\n```"
-        ]
+        "examples": []
       },
       "documentation_url": "https://prefecthq.github.io/prefect-databricks/flows/#prefect_databricks.flows.jobs_runs_submit_and_wait_for_completion",
       "entrypoint": "prefect_databricks/flows.py:jobs_runs_submit_and_wait_for_completion",
@@ -441,7 +439,6 @@
         "properties": {
           "databricks_credentials": {
             "title": "databricks_credentials",
-            "description": "\nCredentials to use for authentication with Databricks.",
             "position": 0,
             "allOf": [
               {
@@ -451,7 +448,6 @@
           },
           "tasks": {
             "title": "tasks",
-            "description": "Tasks to run, e.g.\n```\n[\n    {\n        \"task_key\": \"Sessionize\",\n        \"description\": \"Extracts session data from events\",\n        \"depends_on\": [],\n        \"existing_cluster_id\": \"0923-164208-meows279\",\n        \"spark_jar_task\": {\n            \"main_class_name\": \"com.databricks.Sessionize\",\n            \"parameters\": [\"--data\", \"dbfs:/path/to/data.json\"],\n        },\n        \"libraries\": [{\"jar\": \"dbfs:/mnt/databricks/Sessionize.jar\"}],\n        \"timeout_seconds\": 86400,\n    },\n    {\n        \"task_key\": \"Orders_Ingest\",\n        \"description\": \"Ingests order data\",\n        \"depends_on\": [],\n        \"existing_cluster_id\": \"0923-164208-meows279\",\n        \"spark_jar_task\": {\n            \"main_class_name\": \"com.databricks.OrdersIngest\",\n            \"parameters\": [\"--data\", \"dbfs:/path/to/order-data.json\"],\n        },\n        \"libraries\": [{\"jar\": \"dbfs:/mnt/databricks/OrderIngest.jar\"}],\n        \"timeout_seconds\": 86400,\n    },\n    {\n        \"task_key\": \"Match\",\n        \"description\": \"Matches orders with user sessions\",\n        \"depends_on\": [\n            {\"task_key\": \"Orders_Ingest\"},\n            {\"task_key\": \"Sessionize\"},\n        ],\n        \"new_cluster\": {\n            \"spark_version\": \"7.3.x-scala2.12\",\n            \"node_type_id\": \"i3.xlarge\",\n            \"spark_conf\": {\"spark.speculation\": True},\n            \"aws_attributes\": {\n                \"availability\": \"SPOT\",\n                \"zone_id\": \"us-west-2a\",\n            },\n            \"autoscale\": {\"min_workers\": 2, \"max_workers\": 16},\n        },\n        \"notebook_task\": {\n            \"notebook_path\": \"/Users/user.name@databricks.com/Match\",\n            \"base_parameters\": {\"name\": \"John Doe\", \"age\": \"35\"},\n        },\n        \"timeout_seconds\": 86400,\n    },\n]\n```",
             "position": 1,
             "type": "array",
             "items": {
@@ -460,27 +456,23 @@
           },
           "run_name": {
             "title": "run_name",
-            "description": "\nAn optional name for the run. The default value is `Untitled`, e.g. `A\nmultitask job run`.",
             "position": 2,
             "type": "string"
           },
           "max_wait_seconds": {
             "title": "max_wait_seconds",
-            "description": "Maximum number of seconds to wait for the entire flow to complete.",
             "default": 900,
             "position": 3,
             "type": "integer"
           },
           "poll_frequency_seconds": {
             "title": "poll_frequency_seconds",
-            "description": "Number of seconds to wait in between checks for\nrun completion.",
             "default": 10,
             "position": 4,
             "type": "integer"
           },
           "git_source": {
             "title": "git_source",
-            "description": "\nThis functionality is in Public Preview.  An optional specification for\na remote repository containing the notebooks used by this\njob's notebook tasks. Key-values:\n- git_url:\n    URL of the repository to be cloned by this job. The maximum\n    length is 300 characters, e.g.\n    `https://github.com/databricks/databricks-cli`.\n- git_provider:\n    Unique identifier of the service used to host the Git\n    repository. The value is case insensitive, e.g. `github`.\n- git_branch:\n    Name of the branch to be checked out and used by this job.\n    This field cannot be specified in conjunction with git_tag\n    or git_commit. The maximum length is 255 characters, e.g.\n    `main`.\n- git_tag:\n    Name of the tag to be checked out and used by this job. This\n    field cannot be specified in conjunction with git_branch or\n    git_commit. The maximum length is 255 characters, e.g.\n    `release-1.0.0`.\n- git_commit:\n    Commit to be checked out and used by this job. This field\n    cannot be specified in conjunction with git_branch or\n    git_tag. The maximum length is 64 characters, e.g.\n    `e0056d01`.\n- git_snapshot:\n    Read-only state of the remote repository at the time the job was run.\n                This field is only included on job runs.",
             "position": 5,
             "allOf": [
               {
@@ -490,19 +482,16 @@
           },
           "timeout_seconds": {
             "title": "timeout_seconds",
-            "description": "\nAn optional timeout applied to each run of this job. The default\nbehavior is to have no timeout, e.g. `86400`.",
             "position": 6,
             "type": "integer"
           },
           "idempotency_token": {
             "title": "idempotency_token",
-            "description": "\nAn optional token that can be used to guarantee the idempotency of job\nrun requests. If a run with the provided token already\nexists, the request does not create a new run but returns\nthe ID of the existing run instead. If a run with the\nprovided token is deleted, an error is returned.  If you\nspecify the idempotency token, upon failure you can retry\nuntil the request succeeds. Databricks guarantees that\nexactly one run is launched with that idempotency token.\nThis token must have at most 64 characters.  For more\ninformation, see [How to ensure idempotency for\njobs](https://kb.databricks.com/jobs/jobs-idempotency.html),\ne.g. `8f018174-4792-40d5-bcbc-3e6a527352c8`.",
             "position": 7,
             "type": "string"
           },
           "access_control_list": {
             "title": "access_control_list",
-            "description": "\nList of permissions to set on the job.",
             "position": 8,
             "type": "array",
             "items": {
