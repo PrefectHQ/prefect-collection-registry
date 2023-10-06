@@ -1786,7 +1786,7 @@
       "airbyte-connection": {
         "name": "Airbyte Connection",
         "slug": "airbyte-connection",
-        "logo_url": "https://images.ctfassets.net/zscdif0zqppk/6gm7wsC7ANnKYQsm7oiSYz/aac1ad5e054d35d9e24af8d6ed3aed5f/59758427?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/7f50097d1915fe75b0ee84c951c742a83d3c53cb-250x250.png",
         "documentation_url": "https://prefecthq.github.io/prefect-airbyte/connections/#prefect_airbyte.connections.AirbyteConnection",
         "description": "A block representing an existing Airbyte connection. This block is part of the prefect-airbyte collection. Install prefect-airbyte with `pip install prefect-airbyte` to use this block.",
         "code_example": "Load an existing `AirbyteConnection` block:\n```python\nfrom prefect_airbyte import AirbyteConnection\n\nairbyte_connection = AirbyteConnection.load(\"BLOCK_NAME\")\n```\n\nRun an Airbyte connection sync as a flow:\n```python\nfrom prefect import flow\nfrom prefect_airbyte import AirbyteConnection\nfrom prefect_airbyte.flows import run_connection_sync # this is a flow\n\nairbyte_connection = AirbyteConnection.load(\"BLOCK_NAME\")\n\n@flow\ndef airbyte_orchestrator():\n    run_connection_sync(airbyte_connection) # now it's a subflow\n```",
@@ -1906,7 +1906,7 @@
       "airbyte-server": {
         "name": "Airbyte Server",
         "slug": "airbyte-server",
-        "logo_url": "https://images.ctfassets.net/zscdif0zqppk/6gm7wsC7ANnKYQsm7oiSYz/aac1ad5e054d35d9e24af8d6ed3aed5f/59758427?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/7f50097d1915fe75b0ee84c951c742a83d3c53cb-250x250.png",
         "documentation_url": "https://prefecthq.github.io/prefect-airbyte/server/#prefect_airbyte.server.AirbyteServer",
         "description": "A block representing an Airbyte server for generating `AirbyteClient` instances. This block is part of the prefect-airbyte collection. Install prefect-airbyte with `pip install prefect-airbyte` to use this block.",
         "code_example": "```python\nfrom prefect_airbyte.server import AirbyteServer\n\nserver = AirbyteServer.load(\"BLOCK_NAME\")\n```",
@@ -1974,7 +1974,7 @@
       "aws-credentials": {
         "name": "AWS Credentials",
         "slug": "aws-credentials",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/1jbV4lceHOjGgunX15lUwT/db88e184d727f721575aeb054a37e277/aws.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/d74b16fe84ce626345adf235a47008fea2869a60-225x225.png",
         "documentation_url": "https://prefecthq.github.io/prefect-aws/credentials/#prefect_aws.credentials.AwsCredentials",
         "description": "Block used to manage authentication with AWS. AWS authentication is\nhandled via the `boto3` module. Refer to the\n[boto3 docs](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html)\nfor more info about the possible credential configurations. This block is part of the prefect-aws collection. Install prefect-aws with `pip install prefect-aws` to use this block.",
         "code_example": "Load stored AWS credentials:\n```python\nfrom prefect_aws import AwsCredentials\n\naws_credentials_block = AwsCredentials.load(\"BLOCK_NAME\")\n```",
@@ -2085,7 +2085,7 @@
       "aws-secret": {
         "name": "AWS Secret",
         "slug": "aws-secret",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/1jbV4lceHOjGgunX15lUwT/db88e184d727f721575aeb054a37e277/aws.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/d74b16fe84ce626345adf235a47008fea2869a60-225x225.png",
         "documentation_url": "https://prefecthq.github.io/prefect-aws/secrets_manager/#prefect_aws.secrets_manager.AwsSecret",
         "description": "Manages a secret in AWS's Secrets Manager. This block is part of the prefect-aws collection. Install prefect-aws with `pip install prefect-aws` to use this block.",
         "code_example": "```python\nfrom prefect_aws.secrets_manager import AwsSecret\n\naws_secret_block = AwsSecret.load(\"BLOCK_NAME\")\n```",
@@ -2225,7 +2225,7 @@
       "ecs-task": {
         "name": "ECS Task",
         "slug": "ecs-task",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/1jbV4lceHOjGgunX15lUwT/db88e184d727f721575aeb054a37e277/aws.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/d74b16fe84ce626345adf235a47008fea2869a60-225x225.png",
         "documentation_url": "https://prefecthq.github.io/prefect-aws/ecs/#prefect_aws.ecs.ECSTask",
         "description": "Run a command as an ECS task. This block is part of the prefect-aws collection. Install prefect-aws with `pip install prefect-aws` to use this block.",
         "code_example": "```python\nfrom prefect_aws.ecs import ECSTask\n\necs_task_block = ECSTask.load(\"BLOCK_NAME\")\n```",
@@ -2512,7 +2512,7 @@
       "minio-credentials": {
         "name": "MinIO Credentials",
         "slug": "minio-credentials",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/22vXcxsOrVeFrUwHfSoaeT/7607b876eb589a9028c8126e78f4c7b4/imageedit_7_2837870043.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/676cb17bcbdff601f97e0a02ff8bcb480e91ff40-250x250.png",
         "documentation_url": "https://prefecthq.github.io/prefect-aws/credentials/#prefect_aws.credentials.MinIOCredentials",
         "description": "Block used to manage authentication with MinIO. Refer to the MinIO docs: https://docs.min.io/docs/minio-server-configuration-guide.html for more info about the possible credential configurations. This block is part of the prefect-aws collection. Install prefect-aws with `pip install prefect-aws` to use this block.",
         "code_example": "Load stored MinIO credentials:\n```python\nfrom prefect_aws import MinIOCredentials\n\nminio_credentials_block = MinIOCredentials.load(\"BLOCK_NAME\")\n```",
@@ -2617,7 +2617,7 @@
       "s3-bucket": {
         "name": "S3 Bucket",
         "slug": "s3-bucket",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/1jbV4lceHOjGgunX15lUwT/db88e184d727f721575aeb054a37e277/aws.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/d74b16fe84ce626345adf235a47008fea2869a60-225x225.png",
         "documentation_url": "https://prefecthq.github.io/prefect-aws/s3/#prefect_aws.s3.S3Bucket",
         "description": "Block used to store data using AWS S3 or S3-compatible object storage like MinIO. This block is part of the prefect-aws collection. Install prefect-aws with `pip install prefect-aws` to use this block.",
         "code_example": "```python\nfrom prefect_aws.s3 import S3Bucket\n\ns3_bucket_block = S3Bucket.load(\"BLOCK_NAME\")\n```",
@@ -2829,7 +2829,7 @@
       "azure-blob-storage-credentials": {
         "name": "Azure Blob Storage Credentials",
         "slug": "azure-blob-storage-credentials",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/6AiQ6HRIft8TspZH7AfyZg/39fd82bdbb186db85560f688746c8cdd/azure.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/54e3fa7e00197a4fbd1d82ed62494cb58d08c96a-250x250.png",
         "documentation_url": "https://prefecthq.github.io/prefect-azure/credentials/#prefect_azure.credentials.AzureBlobStorageCredentials",
         "description": "Stores credentials for authenticating with Azure Blob Storage. This block is part of the prefect-azure collection. Install prefect-azure with `pip install prefect-azure` to use this block.",
         "code_example": "Load stored Azure Blob Storage credentials and retrieve a blob service client:\n```python\nfrom prefect_azure import AzureBlobStorageCredentials\n\nazure_credentials_block = AzureBlobStorageCredentials.load(\"BLOCK_NAME\")\n\nblob_service_client = azure_credentials_block.get_blob_client()\n```",
@@ -2866,7 +2866,7 @@
       "azure-container-instance-credentials": {
         "name": "Azure Container Instance Credentials",
         "slug": "azure-container-instance-credentials",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/6AiQ6HRIft8TspZH7AfyZg/39fd82bdbb186db85560f688746c8cdd/azure.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/54e3fa7e00197a4fbd1d82ed62494cb58d08c96a-250x250.png",
         "documentation_url": "https://prefecthq.github.io/prefect-azure/credentials/#prefect_azure.credentials.AzureContainerInstanceCredentials",
         "description": "Block used to manage Azure Container Instances authentication. Stores Azure Service\nPrincipal authentication data. This block is part of the prefect-azure collection. Install prefect-azure with `pip install prefect-azure` to use this block.",
         "code_example": "```python\nfrom prefect_azure.credentials import AzureContainerInstanceCredentials\n\nazure_container_instance_credentials_block = AzureContainerInstanceCredentials.load(\"BLOCK_NAME\")\n```",
@@ -2913,7 +2913,7 @@
       "azure-container-instance-job": {
         "name": "Azure Container Instance Job",
         "slug": "azure-container-instance-job",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/6AiQ6HRIft8TspZH7AfyZg/39fd82bdbb186db85560f688746c8cdd/azure.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/54e3fa7e00197a4fbd1d82ed62494cb58d08c96a-250x250.png",
         "documentation_url": "https://prefecthq.github.io/prefect-azure/container_instance/#prefect_azure.container_instance.AzureContainerInstanceJob",
         "description": "Run tasks using Azure Container Instances. Note this block is experimental. The interface may change without notice. This block is part of the prefect-azure collection. Install prefect-azure with `pip install prefect-azure` to use this block.",
         "code_example": "```python\nfrom prefect_azure.container_instance import AzureContainerInstanceJob\n\nazure_container_instance_job_block = AzureContainerInstanceJob.load(\"BLOCK_NAME\")\n```",
@@ -3197,7 +3197,7 @@
       "azure-cosmos-db-credentials": {
         "name": "Azure Cosmos DB Credentials",
         "slug": "azure-cosmos-db-credentials",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/6AiQ6HRIft8TspZH7AfyZg/39fd82bdbb186db85560f688746c8cdd/azure.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/54e3fa7e00197a4fbd1d82ed62494cb58d08c96a-250x250.png",
         "documentation_url": "https://prefecthq.github.io/prefect-azure/credentials/#prefect_azure.credentials.AzureCosmosDbCredentials",
         "description": "Block used to manage Cosmos DB authentication with Azure.\nAzure authentication is handled via the `azure` module through\na connection string. This block is part of the prefect-azure collection. Install prefect-azure with `pip install prefect-azure` to use this block.",
         "code_example": "Load stored Azure Cosmos DB credentials:\n```python\nfrom prefect_azure import AzureCosmosDbCredentials\nazure_credentials_block = AzureCosmosDbCredentials.load(\"BLOCK_NAME\")\n```",
@@ -3232,7 +3232,7 @@
       "azureml-credentials": {
         "name": "AzureML Credentials",
         "slug": "azureml-credentials",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/6AiQ6HRIft8TspZH7AfyZg/39fd82bdbb186db85560f688746c8cdd/azure.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/54e3fa7e00197a4fbd1d82ed62494cb58d08c96a-250x250.png",
         "documentation_url": "https://prefecthq.github.io/prefect-azure/credentials/#prefect_azure.credentials.AzureMlCredentials",
         "description": "Block used to manage authentication with AzureML. Azure authentication is\nhandled via the `azure` module. This block is part of the prefect-azure collection. Install prefect-azure with `pip install prefect-azure` to use this block.",
         "code_example": "Load stored AzureML credentials:\n```python\nfrom prefect_azure import AzureMlCredentials\nazure_ml_credentials_block = AzureMlCredentials.load(\"BLOCK_NAME\")\n```",
@@ -3301,7 +3301,7 @@
       "bitbucket-credentials": {
         "name": "BitBucket Credentials",
         "slug": "bitbucket-credentials",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/27LMR24ewTSDW238Lks1vH/34c5028659f4007528feadc8db8cecbd/500px-Bitbucket-blue-logomark-only.svg.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/5d729f7355fb6828c4b605268ded9cfafab3ae4f-250x250.png",
         "documentation_url": null,
         "description": "Store BitBucket credentials to interact with private BitBucket repositories. This block is part of the prefect-bitbucket collection. Install prefect-bitbucket with `pip install prefect-bitbucket` to use this block.",
         "code_example": "Load stored BitBucket credentials:\n```python\nfrom prefect_bitbucket import BitBucketCredentials\nbitbucket_credentials_block = BitBucketCredentials.load(\"BLOCK_NAME\")\n```",
@@ -3354,7 +3354,7 @@
       "bitbucket-repository": {
         "name": "BitBucket Repository",
         "slug": "bitbucket-repository",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/27LMR24ewTSDW238Lks1vH/34c5028659f4007528feadc8db8cecbd/500px-Bitbucket-blue-logomark-only.svg.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/5d729f7355fb6828c4b605268ded9cfafab3ae4f-250x250.png",
         "documentation_url": null,
         "description": "Interact with files stored in BitBucket repositories. This block is part of the prefect-bitbucket collection. Install prefect-bitbucket with `pip install prefect-bitbucket` to use this block.",
         "code_example": "```python\nfrom prefect_bitbucket.repository import BitBucketRepository\n\nbitbucket_repository_block = BitBucketRepository.load(\"BLOCK_NAME\")\n```",
@@ -3587,7 +3587,7 @@
       "databricks-credentials": {
         "name": "Databricks Credentials",
         "slug": "databricks-credentials",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5GTHI1PH2dTiantfps6Fnc/1c750fab7f4c14ea1b93a62b9fea6a94/databricks_logo_icon_170295.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/ff9a2573c23954bedd27b0f420465a55b1a99dfd-250x250.png",
         "documentation_url": "https://prefecthq.github.io/prefect-databricks/credentials/#prefect_databricks.credentials.DatabricksCredentials",
         "description": "Block used to manage Databricks authentication. This block is part of the prefect-databricks collection. Install prefect-databricks with `pip install prefect-databricks` to use this block.",
         "code_example": "Load stored Databricks credentials:\n```python\nfrom prefect_databricks import DatabricksCredentials\ndatabricks_credentials_block = DatabricksCredentials.load(\"BLOCK_NAME\")\n```",
@@ -3637,7 +3637,7 @@
       "dbt-cli-bigquery-target-configs": {
         "name": "dbt CLI BigQuery Target Configs",
         "slug": "dbt-cli-bigquery-target-configs",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5zE9lxfzBHjw3tnEup4wWL/9a001902ed43a84c6c96d23b24622e19/dbt-bit_tm.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/f9d31c6978410fe25a70e75fc7e77b5c430b3178-180x162.png",
         "documentation_url": "https://prefecthq.github.io/prefect-dbt/cli/configs/bigquery/#prefect_dbt.cli.configs.bigquery.BigQueryTargetConfigs",
         "description": "dbt CLI target configs containing credentials and settings, specific to BigQuery. This block is part of the prefect-dbt collection. Install prefect-dbt with `pip install prefect-dbt` to use this block.",
         "code_example": "Load stored BigQueryTargetConfigs.\n```python\nfrom prefect_dbt.cli.configs import BigQueryTargetConfigs\n\nbigquery_target_configs = BigQueryTargetConfigs.load(\"BLOCK_NAME\")\n```\n\nInstantiate BigQueryTargetConfigs.\n```python\nfrom prefect_dbt.cli.configs import BigQueryTargetConfigs\nfrom prefect_gcp.credentials import GcpCredentials\n\ncredentials = GcpCredentials.load(\"BLOCK-NAME-PLACEHOLDER\")\ntarget_configs = BigQueryTargetConfigs(\n    schema=\"schema\",  # also known as dataset\n    credentials=credentials,\n)\n```",
@@ -3745,7 +3745,7 @@
       "dbt-cli-global-configs": {
         "name": "dbt CLI Global Configs",
         "slug": "dbt-cli-global-configs",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5zE9lxfzBHjw3tnEup4wWL/9a001902ed43a84c6c96d23b24622e19/dbt-bit_tm.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/f9d31c6978410fe25a70e75fc7e77b5c430b3178-180x162.png",
         "documentation_url": "https://prefecthq.github.io/prefect-dbt/cli/configs/base/#prefect_dbt.cli.configs.base.GlobalConfigs",
         "description": "Global configs control things like the visual output\nof logs, the manner in which dbt parses your project,\nand what to do when dbt finds a version mismatch\nor a failing model. Docs can be found [here](\nhttps://docs.getdbt.com/reference/global-configs). This block is part of the prefect-dbt collection. Install prefect-dbt with `pip install prefect-dbt` to use this block.",
         "code_example": "Load stored GlobalConfigs:\n```python\nfrom prefect_dbt.cli.configs import GlobalConfigs\n\ndbt_cli_global_configs = GlobalConfigs.load(\"BLOCK_NAME\")\n```",
@@ -3839,7 +3839,7 @@
       "dbt-cli-postgres-target-configs": {
         "name": "dbt CLI Postgres Target Configs",
         "slug": "dbt-cli-postgres-target-configs",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5zE9lxfzBHjw3tnEup4wWL/9a001902ed43a84c6c96d23b24622e19/dbt-bit_tm.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/f9d31c6978410fe25a70e75fc7e77b5c430b3178-180x162.png",
         "documentation_url": "https://prefecthq.github.io/prefect-dbt/cli/configs/postgres/#prefect_dbt.cli.configs.postgres.PostgresTargetConfigs",
         "description": "dbt CLI target configs containing credentials and settings specific to Postgres. This block is part of the prefect-dbt collection. Install prefect-dbt with `pip install prefect-dbt` to use this block.",
         "code_example": "Load stored PostgresTargetConfigs:\n```python\nfrom prefect_dbt.cli.configs import PostgresTargetConfigs\n\npostgres_target_configs = PostgresTargetConfigs.load(\"BLOCK_NAME\")\n```\n\nInstantiate PostgresTargetConfigs with DatabaseCredentials.\n```python\nfrom prefect_dbt.cli.configs import PostgresTargetConfigs\nfrom prefect_sqlalchemy import DatabaseCredentials, SyncDriver\n\ncredentials = DatabaseCredentials(\n    driver=SyncDriver.POSTGRESQL_PSYCOPG2,\n    username=\"prefect\",\n    password=\"prefect_password\",\n    database=\"postgres\",\n    host=\"host\",\n    port=8080\n)\ntarget_configs = PostgresTargetConfigs(credentials=credentials, schema=\"schema\")\n```",
@@ -4135,7 +4135,7 @@
       "dbt-cli-profile": {
         "name": "dbt CLI Profile",
         "slug": "dbt-cli-profile",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5zE9lxfzBHjw3tnEup4wWL/9a001902ed43a84c6c96d23b24622e19/dbt-bit_tm.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/f9d31c6978410fe25a70e75fc7e77b5c430b3178-180x162.png",
         "documentation_url": "https://prefecthq.github.io/prefect-dbt/cli/credentials/#prefect_dbt.cli.credentials.DbtCliProfile",
         "description": "Profile for use across dbt CLI tasks and flows. This block is part of the prefect-dbt collection. Install prefect-dbt with `pip install prefect-dbt` to use this block.",
         "code_example": "Load stored dbt CLI profile:\n```python\nfrom prefect_dbt.cli import DbtCliProfile\ndbt_cli_profile = DbtCliProfile.load(\"BLOCK_NAME\").get_profile()\n```\n\nGet a dbt Snowflake profile from DbtCliProfile by using SnowflakeTargetConfigs:\n```python\nfrom prefect_dbt.cli import DbtCliProfile\nfrom prefect_dbt.cli.configs import SnowflakeTargetConfigs\nfrom prefect_snowflake.credentials import SnowflakeCredentials\nfrom prefect_snowflake.database import SnowflakeConnector\n\ncredentials = SnowflakeCredentials(\n    user=\"user\",\n    password=\"password\",\n    account=\"account.region.aws\",\n    role=\"role\",\n)\nconnector = SnowflakeConnector(\n    schema=\"public\",\n    database=\"database\",\n    warehouse=\"warehouse\",\n    credentials=credentials,\n)\ntarget_configs = SnowflakeTargetConfigs(\n    connector=connector\n)\ndbt_cli_profile = DbtCliProfile(\n    name=\"jaffle_shop\",\n    target=\"dev\",\n    target_configs=target_configs,\n)\nprofile = dbt_cli_profile.get_profile()\n```\n\nGet a dbt Redshift profile from DbtCliProfile by using generic TargetConfigs:\n```python\nfrom prefect_dbt.cli import DbtCliProfile\nfrom prefect_dbt.cli.configs import GlobalConfigs, TargetConfigs\n\ntarget_configs_extras = dict(\n    host=\"hostname.region.redshift.amazonaws.com\",\n    user=\"username\",\n    password=\"password1\",\n    port=5439,\n    dbname=\"analytics\",\n)\ntarget_configs = TargetConfigs(\n    type=\"redshift\",\n    schema=\"schema\",\n    threads=4,\n    extras=target_configs_extras\n)\ndbt_cli_profile = DbtCliProfile(\n    name=\"jaffle_shop\",\n    target=\"dev\",\n    target_configs=target_configs,\n)\nprofile = dbt_cli_profile.get_profile()\n```",
@@ -4947,7 +4947,7 @@
       "dbt-cli-snowflake-target-configs": {
         "name": "dbt CLI Snowflake Target Configs",
         "slug": "dbt-cli-snowflake-target-configs",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5zE9lxfzBHjw3tnEup4wWL/9a001902ed43a84c6c96d23b24622e19/dbt-bit_tm.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/f9d31c6978410fe25a70e75fc7e77b5c430b3178-180x162.png",
         "documentation_url": "https://prefecthq.github.io/prefect-dbt/cli/configs/snowflake/#prefect_dbt.cli.configs.snowflake.SnowflakeTargetConfigs",
         "description": "Target configs contain credentials and\nsettings, specific to Snowflake.\nTo find valid keys, head to the [Snowflake Profile](\nhttps://docs.getdbt.com/reference/warehouse-profiles/snowflake-profile)\npage. This block is part of the prefect-dbt collection. Install prefect-dbt with `pip install prefect-dbt` to use this block.",
         "code_example": "Load stored SnowflakeTargetConfigs:\n```python\nfrom prefect_dbt.cli.configs import SnowflakeTargetConfigs\n\nsnowflake_target_configs = SnowflakeTargetConfigs.load(\"BLOCK_NAME\")\n```\n\nInstantiate SnowflakeTargetConfigs.\n```python\nfrom prefect_dbt.cli.configs import SnowflakeTargetConfigs\nfrom prefect_snowflake.credentials import SnowflakeCredentials\nfrom prefect_snowflake.database import SnowflakeConnector\n\ncredentials = SnowflakeCredentials(\n    user=\"user\",\n    password=\"password\",\n    account=\"account.region.aws\",\n    role=\"role\",\n)\nconnector = SnowflakeConnector(\n    schema=\"public\",\n    database=\"database\",\n    warehouse=\"warehouse\",\n    credentials=credentials,\n)\ntarget_configs = SnowflakeTargetConfigs(\n    connector=connector,\n    extras={\"retry_on_database_errors\": True},\n)\n```",
@@ -5180,7 +5180,7 @@
       "dbt-cli-target-configs": {
         "name": "dbt CLI Target Configs",
         "slug": "dbt-cli-target-configs",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5zE9lxfzBHjw3tnEup4wWL/9a001902ed43a84c6c96d23b24622e19/dbt-bit_tm.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/f9d31c6978410fe25a70e75fc7e77b5c430b3178-180x162.png",
         "documentation_url": "https://prefecthq.github.io/prefect-dbt/cli/configs/base/#prefect_dbt.cli.configs.base.TargetConfigs",
         "description": "Target configs contain credentials and\nsettings, specific to the warehouse you're connecting to.\nTo find valid keys, head to the [Available adapters](\nhttps://docs.getdbt.com/docs/available-adapters) page and\nclick the desired adapter's \"Profile Setup\" hyperlink. This block is part of the prefect-dbt collection. Install prefect-dbt with `pip install prefect-dbt` to use this block.",
         "code_example": "Load stored TargetConfigs:\n```python\nfrom prefect_dbt.cli.configs import TargetConfigs\n\ndbt_cli_target_configs = TargetConfigs.load(\"BLOCK_NAME\")\n```",
@@ -5234,7 +5234,7 @@
       "dbt-cloud-credentials": {
         "name": "dbt Cloud Credentials",
         "slug": "dbt-cloud-credentials",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5zE9lxfzBHjw3tnEup4wWL/9a001902ed43a84c6c96d23b24622e19/dbt-bit_tm.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/f9d31c6978410fe25a70e75fc7e77b5c430b3178-180x162.png",
         "documentation_url": "https://prefecthq.github.io/prefect-dbt/cloud/credentials/#prefect_dbt.cloud.credentials.DbtCloudCredentials",
         "description": "Credentials block for credential use across dbt Cloud tasks and flows. This block is part of the prefect-dbt collection. Install prefect-dbt with `pip install prefect-dbt` to use this block.",
         "code_example": "Load stored dbt Cloud credentials:\n```python\nfrom prefect_dbt.cloud import DbtCloudCredentials\n\ndbt_cloud_credentials = DbtCloudCredentials.load(\"BLOCK_NAME\")\n```\n\nUse DbtCloudCredentials instance to trigger a job run:\n```python\nfrom prefect_dbt.cloud import DbtCloudCredentials\n\ncredentials = DbtCloudCredentials(api_key=\"my_api_key\", account_id=123456789)\n\nasync with dbt_cloud_credentials.get_administrative_client() as client:\n    client.trigger_job_run(job_id=1)\n```\n\nLoad saved dbt Cloud credentials within a flow:\n```python\nfrom prefect import flow\n\nfrom prefect_dbt.cloud import DbtCloudCredentials\nfrom prefect_dbt.cloud.jobs import trigger_dbt_cloud_job_run\n\n\n@flow\ndef trigger_dbt_cloud_job_run_flow():\n    credentials = DbtCloudCredentials.load(\"my-dbt-credentials\")\n    trigger_dbt_cloud_job_run(dbt_cloud_credentials=credentials, job_id=1)\n\ntrigger_dbt_cloud_job_run_flow()\n```",
@@ -5281,7 +5281,7 @@
       "dbt-core-operation": {
         "name": "dbt Core Operation",
         "slug": "dbt-core-operation",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5zE9lxfzBHjw3tnEup4wWL/9a001902ed43a84c6c96d23b24622e19/dbt-bit_tm.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/f9d31c6978410fe25a70e75fc7e77b5c430b3178-180x162.png",
         "documentation_url": "https://prefecthq.github.io/prefect-dbt/cli/commands/#prefect_dbt.cli.commands.DbtCoreOperation",
         "description": "A block representing a dbt operation, containing multiple dbt and shell commands.\n\nFor long-lasting operations, use the trigger method and utilize the block as a\ncontext manager for automatic closure of processes when context is exited.\nIf not, manually call the close method to close processes.\n\nFor short-lasting operations, use the run method. Context is automatically managed\nwith this method. This block is part of the prefect-dbt collection. Install prefect-dbt with `pip install prefect-dbt` to use this block.",
         "code_example": "Load a configured block.\n```python\nfrom prefect_dbt import DbtCoreOperation\n\ndbt_op = DbtCoreOperation.load(\"BLOCK_NAME\")\n```\n\nExecute short-lasting dbt debug and list with a custom DbtCliProfile.\n```python\nfrom prefect_dbt import DbtCoreOperation, DbtCliProfile\nfrom prefect_dbt.cli.configs import SnowflakeTargetConfigs\nfrom prefect_snowflake import SnowflakeConnector\n\nsnowflake_connector = await SnowflakeConnector.load(\"snowflake-connector\")\ntarget_configs = SnowflakeTargetConfigs(connector=snowflake_connector)\ndbt_cli_profile = DbtCliProfile(\n    name=\"jaffle_shop\",\n    target=\"dev\",\n    target_configs=target_configs,\n)\ndbt_init = DbtCoreOperation(\n    commands=[\"dbt debug\", \"dbt list\"],\n    dbt_cli_profile=dbt_cli_profile,\n    overwrite_profiles=True\n)\ndbt_init.run()\n```\n\nExecute a longer-lasting dbt run as a context manager.\n```python\nwith DbtCoreOperation(commands=[\"dbt run\"]) as dbt_run:\n    dbt_process = dbt_run.trigger()\n    # do other things\n    dbt_process.wait_for_completion()\n    dbt_output = dbt_process.fetch_result()\n```",
@@ -6296,7 +6296,7 @@
       "email-server-credentials": {
         "name": "Email Server Credentials",
         "slug": "email-server-credentials",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/3PcxFuO9XUqs7wU9MiUBMg/ca740e27815d15528373aced667f58b9/email__1_.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/82bc6ed16ca42a2252a5512c72233a253b8a58eb-250x250.png",
         "documentation_url": "https://prefecthq.github.io/prefect-email/credentials/#prefect_email.credentials.EmailServerCredentials",
         "description": "Block used to manage generic email server authentication.\nIt is recommended you use a\n[Google App Password](https://support.google.com/accounts/answer/185833)\nif you use Gmail. This block is part of the prefect-email collection. Install prefect-email with `pip install prefect-email` to use this block.",
         "code_example": "Load stored email server credentials:\n```python\nfrom prefect_email import EmailServerCredentials\nemail_credentials_block = EmailServerCredentials.load(\"BLOCK_NAME\")\n```",
@@ -6392,7 +6392,7 @@
       "firebolt-credentials": {
         "name": "Firebolt Credentials",
         "slug": "firebolt-credentials",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/3loU17IXqVIWl4aWQfqc78/3c7eefe5e8cf4eec870856f10d7fdcce/5e8a264ceaf4870c90478037_Favicon_128.svg.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/df83dc3c5789050a0b6b146a3780e5982df693f7-300x300.png",
         "documentation_url": "https://prefecthq.github.io/prefect-firebolt/credentials/#prefect_firebolt.credentials.FireboltCredentials",
         "description": "Store credentials for authenticating with Firebolt. This block is part of the prefect-firebolt collection. Install prefect-firebolt with `pip install prefect-firebolt` to use this block.",
         "code_example": "```python\nfrom prefect_firebolt.credentials import FireboltCredentials\n\nfirebolt_credentials_block = FireboltCredentials.load(\"BLOCK_NAME\")\n```",
@@ -6448,7 +6448,7 @@
       "firebolt-database": {
         "name": "Firebolt Database",
         "slug": "firebolt-database",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/3loU17IXqVIWl4aWQfqc78/3c7eefe5e8cf4eec870856f10d7fdcce/5e8a264ceaf4870c90478037_Favicon_128.svg.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/df83dc3c5789050a0b6b146a3780e5982df693f7-300x300.png",
         "documentation_url": "https://prefecthq.github.io/prefect-firebolt/database/#prefect_firebolt.database.FireboltDatabase",
         "description": "Connects to a Firebolt database. This block is part of the prefect-firebolt collection. Install prefect-firebolt with `pip install prefect-firebolt` to use this block.",
         "code_example": "```python\nfrom prefect_firebolt.database import FireboltDatabase\n\nfirebolt_database_block = FireboltDatabase.load(\"BLOCK_NAME\")\n```",
@@ -7186,7 +7186,7 @@
       "github-credentials": {
         "name": "GitHub Credentials",
         "slug": "github-credentials",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/187oCWsD18m5yooahq1vU0/ace41e99ab6dc40c53e5584365a33821/github.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/41971cfecfea5f79ff334164f06ecb34d1038dd4-250x250.png",
         "documentation_url": "https://prefecthq.github.io/prefect-github/credentials/#prefect_github.credentials.GitHubCredentials",
         "description": "Block used to manage GitHub authentication. This block is part of the prefect-github collection. Install prefect-github with `pip install prefect-github` to use this block.",
         "code_example": "Load stored GitHub credentials:\n```python\nfrom prefect_github import GitHubCredentials\ngithub_credentials_block = GitHubCredentials.load(\"BLOCK_NAME\")\n```",
@@ -7218,7 +7218,7 @@
       "github-repository": {
         "name": "GitHub Repository",
         "slug": "github-repository",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/187oCWsD18m5yooahq1vU0/ace41e99ab6dc40c53e5584365a33821/github.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/41971cfecfea5f79ff334164f06ecb34d1038dd4-250x250.png",
         "documentation_url": "https://prefecthq.github.io/prefect-github/repository/#prefect_github.repository.GitHubRepository",
         "description": "Interact with files stored on GitHub repositories. This block is part of the prefect-github collection. Install prefect-github with `pip install prefect-github` to use this block.",
         "code_example": "```python\nfrom prefect_github.repository import GitHubRepository\n\ngithub_repository_block = GitHubRepository.load(\"BLOCK_NAME\")\n```",
@@ -7297,7 +7297,7 @@
       "gitlab-credentials": {
         "name": "GitLab Credentials",
         "slug": "gitlab-credentials",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/55edIimT4g9gbjhkh5a3Sp/dfdb9391d8f45c2e93e72e3a4d350771/gitlab-logo-500.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/a5db0f07a1bb4390f0e1cda9f7ef9091d89633b9-250x250.png",
         "documentation_url": null,
         "description": "Store a GitLab personal access token to interact with private GitLab\nrepositories. This block is part of the prefect-gitlab collection. Install prefect-gitlab with `pip install prefect-gitlab` to use this block.",
         "code_example": "Load stored GitLab credentials:\n```python\nfrom prefect_gitlab import GitLabCredentials\ngitlab_credentials_block = GitLabCredentials.load(\"BLOCK_NAME\")\n```",
@@ -7335,7 +7335,7 @@
       "gitlab-repository": {
         "name": "GitLab Repository",
         "slug": "gitlab-repository",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/55edIimT4g9gbjhkh5a3Sp/dfdb9391d8f45c2e93e72e3a4d350771/gitlab-logo-500.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/a5db0f07a1bb4390f0e1cda9f7ef9091d89633b9-250x250.png",
         "documentation_url": null,
         "description": "Interact with files stored in GitLab repositories. This block is part of the prefect-gitlab collection. Install prefect-gitlab with `pip install prefect-gitlab` to use this block.",
         "code_example": "```python\nfrom prefect_gitlab.repositories import GitLabRepository\n\ngitlab_repository_block = GitLabRepository.load(\"BLOCK_NAME\")\n```",
@@ -7515,7 +7515,7 @@
       "kubernetes-credentials": {
         "name": "Kubernetes Credentials",
         "slug": "kubernetes-credentials",
-        "logo_url": "https://images.ctfassets.net/zscdif0zqppk/oYuHjIbc26oilfQSEMjRv/a61f5f6ef406eead2df5231835b4c4c2/logo.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/2d0b896006ad463b49c28aaac14f31e00e32cfab-250x250.png",
         "documentation_url": "https://prefecthq.github.io/prefect-kubernetes/credentials/#prefect_kubernetes.credentials.KubernetesCredentials",
         "description": "Credentials block for generating configured Kubernetes API clients. This block is part of the prefect-kubernetes collection. Install prefect-kubernetes with `pip install prefect-kubernetes` to use this block.",
         "code_example": "Load stored Kubernetes credentials:\n```python\nfrom prefect_kubernetes.credentials import KubernetesCredentials\n\nkubernetes_credentials = KubernetesCredentials.load(\"BLOCK_NAME\")\n```",
@@ -7576,7 +7576,7 @@
       "monday-credentials": {
         "name": "Monday Credentials",
         "slug": "monday-credentials",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/3ohoKiYTO3Kjt6sri58HXu/27b45e8641127b196008976dde856058/imageedit_5_6047243931.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/ad8614977614bcafee59ec5a3ef080111f045ffc-250x250.png",
         "documentation_url": null,
         "description": "Block used to manage Monday authentication. This block is part of the prefect-monday collection. Install prefect-monday with `pip install prefect-monday` to use this block.",
         "code_example": "Load stored Monday credentials:\n```python\nfrom prefect_monday import MondayCredentials\nmonday_credentials_block = MondayCredentials.load(\"BLOCK_NAME\")\n```",
@@ -7611,7 +7611,7 @@
       "monte-carlo-credentials": {
         "name": "Monte Carlo Credentials",
         "slug": "monte-carlo-credentials",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5OqrPNRdLMvqZzxo9f6Z25/f920dff0f1201fc014b0b083a6d2fdb1/image.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/624870fcf18298f6bf0efb55046e50765620eabd-72x72.png",
         "documentation_url": "https://prefecthq.github.io/prefect-monte-carlo/credentials/#prefect_monte_carlo.credentials.MonteCarloCredentials",
         "description": "Block used to manage Monte Carlo authentication. This block is part of the prefect-monte-carlo collection. Install prefect-monte-carlo with `pip install prefect-monte-carlo` to use this block.",
         "code_example": "Load stored Monte Carlo credentials:\n```python\nfrom prefect_monte_carlo.credentials import MonteCarloCredentials\nmontecarlo_credentials_block = MonteCarloCredentials.load(\"BLOCK_NAME\")\n```",
@@ -7662,7 +7662,7 @@
       "openai-completion-model": {
         "name": "OpenAI Completion Model",
         "slug": "openai-completion-model",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/QE8JwcbZBmIfiognXDLcY/2bcd4c759f877d37159f576101218b49/open-ai-logo-8B9BFEDC26-seeklogo.com.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/760539393a7dbf93a143fb01c2a8b0fe7157a8d8-247x250.png",
         "documentation_url": "https://prefecthq.github.io/prefect-openai/completion/#prefect_openai.completion.CompletionModel",
         "description": "A block that contains config for an OpenAI Completion Model.\nLearn more in the [OpenAPI Text Completion docs](\n    https://beta.openai.com/docs/guides/completion) This block is part of the prefect-openai collection. Install prefect-openai with `pip install prefect-openai` to use this block.",
         "code_example": "Load a configured block:\n```python\nfrom prefect_openai import CompletionModel\n\ncompletion_model = CompletionModel.load(\"BLOCK_NAME\")\n```",
@@ -7780,7 +7780,7 @@
       "openai-credentials": {
         "name": "OpenAI Credentials",
         "slug": "openai-credentials",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/QE8JwcbZBmIfiognXDLcY/2bcd4c759f877d37159f576101218b49/open-ai-logo-8B9BFEDC26-seeklogo.com.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/760539393a7dbf93a143fb01c2a8b0fe7157a8d8-247x250.png",
         "documentation_url": "https://prefecthq.github.io/prefect-openai/credentials/#prefect_openai.credentials.OpenAICredentials",
         "description": "Credentials used to authenticate with OpenAI. This block is part of the prefect-openai collection. Install prefect-openai with `pip install prefect-openai` to use this block.",
         "code_example": "Load a configured block:\n```python\nfrom prefect_openai import OpenAICredentials\n\ncredentials = OpenAICredentials.load(\"BLOCK_NAME\")\n```\n\nGet the OpenAPI client:\n```python\nfrom prefect_openai import OpenAICredentials\n\ncredentials = OpenAICredentials.load(\"BLOCK_NAME\")\nclient = credentials.get_client()\n```",
@@ -7820,7 +7820,7 @@
       "openai-image-model": {
         "name": "OpenAI Image Model",
         "slug": "openai-image-model",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/QE8JwcbZBmIfiognXDLcY/2bcd4c759f877d37159f576101218b49/open-ai-logo-8B9BFEDC26-seeklogo.com.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/760539393a7dbf93a143fb01c2a8b0fe7157a8d8-247x250.png",
         "documentation_url": null,
         "description": "A block that contains config for an OpenAI Image Model.\nLearn more in the [OpenAPI Image generation docs](\n    https://beta.openai.com/docs/guides/images) This block is part of the prefect-openai collection. Install prefect-openai with `pip install prefect-openai` to use this block.",
         "code_example": "Load a configured block:\n```python\nfrom prefect_openai import ImageModel\n\nimage_model = ImageModel.load(\"BLOCK_NAME\")\n```",
@@ -7922,7 +7922,7 @@
       "shell-operation": {
         "name": "Shell Operation",
         "slug": "shell-operation",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/3Nn6D7zVqrdIsGjufgpES4/abd12fa6427121f7363758aafc468d9a/Terminalicon2.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/0b47a017e1b40381de770c17647c49cdf6388d1c-250x250.png",
         "documentation_url": "https://prefecthq.github.io/prefect-shell/commands/#prefect_shell.commands.ShellOperation",
         "description": "A block representing a shell operation, containing multiple commands.\n\nFor long-lasting operations, use the trigger method and utilize the block as a\ncontext manager for automatic closure of processes when context is exited.\nIf not, manually call the close method to close processes.\n\nFor short-lasting operations, use the run method. Context is automatically managed\nwith this method. This block is part of the prefect-shell collection. Install prefect-shell with `pip install prefect-shell` to use this block.",
         "code_example": "Load a configured block:\n```python\nfrom prefect_shell import ShellOperation\n\nshell_operation = ShellOperation.load(\"BLOCK_NAME\")\n```",
@@ -7990,7 +7990,7 @@
       "slack-credentials": {
         "name": "Slack Credentials",
         "slug": "slack-credentials",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/7dkzINU9r6j44giEFuHuUC/85d4cd321ad60c1b1e898bc3fbd28580/5cb480cd5f1b6d3fbadece79.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/c1965ecbf8704ee1ea20d77786de9a41ce1087d1-500x500.png",
         "documentation_url": "https://prefecthq.github.io/prefect-slack/credentials/#prefect_slack.credentials.SlackCredentials",
         "description": "Block holding Slack credentials for use in tasks and flows. This block is part of the prefect-slack collection. Install prefect-slack with `pip install prefect-slack` to use this block.",
         "code_example": "Load stored Slack credentials:\n```python\nfrom prefect_slack import SlackCredentials\nslack_credentials_block = SlackCredentials.load(\"BLOCK_NAME\")\n```\n\nGet a Slack client:\n```python\nfrom prefect_slack import SlackCredentials\nslack_credentials_block = SlackCredentials.load(\"BLOCK_NAME\")\nclient = slack_credentials_block.get_client()\n```",
