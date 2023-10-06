@@ -6386,8 +6386,8 @@
       "firebolt-credentials": {
         "name": "Firebolt Credentials",
         "slug": "firebolt-credentials",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/df83dc3c5789050a0b6b146a3780e5982df693f7-300x300.png",
-        "documentation_url": null,
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/3loU17IXqVIWl4aWQfqc78/3c7eefe5e8cf4eec870856f10d7fdcce/5e8a264ceaf4870c90478037_Favicon_128.svg.png?h=250",
+        "documentation_url": "https://prefecthq.github.io/prefect-firebolt/credentials/#prefect_firebolt.credentials.FireboltCredentials",
         "description": "Store credentials for authenticating with Firebolt. This block is part of the prefect-firebolt collection. Install prefect-firebolt with `pip install prefect-firebolt` to use this block.",
         "code_example": "```python\nfrom prefect_firebolt.credentials import FireboltCredentials\n\nfirebolt_credentials_block = FireboltCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
@@ -6436,14 +6436,14 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.1.0"
+          "version": "0.2.0"
         }
       },
       "firebolt-database": {
         "name": "Firebolt Database",
         "slug": "firebolt-database",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/df83dc3c5789050a0b6b146a3780e5982df693f7-300x300.png",
-        "documentation_url": null,
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/3loU17IXqVIWl4aWQfqc78/3c7eefe5e8cf4eec870856f10d7fdcce/5e8a264ceaf4870c90478037_Favicon_128.svg.png?h=250",
+        "documentation_url": "https://prefecthq.github.io/prefect-firebolt/database/#prefect_firebolt.database.FireboltDatabase",
         "description": "Connects to a Firebolt database. This block is part of the prefect-firebolt collection. Install prefect-firebolt with `pip install prefect-firebolt` to use this block.",
         "code_example": "```python\nfrom prefect_firebolt.database import FireboltDatabase\n\nfirebolt_database_block = FireboltDatabase.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
@@ -6539,7 +6539,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.1.0"
+          "version": "0.2.0"
         }
       }
     }
