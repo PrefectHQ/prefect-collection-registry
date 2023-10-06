@@ -6294,12 +6294,12 @@
       "email-server-credentials": {
         "name": "Email Server Credentials",
         "slug": "email-server-credentials",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/82bc6ed16ca42a2252a5512c72233a253b8a58eb-250x250.png",
-        "documentation_url": null,
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/3PcxFuO9XUqs7wU9MiUBMg/ca740e27815d15528373aced667f58b9/email__1_.png?h=250",
+        "documentation_url": "https://prefecthq.github.io/prefect-email/credentials/#prefect_email.credentials.EmailServerCredentials",
         "description": "Block used to manage generic email server authentication.\nIt is recommended you use a\n[Google App Password](https://support.google.com/accounts/answer/185833)\nif you use Gmail. This block is part of the prefect-email collection. Install prefect-email with `pip install prefect-email` to use this block.",
         "code_example": "Load stored email server credentials:\n```python\nfrom prefect_email import EmailServerCredentials\nemail_credentials_block = EmailServerCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:6944137df7351ce55236c0b685c903460ed8f4609dafebf12f928ea166e1f1d2",
+          "checksum": "sha256:56d6491f4b2d4aaae5ce604652416f44d0c8fa39ca68c5f747aee7cb518a41d0",
           "fields": {
             "title": "EmailServerCredentials",
             "description": "Block used to manage generic email server authentication.\nIt is recommended you use a\n[Google App Password](https://support.google.com/accounts/answer/185833)\nif you use Gmail.",
@@ -6307,17 +6307,19 @@
             "properties": {
               "username": {
                 "title": "Username",
+                "description": "The username to use for authentication to the server. Unnecessary if SMTP login is not required.",
                 "type": "string"
               },
               "password": {
                 "title": "Password",
-                "default": "",
+                "description": "The password to use for authentication to the server. Unnecessary if SMTP login is not required.",
                 "type": "string",
                 "writeOnly": true,
                 "format": "password"
               },
               "smtp_server": {
-                "title": "Smtp Server",
+                "title": "SMTP Server",
+                "description": "Either the hostname of the SMTP server, or one of the keys from the built-in SMTPServer Enum members, like 'gmail'.",
                 "default": "smtp.gmail.com",
                 "anyOf": [
                   {
@@ -6329,7 +6331,8 @@
                 ]
               },
               "smtp_type": {
-                "title": "Smtp Type",
+                "title": "SMTP Type",
+                "description": "Either 'SSL', 'STARTTLS', or 'INSECURE'.",
                 "default": 465,
                 "anyOf": [
                   {
@@ -6341,7 +6344,8 @@
                 ]
               },
               "smtp_port": {
-                "title": "Smtp Port",
+                "title": "SMTP Port",
+                "description": "If provided, overrides the smtp_type's default port number.",
                 "type": "integer"
               }
             },
@@ -6376,7 +6380,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.2.2"
+          "version": "0.3.0"
         }
       }
     }
