@@ -1974,7 +1974,7 @@
       "aws-credentials": {
         "name": "AWS Credentials",
         "slug": "aws-credentials",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/d74b16fe84ce626345adf235a47008fea2869a60-225x225.png",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/1jbV4lceHOjGgunX15lUwT/db88e184d727f721575aeb054a37e277/aws.png?h=250",
         "documentation_url": "https://prefecthq.github.io/prefect-aws/credentials/#prefect_aws.credentials.AwsCredentials",
         "description": "Block used to manage authentication with AWS. AWS authentication is\nhandled via the `boto3` module. Refer to the\n[boto3 docs](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html)\nfor more info about the possible credential configurations. This block is part of the prefect-aws collection. Install prefect-aws with `pip install prefect-aws` to use this block.",
         "code_example": "Load stored AWS credentials:\n```python\nfrom prefect_aws import AwsCredentials\n\naws_credentials_block = AwsCredentials.load(\"BLOCK_NAME\")\n```",
@@ -2079,13 +2079,13 @@
             }
           },
           "capabilities": [],
-          "version": "0.3.7"
+          "version": "0.4.0"
         }
       },
       "aws-secret": {
         "name": "AWS Secret",
         "slug": "aws-secret",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/d74b16fe84ce626345adf235a47008fea2869a60-225x225.png",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/1jbV4lceHOjGgunX15lUwT/db88e184d727f721575aeb054a37e277/aws.png?h=250",
         "documentation_url": "https://prefecthq.github.io/prefect-aws/secrets_manager/#prefect_aws.secrets_manager.AwsSecret",
         "description": "Manages a secret in AWS's Secrets Manager. This block is part of the prefect-aws collection. Install prefect-aws with `pip install prefect-aws` to use this block.",
         "code_example": "```python\nfrom prefect_aws.secrets_manager import AwsSecret\n\naws_secret_block = AwsSecret.load(\"BLOCK_NAME\")\n```",
@@ -2219,13 +2219,13 @@
             }
           },
           "capabilities": [],
-          "version": "0.3.7"
+          "version": "0.4.0"
         }
       },
       "ecs-task": {
         "name": "ECS Task",
         "slug": "ecs-task",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/d74b16fe84ce626345adf235a47008fea2869a60-225x225.png",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/1jbV4lceHOjGgunX15lUwT/db88e184d727f721575aeb054a37e277/aws.png?h=250",
         "documentation_url": "https://prefecthq.github.io/prefect-aws/ecs/#prefect_aws.ecs.ECSTask",
         "description": "Run a command as an ECS task. This block is part of the prefect-aws collection. Install prefect-aws with `pip install prefect-aws` to use this block.",
         "code_example": "```python\nfrom prefect_aws.ecs import ECSTask\n\necs_task_block = ECSTask.load(\"BLOCK_NAME\")\n```",
@@ -2506,13 +2506,13 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "0.3.7"
+          "version": "0.4.0"
         }
       },
       "minio-credentials": {
         "name": "MinIO Credentials",
         "slug": "minio-credentials",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/676cb17bcbdff601f97e0a02ff8bcb480e91ff40-250x250.png",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/22vXcxsOrVeFrUwHfSoaeT/7607b876eb589a9028c8126e78f4c7b4/imageedit_7_2837870043.png?h=250",
         "documentation_url": "https://prefecthq.github.io/prefect-aws/credentials/#prefect_aws.credentials.MinIOCredentials",
         "description": "Block used to manage authentication with MinIO. Refer to the MinIO docs: https://docs.min.io/docs/minio-server-configuration-guide.html for more info about the possible credential configurations. This block is part of the prefect-aws collection. Install prefect-aws with `pip install prefect-aws` to use this block.",
         "code_example": "Load stored MinIO credentials:\n```python\nfrom prefect_aws import MinIOCredentials\n\nminio_credentials_block = MinIOCredentials.load(\"BLOCK_NAME\")\n```",
@@ -2611,13 +2611,13 @@
             }
           },
           "capabilities": [],
-          "version": "0.3.7"
+          "version": "0.4.0"
         }
       },
       "s3-bucket": {
         "name": "S3 Bucket",
         "slug": "s3-bucket",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/d74b16fe84ce626345adf235a47008fea2869a60-225x225.png",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/1jbV4lceHOjGgunX15lUwT/db88e184d727f721575aeb054a37e277/aws.png?h=250",
         "documentation_url": "https://prefecthq.github.io/prefect-aws/s3/#prefect_aws.s3.S3Bucket",
         "description": "Block used to store data using AWS S3 or S3-compatible object storage like MinIO. This block is part of the prefect-aws collection. Install prefect-aws with `pip install prefect-aws` to use this block.",
         "code_example": "```python\nfrom prefect_aws.s3 import S3Bucket\n\ns3_bucket_block = S3Bucket.load(\"BLOCK_NAME\")\n```",
@@ -2819,7 +2819,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "0.3.7"
+          "version": "0.4.0"
         }
       }
     }
