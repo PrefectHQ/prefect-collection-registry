@@ -1,0 +1,165 @@
+{
+  "prefect-firebolt": {
+    "block_types": {
+      "firebolt-credentials": {
+        "name": "Firebolt Credentials",
+        "slug": "firebolt-credentials",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/3loU17IXqVIWl4aWQfqc78/3c7eefe5e8cf4eec870856f10d7fdcce/5e8a264ceaf4870c90478037_Favicon_128.svg.png?h=250",
+        "documentation_url": "https://prefecthq.github.io/prefect-firebolt/credentials/#prefect_firebolt.credentials.FireboltCredentials",
+        "description": "Store credentials for authenticating with Firebolt. This block is part of the prefect-firebolt collection. Install prefect-firebolt with `pip install prefect-firebolt` to use this block.",
+        "code_example": "```python\nfrom prefect_firebolt.credentials import FireboltCredentials\n\nfirebolt_credentials_block = FireboltCredentials.load(\"BLOCK_NAME\")\n```",
+        "block_schema": {
+          "checksum": "sha256:53828a6f4a50581376d806d30db9f87e8fc210297997385e80405076cce24ba4",
+          "fields": {
+            "title": "FireboltCredentials",
+            "description": "Store credentials for authenticating with Firebolt.",
+            "type": "object",
+            "properties": {
+              "username": {
+                "title": "Username",
+                "description": "The email address associated with your Firebolt user.",
+                "type": "string"
+              },
+              "password": {
+                "title": "Password",
+                "description": "The password used for connecting to Firebolt.",
+                "type": "string",
+                "writeOnly": true,
+                "format": "password"
+              },
+              "token": {
+                "title": "Token",
+                "description": "Authentication token to use instead of username and password.",
+                "type": "string",
+                "writeOnly": true,
+                "format": "password"
+              },
+              "api_endpoint": {
+                "title": "API Endpoint",
+                "description": "Firebolt API endpoint used for authentication.",
+                "default": "api.app.firebolt.io",
+                "type": "string"
+              },
+              "account_name": {
+                "title": "Account Name",
+                "description": "Name of the account to authenticate with. If not provided, the default account will be used.",
+                "type": "string"
+              }
+            },
+            "block_type_slug": "firebolt-credentials",
+            "secret_fields": [
+              "password",
+              "token"
+            ],
+            "block_schema_references": {}
+          },
+          "capabilities": [],
+          "version": "0.2.0"
+        }
+      },
+      "firebolt-database": {
+        "name": "Firebolt Database",
+        "slug": "firebolt-database",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/3loU17IXqVIWl4aWQfqc78/3c7eefe5e8cf4eec870856f10d7fdcce/5e8a264ceaf4870c90478037_Favicon_128.svg.png?h=250",
+        "documentation_url": "https://prefecthq.github.io/prefect-firebolt/database/#prefect_firebolt.database.FireboltDatabase",
+        "description": "Connects to a Firebolt database. This block is part of the prefect-firebolt collection. Install prefect-firebolt with `pip install prefect-firebolt` to use this block.",
+        "code_example": "```python\nfrom prefect_firebolt.database import FireboltDatabase\n\nfirebolt_database_block = FireboltDatabase.load(\"BLOCK_NAME\")\n```",
+        "block_schema": {
+          "checksum": "sha256:1fa771ec7a975bd6e9625f86bf6177acfd8e626a04e0c046b109d78a898e93ad",
+          "fields": {
+            "title": "FireboltDatabase",
+            "description": "Connects to a Firebolt database.",
+            "type": "object",
+            "properties": {
+              "credentials": {
+                "$ref": "#/definitions/FireboltCredentials"
+              },
+              "database": {
+                "title": "Database Name",
+                "description": "The name of the database to connect to.",
+                "type": "string"
+              },
+              "engine_name": {
+                "title": "Engine Name",
+                "description": "Name of the engine to connect to. May not be used with engine_url. If neither engine_name nor engine_url is provided, the default engine for the configured database will be used.",
+                "type": "string"
+              },
+              "engine_url": {
+                "title": "Engine URL",
+                "description": "The engine endpoint to use. May not be used with engine_name. If neither engine_name nor engine_url is provided, the default engine for the configured database will be used.",
+                "type": "string"
+              },
+              "additional_parameters": {
+                "title": "Additional Parameters",
+                "description": "Additional configuration to pass to the Firebolt connection.",
+                "type": "object"
+              }
+            },
+            "required": [
+              "credentials",
+              "database"
+            ],
+            "block_type_slug": "firebolt-database",
+            "secret_fields": [
+              "credentials.password",
+              "credentials.token"
+            ],
+            "block_schema_references": {
+              "credentials": {
+                "block_type_slug": "firebolt-credentials",
+                "block_schema_checksum": "sha256:53828a6f4a50581376d806d30db9f87e8fc210297997385e80405076cce24ba4"
+              }
+            },
+            "definitions": {
+              "FireboltCredentials": {
+                "title": "FireboltCredentials",
+                "description": "Store credentials for authenticating with Firebolt.",
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "title": "Username",
+                    "description": "The email address associated with your Firebolt user.",
+                    "type": "string"
+                  },
+                  "password": {
+                    "title": "Password",
+                    "description": "The password used for connecting to Firebolt.",
+                    "type": "string",
+                    "writeOnly": true,
+                    "format": "password"
+                  },
+                  "token": {
+                    "title": "Token",
+                    "description": "Authentication token to use instead of username and password.",
+                    "type": "string",
+                    "writeOnly": true,
+                    "format": "password"
+                  },
+                  "api_endpoint": {
+                    "title": "API Endpoint",
+                    "description": "Firebolt API endpoint used for authentication.",
+                    "default": "api.app.firebolt.io",
+                    "type": "string"
+                  },
+                  "account_name": {
+                    "title": "Account Name",
+                    "description": "Name of the account to authenticate with. If not provided, the default account will be used.",
+                    "type": "string"
+                  }
+                },
+                "block_type_slug": "firebolt-credentials",
+                "secret_fields": [
+                  "password",
+                  "token"
+                ],
+                "block_schema_references": {}
+              }
+            }
+          },
+          "capabilities": [],
+          "version": "0.2.0"
+        }
+      }
+    }
+  }
+}
