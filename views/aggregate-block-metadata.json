@@ -3301,12 +3301,12 @@
       "bitbucket-credentials": {
         "name": "BitBucket Credentials",
         "slug": "bitbucket-credentials",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/5d729f7355fb6828c4b605268ded9cfafab3ae4f-250x250.png",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/27LMR24ewTSDW238Lks1vH/34c5028659f4007528feadc8db8cecbd/500px-Bitbucket-blue-logomark-only.svg.png?h=250",
         "documentation_url": null,
         "description": "Store BitBucket credentials to interact with private BitBucket repositories. This block is part of the prefect-bitbucket collection. Install prefect-bitbucket with `pip install prefect-bitbucket` to use this block.",
         "code_example": "Load stored BitBucket credentials:\n```python\nfrom prefect_bitbucket import BitBucketCredentials\nbitbucket_credentials_block = BitBucketCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:ac894e8f4bff58261c7072b7b2a6e4154622bf68aa38ebca2bce58fedfd54e06",
+          "checksum": "sha256:ef96bdc56cde651f152e3f8938018d53d725b25b5ae98777872c0962250ba0fc",
           "fields": {
             "title": "BitBucketCredentials",
             "description": "Store BitBucket credentials to interact with private BitBucket repositories.",
@@ -3314,8 +3314,9 @@
             "properties": {
               "token": {
                 "title": "Token",
-                "description": "A BitBucket Personal Access Token.",
+                "description": "A BitBucket Personal Access Token - required for private repositories.",
                 "name": "Personal Access Token",
+                "example": "x-token-auth:my-token",
                 "type": "string",
                 "writeOnly": true,
                 "format": "password"
@@ -3347,18 +3348,18 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.1.1"
+          "version": "0.2.0"
         }
       },
       "bitbucket-repository": {
         "name": "BitBucket Repository",
         "slug": "bitbucket-repository",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/5d729f7355fb6828c4b605268ded9cfafab3ae4f-250x250.png",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/27LMR24ewTSDW238Lks1vH/34c5028659f4007528feadc8db8cecbd/500px-Bitbucket-blue-logomark-only.svg.png?h=250",
         "documentation_url": null,
         "description": "Interact with files stored in BitBucket repositories. This block is part of the prefect-bitbucket collection. Install prefect-bitbucket with `pip install prefect-bitbucket` to use this block.",
         "code_example": "```python\nfrom prefect_bitbucket.repository import BitBucketRepository\n\nbitbucket_repository_block = BitBucketRepository.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:5cb02c2fabf32f266105998c7261862992d7f912bc61fcc97d6e27fa7e588f26",
+          "checksum": "sha256:b159a8f21358b694f13fb67b73f20bf3f8b74138940fc0f16ab08107e78d5237",
           "fields": {
             "title": "BitBucketRepository",
             "description": "Interact with files stored in BitBucket repositories.",
@@ -3395,7 +3396,7 @@
             "block_schema_references": {
               "bitbucket_credentials": {
                 "block_type_slug": "bitbucket-credentials",
-                "block_schema_checksum": "sha256:ac894e8f4bff58261c7072b7b2a6e4154622bf68aa38ebca2bce58fedfd54e06"
+                "block_schema_checksum": "sha256:ef96bdc56cde651f152e3f8938018d53d725b25b5ae98777872c0962250ba0fc"
               }
             },
             "definitions": {
@@ -3406,8 +3407,9 @@
                 "properties": {
                   "token": {
                     "title": "Token",
-                    "description": "A BitBucket Personal Access Token.",
+                    "description": "A BitBucket Personal Access Token - required for private repositories.",
                     "name": "Personal Access Token",
+                    "example": "x-token-auth:my-token",
                     "type": "string",
                     "writeOnly": true,
                     "format": "password"
@@ -3443,7 +3445,7 @@
           "capabilities": [
             "get-directory"
           ],
-          "version": "0.1.1"
+          "version": "0.2.0"
         }
       }
     }
