@@ -2829,7 +2829,7 @@
       "azure-blob-storage-credentials": {
         "name": "Azure Blob Storage Credentials",
         "slug": "azure-blob-storage-credentials",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/54e3fa7e00197a4fbd1d82ed62494cb58d08c96a-250x250.png",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/6AiQ6HRIft8TspZH7AfyZg/39fd82bdbb186db85560f688746c8cdd/azure.png?h=250",
         "documentation_url": "https://prefecthq.github.io/prefect-azure/credentials/#prefect_azure.credentials.AzureBlobStorageCredentials",
         "description": "Stores credentials for authenticating with Azure Blob Storage. This block is part of the prefect-azure collection. Install prefect-azure with `pip install prefect-azure` to use this block.",
         "code_example": "Load stored Azure Blob Storage credentials and retrieve a blob service client:\n```python\nfrom prefect_azure import AzureBlobStorageCredentials\n\nazure_credentials_block = AzureBlobStorageCredentials.load(\"BLOCK_NAME\")\n\nblob_service_client = azure_credentials_block.get_blob_client()\n```",
@@ -2860,13 +2860,13 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.2.12"
+          "version": "0.3.0"
         }
       },
       "azure-container-instance-credentials": {
         "name": "Azure Container Instance Credentials",
         "slug": "azure-container-instance-credentials",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/54e3fa7e00197a4fbd1d82ed62494cb58d08c96a-250x250.png",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/6AiQ6HRIft8TspZH7AfyZg/39fd82bdbb186db85560f688746c8cdd/azure.png?h=250",
         "documentation_url": "https://prefecthq.github.io/prefect-azure/credentials/#prefect_azure.credentials.AzureContainerInstanceCredentials",
         "description": "Block used to manage Azure Container Instances authentication. Stores Azure Service\nPrincipal authentication data. This block is part of the prefect-azure collection. Install prefect-azure with `pip install prefect-azure` to use this block.",
         "code_example": "```python\nfrom prefect_azure.credentials import AzureContainerInstanceCredentials\n\nazure_container_instance_credentials_block = AzureContainerInstanceCredentials.load(\"BLOCK_NAME\")\n```",
@@ -2907,13 +2907,13 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.2.12"
+          "version": "0.3.0"
         }
       },
       "azure-container-instance-job": {
         "name": "Azure Container Instance Job",
         "slug": "azure-container-instance-job",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/54e3fa7e00197a4fbd1d82ed62494cb58d08c96a-250x250.png",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/6AiQ6HRIft8TspZH7AfyZg/39fd82bdbb186db85560f688746c8cdd/azure.png?h=250",
         "documentation_url": "https://prefecthq.github.io/prefect-azure/container_instance/#prefect_azure.container_instance.AzureContainerInstanceJob",
         "description": "Run tasks using Azure Container Instances. Note this block is experimental. The interface may change without notice. This block is part of the prefect-azure collection. Install prefect-azure with `pip install prefect-azure` to use this block.",
         "code_example": "```python\nfrom prefect_azure.container_instance import AzureContainerInstanceJob\n\nazure_container_instance_job_block = AzureContainerInstanceJob.load(\"BLOCK_NAME\")\n```",
@@ -3191,13 +3191,13 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "0.2.12"
+          "version": "0.3.0"
         }
       },
       "azure-cosmos-db-credentials": {
         "name": "Azure Cosmos DB Credentials",
         "slug": "azure-cosmos-db-credentials",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/54e3fa7e00197a4fbd1d82ed62494cb58d08c96a-250x250.png",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/6AiQ6HRIft8TspZH7AfyZg/39fd82bdbb186db85560f688746c8cdd/azure.png?h=250",
         "documentation_url": "https://prefecthq.github.io/prefect-azure/credentials/#prefect_azure.credentials.AzureCosmosDbCredentials",
         "description": "Block used to manage Cosmos DB authentication with Azure.\nAzure authentication is handled via the `azure` module through\na connection string. This block is part of the prefect-azure collection. Install prefect-azure with `pip install prefect-azure` to use this block.",
         "code_example": "Load stored Azure Cosmos DB credentials:\n```python\nfrom prefect_azure import AzureCosmosDbCredentials\nazure_credentials_block = AzureCosmosDbCredentials.load(\"BLOCK_NAME\")\n```",
@@ -3226,18 +3226,18 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.2.12"
+          "version": "0.3.0"
         }
       },
       "azureml-credentials": {
         "name": "AzureML Credentials",
         "slug": "azureml-credentials",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/54e3fa7e00197a4fbd1d82ed62494cb58d08c96a-250x250.png",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/6AiQ6HRIft8TspZH7AfyZg/39fd82bdbb186db85560f688746c8cdd/azure.png?h=250",
         "documentation_url": "https://prefecthq.github.io/prefect-azure/credentials/#prefect_azure.credentials.AzureMlCredentials",
         "description": "Block used to manage authentication with AzureML. Azure authentication is\nhandled via the `azure` module. This block is part of the prefect-azure collection. Install prefect-azure with `pip install prefect-azure` to use this block.",
         "code_example": "Load stored AzureML credentials:\n```python\nfrom prefect_azure import AzureMlCredentials\nazure_ml_credentials_block = AzureMlCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:7ade832cf475fd1ea5d88faf0003fad80abc9049bcc2bd5fed52476ffc800c79",
+          "checksum": "sha256:11338ccb5cd90992ac378f9b7a73cbf1942fae58343ac2026b3718ed688b52e6",
           "fields": {
             "title": "AzureMlCredentials",
             "description": "Block used to manage authentication with AzureML. Azure authentication is\nhandled via the `azure` module.",
@@ -3262,7 +3262,7 @@
               },
               "subscription_id": {
                 "title": "Subscription Id",
-                "description": "The Azure subscription ID containing the workspace.",
+                "description": "The Azure subscription ID containing the workspace, in format: '00000000-0000-0000-0000-000000000000'.",
                 "type": "string"
               },
               "resource_group": {
@@ -3291,7 +3291,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.2.12"
+          "version": "0.3.0"
         }
       }
     }
