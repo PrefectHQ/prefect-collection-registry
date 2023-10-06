@@ -7916,7 +7916,7 @@
       "shell-operation": {
         "name": "Shell Operation",
         "slug": "shell-operation",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/0b47a017e1b40381de770c17647c49cdf6388d1c-250x250.png",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/3Nn6D7zVqrdIsGjufgpES4/abd12fa6427121f7363758aafc468d9a/Terminalicon2.png?h=250",
         "documentation_url": "https://prefecthq.github.io/prefect-shell/commands/#prefect_shell.commands.ShellOperation",
         "description": "A block representing a shell operation, containing multiple commands.\n\nFor long-lasting operations, use the trigger method and utilize the block as a\ncontext manager for automatic closure of processes when context is exited.\nIf not, manually call the close method to close processes.\n\nFor short-lasting operations, use the run method. Context is automatically managed\nwith this method. This block is part of the prefect-shell collection. Install prefect-shell with `pip install prefect-shell` to use this block.",
         "code_example": "Load a configured block:\n```python\nfrom prefect_shell import ShellOperation\n\nshell_operation = ShellOperation.load(\"BLOCK_NAME\")\n```",
@@ -7974,7 +7974,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.1.5"
+          "version": "0.2.0"
         }
       }
     }
@@ -8580,12 +8580,12 @@
       "twitter-credentials": {
         "name": "Twitter Credentials",
         "slug": "twitter-credentials",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/1NyN5egjNk9Sel17rs0cTz/067bb478b4fec22d8aa47b79b085a6e9/twitter.png?h=250",
-        "documentation_url": "https://prefecthq.github.io/prefect-twitter/credentials/#prefect_twitter.credentials.TwitterCredentials",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/747aa724fedcefd1c1cec248ab7a5b518a1191cd-250x250.png",
+        "documentation_url": null,
         "description": "Block used to manage Twitter authentication with tweepy.\nSee Authentication Tokens section of the Keys and Tokens tab of\nyour app, under the Twitter Developer Portal Projects & Apps page at\nhttps://developer.twitter.com/en/portal/projects-and-apps. This block is part of the prefect-twitter collection. Install prefect-twitter with `pip install prefect-twitter` to use this block.",
         "code_example": "Load stored Twitter credentials:\n```python\nfrom prefect_twitter import TwitterCredentials\ntwitter_credentials_block = TwitterCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:3ddef85943cded20f2e6145a698e5238fbd81d94df72cb758dfa9a4f1840d01e",
+          "checksum": "sha256:4c24588fb507d62c850405da822ec87e52ffc726dbbfea8ceca944d72817a7e2",
           "fields": {
             "title": "TwitterCredentials",
             "description": "Block used to manage Twitter authentication with tweepy.\nSee Authentication Tokens section of the Keys and Tokens tab of\nyour app, under the Twitter Developer Portal Projects & Apps page at\nhttps://developer.twitter.com/en/portal/projects-and-apps.",
@@ -8593,24 +8593,20 @@
             "properties": {
               "consumer_key": {
                 "title": "Consumer Key",
-                "description": "Twitter App API key used for authentication.",
                 "type": "string"
               },
               "consumer_secret": {
                 "title": "Consumer Secret",
-                "description": "Twitter App API secret used for authentication.",
                 "type": "string",
                 "writeOnly": true,
                 "format": "password"
               },
               "access_token": {
                 "title": "Access Token",
-                "description": "Oauth token used to access the Twitter API.",
                 "type": "string"
               },
               "access_token_secret": {
                 "title": "Access Token Secret",
-                "description": "Ouath secret used to access the Twitter API.",
                 "type": "string",
                 "writeOnly": true,
                 "format": "password"
@@ -8630,7 +8626,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.2.0"
+          "version": "0.1.1"
         }
       }
     }
