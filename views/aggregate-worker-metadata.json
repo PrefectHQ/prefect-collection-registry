@@ -1014,7 +1014,7 @@
       },
       "description": "Execute flow runs within containers on Google Cloud Run. Requires a Google Cloud Platform account.",
       "display_name": "Google Cloud Run",
-      "documentation_url": "https://prefecthq.github.io/prefect-gcp/worker/",
+      "documentation_url": "https://prefecthq.github.io/prefect-gcp/cloud_run_worker/",
       "install_command": "pip install prefect-gcp",
       "is_beta": false,
       "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/10424e311932e31c477ac2b9ef3d53cefbaad708-250x250.png",
@@ -1057,7 +1057,7 @@
           "job_watch_poll_interval": "{{ job_watch_poll_interval }}"
         },
         "variables": {
-          "description": "Default variables for the Vertex AI worker.\\n\\nThe schema for this class is used to populate the `variables` section of the default\\nbase job template.",
+          "description": "Default variables for the Vertex AI worker.\n\nThe schema for this class is used to populate the `variables` section of the default\nbase job template.",
           "type": "object",
           "properties": {
             "name": {
@@ -1175,7 +1175,7 @@
           "definitions": {
             "GcpCredentials": {
               "title": "GcpCredentials",
-              "description": "Block used to manage authentication with GCP. Google authentication is\\nhandled via the `google.oauth2` module or through the CLI.\\nSpecify either one of service `account_file` or `service_account_info`; if both\\nare not specified, the client will try to detect the credentials following Google's\\n[Application Default Credentials](https://cloud.google.com/docs/authentication/application-default-credentials).\\nSee Google's [Authentication documentation](https://cloud.google.com/docs/authentication#service-accounts)\\nfor details on inference and recommended authentication patterns.",
+              "description": "Block used to manage authentication with GCP. Google authentication is\nhandled via the `google.oauth2` module or through the CLI.\nSpecify either one of service `account_file` or `service_account_info`; if both\nare not specified, the client will try to detect the credentials following Google's\n[Application Default Credentials](https://cloud.google.com/docs/authentication/application-default-credentials).\nSee Google's [Authentication documentation](https://cloud.google.com/docs/authentication#service-accounts)\nfor details on inference and recommended authentication patterns.",
               "type": "object",
               "properties": {
                 "service_account_file": {

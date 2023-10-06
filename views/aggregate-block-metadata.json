@@ -1787,7 +1787,7 @@
         "name": "Airbyte Connection",
         "slug": "airbyte-connection",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/7f50097d1915fe75b0ee84c951c742a83d3c53cb-250x250.png",
-        "documentation_url": null,
+        "documentation_url": "https://prefecthq.github.io/prefect-airbyte/connections/#prefect_airbyte.connections.AirbyteConnection",
         "description": "A block representing an existing Airbyte connection. This block is part of the prefect-airbyte collection. Install prefect-airbyte with `pip install prefect-airbyte` to use this block.",
         "code_example": "Load an existing `AirbyteConnection` block:\n```python\nfrom prefect_airbyte import AirbyteConnection\n\nairbyte_connection = AirbyteConnection.load(\"BLOCK_NAME\")\n```\n\nRun an Airbyte connection sync as a flow:\n```python\nfrom prefect import flow\nfrom prefect_airbyte import AirbyteConnection\nfrom prefect_airbyte.flows import run_connection_sync # this is a flow\n\nairbyte_connection = AirbyteConnection.load(\"BLOCK_NAME\")\n\n@flow\ndef airbyte_orchestrator():\n    run_connection_sync(airbyte_connection) # now it's a subflow\n```",
         "block_schema": {
@@ -1900,14 +1900,14 @@
             }
           },
           "capabilities": [],
-          "version": "0.2.0"
+          "version": "0.3.0"
         }
       },
       "airbyte-server": {
         "name": "Airbyte Server",
         "slug": "airbyte-server",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/7f50097d1915fe75b0ee84c951c742a83d3c53cb-250x250.png",
-        "documentation_url": null,
+        "documentation_url": "https://prefecthq.github.io/prefect-airbyte/server/#prefect_airbyte.server.AirbyteServer",
         "description": "A block representing an Airbyte server for generating `AirbyteClient` instances. This block is part of the prefect-airbyte collection. Install prefect-airbyte with `pip install prefect-airbyte` to use this block.",
         "code_example": "```python\nfrom prefect_airbyte.server import AirbyteServer\n\nserver = AirbyteServer.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
@@ -1964,7 +1964,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.2.0"
+          "version": "0.3.0"
         }
       }
     }
@@ -2079,7 +2079,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.3.7"
+          "version": "0.4.0"
         }
       },
       "aws-secret": {
@@ -2219,7 +2219,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.3.7"
+          "version": "0.4.0"
         }
       },
       "ecs-task": {
@@ -2506,7 +2506,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "0.3.7"
+          "version": "0.4.0"
         }
       },
       "minio-credentials": {
@@ -2611,7 +2611,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.3.7"
+          "version": "0.4.0"
         }
       },
       "s3-bucket": {
@@ -2819,7 +2819,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "0.3.7"
+          "version": "0.4.0"
         }
       }
     }
@@ -2860,7 +2860,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.2.12"
+          "version": "0.3.0"
         }
       },
       "azure-container-instance-credentials": {
@@ -2907,7 +2907,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.2.12"
+          "version": "0.3.0"
         }
       },
       "azure-container-instance-job": {
@@ -3191,7 +3191,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "0.2.12"
+          "version": "0.3.0"
         }
       },
       "azure-cosmos-db-credentials": {
@@ -3226,7 +3226,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.2.12"
+          "version": "0.3.0"
         }
       },
       "azureml-credentials": {
@@ -3237,7 +3237,7 @@
         "description": "Block used to manage authentication with AzureML. Azure authentication is\nhandled via the `azure` module. This block is part of the prefect-azure collection. Install prefect-azure with `pip install prefect-azure` to use this block.",
         "code_example": "Load stored AzureML credentials:\n```python\nfrom prefect_azure import AzureMlCredentials\nazure_ml_credentials_block = AzureMlCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:7ade832cf475fd1ea5d88faf0003fad80abc9049bcc2bd5fed52476ffc800c79",
+          "checksum": "sha256:11338ccb5cd90992ac378f9b7a73cbf1942fae58343ac2026b3718ed688b52e6",
           "fields": {
             "title": "AzureMlCredentials",
             "description": "Block used to manage authentication with AzureML. Azure authentication is\nhandled via the `azure` module.",
@@ -3262,7 +3262,7 @@
               },
               "subscription_id": {
                 "title": "Subscription Id",
-                "description": "The Azure subscription ID containing the workspace.",
+                "description": "The Azure subscription ID containing the workspace, in format: '00000000-0000-0000-0000-000000000000'.",
                 "type": "string"
               },
               "resource_group": {
@@ -3291,7 +3291,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.2.12"
+          "version": "0.3.0"
         }
       }
     }
@@ -3306,7 +3306,7 @@
         "description": "Store BitBucket credentials to interact with private BitBucket repositories. This block is part of the prefect-bitbucket collection. Install prefect-bitbucket with `pip install prefect-bitbucket` to use this block.",
         "code_example": "Load stored BitBucket credentials:\n```python\nfrom prefect_bitbucket import BitBucketCredentials\nbitbucket_credentials_block = BitBucketCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:ac894e8f4bff58261c7072b7b2a6e4154622bf68aa38ebca2bce58fedfd54e06",
+          "checksum": "sha256:ef96bdc56cde651f152e3f8938018d53d725b25b5ae98777872c0962250ba0fc",
           "fields": {
             "title": "BitBucketCredentials",
             "description": "Store BitBucket credentials to interact with private BitBucket repositories.",
@@ -3314,8 +3314,9 @@
             "properties": {
               "token": {
                 "title": "Token",
-                "description": "A BitBucket Personal Access Token.",
+                "description": "A BitBucket Personal Access Token - required for private repositories.",
                 "name": "Personal Access Token",
+                "example": "x-token-auth:my-token",
                 "type": "string",
                 "writeOnly": true,
                 "format": "password"
@@ -3347,7 +3348,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.1.1"
+          "version": "0.2.0"
         }
       },
       "bitbucket-repository": {
@@ -3358,7 +3359,7 @@
         "description": "Interact with files stored in BitBucket repositories. This block is part of the prefect-bitbucket collection. Install prefect-bitbucket with `pip install prefect-bitbucket` to use this block.",
         "code_example": "```python\nfrom prefect_bitbucket.repository import BitBucketRepository\n\nbitbucket_repository_block = BitBucketRepository.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:5cb02c2fabf32f266105998c7261862992d7f912bc61fcc97d6e27fa7e588f26",
+          "checksum": "sha256:b159a8f21358b694f13fb67b73f20bf3f8b74138940fc0f16ab08107e78d5237",
           "fields": {
             "title": "BitBucketRepository",
             "description": "Interact with files stored in BitBucket repositories.",
@@ -3395,7 +3396,7 @@
             "block_schema_references": {
               "bitbucket_credentials": {
                 "block_type_slug": "bitbucket-credentials",
-                "block_schema_checksum": "sha256:ac894e8f4bff58261c7072b7b2a6e4154622bf68aa38ebca2bce58fedfd54e06"
+                "block_schema_checksum": "sha256:ef96bdc56cde651f152e3f8938018d53d725b25b5ae98777872c0962250ba0fc"
               }
             },
             "definitions": {
@@ -3406,8 +3407,9 @@
                 "properties": {
                   "token": {
                     "title": "Token",
-                    "description": "A BitBucket Personal Access Token.",
+                    "description": "A BitBucket Personal Access Token - required for private repositories.",
                     "name": "Personal Access Token",
+                    "example": "x-token-auth:my-token",
                     "type": "string",
                     "writeOnly": true,
                     "format": "password"
@@ -3443,7 +3445,7 @@
           "capabilities": [
             "get-directory"
           ],
-          "version": "0.1.1"
+          "version": "0.2.0"
         }
       }
     }
@@ -3625,7 +3627,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.1.6"
+          "version": "0.2.0"
         }
       }
     }
@@ -3737,7 +3739,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.3.1"
+          "version": "0.4.0"
         }
       },
       "dbt-cli-global-configs": {
@@ -3831,7 +3833,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.3.1"
+          "version": "0.4.0"
         }
       },
       "dbt-cli-postgres-target-configs": {
@@ -4127,7 +4129,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.3.1"
+          "version": "0.4.0"
         }
       },
       "dbt-cli-profile": {
@@ -4939,7 +4941,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.3.1"
+          "version": "0.4.0"
         }
       },
       "dbt-cli-snowflake-target-configs": {
@@ -5172,7 +5174,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.3.1"
+          "version": "0.4.0"
         }
       },
       "dbt-cli-target-configs": {
@@ -5226,7 +5228,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.3.1"
+          "version": "0.4.0"
         }
       },
       "dbt-cloud-credentials": {
@@ -5273,7 +5275,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.3.1"
+          "version": "0.4.0"
         }
       },
       "dbt-core-operation": {
@@ -5282,7 +5284,7 @@
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/f9d31c6978410fe25a70e75fc7e77b5c430b3178-180x162.png",
         "documentation_url": "https://prefecthq.github.io/prefect-dbt/cli/commands/#prefect_dbt.cli.commands.DbtCoreOperation",
         "description": "A block representing a dbt operation, containing multiple dbt and shell commands.\n\nFor long-lasting operations, use the trigger method and utilize the block as a\ncontext manager for automatic closure of processes when context is exited.\nIf not, manually call the close method to close processes.\n\nFor short-lasting operations, use the run method. Context is automatically managed\nwith this method. This block is part of the prefect-dbt collection. Install prefect-dbt with `pip install prefect-dbt` to use this block.",
-        "code_example": "Load a configured block.\n```python\nfrom prefect_dbt import DbtCoreOperation\n\ndbt_op = DbtCoreOperation.load(\"BLOCK_NAME\")\n```\n\nExecute short-lasting dbt debug and list with a custom DbtCliProfile.\n```python\nfrom prefect_dbt import DbtCoreOperation, DbtCliProfile\nfrom prefect_dbt.cli.configs import SnowflakeTargetConfigs\nfrom prefect_snowflake import SnowflakeConnector\n\nsnowflake_connector = await SnowflakeConnector.load(\"snowflake-connector\")\ntarget_configs = SnowflakeTargetConfigs(connector=snowflake_connector)\ndbt_cli_profile = DbtCliProfile(\n    name=\"jaffle_shop\",\n    target=\"dev\",\n    target_configs=target_configs,\n)\nprofile = dbt_cli_profile.get_profile()\ndbt_init = DbtCoreOperation(\n    commands=[\"dbt debug\", \"dbt list\"],\n    dbt_cli_profile=dbt_cli_profile,\n    overwrite_profiles=True\n)\ndbt_init.run()\n```\n\nExecute a longer-lasting dbt run as a context manager.\n```python\nwith DbtCoreOperation(commands=[\"dbt run\"]) as dbt_run:\n    dbt_process = dbt_run.trigger()\n    # do other things\n    dbt_process.wait_for_completion()\n    dbt_output = dbt_process.fetch_result()\n```",
+        "code_example": "Load a configured block.\n```python\nfrom prefect_dbt import DbtCoreOperation\n\ndbt_op = DbtCoreOperation.load(\"BLOCK_NAME\")\n```\n\nExecute short-lasting dbt debug and list with a custom DbtCliProfile.\n```python\nfrom prefect_dbt import DbtCoreOperation, DbtCliProfile\nfrom prefect_dbt.cli.configs import SnowflakeTargetConfigs\nfrom prefect_snowflake import SnowflakeConnector\n\nsnowflake_connector = await SnowflakeConnector.load(\"snowflake-connector\")\ntarget_configs = SnowflakeTargetConfigs(connector=snowflake_connector)\ndbt_cli_profile = DbtCliProfile(\n    name=\"jaffle_shop\",\n    target=\"dev\",\n    target_configs=target_configs,\n)\ndbt_init = DbtCoreOperation(\n    commands=[\"dbt debug\", \"dbt list\"],\n    dbt_cli_profile=dbt_cli_profile,\n    overwrite_profiles=True\n)\ndbt_init.run()\n```\n\nExecute a longer-lasting dbt run as a context manager.\n```python\nwith DbtCoreOperation(commands=[\"dbt run\"]) as dbt_run:\n    dbt_process = dbt_run.trigger()\n    # do other things\n    dbt_process.wait_for_completion()\n    dbt_output = dbt_process.fetch_result()\n```",
         "block_schema": {
           "checksum": "sha256:0f685bc693353f66d1fc83687c8af67511feba052b5343506033141c9a2441c7",
           "fields": {
@@ -6176,7 +6178,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.3.1"
+          "version": "0.4.0"
         }
       }
     }
@@ -6295,11 +6297,11 @@
         "name": "Email Server Credentials",
         "slug": "email-server-credentials",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/82bc6ed16ca42a2252a5512c72233a253b8a58eb-250x250.png",
-        "documentation_url": null,
+        "documentation_url": "https://prefecthq.github.io/prefect-email/credentials/#prefect_email.credentials.EmailServerCredentials",
         "description": "Block used to manage generic email server authentication.\nIt is recommended you use a\n[Google App Password](https://support.google.com/accounts/answer/185833)\nif you use Gmail. This block is part of the prefect-email collection. Install prefect-email with `pip install prefect-email` to use this block.",
         "code_example": "Load stored email server credentials:\n```python\nfrom prefect_email import EmailServerCredentials\nemail_credentials_block = EmailServerCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:6944137df7351ce55236c0b685c903460ed8f4609dafebf12f928ea166e1f1d2",
+          "checksum": "sha256:56d6491f4b2d4aaae5ce604652416f44d0c8fa39ca68c5f747aee7cb518a41d0",
           "fields": {
             "title": "EmailServerCredentials",
             "description": "Block used to manage generic email server authentication.\nIt is recommended you use a\n[Google App Password](https://support.google.com/accounts/answer/185833)\nif you use Gmail.",
@@ -6307,17 +6309,19 @@
             "properties": {
               "username": {
                 "title": "Username",
+                "description": "The username to use for authentication to the server. Unnecessary if SMTP login is not required.",
                 "type": "string"
               },
               "password": {
                 "title": "Password",
-                "default": "",
+                "description": "The password to use for authentication to the server. Unnecessary if SMTP login is not required.",
                 "type": "string",
                 "writeOnly": true,
                 "format": "password"
               },
               "smtp_server": {
-                "title": "Smtp Server",
+                "title": "SMTP Server",
+                "description": "Either the hostname of the SMTP server, or one of the keys from the built-in SMTPServer Enum members, like 'gmail'.",
                 "default": "smtp.gmail.com",
                 "anyOf": [
                   {
@@ -6329,7 +6333,8 @@
                 ]
               },
               "smtp_type": {
-                "title": "Smtp Type",
+                "title": "SMTP Type",
+                "description": "Either 'SSL', 'STARTTLS', or 'INSECURE'.",
                 "default": 465,
                 "anyOf": [
                   {
@@ -6341,7 +6346,8 @@
                 ]
               },
               "smtp_port": {
-                "title": "Smtp Port",
+                "title": "SMTP Port",
+                "description": "If provided, overrides the smtp_type's default port number.",
                 "type": "integer"
               }
             },
@@ -6376,7 +6382,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.2.2"
+          "version": "0.3.0"
         }
       }
     }
@@ -6387,7 +6393,7 @@
         "name": "Firebolt Credentials",
         "slug": "firebolt-credentials",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/df83dc3c5789050a0b6b146a3780e5982df693f7-300x300.png",
-        "documentation_url": null,
+        "documentation_url": "https://prefecthq.github.io/prefect-firebolt/credentials/#prefect_firebolt.credentials.FireboltCredentials",
         "description": "Store credentials for authenticating with Firebolt. This block is part of the prefect-firebolt collection. Install prefect-firebolt with `pip install prefect-firebolt` to use this block.",
         "code_example": "```python\nfrom prefect_firebolt.credentials import FireboltCredentials\n\nfirebolt_credentials_block = FireboltCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
@@ -6436,14 +6442,14 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.1.0"
+          "version": "0.2.0"
         }
       },
       "firebolt-database": {
         "name": "Firebolt Database",
         "slug": "firebolt-database",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/df83dc3c5789050a0b6b146a3780e5982df693f7-300x300.png",
-        "documentation_url": null,
+        "documentation_url": "https://prefecthq.github.io/prefect-firebolt/database/#prefect_firebolt.database.FireboltDatabase",
         "description": "Connects to a Firebolt database. This block is part of the prefect-firebolt collection. Install prefect-firebolt with `pip install prefect-firebolt` to use this block.",
         "code_example": "```python\nfrom prefect_firebolt.database import FireboltDatabase\n\nfirebolt_database_block = FireboltDatabase.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
@@ -6539,7 +6545,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.1.0"
+          "version": "0.2.0"
         }
       }
     }
@@ -6615,7 +6621,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.4.6"
+          "version": "0.5.0"
         }
       },
       "cloud-run-job": {
@@ -6781,7 +6787,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "0.4.6"
+          "version": "0.5.0"
         }
       },
       "gcp-credentials": {
@@ -6822,7 +6828,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.4.6"
+          "version": "0.5.0"
         }
       },
       "gcpsecret": {
@@ -6900,7 +6906,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.4.6"
+          "version": "0.5.0"
         }
       },
       "gcs-bucket": {
@@ -6988,7 +6994,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "0.4.6"
+          "version": "0.5.0"
         }
       },
       "vertex-ai-custom-training-job": {
@@ -7170,7 +7176,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "0.4.6"
+          "version": "0.5.0"
         }
       }
     }
@@ -7181,7 +7187,7 @@
         "name": "GitHub Credentials",
         "slug": "github-credentials",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/41971cfecfea5f79ff334164f06ecb34d1038dd4-250x250.png",
-        "documentation_url": null,
+        "documentation_url": "https://prefecthq.github.io/prefect-github/credentials/#prefect_github.credentials.GitHubCredentials",
         "description": "Block used to manage GitHub authentication. This block is part of the prefect-github collection. Install prefect-github with `pip install prefect-github` to use this block.",
         "code_example": "Load stored GitHub credentials:\n```python\nfrom prefect_github import GitHubCredentials\ngithub_credentials_block = GitHubCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
@@ -7206,14 +7212,14 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.1.5"
+          "version": "0.2.0"
         }
       },
       "github-repository": {
         "name": "GitHub Repository",
         "slug": "github-repository",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/41971cfecfea5f79ff334164f06ecb34d1038dd4-250x250.png",
-        "documentation_url": null,
+        "documentation_url": "https://prefecthq.github.io/prefect-github/repository/#prefect_github.repository.GitHubRepository",
         "description": "Interact with files stored on GitHub repositories. This block is part of the prefect-github collection. Install prefect-github with `pip install prefect-github` to use this block.",
         "code_example": "```python\nfrom prefect_github.repository import GitHubRepository\n\ngithub_repository_block = GitHubRepository.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
@@ -7281,7 +7287,7 @@
           "capabilities": [
             "get-directory"
           ],
-          "version": "0.1.5"
+          "version": "0.2.0"
         }
       }
     }
@@ -7323,7 +7329,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.1.1"
+          "version": "0.2.0"
         }
       },
       "gitlab-repository": {
@@ -7404,7 +7410,7 @@
           "capabilities": [
             "get-directory"
           ],
-          "version": "0.1.1"
+          "version": "0.2.0"
         }
       }
     }
@@ -7560,7 +7566,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.2.12"
+          "version": "0.3.0"
         }
       }
     }
@@ -7595,7 +7601,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.1.0"
+          "version": "0.2.0"
         }
       }
     }
@@ -7606,7 +7612,7 @@
         "name": "Monte Carlo Credentials",
         "slug": "monte-carlo-credentials",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/624870fcf18298f6bf0efb55046e50765620eabd-72x72.png",
-        "documentation_url": null,
+        "documentation_url": "https://prefecthq.github.io/prefect-monte-carlo/credentials/#prefect_monte_carlo.credentials.MonteCarloCredentials",
         "description": "Block used to manage Monte Carlo authentication. This block is part of the prefect-monte-carlo collection. Install prefect-monte-carlo with `pip install prefect-monte-carlo` to use this block.",
         "code_example": "Load stored Monte Carlo credentials:\n```python\nfrom prefect_monte_carlo.credentials import MonteCarloCredentials\nmontecarlo_credentials_block = MonteCarloCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
@@ -7646,7 +7652,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.1.0"
+          "version": "0.2.0"
         }
       }
     }
@@ -7768,7 +7774,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.1.1"
+          "version": "0.2.0"
         }
       },
       "openai-credentials": {
@@ -7777,7 +7783,7 @@
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/760539393a7dbf93a143fb01c2a8b0fe7157a8d8-247x250.png",
         "documentation_url": "https://prefecthq.github.io/prefect-openai/credentials/#prefect_openai.credentials.OpenAICredentials",
         "description": "Credentials used to authenticate with OpenAI. This block is part of the prefect-openai collection. Install prefect-openai with `pip install prefect-openai` to use this block.",
-        "code_example": "Load a configured block:\n```python\nfrom prefect_openai import OpenAICredentials\n\ncredentials = OpenAICredentials.load(\"BLOCK_NAME\")\n```",
+        "code_example": "Load a configured block:\n```python\nfrom prefect_openai import OpenAICredentials\n\ncredentials = OpenAICredentials.load(\"BLOCK_NAME\")\n```\n\nGet the OpenAPI client:\n```python\nfrom prefect_openai import OpenAICredentials\n\ncredentials = OpenAICredentials.load(\"BLOCK_NAME\")\nclient = credentials.get_client()\n```",
         "block_schema": {
           "checksum": "sha256:acea8c195b0a3fd20d47b997fa4f070953b25c8b4a02619e7632ace075e4f882",
           "fields": {
@@ -7808,7 +7814,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.1.1"
+          "version": "0.2.0"
         }
       },
       "openai-image-model": {
@@ -7906,7 +7912,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.1.1"
+          "version": "0.2.0"
         }
       }
     }
@@ -7974,7 +7980,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.1.5"
+          "version": "0.2.0"
         }
       }
     }
@@ -7987,7 +7993,7 @@
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/c1965ecbf8704ee1ea20d77786de9a41ce1087d1-500x500.png",
         "documentation_url": "https://prefecthq.github.io/prefect-slack/credentials/#prefect_slack.credentials.SlackCredentials",
         "description": "Block holding Slack credentials for use in tasks and flows. This block is part of the prefect-slack collection. Install prefect-slack with `pip install prefect-slack` to use this block.",
-        "code_example": "Load stored Slack credentials:\n```python\nfrom prefect_slack import SlackCredentials\nslack_credentials_block = SlackCredentials.load(\"BLOCK_NAME\")\n```",
+        "code_example": "Load stored Slack credentials:\n```python\nfrom prefect_slack import SlackCredentials\nslack_credentials_block = SlackCredentials.load(\"BLOCK_NAME\")\n```\n\nGet a Slack client:\n```python\nfrom prefect_slack import SlackCredentials\nslack_credentials_block = SlackCredentials.load(\"BLOCK_NAME\")\nclient = slack_credentials_block.get_client()\n```",
         "block_schema": {
           "checksum": "sha256:f79058d8fcf22ed575f824b27daa68a52fedaa0e40f7a8a542d4ac9cf3ee8317",
           "fields": {
@@ -8013,7 +8019,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.1.2"
+          "version": "0.2.0"
         }
       }
     }
