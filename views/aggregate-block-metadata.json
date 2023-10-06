@@ -8580,12 +8580,12 @@
       "twitter-credentials": {
         "name": "Twitter Credentials",
         "slug": "twitter-credentials",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/747aa724fedcefd1c1cec248ab7a5b518a1191cd-250x250.png",
-        "documentation_url": null,
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/1NyN5egjNk9Sel17rs0cTz/067bb478b4fec22d8aa47b79b085a6e9/twitter.png?h=250",
+        "documentation_url": "https://prefecthq.github.io/prefect-twitter/credentials/#prefect_twitter.credentials.TwitterCredentials",
         "description": "Block used to manage Twitter authentication with tweepy.\nSee Authentication Tokens section of the Keys and Tokens tab of\nyour app, under the Twitter Developer Portal Projects & Apps page at\nhttps://developer.twitter.com/en/portal/projects-and-apps. This block is part of the prefect-twitter collection. Install prefect-twitter with `pip install prefect-twitter` to use this block.",
         "code_example": "Load stored Twitter credentials:\n```python\nfrom prefect_twitter import TwitterCredentials\ntwitter_credentials_block = TwitterCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:4c24588fb507d62c850405da822ec87e52ffc726dbbfea8ceca944d72817a7e2",
+          "checksum": "sha256:3ddef85943cded20f2e6145a698e5238fbd81d94df72cb758dfa9a4f1840d01e",
           "fields": {
             "title": "TwitterCredentials",
             "description": "Block used to manage Twitter authentication with tweepy.\nSee Authentication Tokens section of the Keys and Tokens tab of\nyour app, under the Twitter Developer Portal Projects & Apps page at\nhttps://developer.twitter.com/en/portal/projects-and-apps.",
@@ -8593,20 +8593,24 @@
             "properties": {
               "consumer_key": {
                 "title": "Consumer Key",
+                "description": "Twitter App API key used for authentication.",
                 "type": "string"
               },
               "consumer_secret": {
                 "title": "Consumer Secret",
+                "description": "Twitter App API secret used for authentication.",
                 "type": "string",
                 "writeOnly": true,
                 "format": "password"
               },
               "access_token": {
                 "title": "Access Token",
+                "description": "Oauth token used to access the Twitter API.",
                 "type": "string"
               },
               "access_token_secret": {
                 "title": "Access Token Secret",
+                "description": "Ouath secret used to access the Twitter API.",
                 "type": "string",
                 "writeOnly": true,
                 "format": "password"
@@ -8626,7 +8630,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.1.1"
+          "version": "0.2.0"
         }
       }
     }
