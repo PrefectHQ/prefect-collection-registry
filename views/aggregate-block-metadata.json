@@ -7611,8 +7611,8 @@
       "monte-carlo-credentials": {
         "name": "Monte Carlo Credentials",
         "slug": "monte-carlo-credentials",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/624870fcf18298f6bf0efb55046e50765620eabd-72x72.png",
-        "documentation_url": null,
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5OqrPNRdLMvqZzxo9f6Z25/f920dff0f1201fc014b0b083a6d2fdb1/image.png?h=250",
+        "documentation_url": "https://prefecthq.github.io/prefect-monte-carlo/credentials/#prefect_monte_carlo.credentials.MonteCarloCredentials",
         "description": "Block used to manage Monte Carlo authentication. This block is part of the prefect-monte-carlo collection. Install prefect-monte-carlo with `pip install prefect-monte-carlo` to use this block.",
         "code_example": "Load stored Monte Carlo credentials:\n```python\nfrom prefect_monte_carlo.credentials import MonteCarloCredentials\nmontecarlo_credentials_block = MonteCarloCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
@@ -7652,7 +7652,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.1.0"
+          "version": "0.2.0"
         }
       }
     }
