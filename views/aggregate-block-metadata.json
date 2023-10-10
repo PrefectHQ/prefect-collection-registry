@@ -8309,7 +8309,7 @@
       "database-credentials": {
         "name": "Database Credentials",
         "slug": "database-credentials",
-        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/3xLant5G70S4vJpmdWCYmr/8fdb19f15b97c3a07c3af3efde4d28fb/download.svg.png?h=250",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/fb3f4debabcda1c5a3aeea4f5b3f94c28845e23e-250x250.png",
         "documentation_url": "https://prefecthq.github.io/prefect-sqlalchemy/credentials/#prefect_sqlalchemy.credentials.DatabaseCredentials",
         "description": "Block used to manage authentication with a database. This block is part of the prefect-sqlalchemy collection. Install prefect-sqlalchemy with `pip install prefect-sqlalchemy` to use this block.",
         "code_example": "Load stored database credentials:\n```python\nfrom prefect_sqlalchemy import DatabaseCredentials\ndatabase_block = DatabaseCredentials.load(\"BLOCK_NAME\")\n```",
