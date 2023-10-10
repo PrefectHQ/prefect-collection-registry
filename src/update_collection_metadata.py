@@ -199,6 +199,7 @@ async def update_all_collections(
 
     return Completed(message="All new releases have been recorded.")
 
+
 if __name__ == "__main__":
-   import asyncio
-   asyncio.run(update_all_collections())
+    for collection in ["prefect-openmetadata", "prefect-sqlalchemy"]:
+        asyncio.run(update_collection_metadata(collection, "update-metadata-manually"))
