@@ -1,0 +1,146 @@
+{
+  "prefect-kubernetes": {
+    "run_namespaced_job": {
+      "description": {
+        "summary": "Example:\n\n    ```python\n    from prefect_kubernetes import KubernetesJob, run_namespaced_job\n    from prefect_kubernetes.credentials import KubernetesCredentials\n\n    run_namespaced_job(\n        kubernetes_job=KubernetesJob.from_yaml_file(\n            credentials=KubernetesCredentials.load(\"k8s-creds\"),\n            manifest_path=\"path/to/job.yaml\",\n        )\n    )\n    ```",
+        "returns": "The a dict of logs from each pod in the job, e.g. {'pod_name': 'pod_log_str'}.",
+        "examples": []
+      },
+      "documentation_url": "https://prefecthq.github.io/prefect-kubernetes/flows/#prefect_kubernetes.flows.run_namespaced_job",
+      "entrypoint": "prefect_kubernetes/flows.py:run_namespaced_job",
+      "install_command": "pip install prefect-kubernetes",
+      "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/2d0b896006ad463b49c28aaac14f31e00e32cfab-250x250.png",
+      "name": "run-namespaced-job",
+      "parameters": {
+        "title": "Parameters",
+        "type": "object",
+        "properties": {
+          "kubernetes_job": {
+            "title": "kubernetes_job",
+            "description": "The `KubernetesJob` block that specifies the job to run.",
+            "position": 0,
+            "allOf": [
+              {
+                "$ref": "#/definitions/KubernetesJob"
+              }
+            ]
+          }
+        },
+        "required": [
+          "kubernetes_job"
+        ],
+        "definitions": {
+          "KubernetesClusterConfig": {
+            "title": "KubernetesClusterConfig",
+            "description": "Stores configuration for interaction with Kubernetes clusters.\n\nSee `from_file` for creation.",
+            "type": "object",
+            "properties": {
+              "config": {
+                "title": "Config",
+                "description": "The entire contents of a kubectl config file.",
+                "type": "object"
+              },
+              "context_name": {
+                "title": "Context Name",
+                "description": "The name of the kubectl context to use.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "config",
+              "context_name"
+            ],
+            "block_type_slug": "kubernetes-cluster-config",
+            "secret_fields": [],
+            "block_schema_references": {}
+          },
+          "KubernetesCredentials": {
+            "title": "KubernetesCredentials",
+            "description": "Credentials block for generating configured Kubernetes API clients.",
+            "type": "object",
+            "properties": {
+              "cluster_config": {
+                "$ref": "#/definitions/KubernetesClusterConfig"
+              }
+            },
+            "block_type_slug": "kubernetes-credentials",
+            "secret_fields": [],
+            "block_schema_references": {
+              "cluster_config": {
+                "block_type_slug": "kubernetes-cluster-config",
+                "block_schema_checksum": "sha256:90d421e948bfbe4cdc98b124995f0edd0f84b0837549ad1390423bad8e31cf3b"
+              }
+            }
+          },
+          "KubernetesJob": {
+            "title": "KubernetesJob",
+            "description": "A block representing a Kubernetes job configuration.",
+            "type": "object",
+            "properties": {
+              "v1_job": {
+                "title": "Job Manifest",
+                "description": "The Kubernetes job manifest to run. This dictionary can be produced using `yaml.safe_load`.",
+                "type": "object"
+              },
+              "api_kwargs": {
+                "title": "Additional API Arguments",
+                "description": "Additional arguments to include in Kubernetes API calls.",
+                "example": {
+                  "pretty": "true"
+                },
+                "type": "object"
+              },
+              "credentials": {
+                "title": "Credentials",
+                "description": "The credentials to configure a client from.",
+                "allOf": [
+                  {
+                    "$ref": "#/definitions/KubernetesCredentials"
+                  }
+                ]
+              },
+              "delete_after_completion": {
+                "title": "Delete After Completion",
+                "description": "Whether to delete the job after it has completed.",
+                "default": true,
+                "type": "boolean"
+              },
+              "interval_seconds": {
+                "title": "Interval Seconds",
+                "description": "The number of seconds to wait between job status checks.",
+                "default": 5,
+                "type": "integer"
+              },
+              "namespace": {
+                "title": "Namespace",
+                "description": "The namespace to create and run the job in.",
+                "default": "default",
+                "type": "string"
+              },
+              "timeout_seconds": {
+                "title": "Timeout Seconds",
+                "description": "The number of seconds to wait for the job run before timing out.",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "v1_job",
+              "credentials"
+            ],
+            "block_type_slug": "k8s-job",
+            "secret_fields": [],
+            "block_schema_references": {
+              "credentials": {
+                "block_type_slug": "kubernetes-credentials",
+                "block_schema_checksum": "sha256:957fa8dca90bd1b5fb9c575ee09e80b454116c0b134287fbc2eff47a72564c3b"
+              }
+            }
+          }
+        }
+      },
+      "path_containing_flow": "prefect_kubernetes/flows.py",
+      "repo_url": "https://github.com/PrefectHQ/prefect-kubernetes",
+      "slug": "run_namespaced_job"
+    }
+  }
+}
