@@ -3301,7 +3301,7 @@
       "bitbucket-credentials": {
         "name": "BitBucket Credentials",
         "slug": "bitbucket-credentials",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/5d729f7355fb6828c4b605268ded9cfafab3ae4f-250x250.png",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/27LMR24ewTSDW238Lks1vH/34c5028659f4007528feadc8db8cecbd/500px-Bitbucket-blue-logomark-only.svg.png?h=250",
         "documentation_url": null,
         "description": "Store BitBucket credentials to interact with private BitBucket repositories. This block is part of the prefect-bitbucket collection. Install prefect-bitbucket with `pip install prefect-bitbucket` to use this block.",
         "code_example": "Load stored BitBucket credentials:\n```python\nfrom prefect_bitbucket import BitBucketCredentials\nbitbucket_credentials_block = BitBucketCredentials.load(\"BLOCK_NAME\")\n```",
@@ -3348,13 +3348,13 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.2.0"
+          "version": "0.2.1"
         }
       },
       "bitbucket-repository": {
         "name": "BitBucket Repository",
         "slug": "bitbucket-repository",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/5d729f7355fb6828c4b605268ded9cfafab3ae4f-250x250.png",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/27LMR24ewTSDW238Lks1vH/34c5028659f4007528feadc8db8cecbd/500px-Bitbucket-blue-logomark-only.svg.png?h=250",
         "documentation_url": null,
         "description": "Interact with files stored in BitBucket repositories. This block is part of the prefect-bitbucket collection. Install prefect-bitbucket with `pip install prefect-bitbucket` to use this block.",
         "code_example": "```python\nfrom prefect_bitbucket.repository import BitBucketRepository\n\nbitbucket_repository_block = BitBucketRepository.load(\"BLOCK_NAME\")\n```",
@@ -3445,7 +3445,7 @@
           "capabilities": [
             "get-directory"
           ],
-          "version": "0.2.0"
+          "version": "0.2.1"
         }
       }
     }
