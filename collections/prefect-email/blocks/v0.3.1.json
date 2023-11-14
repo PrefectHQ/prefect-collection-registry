@@ -1,0 +1,98 @@
+{
+  "prefect-email": {
+    "block_types": {
+      "email-server-credentials": {
+        "name": "Email Server Credentials",
+        "slug": "email-server-credentials",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/3PcxFuO9XUqs7wU9MiUBMg/ca740e27815d15528373aced667f58b9/email__1_.png?h=250",
+        "documentation_url": "https://prefecthq.github.io/prefect-email/credentials/#prefect_email.credentials.EmailServerCredentials",
+        "description": "Block used to manage generic email server authentication.\nIt is recommended you use a\n[Google App Password](https://support.google.com/accounts/answer/185833)\nif you use Gmail. This block is part of the prefect-email collection. Install prefect-email with `pip install prefect-email` to use this block.",
+        "code_example": "Load stored email server credentials:\n```python\nfrom prefect_email import EmailServerCredentials\nemail_credentials_block = EmailServerCredentials.load(\"BLOCK_NAME\")\n```",
+        "block_schema": {
+          "checksum": "sha256:56d6491f4b2d4aaae5ce604652416f44d0c8fa39ca68c5f747aee7cb518a41d0",
+          "fields": {
+            "title": "EmailServerCredentials",
+            "description": "Block used to manage generic email server authentication.\nIt is recommended you use a\n[Google App Password](https://support.google.com/accounts/answer/185833)\nif you use Gmail.",
+            "type": "object",
+            "properties": {
+              "username": {
+                "title": "Username",
+                "description": "The username to use for authentication to the server. Unnecessary if SMTP login is not required.",
+                "type": "string"
+              },
+              "password": {
+                "title": "Password",
+                "description": "The password to use for authentication to the server. Unnecessary if SMTP login is not required.",
+                "type": "string",
+                "writeOnly": true,
+                "format": "password"
+              },
+              "smtp_server": {
+                "title": "SMTP Server",
+                "description": "Either the hostname of the SMTP server, or one of the keys from the built-in SMTPServer Enum members, like 'gmail'.",
+                "default": "smtp.gmail.com",
+                "anyOf": [
+                  {
+                    "$ref": "#/definitions/SMTPServer"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
+              },
+              "smtp_type": {
+                "title": "SMTP Type",
+                "description": "Either 'SSL', 'STARTTLS', or 'INSECURE'.",
+                "default": 465,
+                "anyOf": [
+                  {
+                    "$ref": "#/definitions/SMTPType"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
+              },
+              "smtp_port": {
+                "title": "SMTP Port",
+                "description": "If provided, overrides the smtp_type's default port number.",
+                "type": "integer"
+              }
+            },
+            "block_type_slug": "email-server-credentials",
+            "secret_fields": [
+              "password"
+            ],
+            "block_schema_references": {},
+            "definitions": {
+              "SMTPServer": {
+                "title": "SMTPServer",
+                "description": "Server used to send email.",
+                "enum": [
+                  "smtp.aol.com",
+                  "smtp.mail.att.net",
+                  "smtp.comcast.net",
+                  "smtp.mail.me.com",
+                  "smtp.gmail.com",
+                  "smtp-mail.outlook.com",
+                  "smtp.mail.yahoo.com"
+                ]
+              },
+              "SMTPType": {
+                "title": "SMTPType",
+                "description": "Protocols used to secure email transmissions.",
+                "enum": [
+                  465,
+                  587,
+                  25
+                ]
+              }
+            }
+          },
+          "capabilities": [],
+          "version": "0.3.1"
+        }
+      }
+    }
+  }
+}
