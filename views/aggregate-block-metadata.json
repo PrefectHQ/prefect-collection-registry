@@ -7576,7 +7576,7 @@
       "monday-credentials": {
         "name": "Monday Credentials",
         "slug": "monday-credentials",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/ad8614977614bcafee59ec5a3ef080111f045ffc-250x250.png",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/3ohoKiYTO3Kjt6sri58HXu/27b45e8641127b196008976dde856058/imageedit_5_6047243931.png?h=250",
         "documentation_url": null,
         "description": "Block used to manage Monday authentication. This block is part of the prefect-monday collection. Install prefect-monday with `pip install prefect-monday` to use this block.",
         "code_example": "Load stored Monday credentials:\n```python\nfrom prefect_monday import MondayCredentials\nmonday_credentials_block = MondayCredentials.load(\"BLOCK_NAME\")\n```",
@@ -7601,7 +7601,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.2.0"
+          "version": "0.2.1"
         }
       }
     }
