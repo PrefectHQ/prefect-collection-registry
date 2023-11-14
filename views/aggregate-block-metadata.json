@@ -7186,7 +7186,7 @@
       "github-credentials": {
         "name": "GitHub Credentials",
         "slug": "github-credentials",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/41971cfecfea5f79ff334164f06ecb34d1038dd4-250x250.png",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/187oCWsD18m5yooahq1vU0/ace41e99ab6dc40c53e5584365a33821/github.png?h=250",
         "documentation_url": "https://prefecthq.github.io/prefect-github/credentials/#prefect_github.credentials.GitHubCredentials",
         "description": "Block used to manage GitHub authentication. This block is part of the prefect-github collection. Install prefect-github with `pip install prefect-github` to use this block.",
         "code_example": "Load stored GitHub credentials:\n```python\nfrom prefect_github import GitHubCredentials\ngithub_credentials_block = GitHubCredentials.load(\"BLOCK_NAME\")\n```",
@@ -7212,13 +7212,13 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.2.0"
+          "version": "0.2.1"
         }
       },
       "github-repository": {
         "name": "GitHub Repository",
         "slug": "github-repository",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/41971cfecfea5f79ff334164f06ecb34d1038dd4-250x250.png",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/187oCWsD18m5yooahq1vU0/ace41e99ab6dc40c53e5584365a33821/github.png?h=250",
         "documentation_url": "https://prefecthq.github.io/prefect-github/repository/#prefect_github.repository.GitHubRepository",
         "description": "Interact with files stored on GitHub repositories. This block is part of the prefect-github collection. Install prefect-github with `pip install prefect-github` to use this block.",
         "code_example": "```python\nfrom prefect_github.repository import GitHubRepository\n\ngithub_repository_block = GitHubRepository.load(\"BLOCK_NAME\")\n```",
@@ -7287,7 +7287,7 @@
           "capabilities": [
             "get-directory"
           ],
-          "version": "0.2.0"
+          "version": "0.2.1"
         }
       }
     }
