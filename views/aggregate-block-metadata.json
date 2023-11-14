@@ -7420,8 +7420,8 @@
       "hex-credentials": {
         "name": "Hex Credentials",
         "slug": "hex-credentials",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/59acfd21aae4732c0046a18e44da08db78822baf-250x250.png",
-        "documentation_url": null,
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/3biMverMLGiDA7y5fkqKZF/4b7747052b59fa8182a9686b88ea9541/Hex_Purple__for_light_backgrounds_.png?h=250",
+        "documentation_url": "https://prefecthq.github.io/prefect-hex/credentials/#prefect_hex.credentials.HexCredentials",
         "description": "Block used to manage Hex authentication. This block is part of the prefect-hex collection. Install prefect-hex with `pip install prefect-hex` to use this block.",
         "code_example": "Load stored Hex credentials:\n```python\nfrom prefect_hex import HexCredentials\n\nhex_credentials_block = HexCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
@@ -7455,7 +7455,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.1.1"
+          "version": "0.2.1"
         }
       }
     }
