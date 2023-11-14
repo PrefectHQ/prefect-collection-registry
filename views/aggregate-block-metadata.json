@@ -6296,7 +6296,7 @@
       "email-server-credentials": {
         "name": "Email Server Credentials",
         "slug": "email-server-credentials",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/82bc6ed16ca42a2252a5512c72233a253b8a58eb-250x250.png",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/3PcxFuO9XUqs7wU9MiUBMg/ca740e27815d15528373aced667f58b9/email__1_.png?h=250",
         "documentation_url": "https://prefecthq.github.io/prefect-email/credentials/#prefect_email.credentials.EmailServerCredentials",
         "description": "Block used to manage generic email server authentication.\nIt is recommended you use a\n[Google App Password](https://support.google.com/accounts/answer/185833)\nif you use Gmail. This block is part of the prefect-email collection. Install prefect-email with `pip install prefect-email` to use this block.",
         "code_example": "Load stored email server credentials:\n```python\nfrom prefect_email import EmailServerCredentials\nemail_credentials_block = EmailServerCredentials.load(\"BLOCK_NAME\")\n```",
@@ -6382,7 +6382,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.3.0"
+          "version": "0.3.1"
         }
       }
     }
