@@ -1786,7 +1786,7 @@
       "airbyte-connection": {
         "name": "Airbyte Connection",
         "slug": "airbyte-connection",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/7f50097d1915fe75b0ee84c951c742a83d3c53cb-250x250.png",
+        "logo_url": "https://images.ctfassets.net/zscdif0zqppk/6gm7wsC7ANnKYQsm7oiSYz/aac1ad5e054d35d9e24af8d6ed3aed5f/59758427?h=250",
         "documentation_url": "https://prefecthq.github.io/prefect-airbyte/connections/#prefect_airbyte.connections.AirbyteConnection",
         "description": "A block representing an existing Airbyte connection. This block is part of the prefect-airbyte collection. Install prefect-airbyte with `pip install prefect-airbyte` to use this block.",
         "code_example": "Load an existing `AirbyteConnection` block:\n```python\nfrom prefect_airbyte import AirbyteConnection\n\nairbyte_connection = AirbyteConnection.load(\"BLOCK_NAME\")\n```\n\nRun an Airbyte connection sync as a flow:\n```python\nfrom prefect import flow\nfrom prefect_airbyte import AirbyteConnection\nfrom prefect_airbyte.flows import run_connection_sync # this is a flow\n\nairbyte_connection = AirbyteConnection.load(\"BLOCK_NAME\")\n\n@flow\ndef airbyte_orchestrator():\n    run_connection_sync(airbyte_connection) # now it's a subflow\n```",
@@ -1900,13 +1900,13 @@
             }
           },
           "capabilities": [],
-          "version": "0.3.0"
+          "version": "0.3.1"
         }
       },
       "airbyte-server": {
         "name": "Airbyte Server",
         "slug": "airbyte-server",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/7f50097d1915fe75b0ee84c951c742a83d3c53cb-250x250.png",
+        "logo_url": "https://images.ctfassets.net/zscdif0zqppk/6gm7wsC7ANnKYQsm7oiSYz/aac1ad5e054d35d9e24af8d6ed3aed5f/59758427?h=250",
         "documentation_url": "https://prefecthq.github.io/prefect-airbyte/server/#prefect_airbyte.server.AirbyteServer",
         "description": "A block representing an Airbyte server for generating `AirbyteClient` instances. This block is part of the prefect-airbyte collection. Install prefect-airbyte with `pip install prefect-airbyte` to use this block.",
         "code_example": "```python\nfrom prefect_airbyte.server import AirbyteServer\n\nserver = AirbyteServer.load(\"BLOCK_NAME\")\n```",
@@ -1964,7 +1964,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.3.0"
+          "version": "0.3.1"
         }
       }
     }
