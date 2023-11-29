@@ -2860,7 +2860,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.3.1"
+          "version": "0.3.3"
         }
       },
       "azure-container-instance-credentials": {
@@ -2907,7 +2907,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.3.1"
+          "version": "0.3.3"
         }
       },
       "azure-container-instance-job": {
@@ -3191,7 +3191,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "0.3.1"
+          "version": "0.3.3"
         }
       },
       "azure-cosmos-db-credentials": {
@@ -3226,7 +3226,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.3.1"
+          "version": "0.3.3"
         }
       },
       "azureml-credentials": {
@@ -3291,7 +3291,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.3.1"
+          "version": "0.3.3"
         }
       }
     }
@@ -6621,7 +6621,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.5.3"
+          "version": "0.5.1"
         }
       },
       "cloud-run-job": {
@@ -6787,7 +6787,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "0.5.3"
+          "version": "0.5.1"
         }
       },
       "gcp-credentials": {
@@ -6828,7 +6828,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.5.3"
+          "version": "0.5.1"
         }
       },
       "gcpsecret": {
@@ -6906,7 +6906,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.5.3"
+          "version": "0.5.1"
         }
       },
       "gcs-bucket": {
@@ -6994,7 +6994,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "0.5.3"
+          "version": "0.5.1"
         }
       },
       "vertex-ai-custom-training-job": {
@@ -7176,7 +7176,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "0.5.3"
+          "version": "0.5.1"
         }
       }
     }
