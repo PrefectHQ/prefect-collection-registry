@@ -1,0 +1,47 @@
+{
+  "prefect-hex": {
+    "block_types": {
+      "hex-credentials": {
+        "name": "Hex Credentials",
+        "slug": "hex-credentials",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/3biMverMLGiDA7y5fkqKZF/4b7747052b59fa8182a9686b88ea9541/Hex_Purple__for_light_backgrounds_.png?h=250",
+        "documentation_url": "https://prefecthq.github.io/prefect-hex/credentials/#prefect_hex.credentials.HexCredentials",
+        "description": "Block used to manage Hex authentication. This block is part of the prefect-hex collection. Install prefect-hex with `pip install prefect-hex` to use this block.",
+        "code_example": "Load stored Hex credentials:\n```python\nfrom prefect_hex import HexCredentials\n\nhex_credentials_block = HexCredentials.load(\"BLOCK_NAME\")\n```",
+        "block_schema": {
+          "checksum": "sha256:0a2dcb1e5b0b50978cda603890a81f44f5a8c9d1e37fbbff5e616d2b09f0932f",
+          "fields": {
+            "title": "HexCredentials",
+            "description": "Block used to manage Hex authentication.",
+            "type": "object",
+            "properties": {
+              "domain": {
+                "title": "Domain",
+                "description": "Domain to make API requests against.",
+                "default": "app.hex.tech",
+                "type": "string"
+              },
+              "token": {
+                "title": "Token",
+                "description": "Token used for authentication.",
+                "type": "string",
+                "writeOnly": true,
+                "format": "password"
+              }
+            },
+            "required": [
+              "token"
+            ],
+            "block_type_slug": "hex-credentials",
+            "secret_fields": [
+              "token"
+            ],
+            "block_schema_references": {}
+          },
+          "capabilities": [],
+          "version": "0.2.1"
+        }
+      }
+    }
+  }
+}

@@ -90,7 +90,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.14.4"
+          "version": "2.14.8"
         }
       },
       "date-time": {
@@ -122,7 +122,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.14.4"
+          "version": "2.14.8"
         }
       },
       "discord-webhook": {
@@ -210,7 +210,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.14.4"
+          "version": "2.14.8"
         }
       },
       "docker-container": {
@@ -411,7 +411,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.14.4"
+          "version": "2.14.8"
         }
       },
       "docker-registry": {
@@ -466,7 +466,7 @@
           "capabilities": [
             "docker-login"
           ],
-          "version": "2.14.4"
+          "version": "2.14.8"
         }
       },
       "gcs": {
@@ -517,7 +517,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.14.4"
+          "version": "2.14.8"
         }
       },
       "github": {
@@ -571,7 +571,7 @@
           "capabilities": [
             "get-directory"
           ],
-          "version": "2.14.4"
+          "version": "2.14.8"
         }
       },
       "json": {
@@ -601,7 +601,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.14.4"
+          "version": "2.14.8"
         }
       },
       "kubernetes-cluster-config": {
@@ -638,7 +638,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.14.4"
+          "version": "2.14.8"
         }
       },
       "kubernetes-job": {
@@ -812,7 +812,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.14.4"
+          "version": "2.14.8"
         }
       },
       "local-file-system": {
@@ -845,7 +845,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.14.4"
+          "version": "2.14.8"
         }
       },
       "mattermost-webhook": {
@@ -932,7 +932,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.14.4"
+          "version": "2.14.8"
         }
       },
       "ms-teams-webhook": {
@@ -983,7 +983,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.14.4"
+          "version": "2.14.8"
         }
       },
       "opsgenie-webhook": {
@@ -1105,7 +1105,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.14.4"
+          "version": "2.14.8"
         }
       },
       "pager-duty-webhook": {
@@ -1218,7 +1218,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.14.4"
+          "version": "2.14.8"
         }
       },
       "process": {
@@ -1300,7 +1300,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.14.4"
+          "version": "2.14.8"
         }
       },
       "remote-file-system": {
@@ -1342,7 +1342,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.14.4"
+          "version": "2.14.8"
         }
       },
       "s3": {
@@ -1398,7 +1398,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.14.4"
+          "version": "2.14.8"
         }
       },
       "secret": {
@@ -1433,7 +1433,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.14.4"
+          "version": "2.14.8"
         }
       },
       "sendgrid-email": {
@@ -1500,7 +1500,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.14.4"
+          "version": "2.14.8"
         }
       },
       "slack-webhook": {
@@ -1551,7 +1551,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.14.4"
+          "version": "2.14.8"
         }
       },
       "smb": {
@@ -1617,7 +1617,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.14.4"
+          "version": "2.14.8"
         }
       },
       "string": {
@@ -1648,7 +1648,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.14.4"
+          "version": "2.14.8"
         }
       },
       "twilio-sms": {
@@ -1721,7 +1721,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.14.4"
+          "version": "2.14.8"
         }
       },
       "webhook": {
@@ -1776,7 +1776,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.14.4"
+          "version": "2.14.8"
         }
       }
     }
@@ -1900,7 +1900,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.3.0"
+          "version": "0.3.2"
         }
       },
       "airbyte-server": {
@@ -1964,7 +1964,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.3.0"
+          "version": "0.3.2"
         }
       }
     }
@@ -2079,7 +2079,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.4.2"
+          "version": "0.4.4"
         }
       },
       "aws-secret": {
@@ -2219,7 +2219,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.4.2"
+          "version": "0.4.4"
         }
       },
       "ecs-task": {
@@ -2506,7 +2506,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "0.4.2"
+          "version": "0.4.4"
         }
       },
       "minio-credentials": {
@@ -2611,7 +2611,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.4.2"
+          "version": "0.4.4"
         }
       },
       "s3-bucket": {
@@ -2819,7 +2819,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "0.4.2"
+          "version": "0.4.4"
         }
       }
     }
@@ -2860,7 +2860,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.3.1"
+          "version": "0.3.3"
         }
       },
       "azure-container-instance-credentials": {
@@ -2907,7 +2907,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.3.1"
+          "version": "0.3.3"
         }
       },
       "azure-container-instance-job": {
@@ -3191,7 +3191,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "0.3.1"
+          "version": "0.3.3"
         }
       },
       "azure-cosmos-db-credentials": {
@@ -3226,7 +3226,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.3.1"
+          "version": "0.3.3"
         }
       },
       "azureml-credentials": {
@@ -3291,7 +3291,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.3.1"
+          "version": "0.3.3"
         }
       }
     }
@@ -3348,7 +3348,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.2.0"
+          "version": "0.2.2"
         }
       },
       "bitbucket-repository": {
@@ -3445,7 +3445,7 @@
           "capabilities": [
             "get-directory"
           ],
-          "version": "0.2.0"
+          "version": "0.2.2"
         }
       }
     }
@@ -3627,7 +3627,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.2.1"
+          "version": "0.2.3"
         }
       }
     }
@@ -3637,7 +3637,7 @@
       "dbt-cli-bigquery-target-configs": {
         "name": "dbt CLI BigQuery Target Configs",
         "slug": "dbt-cli-bigquery-target-configs",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/f9d31c6978410fe25a70e75fc7e77b5c430b3178-180x162.png",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/1f4742f3473da5a9fc873430a803bb739e5e48a6-400x400.png",
         "documentation_url": "https://prefecthq.github.io/prefect-dbt/cli/configs/bigquery/#prefect_dbt.cli.configs.bigquery.BigQueryTargetConfigs",
         "description": "dbt CLI target configs containing credentials and settings, specific to BigQuery. This block is part of the prefect-dbt collection. Install prefect-dbt with `pip install prefect-dbt` to use this block.",
         "code_example": "Load stored BigQueryTargetConfigs.\n```python\nfrom prefect_dbt.cli.configs import BigQueryTargetConfigs\n\nbigquery_target_configs = BigQueryTargetConfigs.load(\"BLOCK_NAME\")\n```\n\nInstantiate BigQueryTargetConfigs.\n```python\nfrom prefect_dbt.cli.configs import BigQueryTargetConfigs\nfrom prefect_gcp.credentials import GcpCredentials\n\ncredentials = GcpCredentials.load(\"BLOCK-NAME-PLACEHOLDER\")\ntarget_configs = BigQueryTargetConfigs(\n    schema=\"schema\",  # also known as dataset\n    credentials=credentials,\n)\n```",
@@ -3739,13 +3739,13 @@
             }
           },
           "capabilities": [],
-          "version": "0.4.0"
+          "version": "0.4.1"
         }
       },
       "dbt-cli-global-configs": {
         "name": "dbt CLI Global Configs",
         "slug": "dbt-cli-global-configs",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/f9d31c6978410fe25a70e75fc7e77b5c430b3178-180x162.png",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/1f4742f3473da5a9fc873430a803bb739e5e48a6-400x400.png",
         "documentation_url": "https://prefecthq.github.io/prefect-dbt/cli/configs/base/#prefect_dbt.cli.configs.base.GlobalConfigs",
         "description": "Global configs control things like the visual output\nof logs, the manner in which dbt parses your project,\nand what to do when dbt finds a version mismatch\nor a failing model. Docs can be found [here](\nhttps://docs.getdbt.com/reference/global-configs). This block is part of the prefect-dbt collection. Install prefect-dbt with `pip install prefect-dbt` to use this block.",
         "code_example": "Load stored GlobalConfigs:\n```python\nfrom prefect_dbt.cli.configs import GlobalConfigs\n\ndbt_cli_global_configs = GlobalConfigs.load(\"BLOCK_NAME\")\n```",
@@ -3833,13 +3833,13 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.4.0"
+          "version": "0.4.1"
         }
       },
       "dbt-cli-postgres-target-configs": {
         "name": "dbt CLI Postgres Target Configs",
         "slug": "dbt-cli-postgres-target-configs",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/f9d31c6978410fe25a70e75fc7e77b5c430b3178-180x162.png",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/1f4742f3473da5a9fc873430a803bb739e5e48a6-400x400.png",
         "documentation_url": "https://prefecthq.github.io/prefect-dbt/cli/configs/postgres/#prefect_dbt.cli.configs.postgres.PostgresTargetConfigs",
         "description": "dbt CLI target configs containing credentials and settings specific to Postgres. This block is part of the prefect-dbt collection. Install prefect-dbt with `pip install prefect-dbt` to use this block.",
         "code_example": "Load stored PostgresTargetConfigs:\n```python\nfrom prefect_dbt.cli.configs import PostgresTargetConfigs\n\npostgres_target_configs = PostgresTargetConfigs.load(\"BLOCK_NAME\")\n```\n\nInstantiate PostgresTargetConfigs with DatabaseCredentials.\n```python\nfrom prefect_dbt.cli.configs import PostgresTargetConfigs\nfrom prefect_sqlalchemy import DatabaseCredentials, SyncDriver\n\ncredentials = DatabaseCredentials(\n    driver=SyncDriver.POSTGRESQL_PSYCOPG2,\n    username=\"prefect\",\n    password=\"prefect_password\",\n    database=\"postgres\",\n    host=\"host\",\n    port=8080\n)\ntarget_configs = PostgresTargetConfigs(credentials=credentials, schema=\"schema\")\n```",
@@ -4129,13 +4129,13 @@
             }
           },
           "capabilities": [],
-          "version": "0.4.0"
+          "version": "0.4.1"
         }
       },
       "dbt-cli-profile": {
         "name": "dbt CLI Profile",
         "slug": "dbt-cli-profile",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/f9d31c6978410fe25a70e75fc7e77b5c430b3178-180x162.png",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/1f4742f3473da5a9fc873430a803bb739e5e48a6-400x400.png",
         "documentation_url": "https://prefecthq.github.io/prefect-dbt/cli/credentials/#prefect_dbt.cli.credentials.DbtCliProfile",
         "description": "Profile for use across dbt CLI tasks and flows. This block is part of the prefect-dbt collection. Install prefect-dbt with `pip install prefect-dbt` to use this block.",
         "code_example": "Load stored dbt CLI profile:\n```python\nfrom prefect_dbt.cli import DbtCliProfile\ndbt_cli_profile = DbtCliProfile.load(\"BLOCK_NAME\").get_profile()\n```\n\nGet a dbt Snowflake profile from DbtCliProfile by using SnowflakeTargetConfigs:\n```python\nfrom prefect_dbt.cli import DbtCliProfile\nfrom prefect_dbt.cli.configs import SnowflakeTargetConfigs\nfrom prefect_snowflake.credentials import SnowflakeCredentials\nfrom prefect_snowflake.database import SnowflakeConnector\n\ncredentials = SnowflakeCredentials(\n    user=\"user\",\n    password=\"password\",\n    account=\"account.region.aws\",\n    role=\"role\",\n)\nconnector = SnowflakeConnector(\n    schema=\"public\",\n    database=\"database\",\n    warehouse=\"warehouse\",\n    credentials=credentials,\n)\ntarget_configs = SnowflakeTargetConfigs(\n    connector=connector\n)\ndbt_cli_profile = DbtCliProfile(\n    name=\"jaffle_shop\",\n    target=\"dev\",\n    target_configs=target_configs,\n)\nprofile = dbt_cli_profile.get_profile()\n```\n\nGet a dbt Redshift profile from DbtCliProfile by using generic TargetConfigs:\n```python\nfrom prefect_dbt.cli import DbtCliProfile\nfrom prefect_dbt.cli.configs import GlobalConfigs, TargetConfigs\n\ntarget_configs_extras = dict(\n    host=\"hostname.region.redshift.amazonaws.com\",\n    user=\"username\",\n    password=\"password1\",\n    port=5439,\n    dbname=\"analytics\",\n)\ntarget_configs = TargetConfigs(\n    type=\"redshift\",\n    schema=\"schema\",\n    threads=4,\n    extras=target_configs_extras\n)\ndbt_cli_profile = DbtCliProfile(\n    name=\"jaffle_shop\",\n    target=\"dev\",\n    target_configs=target_configs,\n)\nprofile = dbt_cli_profile.get_profile()\n```",
@@ -4941,13 +4941,13 @@
             }
           },
           "capabilities": [],
-          "version": "0.4.0"
+          "version": "0.4.1"
         }
       },
       "dbt-cli-snowflake-target-configs": {
         "name": "dbt CLI Snowflake Target Configs",
         "slug": "dbt-cli-snowflake-target-configs",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/f9d31c6978410fe25a70e75fc7e77b5c430b3178-180x162.png",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/1f4742f3473da5a9fc873430a803bb739e5e48a6-400x400.png",
         "documentation_url": "https://prefecthq.github.io/prefect-dbt/cli/configs/snowflake/#prefect_dbt.cli.configs.snowflake.SnowflakeTargetConfigs",
         "description": "Target configs contain credentials and\nsettings, specific to Snowflake.\nTo find valid keys, head to the [Snowflake Profile](\nhttps://docs.getdbt.com/reference/warehouse-profiles/snowflake-profile)\npage. This block is part of the prefect-dbt collection. Install prefect-dbt with `pip install prefect-dbt` to use this block.",
         "code_example": "Load stored SnowflakeTargetConfigs:\n```python\nfrom prefect_dbt.cli.configs import SnowflakeTargetConfigs\n\nsnowflake_target_configs = SnowflakeTargetConfigs.load(\"BLOCK_NAME\")\n```\n\nInstantiate SnowflakeTargetConfigs.\n```python\nfrom prefect_dbt.cli.configs import SnowflakeTargetConfigs\nfrom prefect_snowflake.credentials import SnowflakeCredentials\nfrom prefect_snowflake.database import SnowflakeConnector\n\ncredentials = SnowflakeCredentials(\n    user=\"user\",\n    password=\"password\",\n    account=\"account.region.aws\",\n    role=\"role\",\n)\nconnector = SnowflakeConnector(\n    schema=\"public\",\n    database=\"database\",\n    warehouse=\"warehouse\",\n    credentials=credentials,\n)\ntarget_configs = SnowflakeTargetConfigs(\n    connector=connector,\n    extras={\"retry_on_database_errors\": True},\n)\n```",
@@ -5174,13 +5174,13 @@
             }
           },
           "capabilities": [],
-          "version": "0.4.0"
+          "version": "0.4.1"
         }
       },
       "dbt-cli-target-configs": {
         "name": "dbt CLI Target Configs",
         "slug": "dbt-cli-target-configs",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/f9d31c6978410fe25a70e75fc7e77b5c430b3178-180x162.png",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/1f4742f3473da5a9fc873430a803bb739e5e48a6-400x400.png",
         "documentation_url": "https://prefecthq.github.io/prefect-dbt/cli/configs/base/#prefect_dbt.cli.configs.base.TargetConfigs",
         "description": "Target configs contain credentials and\nsettings, specific to the warehouse you're connecting to.\nTo find valid keys, head to the [Available adapters](\nhttps://docs.getdbt.com/docs/available-adapters) page and\nclick the desired adapter's \"Profile Setup\" hyperlink. This block is part of the prefect-dbt collection. Install prefect-dbt with `pip install prefect-dbt` to use this block.",
         "code_example": "Load stored TargetConfigs:\n```python\nfrom prefect_dbt.cli.configs import TargetConfigs\n\ndbt_cli_target_configs = TargetConfigs.load(\"BLOCK_NAME\")\n```",
@@ -5228,13 +5228,13 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.4.0"
+          "version": "0.4.1"
         }
       },
       "dbt-cloud-credentials": {
         "name": "dbt Cloud Credentials",
         "slug": "dbt-cloud-credentials",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/f9d31c6978410fe25a70e75fc7e77b5c430b3178-180x162.png",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/1f4742f3473da5a9fc873430a803bb739e5e48a6-400x400.png",
         "documentation_url": "https://prefecthq.github.io/prefect-dbt/cloud/credentials/#prefect_dbt.cloud.credentials.DbtCloudCredentials",
         "description": "Credentials block for credential use across dbt Cloud tasks and flows. This block is part of the prefect-dbt collection. Install prefect-dbt with `pip install prefect-dbt` to use this block.",
         "code_example": "Load stored dbt Cloud credentials:\n```python\nfrom prefect_dbt.cloud import DbtCloudCredentials\n\ndbt_cloud_credentials = DbtCloudCredentials.load(\"BLOCK_NAME\")\n```\n\nUse DbtCloudCredentials instance to trigger a job run:\n```python\nfrom prefect_dbt.cloud import DbtCloudCredentials\n\ncredentials = DbtCloudCredentials(api_key=\"my_api_key\", account_id=123456789)\n\nasync with dbt_cloud_credentials.get_administrative_client() as client:\n    client.trigger_job_run(job_id=1)\n```\n\nLoad saved dbt Cloud credentials within a flow:\n```python\nfrom prefect import flow\n\nfrom prefect_dbt.cloud import DbtCloudCredentials\nfrom prefect_dbt.cloud.jobs import trigger_dbt_cloud_job_run\n\n\n@flow\ndef trigger_dbt_cloud_job_run_flow():\n    credentials = DbtCloudCredentials.load(\"my-dbt-credentials\")\n    trigger_dbt_cloud_job_run(dbt_cloud_credentials=credentials, job_id=1)\n\ntrigger_dbt_cloud_job_run_flow()\n```",
@@ -5275,13 +5275,13 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.4.0"
+          "version": "0.4.1"
         }
       },
       "dbt-core-operation": {
         "name": "dbt Core Operation",
         "slug": "dbt-core-operation",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/f9d31c6978410fe25a70e75fc7e77b5c430b3178-180x162.png",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/1f4742f3473da5a9fc873430a803bb739e5e48a6-400x400.png",
         "documentation_url": "https://prefecthq.github.io/prefect-dbt/cli/commands/#prefect_dbt.cli.commands.DbtCoreOperation",
         "description": "A block representing a dbt operation, containing multiple dbt and shell commands.\n\nFor long-lasting operations, use the trigger method and utilize the block as a\ncontext manager for automatic closure of processes when context is exited.\nIf not, manually call the close method to close processes.\n\nFor short-lasting operations, use the run method. Context is automatically managed\nwith this method. This block is part of the prefect-dbt collection. Install prefect-dbt with `pip install prefect-dbt` to use this block.",
         "code_example": "Load a configured block.\n```python\nfrom prefect_dbt import DbtCoreOperation\n\ndbt_op = DbtCoreOperation.load(\"BLOCK_NAME\")\n```\n\nExecute short-lasting dbt debug and list with a custom DbtCliProfile.\n```python\nfrom prefect_dbt import DbtCoreOperation, DbtCliProfile\nfrom prefect_dbt.cli.configs import SnowflakeTargetConfigs\nfrom prefect_snowflake import SnowflakeConnector\n\nsnowflake_connector = await SnowflakeConnector.load(\"snowflake-connector\")\ntarget_configs = SnowflakeTargetConfigs(connector=snowflake_connector)\ndbt_cli_profile = DbtCliProfile(\n    name=\"jaffle_shop\",\n    target=\"dev\",\n    target_configs=target_configs,\n)\ndbt_init = DbtCoreOperation(\n    commands=[\"dbt debug\", \"dbt list\"],\n    dbt_cli_profile=dbt_cli_profile,\n    overwrite_profiles=True\n)\ndbt_init.run()\n```\n\nExecute a longer-lasting dbt run as a context manager.\n```python\nwith DbtCoreOperation(commands=[\"dbt run\"]) as dbt_run:\n    dbt_process = dbt_run.trigger()\n    # do other things\n    dbt_process.wait_for_completion()\n    dbt_output = dbt_process.fetch_result()\n```",
@@ -6178,7 +6178,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.4.0"
+          "version": "0.4.1"
         }
       }
     }
@@ -6382,7 +6382,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.3.0"
+          "version": "0.3.2"
         }
       }
     }
@@ -6442,7 +6442,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.2.0"
+          "version": "0.2.2"
         }
       },
       "firebolt-database": {
@@ -6545,7 +6545,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.2.0"
+          "version": "0.2.2"
         }
       }
     }
@@ -7212,7 +7212,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.2.0"
+          "version": "0.2.2"
         }
       },
       "github-repository": {
@@ -7287,7 +7287,7 @@
           "capabilities": [
             "get-directory"
           ],
-          "version": "0.2.0"
+          "version": "0.2.2"
         }
       }
     }
@@ -7329,7 +7329,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.2.0"
+          "version": "0.2.1"
         }
       },
       "gitlab-repository": {
@@ -7410,7 +7410,7 @@
           "capabilities": [
             "get-directory"
           ],
-          "version": "0.2.0"
+          "version": "0.2.1"
         }
       }
     }
@@ -7505,7 +7505,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.1.0"
+          "version": "0.2.1"
         }
       }
     }
@@ -7980,7 +7980,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.2.0"
+          "version": "0.2.2"
         }
       }
     }
@@ -8019,7 +8019,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.2.0"
+          "version": "0.2.2"
         }
       }
     }
@@ -8193,7 +8193,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.26.1"
+          "version": "0.27.2"
         }
       },
       "snowflake-credentials": {
@@ -8299,7 +8299,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.26.1"
+          "version": "0.27.2"
         }
       }
     }
@@ -8587,11 +8587,11 @@
         "name": "Twitter Credentials",
         "slug": "twitter-credentials",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/747aa724fedcefd1c1cec248ab7a5b518a1191cd-250x250.png",
-        "documentation_url": null,
+        "documentation_url": "https://prefecthq.github.io/prefect-twitter/credentials/#prefect_twitter.credentials.TwitterCredentials",
         "description": "Block used to manage Twitter authentication with tweepy.\nSee Authentication Tokens section of the Keys and Tokens tab of\nyour app, under the Twitter Developer Portal Projects & Apps page at\nhttps://developer.twitter.com/en/portal/projects-and-apps. This block is part of the prefect-twitter collection. Install prefect-twitter with `pip install prefect-twitter` to use this block.",
         "code_example": "Load stored Twitter credentials:\n```python\nfrom prefect_twitter import TwitterCredentials\ntwitter_credentials_block = TwitterCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:4c24588fb507d62c850405da822ec87e52ffc726dbbfea8ceca944d72817a7e2",
+          "checksum": "sha256:3ddef85943cded20f2e6145a698e5238fbd81d94df72cb758dfa9a4f1840d01e",
           "fields": {
             "title": "TwitterCredentials",
             "description": "Block used to manage Twitter authentication with tweepy.\nSee Authentication Tokens section of the Keys and Tokens tab of\nyour app, under the Twitter Developer Portal Projects & Apps page at\nhttps://developer.twitter.com/en/portal/projects-and-apps.",
@@ -8599,20 +8599,24 @@
             "properties": {
               "consumer_key": {
                 "title": "Consumer Key",
+                "description": "Twitter App API key used for authentication.",
                 "type": "string"
               },
               "consumer_secret": {
                 "title": "Consumer Secret",
+                "description": "Twitter App API secret used for authentication.",
                 "type": "string",
                 "writeOnly": true,
                 "format": "password"
               },
               "access_token": {
                 "title": "Access Token",
+                "description": "Oauth token used to access the Twitter API.",
                 "type": "string"
               },
               "access_token_secret": {
                 "title": "Access Token Secret",
+                "description": "Ouath secret used to access the Twitter API.",
                 "type": "string",
                 "writeOnly": true,
                 "format": "password"
@@ -8632,7 +8636,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.1.1"
+          "version": "0.2.2"
         }
       }
     }
