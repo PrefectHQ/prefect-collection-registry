@@ -200,10 +200,10 @@ async def update_all_collections(
     return Completed(message="All new releases have been recorded.")
 
 
-# if __name__ == "__main__":
-## ALL COLLECTIONS
-# asyncio.run(update_all_collections())
+if __name__ == "__main__":
+    # ALL COLLECTIONS
+    asyncio.run(update_all_collections())
 
-## MANUAL RUNS
-# for collection in ["prefect-sqlalchemy"]:
-#     update_collection_metadata(collection, "update-metadata-manually")
+    # # MANUAL RUNS
+    # for collection in ["prefect-sqlalchemy"]:
+    #     asyncio.run(update_collection_metadata(collection, "update-metadata-manually"))
