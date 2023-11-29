@@ -1900,7 +1900,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.3.0"
+          "version": "0.3.2"
         }
       },
       "airbyte-server": {
@@ -1964,7 +1964,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.3.0"
+          "version": "0.3.2"
         }
       }
     }
