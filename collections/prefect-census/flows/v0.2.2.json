@@ -1,0 +1,280 @@
+{
+  "prefect-census": {
+    "run_census_sync": {
+      "description": {
+        "summary": "A flow for triggering a Census sync run and waiting for completion.",
+        "returns": "The result of the sync run.",
+        "examples": []
+      },
+      "documentation_url": "https://prefecthq.github.io/prefect-census/flows/#prefect_census.flows.run_census_sync",
+      "entrypoint": "prefect_census/flows.py:run_census_sync",
+      "install_command": "pip install prefect-census",
+      "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/b2f805555c778f37f861b67c4a861908f66a6e35-700x700.png",
+      "name": "run-census-sync",
+      "parameters": {
+        "title": "Parameters",
+        "type": "object",
+        "properties": {
+          "census_sync": {
+            "title": "census_sync",
+            "description": "The Census sync job block to trigger.",
+            "position": 0,
+            "allOf": [
+              {
+                "$ref": "#/definitions/CensusSync"
+              }
+            ]
+          }
+        },
+        "required": [
+          "census_sync"
+        ],
+        "definitions": {
+          "CensusCredentials": {
+            "title": "CensusCredentials",
+            "description": "Credentials block for credential use across Census tasks and flows.",
+            "type": "object",
+            "properties": {
+              "api_key": {
+                "title": "API Key",
+                "description": "API key to authenticate with the Census API.",
+                "type": "string",
+                "writeOnly": true,
+                "format": "password"
+              }
+            },
+            "required": [
+              "api_key"
+            ],
+            "block_type_slug": "census-credentials",
+            "secret_fields": [
+              "api_key"
+            ],
+            "block_schema_references": {}
+          },
+          "CensusSync": {
+            "title": "CensusSync",
+            "description": "Runs a Census sync",
+            "type": "object",
+            "properties": {
+              "credentials": {
+                "title": "Credentials",
+                "description": "Credentials for authenticating with Census.",
+                "allOf": [
+                  {
+                    "$ref": "#/definitions/CensusCredentials"
+                  }
+                ]
+              },
+              "sync_id": {
+                "title": "Sync Id",
+                "description": "The ID of the sync to trigger.",
+                "type": "integer"
+              },
+              "force_full_sync": {
+                "title": "Force Full Sync",
+                "description": "If `True`, a full sync will be triggered.",
+                "default": false,
+                "type": "boolean"
+              },
+              "max_wait_seconds": {
+                "title": "Max Wait Seconds",
+                "description": "The maximum number of seconds to wait for the sync to complete.",
+                "default": 3600,
+                "type": "integer"
+              },
+              "poll_frequency_seconds": {
+                "title": "Poll Frequency Seconds",
+                "description": "Number of seconds to wait between sync status checks.",
+                "default": 5,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "credentials",
+              "sync_id"
+            ],
+            "block_type_slug": "census-sync",
+            "secret_fields": [
+              "credentials.api_key"
+            ],
+            "block_schema_references": {
+              "credentials": {
+                "block_type_slug": "census-credentials",
+                "block_schema_checksum": "sha256:4101a4f4096dd3a5cf916692b7948959ea88e87bb08d91d6d5cc929224da5f4a"
+              }
+            }
+          }
+        }
+      },
+      "path_containing_flow": "prefect_census/flows.py",
+      "repo_url": "https://github.com/PrefectHQ/prefect-census",
+      "slug": "run_census_sync"
+    },
+    "wait_census_sync_completion": {
+      "description": {
+        "summary": "Waits for the Census sync run to finish running.",
+        "examples": []
+      },
+      "documentation_url": "https://prefecthq.github.io/prefect-census/runs/#prefect_census.runs.wait_census_sync_completion",
+      "entrypoint": "prefect_census/runs.py:wait_census_sync_completion",
+      "install_command": "pip install prefect-census",
+      "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/b2f805555c778f37f861b67c4a861908f66a6e35-700x700.png",
+      "name": "Wait for Census sync run",
+      "parameters": {
+        "title": "Parameters",
+        "type": "object",
+        "properties": {
+          "run_id": {
+            "title": "run_id",
+            "description": "The ID of the sync run to wait for.",
+            "position": 0,
+            "type": "integer"
+          },
+          "credentials": {
+            "title": "credentials",
+            "description": "Credentials for authenticating with Census.",
+            "position": 1,
+            "allOf": [
+              {
+                "$ref": "#/definitions/CensusCredentials"
+              }
+            ]
+          },
+          "max_wait_seconds": {
+            "title": "max_wait_seconds",
+            "description": "Maximum number of seconds to wait for sync to complete.",
+            "default": 60,
+            "position": 2,
+            "type": "integer"
+          },
+          "poll_frequency_seconds": {
+            "title": "poll_frequency_seconds",
+            "description": "Number of seconds to wait in between checks for\nrun completion.",
+            "default": 5,
+            "position": 3,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "run_id",
+          "credentials"
+        ],
+        "definitions": {
+          "CensusCredentials": {
+            "title": "CensusCredentials",
+            "description": "Credentials block for credential use across Census tasks and flows.",
+            "type": "object",
+            "properties": {
+              "api_key": {
+                "title": "API Key",
+                "description": "API key to authenticate with the Census API.",
+                "type": "string",
+                "writeOnly": true,
+                "format": "password"
+              }
+            },
+            "required": [
+              "api_key"
+            ],
+            "block_type_slug": "census-credentials",
+            "secret_fields": [
+              "api_key"
+            ],
+            "block_schema_references": {}
+          }
+        }
+      },
+      "path_containing_flow": "prefect_census/runs.py",
+      "repo_url": "https://github.com/PrefectHQ/prefect-census",
+      "slug": "wait_census_sync_completion"
+    },
+    "trigger_census_sync_run_and_wait_for_completion": {
+      "description": {
+        "summary": "Triggers a Census sync run and waits for thetriggered run to complete.",
+        "examples": [
+          "Trigger a Census sync using CensusCredentials instance and wait\nfor completion as a standalone flow:\n```python\nimport asyncio\n\nfrom prefect_census import CensusCredentials\nfrom prefect_census.syncs import trigger_census_sync_run_and_wait_for_completion\n\nasyncio.run(\n    trigger_census_sync_run_and_wait_for_completion(\n        credentials=CensusCredentials(\n            api_key=\"my_api_key\"\n        ),\n        sync_id=42\n    )\n)\n```\n\nTrigger a Census sync and wait for completion as a subflow:\n```python\nfrom prefect import flow\n\nfrom prefect_census import CensusCredentials\nfrom prefect_census.syncs import trigger_census_sync_run_and_wait_for_completion\n\n@flow\ndef my_flow():\n    ...\n    creds = CensusCredentials(api_key=\"my_api_key\")\n    run_result = trigger_census_sync_run_and_wait_for_completion(\n        credentials=creds,\n        sync_id=42\n    )\n    ...\n\nmy_flow()\n```"
+        ]
+      },
+      "documentation_url": "https://prefecthq.github.io/prefect-census/syncs/#prefect_census.syncs.trigger_census_sync_run_and_wait_for_completion",
+      "entrypoint": "prefect_census/syncs.py:trigger_census_sync_run_and_wait_for_completion",
+      "install_command": "pip install prefect-census",
+      "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/b2f805555c778f37f861b67c4a861908f66a6e35-700x700.png",
+      "name": "Trigger Census sync run and wait for completion",
+      "parameters": {
+        "title": "Parameters",
+        "type": "object",
+        "properties": {
+          "credentials": {
+            "title": "credentials",
+            "description": "Credentials for authenticating with Census.",
+            "position": 0,
+            "allOf": [
+              {
+                "$ref": "#/definitions/CensusCredentials"
+              }
+            ]
+          },
+          "sync_id": {
+            "title": "sync_id",
+            "description": "The ID of the sync to trigger.",
+            "position": 1,
+            "type": "integer"
+          },
+          "force_full_sync": {
+            "title": "force_full_sync",
+            "description": "If `True`, a full sync will be triggered.",
+            "default": false,
+            "position": 2,
+            "type": "boolean"
+          },
+          "max_wait_seconds": {
+            "title": "max_wait_seconds",
+            "description": "Maximum number of seconds to wait for sync to complete",
+            "default": 900,
+            "position": 3,
+            "type": "integer"
+          },
+          "poll_frequency_seconds": {
+            "title": "poll_frequency_seconds",
+            "description": "Number of seconds to wait in between checks for run completion.",
+            "default": 10,
+            "position": 4,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "credentials",
+          "sync_id"
+        ],
+        "definitions": {
+          "CensusCredentials": {
+            "title": "CensusCredentials",
+            "description": "Credentials block for credential use across Census tasks and flows.",
+            "type": "object",
+            "properties": {
+              "api_key": {
+                "title": "API Key",
+                "description": "API key to authenticate with the Census API.",
+                "type": "string",
+                "writeOnly": true,
+                "format": "password"
+              }
+            },
+            "required": [
+              "api_key"
+            ],
+            "block_type_slug": "census-credentials",
+            "secret_fields": [
+              "api_key"
+            ],
+            "block_schema_references": {}
+          }
+        }
+      },
+      "path_containing_flow": "prefect_census/syncs.py",
+      "repo_url": "https://github.com/PrefectHQ/prefect-census",
+      "slug": "trigger_census_sync_run_and_wait_for_completion"
+    }
+  }
+}
