@@ -201,9 +201,9 @@ async def update_all_collections(
 
 
 if __name__ == "__main__":
-    # ALL COLLECTIONS
-    asyncio.run(update_all_collections())
+    # # ALL COLLECTIONS
+    # asyncio.run(update_all_collections())
 
     # # MANUAL RUNS
     # for collection in ["prefect-sqlalchemy"]:
-    #     asyncio.run(update_collection_metadata(collection, "update-metadata-manually"))
+    #     update_collection_metadata(collection, "update-metadata-manually")
