@@ -6621,7 +6621,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.5.1"
+          "version": "0.5.4"
         }
       },
       "cloud-run-job": {
@@ -6787,7 +6787,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "0.5.1"
+          "version": "0.5.4"
         }
       },
       "gcp-credentials": {
@@ -6828,7 +6828,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.5.1"
+          "version": "0.5.4"
         }
       },
       "gcpsecret": {
@@ -6906,7 +6906,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.5.1"
+          "version": "0.5.4"
         }
       },
       "gcs-bucket": {
@@ -6994,7 +6994,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "0.5.1"
+          "version": "0.5.4"
         }
       },
       "vertex-ai-custom-training-job": {
@@ -7176,7 +7176,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "0.5.1"
+          "version": "0.5.4"
         }
       }
     }

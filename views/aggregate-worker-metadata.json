@@ -1203,8 +1203,8 @@
           }
         }
       },
-      "description": "A worker which runs flow runs on Google Cloud Run (API v2).",
-      "display_name": "Cloud Run Worker V2",
+      "description": "Execute flow runs within containers on Google Cloud Run (V2 API). Requires a Google Cloud Platform account.",
+      "display_name": "Google Cloud Run V2",
       "documentation_url": "https://prefecthq.github.io/prefect-gcp/worker_v2/",
       "install_command": "pip install prefect-gcp",
       "is_beta": false,
