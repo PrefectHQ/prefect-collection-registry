@@ -1,0 +1,150 @@
+{
+  "prefect-monte-carlo": {
+    "create_or_update_lineage": {
+      "description": {
+        "summary": "Create or update a `source` node, `destination` node, and the edge that connects them.",
+        "examples": [
+          "Create or update a lineage edge between a source and destination node.\n```python\nfrom prefect import flow\nfrom prefect.context import get_run_context\nfrom prefect_monte_carlo.credentials import MonteCarloCredentials\nfrom prefect_monte_carlo.lineage import (\n    create_or_update_lineage, MonteCarloLineageNode\n)\n\n@flow\ndef monte_carlo_orchestrator():\n    flow_run_name = get_run_context().flow_run.name\n\n    source = MonteCarloLineageNode(\n        node_name=\"source_dataset\",\n        object_id=\"source_dataset\",\n        object_type=\"table\",\n        resource_name=\"some_resource_name\",\n        tags=[{\"propertyName\": \"dataset_owner\", \"propertyValue\": \"owner_name\"}],\n    )\n\n    destination = MonteCarloLineageNode(\n        node_name=\"destination_dataset\",\n        object_id=\"destination_dataset\",\n        object_type=\"table\",\n        resource_name=\"some_resource_name\",\n        tags=[{\"propertyName\": \"dataset_owner\", \"propertyValue\": \"owner_name\"}],\n    )\n\n    # `create_or_update_lineage` is a flow, so this will be a subflow run\n    # `extra_tags` are added to both the `source` and `destination` nodes\n    create_or_update_lineage(\n        monte_carlo_credentials=MonteCarloCredentials.load(\"my-mc-creds\")\n        source=source,\n        destination=destination,\n        expire_at=datetime.now() + timedelta(days=10),\n        extra_tags=[\n            {\"propertyName\": \"flow_run_name\", \"propertyValue\": flow_run_name}\n        ]\n    )\n\n```"
+        ]
+      },
+      "documentation_url": "https://prefecthq.github.io/prefect-monte-carlo/lineage/#prefect_monte_carlo.lineage.create_or_update_lineage",
+      "entrypoint": "prefect_monte_carlo/lineage.py:create_or_update_lineage",
+      "install_command": "pip install prefect-monte-carlo",
+      "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/624870fcf18298f6bf0efb55046e50765620eabd-72x72.png",
+      "name": "create-or-update-lineage",
+      "parameters": {
+        "title": "Parameters",
+        "type": "object",
+        "properties": {
+          "monte_carlo_credentials": {
+            "title": "monte_carlo_credentials",
+            "description": "The Monte Carlo credentials block used to generate\nan authenticated GraphQL API client via pycarlo.",
+            "position": 0,
+            "allOf": [
+              {
+                "$ref": "#/definitions/MonteCarloCredentials"
+              }
+            ]
+          },
+          "source": {
+            "title": "source",
+            "description": "A source node configuration - expected to include the following\nkeys: `node_name`, `object_id`, `object_type`, `resource_name`, `tags`.",
+            "position": 1,
+            "allOf": [
+              {
+                "$ref": "#/definitions/MonteCarloLineageNode"
+              }
+            ]
+          },
+          "destination": {
+            "title": "destination",
+            "description": "A destination node configuration - expected to include the\nfollowing keys: `node_name`, `object_id`, `object_type`, `resource_name`,\n`tags`.",
+            "position": 2,
+            "allOf": [
+              {
+                "$ref": "#/definitions/MonteCarloLineageNode"
+              }
+            ]
+          },
+          "expire_at": {
+            "title": "expire_at",
+            "description": "Date and time indicating when to expire\na source-destination edge.",
+            "position": 3,
+            "type": "string",
+            "format": "date-time"
+          },
+          "extra_tags": {
+            "title": "extra_tags",
+            "description": "Optional list of tags to attach to the source\nand destination node.",
+            "position": 4,
+            "type": "array",
+            "items": {}
+          }
+        },
+        "required": [
+          "monte_carlo_credentials",
+          "source",
+          "destination"
+        ],
+        "definitions": {
+          "MonteCarloCredentials": {
+            "title": "MonteCarloCredentials",
+            "description": "Block used to manage Monte Carlo authentication.",
+            "type": "object",
+            "properties": {
+              "api_key": {
+                "title": "API Key",
+                "description": "The token to authenticate with Monte Carlo's GraphQL API.",
+                "type": "string",
+                "writeOnly": true,
+                "format": "password"
+              },
+              "api_key_id": {
+                "title": "API Key ID",
+                "description": "The ID associated with the Monte Carlo API token.",
+                "type": "string"
+              },
+              "catalog_url": {
+                "title": "Monte Carlo catalog URL",
+                "description": "The URL of the Monte Carlo catalog.",
+                "default": "https://getmontecarlo.com/catalog",
+                "type": "string"
+              }
+            },
+            "required": [
+              "api_key",
+              "api_key_id"
+            ],
+            "block_type_slug": "monte-carlo-credentials",
+            "secret_fields": [
+              "api_key"
+            ],
+            "block_schema_references": {}
+          },
+          "MonteCarloLineageNode": {
+            "title": "MonteCarloLineageNode",
+            "description": "Pydantic Model of a Monte Carlo lineage lineage node.",
+            "type": "object",
+            "properties": {
+              "node_name": {
+                "title": "Node Name",
+                "type": "string"
+              },
+              "object_id": {
+                "title": "Object Id",
+                "type": "string"
+              },
+              "resource_name": {
+                "title": "Resource Name",
+                "type": "string"
+              },
+              "object_type": {
+                "title": "Object Type",
+                "default": "table",
+                "type": "string"
+              },
+              "tags": {
+                "title": "Tags",
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "required": [
+              "node_name",
+              "object_id",
+              "resource_name"
+            ]
+          }
+        }
+      },
+      "path_containing_flow": "prefect_monte_carlo/lineage.py",
+      "repo_url": "https://github.com/PrefectHQ/prefect-monte-carlo",
+      "slug": "create_or_update_lineage"
+    }
+  }
+}
