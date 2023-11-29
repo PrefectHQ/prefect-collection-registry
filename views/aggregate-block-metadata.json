@@ -7465,7 +7465,7 @@
       "hightouch-credentials": {
         "name": "Hightouch Credentials",
         "slug": "hightouch-credentials",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/9a94b9f9ff88015df929483e423fb43e3871aeb5-250x250.png",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/6WT9DIXFrqQy0nA9VRZfuL/40a7039742fca9d053677f58a79aacd5/hightouch.png?h=250",
         "documentation_url": null,
         "description": "Block used to manage Hightouch authentication. This block is part of the prefect-hightouch collection. Install prefect-hightouch with `pip install prefect-hightouch` to use this block.",
         "code_example": "Load stored Hightouch credentials:\n```python\nfrom prefect_hightouch import HightouchCredentials\nhightouch_credentials_block = HightouchCredentials.load(\"BLOCK_NAME\")\n```",
@@ -7505,7 +7505,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.1.0"
+          "version": "0.2.1"
         }
       }
     }
