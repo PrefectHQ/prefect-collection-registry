@@ -200,7 +200,7 @@ async def update_all_collections(
     return Completed(message="All new releases have been recorded.")
 
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
     # # ALL COLLECTIONS
     # asyncio.run(update_all_collections())
 
