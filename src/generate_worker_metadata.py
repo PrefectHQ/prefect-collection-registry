@@ -18,6 +18,11 @@ from prefect.workers.base import BaseWorker
 from metadata_schemas import worker_schema
 import utils
 
+# `block` work pool types should only be created via
+# `Infrastructure.publish_as_work_pool`
+# See https://github.com/PrefectHQ/prefect/pull/11180 for more details
+WORKERS_BLOCKLIST = {"BaseWorker", "BlockWorker"}
+
 
 @task
 def generate_worker_metadata(worker_subcls: Type[BaseWorker], package_name: str):
@@ -114,7 +119,7 @@ def discover_base_worker_subclasses(module: ModuleType) -> List[Type[BaseWorker]
         for _, cls in inspect.getmembers(module)
         if inspect.isclass(cls)
         and issubclass(cls, BaseWorker)
-        and cls.__name__ != "BaseWorker"
+        and cls.__name__ not in WORKERS_BLOCKLIST
     ]
 
 
