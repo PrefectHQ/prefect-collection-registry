@@ -2860,7 +2860,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.3.3"
+          "version": "0.3.4"
         }
       },
       "azure-container-instance-credentials": {
@@ -2907,7 +2907,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.3.3"
+          "version": "0.3.4"
         }
       },
       "azure-container-instance-job": {
@@ -3191,7 +3191,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "0.3.3"
+          "version": "0.3.4"
         }
       },
       "azure-cosmos-db-credentials": {
@@ -3226,7 +3226,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.3.3"
+          "version": "0.3.4"
         }
       },
       "azureml-credentials": {
@@ -3291,7 +3291,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.3.3"
+          "version": "0.3.4"
         }
       }
     }
