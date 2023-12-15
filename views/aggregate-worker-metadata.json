@@ -1,47 +1,5 @@
 {
   "prefect": {
-    "block": {
-      "default_base_job_configuration": {
-        "job_configuration": {
-          "block": "{{ block }}"
-        },
-        "variables": {
-          "type": "object",
-          "properties": {
-            "block": {
-              "title": "Block",
-              "description": "The infrastructure block to use for job creation.",
-              "allOf": [
-                {
-                  "$ref": "#/definitions/Block"
-                }
-              ]
-            }
-          },
-          "required": [
-            "block"
-          ],
-          "definitions": {
-            "Block": {
-              "title": "Block",
-              "description": "A base class for implementing a block that wraps an external service.\n\nThis class can be defined with an arbitrary set of fields and methods, and\ncouples business logic with data contained in an block document.\n`_block_document_name`, `_block_document_id`, `_block_schema_id`, and\n`_block_type_id` are reserved by Prefect as Block metadata fields, but\notherwise a Block can implement arbitrary logic. Blocks can be instantiated\nwithout populating these metadata fields, but can only be used interactively,\nnot with the Prefect API.\n\nInstead of the __init__ method, a block implementation allows the\ndefinition of a `block_initialization` method that is called after\ninitialization.",
-              "type": "object",
-              "properties": {},
-              "block_type_slug": "block",
-              "secret_fields": [],
-              "block_schema_references": {}
-            }
-          }
-        }
-      },
-      "description": "Execute flow runs using an infrastructure block as the job creator.",
-      "display_name": "Block",
-      "documentation_url": "",
-      "install_command": "pip install prefect",
-      "is_beta": false,
-      "logo_url": "",
-      "type": "block"
-    },
     "prefect-agent": {
       "type": "prefect-agent",
       "documentation_url": "https://docs.prefect.io/latest/concepts/work-pools/#agent-overview",
