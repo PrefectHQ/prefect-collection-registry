@@ -90,7 +90,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.14.11"
+          "version": "2.14.12"
         }
       },
       "date-time": {
@@ -122,7 +122,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.14.11"
+          "version": "2.14.12"
         }
       },
       "discord-webhook": {
@@ -210,7 +210,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.14.11"
+          "version": "2.14.12"
         }
       },
       "docker-container": {
@@ -411,7 +411,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.14.11"
+          "version": "2.14.12"
         }
       },
       "docker-registry": {
@@ -466,7 +466,7 @@
           "capabilities": [
             "docker-login"
           ],
-          "version": "2.14.11"
+          "version": "2.14.12"
         }
       },
       "gcs": {
@@ -517,7 +517,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.14.11"
+          "version": "2.14.12"
         }
       },
       "github": {
@@ -571,7 +571,7 @@
           "capabilities": [
             "get-directory"
           ],
-          "version": "2.14.11"
+          "version": "2.14.12"
         }
       },
       "json": {
@@ -601,7 +601,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.14.11"
+          "version": "2.14.12"
         }
       },
       "kubernetes-cluster-config": {
@@ -638,7 +638,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.14.11"
+          "version": "2.14.12"
         }
       },
       "kubernetes-job": {
@@ -812,7 +812,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.14.11"
+          "version": "2.14.12"
         }
       },
       "local-file-system": {
@@ -845,7 +845,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.14.11"
+          "version": "2.14.12"
         }
       },
       "mattermost-webhook": {
@@ -932,7 +932,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.14.11"
+          "version": "2.14.12"
         }
       },
       "ms-teams-webhook": {
@@ -983,7 +983,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.14.11"
+          "version": "2.14.12"
         }
       },
       "opsgenie-webhook": {
@@ -1105,7 +1105,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.14.11"
+          "version": "2.14.12"
         }
       },
       "pager-duty-webhook": {
@@ -1218,7 +1218,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.14.11"
+          "version": "2.14.12"
         }
       },
       "process": {
@@ -1300,7 +1300,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.14.11"
+          "version": "2.14.12"
         }
       },
       "remote-file-system": {
@@ -1342,7 +1342,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.14.11"
+          "version": "2.14.12"
         }
       },
       "s3": {
@@ -1398,7 +1398,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.14.11"
+          "version": "2.14.12"
         }
       },
       "secret": {
@@ -1433,7 +1433,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.14.11"
+          "version": "2.14.12"
         }
       },
       "sendgrid-email": {
@@ -1500,7 +1500,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.14.11"
+          "version": "2.14.12"
         }
       },
       "slack-webhook": {
@@ -1551,7 +1551,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.14.11"
+          "version": "2.14.12"
         }
       },
       "smb": {
@@ -1617,7 +1617,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.14.11"
+          "version": "2.14.12"
         }
       },
       "string": {
@@ -1648,7 +1648,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.14.11"
+          "version": "2.14.12"
         }
       },
       "twilio-sms": {
@@ -1721,7 +1721,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.14.11"
+          "version": "2.14.12"
         }
       },
       "webhook": {
@@ -1776,7 +1776,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.14.11"
+          "version": "2.14.12"
         }
       }
     }
