@@ -15,4 +15,3 @@ pull:
   - prefect.deployments.steps.git_clone:
       repository: https://github.com/PrefectHQ/prefect-collection-registry
       branch: main
-      access_token: "{{ prefect.blocks.secret.prefect-collection-registry-contents-ro-pat }}"
