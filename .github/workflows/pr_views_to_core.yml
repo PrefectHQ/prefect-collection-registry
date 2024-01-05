@@ -7,7 +7,6 @@ on:
   workflow_dispatch:
 
 env:
-  PREFECT_API_KEY: ${{ secrets.PREFECT_PRD_INTEGRATIONS_WORKSPACE_API_KEY }}
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # replace with token that has repo access / can create PRs on PrefectHQ/prefect
 
 jobs:
@@ -16,21 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-          cache: pip
-          cache-dependency-path: requirements*.txt
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install --upgrade --upgrade-strategy eager -e ".[dev]"
-
-      - name: Set workspace
-        run: prefect cloud workspace set -w prefect-technologies/integrations
 
       - name: Open PRs to PrefectHQ/prefect
         run: |
