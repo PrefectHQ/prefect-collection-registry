@@ -19,7 +19,6 @@ NEW_BRANCH = f'update-worker-metadata-{datetime.now().strftime("%Y%m%d%H%M%S")}'
 commands = f"""
     mkdir -p {os.path.dirname(TARGET_FILE_PATH)} &&
     curl -o {TARGET_FILE_PATH} {SOURCE_REPO_URL} &&
-    gh auth login &&
     git checkout -b {NEW_BRANCH} &&
     git add {TARGET_FILE_PATH} &&
     git commit -m "Update aggregate-worker-metadata.json" &&
