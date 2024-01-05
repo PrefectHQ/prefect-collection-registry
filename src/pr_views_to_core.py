@@ -5,7 +5,9 @@ import asyncio
 import httpx
 from datetime import datetime
 
-GITHUB_TOKEN = os.environ['GITHUB_TOKEN']
+from prefect.blocks.system import Secret
+
+GITHUB_TOKEN = Secret.load("collection-registry-contents-prs-rw-pat").get()
 SOURCE_REPO_URL = 'https://raw.githubusercontent.com/PrefectHQ/prefect-collection-registry/main/views/aggregate-worker-metadata.json'
 TARGET_FILE_PATH = 'src/prefect/server/api/collections_data/views/aggregate-worker-metadata.json' # noqa E501
 TARGET_ORG = 'PrefectHQ'

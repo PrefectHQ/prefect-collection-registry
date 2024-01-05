@@ -7,6 +7,9 @@ on:
     # paths:
     #   - 'views/aggregate-worker-metadata.json'
 
+env:
+    PREFECT_API_KEY: ${{ secrets.PREFECT_PRD_INTEGRATIONS_WORKSPACE_API_KEY }}
+
 jobs:
   update-views:
     name: Send updated views to PrefectHQ/prefect
@@ -25,6 +28,9 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install --upgrade --upgrade-strategy eager -e ".[dev]"
+
+      - name: Set workspace
+        run: prefect cloud workspace set -w prefect-technologies/integrations
 
       - name: Open PRs to PrefectHQ/prefect
         run: python src/pr_views_to_core.py
