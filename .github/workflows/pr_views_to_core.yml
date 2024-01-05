@@ -1,0 +1,32 @@
+name: PR Views to PrefectHQ/prefect
+
+on:
+  pull_request:
+    branches:
+      - main
+      - pr-worker-view
+    paths:
+      - 'views/aggregate-worker-metadata.json'
+
+jobs:
+  update-views:
+    name: Send updated views to PrefectHQ/prefect
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: requirements*.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --upgrade --upgrade-strategy eager -e ".[dev]"
+
+      - name: Open PRs to PrefectHQ/prefect
+        run: src/pr_views_to_core.py
+
