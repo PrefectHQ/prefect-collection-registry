@@ -20,8 +20,9 @@ commands = f"""
     git checkout -b {NEW_BRANCH} &&
     git add {TARGET_FILE_PATH} &&
     git commit -m "Update aggregate-worker-metadata.json" &&
-    git push -u origin {NEW_BRANCH}
-"""
+    gh auth setup-git &&
+    gh pr create --base main --head {NEW_BRANCH} --title "Automated PR for Worker Metadata Update" --fill
+""" # noqa E501
 subprocess.check_call(commands, shell=True)
 
 async def create_pull_request(new_branch: str):
