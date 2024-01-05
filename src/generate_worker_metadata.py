@@ -10,7 +10,6 @@ from typing import Any, Dict, List, Type
 
 import fastjsonschema
 from prefect import flow, task
-from prefect.logging.loggers import get_logger
 from prefect.plugins import safe_load_entrypoints
 from prefect.utilities.dispatch import get_registry_for_type
 from prefect.utilities.importtools import to_qualified_name
@@ -24,7 +23,6 @@ import utils
 # See https://github.com/PrefectHQ/prefect/pull/11180 for more details
 WORKERS_BLOCKLIST = {"BaseWorker", "BlockWorker"}
 
-logger = get_logger("generate_worker_metadata")
 
 @task
 def generate_worker_metadata(worker_subcls: Type[BaseWorker], package_name: str):
@@ -82,7 +80,11 @@ def get_worker_metadata_from_prefect():
             worker_subcls=worker_subcls, package_name="prefect"
         )
         for worker_subcls in worker_registry.values()
-        if to_qualified_name(worker_subcls).startswith("prefect.")
+        if (
+            to_qualified_name(worker_subcls).startswith("prefect.")
+            and worker_subcls.__name__ not in WORKERS_BLOCKLIST
+        )
+        
     }
 
     output.update(metadata)
@@ -106,7 +108,6 @@ def get_worker_metadata_from_collection(collection_name: str):
 
         worker_subclasses = discover_base_worker_subclasses(module)
         for worker_subcls in worker_subclasses:
-            logger.info(f"Generating metadata for {worker_subcls.type}")
             output[worker_subcls.type] = generate_worker_metadata(
                 worker_subcls=worker_subcls, package_name=collection_name
             )
