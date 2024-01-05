@@ -4,13 +4,8 @@ on:
   push:
     branches:
       - pr-worker-view
-    paths:
-      - 'views/aggregate-worker-metadata.json'
-  pull_request:
-    branches:
-      - main
-    paths:
-      - 'views/aggregate-worker-metadata.json'
+    # paths:
+    #   - 'views/aggregate-worker-metadata.json'
 
 jobs:
   update-views:
