@@ -80,7 +80,11 @@ def get_worker_metadata_from_prefect():
             worker_subcls=worker_subcls, package_name="prefect"
         )
         for worker_subcls in worker_registry.values()
-        if to_qualified_name(worker_subcls).startswith("prefect.")
+        if (
+            to_qualified_name(worker_subcls).startswith("prefect.")
+            and worker_subcls.__name__ not in WORKERS_BLOCKLIST
+        )
+        
     }
 
     output.update(metadata)

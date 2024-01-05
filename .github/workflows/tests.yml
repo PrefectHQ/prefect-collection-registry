@@ -1,6 +1,9 @@
 name: Tests
 
 on:
+  push:
+    branches:
+      - fix-ci
   pull_request:
     branches:
       - main
