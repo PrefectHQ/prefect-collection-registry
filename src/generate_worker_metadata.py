@@ -69,7 +69,7 @@ def get_worker_metadata_from_prefect():
             "install_command": "pip install prefect",
             "default_base_job_configuration": {},
             "description": (
-                "Execute flow runs on heterogenous infrastructure using infrastructure"
+                "Execute flow runs on heterogeneous infrastructure using infrastructure"
                 " blocks."
             ),
         }
