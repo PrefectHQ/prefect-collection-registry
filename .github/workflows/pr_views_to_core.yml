@@ -3,11 +3,12 @@ name: PR Views to PrefectHQ/prefect
 on:
   push:
     branches:
-      - pr-worker-view
+      - main
+  workflow_dispatch:
 
 env:
   PREFECT_API_KEY: ${{ secrets.PREFECT_PRD_INTEGRATIONS_WORKSPACE_API_KEY }}
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # replace with token that has repo access / can create PRs on PrefectHQ/prefect
 
 jobs:
   update-views:
@@ -43,8 +44,6 @@ jobs:
           mkdir -p $(dirname $TARGET_FILE_PATH)
           curl -o $TARGET_FILE_PATH $SOURCE_REPO_URL
 
-          git config user.email "marvin@prefect.io"
-          git config user.name "marvin-robot"
           git checkout -b $NEW_BRANCH
           git add $TARGET_FILE_PATH
           git commit -m "Update aggregate-worker-metadata.json"
