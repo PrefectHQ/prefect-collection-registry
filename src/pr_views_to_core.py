@@ -5,7 +5,7 @@ from prefect.blocks.system import Secret
 
 GITHUB_TOKEN = Secret.load("collection-registry-contents-prs-rw-pat").get()
 SOURCE_REPO_URL = 'https://raw.githubusercontent.com/PrefectHQ/prefect-collection-registry/main/views/aggregate-worker-metadata.json'
-TARGET_FILE_PATH = 'src/prefect/server/api/collections_data/views/aggregate-worker-metadata.json'
+TARGET_FILE_PATH = 'src/prefect/server/api/collections_data/views/aggregate-worker-metadata.json' # noqa: E501
 TARGET_ORG = 'PrefectHQ'
 TARGET_REPO = 'prefect'
 NEW_BRANCH = f'update-worker-metadata-{datetime.now().strftime("%Y%m%d%H%M%S")}'
