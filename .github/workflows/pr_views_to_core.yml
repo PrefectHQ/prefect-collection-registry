@@ -27,5 +27,5 @@ jobs:
           python -m pip install --upgrade --upgrade-strategy eager -e ".[dev]"
 
       - name: Open PRs to PrefectHQ/prefect
-        run: src/pr_views_to_core.py
+        run: python src/pr_views_to_core.py
 
