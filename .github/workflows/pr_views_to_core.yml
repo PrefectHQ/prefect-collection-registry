@@ -4,11 +4,10 @@ on:
   push:
     branches:
       - pr-worker-view
-    # paths:
-    #   - 'views/aggregate-worker-metadata.json'
 
 env:
-    PREFECT_API_KEY: ${{ secrets.PREFECT_PRD_INTEGRATIONS_WORKSPACE_API_KEY }}
+  PREFECT_API_KEY: ${{ secrets.PREFECT_PRD_INTEGRATIONS_WORKSPACE_API_KEY }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   update-views:
@@ -33,5 +32,22 @@ jobs:
         run: prefect cloud workspace set -w prefect-technologies/integrations
 
       - name: Open PRs to PrefectHQ/prefect
-        run: python src/pr_views_to_core.py
+        run: |
+          NEW_BRANCH="update-worker-metadata-$(date +%Y%m%d%H%M%S)"
+          TARGET_FILE_PATH="src/prefect/server/api/collections_data/views/aggregate-worker-metadata.json"
+          SOURCE_REPO_URL="https://raw.githubusercontent.com/PrefectHQ/prefect-collection-registry/main/views/aggregate-worker-metadata.json"
 
+          git clone https://github.com/PrefectHQ/prefect.git
+          cd prefect
+
+          mkdir -p $(dirname $TARGET_FILE_PATH)
+          curl -o $TARGET_FILE_PATH $SOURCE_REPO_URL
+
+          git config user.email "marvin@prefect.io"
+          git config user.name "marvin-robot"
+          git checkout -b $NEW_BRANCH
+          git add $TARGET_FILE_PATH
+          git commit -m "Update aggregate-worker-metadata.json"
+          git push --set-upstream origin $NEW_BRANCH
+
+          gh pr create --repo PrefectHQ/prefect --base main --head $NEW_BRANCH --title "Automated PR for Worker Metadata Update" --body "This is an automated PR to update the worker metadata."
