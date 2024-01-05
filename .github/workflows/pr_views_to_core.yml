@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 env:
-  GITHUB_TOKEN: ${{ secrets.PREFECT_COLLECTION_REGISTRY_PRS_RW }}
+  GITHUB_TOKEN: ${{ secrets.OSS_PRS_RW }}
 
 jobs:
   update-views:
