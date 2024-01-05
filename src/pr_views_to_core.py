@@ -8,6 +8,8 @@ from datetime import datetime
 from prefect.blocks.system import Secret
 
 GITHUB_TOKEN = Secret.load("collection-registry-contents-prs-rw-pat").get()
+os.environ['GITHUB_TOKEN'] = GITHUB_TOKEN
+
 SOURCE_REPO_URL = 'https://raw.githubusercontent.com/PrefectHQ/prefect-collection-registry/main/views/aggregate-worker-metadata.json'
 TARGET_FILE_PATH = 'src/prefect/server/api/collections_data/views/aggregate-worker-metadata.json' # noqa E501
 TARGET_ORG = 'PrefectHQ'
@@ -17,12 +19,10 @@ NEW_BRANCH = f'update-worker-metadata-{datetime.now().strftime("%Y%m%d%H%M%S")}'
 commands = f"""
     mkdir -p {os.path.dirname(TARGET_FILE_PATH)} &&
     curl -o {TARGET_FILE_PATH} {SOURCE_REPO_URL} &&
-    git config --global user.email "marvin@prefect.io" &&
-    git config --global user.name "marvin-robot" &&
     git checkout -b {NEW_BRANCH} &&
     git add {TARGET_FILE_PATH} &&
     git commit -m "Update aggregate-worker-metadata.json" &&
-    gh auth setup-git &&
+    gh auth login &&
     gh pr create --base main --head {NEW_BRANCH} --title "Automated PR for Worker Metadata Update" --fill
 """ # noqa E501
 subprocess.check_call(commands, shell=True)
