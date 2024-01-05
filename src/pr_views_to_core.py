@@ -24,7 +24,8 @@ commands = f"""
     git checkout -b {NEW_BRANCH} &&
     git add {TARGET_FILE_PATH} &&
     git commit -m "Update aggregate-worker-metadata.json" &&
-    gh pr create --base main --head {NEW_BRANCH} --title "Automated PR for Worker Metadata Update" --fill
+    git push --set-upstream origin {NEW_BRANCH} &&
+    gh pr create --base main --head {NEW_BRANCH} --title "Automated PR for Worker Metadata Update" --body "This is an automated PR to update the worker metadata."
 """ # noqa E501
 subprocess.check_call(commands, shell=True)
 
