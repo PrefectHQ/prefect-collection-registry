@@ -1,10 +1,14 @@
 name: PR Views to PrefectHQ/prefect
 
 on:
+  push:
+    branches:
+      - pr-worker-view
+    paths:
+      - 'views/aggregate-worker-metadata.json'
   pull_request:
     branches:
       - main
-      - pr-worker-view
     paths:
       - 'views/aggregate-worker-metadata.json'
 
