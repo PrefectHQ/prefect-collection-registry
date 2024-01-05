@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 env:
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # replace with token that has repo access / can create PRs on PrefectHQ/prefect
+  GITHUB_TOKEN: ${{ secrets.PREFECT_COLLECTION_REGISTRY_PRS_RW }}
 
 jobs:
   update-views:
