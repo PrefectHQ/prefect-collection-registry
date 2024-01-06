@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - pr-worker-view-test      
     paths:
       - "views/aggregate-worker-metadata.json"
   workflow_dispatch:
