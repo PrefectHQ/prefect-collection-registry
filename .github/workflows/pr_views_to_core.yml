@@ -19,6 +19,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Configure Git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+
       - name: Open PRs to PrefectHQ/prefect
         run: |
           NEW_BRANCH="update-worker-metadata-$(date +%Y%m%d%H%M%S)"
@@ -29,9 +34,6 @@ jobs:
           cd prefect
 
           curl -o $TARGET_FILE_PATH $SOURCE_REPO_URL
-
-          git config --global user.email "marvin@prefect.io"
-          git config --global user.name "Marvin"
 
           git checkout -b $NEW_BRANCH
           git add $TARGET_FILE_PATH
