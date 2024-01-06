@@ -25,14 +25,14 @@ jobs:
           TARGET_FILE_PATH="src/prefect/server/api/collections_data/views/aggregate-worker-metadata.json"
           SOURCE_REPO_URL="https://raw.githubusercontent.com/PrefectHQ/prefect-collection-registry/main/views/aggregate-worker-metadata.json"
 
-          git clone https://github.com/PrefectHQ/prefect.git
+          git clone htt
           cd prefect
 
           curl -o $TARGET_FILE_PATH $SOURCE_REPO_URL
 
           git config --global user.email "marvin@prefect.io"
           git config --global user.name "marvin-robot"
-
+          git remote set-url origin https://x-access-token:$GITHUB_TOKEN@github.com/$TARGET_ORG/$TARGET_REPO.git &&
           git checkout -b $NEW_BRANCH
           git add $TARGET_FILE_PATH
           git commit -m "Update aggregate-worker-metadata.json"
