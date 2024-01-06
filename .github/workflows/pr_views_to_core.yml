@@ -30,8 +30,7 @@ jobs:
 
           curl -o $TARGET_FILE_PATH $SOURCE_REPO_URL
 
-          gh auth login --with-token <<< $GITHUB_TOKEN
-          git remote set-url origin https://github.com/prefecthq/prefect.git &&
+          gh auth setup-git
           git checkout -b $NEW_BRANCH
           git add $TARGET_FILE_PATH
           git commit -m "Update aggregate-worker-metadata.json"
