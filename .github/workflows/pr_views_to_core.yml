@@ -5,8 +5,8 @@ on:
     branches:
       - main
       - pr-worker-view-test      
-    paths:
-      - "views/aggregate-worker-metadata.json"
+    # paths:
+    #   - "views/aggregate-worker-metadata.json"
   workflow_dispatch:
 
 env:
