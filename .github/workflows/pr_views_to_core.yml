@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - pr-worker-view-test
+      - pr-worker-view-test      
     # paths:
     #   - "views/aggregate-worker-metadata.json"
   workflow_dispatch:
@@ -20,11 +20,11 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Open PRs to PrefectHQ/prefect
-        env:
-          NEW_BRANCH: "update-worker-metadata-$(date +%Y%m%d%H%M%S)"
-          TARGET_FILE_PATH: "src/prefect/server/api/collections_data/views/aggregate-worker-metadata.json"
-          SOURCE_REPO_URL: "https://raw.githubusercontent.com/PrefectHQ/prefect-collection-registry/main/views/aggregate-worker-metadata.json"
         run: |
+          NEW_BRANCH="update-worker-metadata-$(date +%Y%m%d%H%M%S)"
+          TARGET_FILE_PATH="src/prefect/server/api/collections_data/views/aggregate-worker-metadata.json"
+          SOURCE_REPO_URL="https://raw.githubusercontent.com/PrefectHQ/prefect-collection-registry/main/views/aggregate-worker-metadata.json"
+
           git clone https://x-access-token:${GITHUB_TOKEN}@github.com/PrefectHQ/prefect.git
           cd prefect
 
