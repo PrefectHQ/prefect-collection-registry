@@ -27,7 +27,6 @@ jobs:
           git clone https://github.com/PrefectHQ/prefect.git
           cd prefect
 
-          mkdir -p $(dirname $TARGET_FILE_PATH)
           curl -o $TARGET_FILE_PATH $SOURCE_REPO_URL
 
           git checkout -b $NEW_BRANCH
