@@ -25,7 +25,7 @@ jobs:
           TARGET_FILE_PATH="src/prefect/server/api/collections_data/views/aggregate-worker-metadata.json"
           SOURCE_REPO_URL="https://raw.githubusercontent.com/PrefectHQ/prefect-collection-registry/main/views/aggregate-worker-metadata.json"
 
-          git clone htt
+          git clone http://github.com/PrefectHQ/prefect.git
           cd prefect
 
           curl -o $TARGET_FILE_PATH $SOURCE_REPO_URL
