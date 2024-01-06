@@ -32,7 +32,7 @@ jobs:
 
           git config --global user.email "marvin@prefect.io"
           git config --global user.name "marvin-robot"
-          git remote set-url origin https://x-access-token:$GITHUB_TOKEN@github.com/$TARGET_ORG/$TARGET_REPO.git &&
+          git remote set-url origin https://x-access-token:$GITHUB_TOKEN@github.com/prefecthq/prefect.git &&
           git checkout -b $NEW_BRANCH
           git add $TARGET_FILE_PATH
           git commit -m "Update aggregate-worker-metadata.json"
