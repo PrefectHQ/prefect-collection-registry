@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - git-config
     paths:
       - "views/aggregate-worker-metadata.json"
   workflow_dispatch:
@@ -17,6 +18,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "$GITHUB_ACTOR"
+          git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
       - name: Open PRs to PrefectHQ/prefect
         run: |
