@@ -6382,7 +6382,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.4.3"
+          "version": "0.4.4"
         }
       },
       "docker-registry-credentials": {
@@ -6393,7 +6393,7 @@
         "description": "Store credentials for interacting with a Docker Registry. This block is part of the prefect-docker collection. Install prefect-docker with `pip install prefect-docker` to use this block.",
         "code_example": "Log into Docker Registry.\n```python\nfrom prefect_docker import DockerHost, DockerRegistryCredentials\n\ndocker_host = DockerHost()\ndocker_registry_credentials = DockerRegistryCredentials(\n    username=\"my_username\",\n    password=\"my_password\",\n    registry_url=\"registry.hub.docker.com\",\n)\nwith docker_host.get_client() as client:\n    docker_registry_credentials.login(client)\n```",
         "block_schema": {
-          "checksum": "sha256:79c2e94bef9297ccd49000f66e7919ee915c97495720b41fba8420786dbf2c58",
+          "checksum": "sha256:d5cbcfdf092e1f904ea26c274fcd0f23d86ecbbd0afae0f254f575ac3e40915d",
           "fields": {
             "title": "DockerRegistryCredentials",
             "description": "Store credentials for interacting with a Docker Registry.",
@@ -6414,7 +6414,7 @@
               "registry_url": {
                 "title": "Registry Url",
                 "description": "The URL to the registry. Generally, \"http\" or \"https\" can be omitted.",
-                "example": "registry.hub.docker.com",
+                "example": "index.docker.io",
                 "type": "string"
               },
               "reauth": {
@@ -6436,7 +6436,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.4.3"
+          "version": "0.4.4"
         }
       }
     }
