@@ -2079,7 +2079,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.4.7"
+          "version": "0.4.8"
         }
       },
       "aws-secret": {
@@ -2219,7 +2219,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.4.7"
+          "version": "0.4.8"
         }
       },
       "ecs-task": {
@@ -2230,7 +2230,7 @@
         "description": "Run a command as an ECS task. This block is part of the prefect-aws collection. Install prefect-aws with `pip install prefect-aws` to use this block.",
         "code_example": "```python\nfrom prefect_aws.ecs import ECSTask\n\necs_task_block = ECSTask.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:19d0187ed1eb07b8473fb2d8a5aa7dbfff5995df37775c2e1eea891e24c46b93",
+          "checksum": "sha256:d72b495859da39536d3e1119ddabd42a10866867b97c4834956ae231120858ca",
           "fields": {
             "title": "ECSTask",
             "description": "Run a command as an ECS task.",
@@ -2344,7 +2344,7 @@
               },
               "launch_type": {
                 "title": "Launch Type",
-                "description": "The type of ECS task run infrastructure that should be used. Note that 'FARGATE_SPOT' is not a formal ECS launch type, but we will configure the proper capacity provider stategy if set here.",
+                "description": "The type of ECS task run infrastructure that should be used. Note that 'FARGATE_SPOT' is not a formal ECS launch type, but we will configure the proper capacity provider strategy if set here.",
                 "default": "FARGATE",
                 "enum": [
                   "FARGATE",
@@ -2506,7 +2506,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "0.4.7"
+          "version": "0.4.8"
         }
       },
       "lambda-function": {
@@ -2656,7 +2656,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.4.7"
+          "version": "0.4.8"
         }
       },
       "minio-credentials": {
@@ -2761,7 +2761,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.4.7"
+          "version": "0.4.8"
         }
       },
       "s3-bucket": {
@@ -2969,7 +2969,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "0.4.7"
+          "version": "0.4.8"
         }
       }
     }
