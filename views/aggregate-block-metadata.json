@@ -9,7 +9,7 @@
         "description": "Store data as a file on Azure Datalake and Azure Blob Storage.",
         "code_example": "Load stored Azure config:\n```python\nfrom prefect.filesystems import Azure\n\naz_block = Azure.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:d7b8e34b219812de879cee283580c94480178a578d6c7b0715cd18a551c335fa",
+          "checksum": "sha256:2b14da50694ba737bfe4d32f9cbba09630681e2f067befc07086a6bd2c255a5a",
           "fields": {
             "title": "Azure",
             "description": "Store data as a file on Azure Datalake and Azure Blob Storage.",
@@ -68,6 +68,13 @@
                 "description": "Set the 'anon' flag for ADLFS. This should be False for systems that require ADLFS to use DefaultAzureCredentials.",
                 "default": true,
                 "type": "boolean"
+              },
+              "azure_storage_container": {
+                "title": "Azure storage container",
+                "description": "Blob Container in Azure Storage Account. If set the 'bucket_path' will be interpreted using the following URL format:'az://<container>@<storage_account>.dfs.core.windows.net/<bucket_path>'.",
+                "type": "string",
+                "writeOnly": true,
+                "format": "password"
               }
             },
             "required": [
@@ -80,7 +87,8 @@
               "azure_storage_account_key",
               "azure_storage_tenant_id",
               "azure_storage_client_id",
-              "azure_storage_client_secret"
+              "azure_storage_client_secret",
+              "azure_storage_container"
             ],
             "block_schema_references": {}
           },
@@ -90,7 +98,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.14.17"
+          "version": "2.14.20"
         }
       },
       "date-time": {
@@ -122,7 +130,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.14.17"
+          "version": "2.14.20"
         }
       },
       "discord-webhook": {
@@ -210,7 +218,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.14.17"
+          "version": "2.14.20"
         }
       },
       "docker-container": {
@@ -411,7 +419,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.14.17"
+          "version": "2.14.20"
         }
       },
       "docker-registry": {
@@ -466,7 +474,7 @@
           "capabilities": [
             "docker-login"
           ],
-          "version": "2.14.17"
+          "version": "2.14.20"
         }
       },
       "gcs": {
@@ -517,7 +525,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.14.17"
+          "version": "2.14.20"
         }
       },
       "github": {
@@ -571,7 +579,7 @@
           "capabilities": [
             "get-directory"
           ],
-          "version": "2.14.17"
+          "version": "2.14.20"
         }
       },
       "json": {
@@ -601,7 +609,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.14.17"
+          "version": "2.14.20"
         }
       },
       "kubernetes-cluster-config": {
@@ -638,7 +646,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.14.17"
+          "version": "2.14.20"
         }
       },
       "kubernetes-job": {
@@ -812,7 +820,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.14.17"
+          "version": "2.14.20"
         }
       },
       "local-file-system": {
@@ -845,7 +853,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.14.17"
+          "version": "2.14.20"
         }
       },
       "mattermost-webhook": {
@@ -932,7 +940,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.14.17"
+          "version": "2.14.20"
         }
       },
       "ms-teams-webhook": {
@@ -983,7 +991,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.14.17"
+          "version": "2.14.20"
         }
       },
       "opsgenie-webhook": {
@@ -1105,7 +1113,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.14.17"
+          "version": "2.14.20"
         }
       },
       "pager-duty-webhook": {
@@ -1218,7 +1226,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.14.17"
+          "version": "2.14.20"
         }
       },
       "process": {
@@ -1300,7 +1308,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.14.17"
+          "version": "2.14.20"
         }
       },
       "remote-file-system": {
@@ -1342,7 +1350,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.14.17"
+          "version": "2.14.20"
         }
       },
       "s3": {
@@ -1398,7 +1406,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.14.17"
+          "version": "2.14.20"
         }
       },
       "secret": {
@@ -1433,7 +1441,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.14.17"
+          "version": "2.14.20"
         }
       },
       "sendgrid-email": {
@@ -1500,7 +1508,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.14.17"
+          "version": "2.14.20"
         }
       },
       "slack-webhook": {
@@ -1551,7 +1559,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.14.17"
+          "version": "2.14.20"
         }
       },
       "smb": {
@@ -1617,7 +1625,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.14.17"
+          "version": "2.14.20"
         }
       },
       "string": {
@@ -1648,7 +1656,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.14.17"
+          "version": "2.14.20"
         }
       },
       "twilio-sms": {
@@ -1721,7 +1729,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.14.17"
+          "version": "2.14.20"
         }
       },
       "webhook": {
@@ -1776,7 +1784,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.14.17"
+          "version": "2.14.20"
         }
       }
     }
