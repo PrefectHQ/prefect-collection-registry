@@ -6779,7 +6779,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.5.5"
+          "version": "0.5.7"
         }
       },
       "cloud-run-job": {
@@ -6790,7 +6790,7 @@
         "description": "Infrastructure block used to run GCP Cloud Run Jobs. Note this block is experimental. The interface may change without notice. This block is part of the prefect-gcp collection. Install prefect-gcp with `pip install prefect-gcp` to use this block.",
         "code_example": "```python\nfrom prefect_gcp.cloud_run import CloudRunJob\n\ncloud_run_job_block = CloudRunJob.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:c315aa5171af2b01fdc926efebe9b0fb8db9b133a0883a1dcc62197342a853c1",
+          "checksum": "sha256:acb0001d2257a6f271c4e69e392f94913011d44d12bcd3e89a668dce76eba7ef",
           "fields": {
             "title": "CloudRunJob",
             "description": "Infrastructure block used to run GCP Cloud Run Jobs. Note this block is experimental. The interface may change without notice.",
@@ -6894,6 +6894,14 @@
                 "exclusiveMinimum": 0,
                 "maximum": 3600,
                 "type": "integer"
+              },
+              "max_retries": {
+                "title": "Max Retries",
+                "description": "The maximum retries setting specifies the number of times a task is allowed to restart in case of failure before being failed permanently.",
+                "default": 3,
+                "minimum": 0,
+                "maximum": 10,
+                "type": "integer"
               }
             },
             "required": [
@@ -6945,7 +6953,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "0.5.5"
+          "version": "0.5.7"
         }
       },
       "gcp-credentials": {
@@ -6986,7 +6994,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.5.5"
+          "version": "0.5.7"
         }
       },
       "gcpsecret": {
@@ -7064,7 +7072,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.5.5"
+          "version": "0.5.7"
         }
       },
       "gcs-bucket": {
@@ -7152,7 +7160,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "0.5.5"
+          "version": "0.5.7"
         }
       },
       "vertex-ai-custom-training-job": {
@@ -7334,7 +7342,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "0.5.5"
+          "version": "0.5.7"
         }
       }
     }
