@@ -2984,6 +2984,89 @@
   },
   "prefect-azure": {
     "block_types": {
+      "azure-blob-storage-container": {
+        "name": "Azure Blob Storage Container",
+        "slug": "azure-blob-storage-container",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/54e3fa7e00197a4fbd1d82ed62494cb58d08c96a-250x250.png",
+        "documentation_url": "https://prefecthq.github.io/prefect-azure/blob_storage/#prefect_azure.blob_storabe.AzureBlobStorageContainer",
+        "description": "Represents a container in Azure Blob Storage.\n\nThis class provides methods for downloading and uploading files and folders\nto and from the Azure Blob Storage container. This block is part of the prefect-azure collection. Install prefect-azure with `pip install prefect-azure` to use this block.",
+        "code_example": "```python\nfrom prefect_azure.blob_storage import AzureBlobStorageContainer\n\nazure_blob_storage_container_block = AzureBlobStorageContainer.load(\"BLOCK_NAME\")\n```",
+        "block_schema": {
+          "checksum": "sha256:dcb604fba31292177868c0998110c7b4c0ba0b5601ee39679b2936adfd836f19",
+          "fields": {
+            "title": "AzureBlobStorageContainer",
+            "description": "Represents a container in Azure Blob Storage.\n\nThis class provides methods for downloading and uploading files and folders\nto and from the Azure Blob Storage container.",
+            "type": "object",
+            "properties": {
+              "container_name": {
+                "title": "Container Name",
+                "description": "The name of a Azure Blob Storage container.",
+                "type": "string"
+              },
+              "credentials": {
+                "title": "Credentials",
+                "description": "The credentials to use for authentication with Azure.",
+                "allOf": [
+                  {
+                    "$ref": "#/definitions/AzureBlobStorageCredentials"
+                  }
+                ]
+              },
+              "base_folder": {
+                "title": "Base Folder",
+                "description": "A base path to a folder within the container to use for reading and writing objects.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "container_name"
+            ],
+            "block_type_slug": "azure-blob-storage-container",
+            "secret_fields": [
+              "credentials.connection_string"
+            ],
+            "block_schema_references": {
+              "credentials": {
+                "block_type_slug": "azure-blob-storage-credentials",
+                "block_schema_checksum": "sha256:73e835b6cb9a1902fd869037fb7f8a90f974508dda7a168e748a1206e7c325eb"
+              }
+            },
+            "definitions": {
+              "AzureBlobStorageCredentials": {
+                "title": "AzureBlobStorageCredentials",
+                "description": "Stores credentials for authenticating with Azure Blob Storage.",
+                "type": "object",
+                "properties": {
+                  "connection_string": {
+                    "title": "Connection String",
+                    "description": "The connection string to your Azure storage account. If provided, the connection string will take precedence over the account URL.",
+                    "type": "string",
+                    "writeOnly": true,
+                    "format": "password"
+                  },
+                  "account_url": {
+                    "title": "Account URL",
+                    "description": "The URL for your Azure storage account. If provided, the account URL will be used to authenticate with the discovered default Azure credentials.",
+                    "type": "string"
+                  }
+                },
+                "block_type_slug": "azure-blob-storage-credentials",
+                "secret_fields": [
+                  "connection_string"
+                ],
+                "block_schema_references": {}
+              }
+            }
+          },
+          "capabilities": [
+            "get-directory",
+            "put-directory",
+            "read-path",
+            "write-path"
+          ],
+          "version": "0.3.6"
+        }
+      },
       "azure-blob-storage-credentials": {
         "name": "Azure Blob Storage Credentials",
         "slug": "azure-blob-storage-credentials",
@@ -3018,7 +3101,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.3.5"
+          "version": "0.3.6"
         }
       },
       "azure-container-instance-credentials": {
@@ -3065,7 +3148,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.3.5"
+          "version": "0.3.6"
         }
       },
       "azure-container-instance-job": {
@@ -3349,7 +3432,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "0.3.5"
+          "version": "0.3.6"
         }
       },
       "azure-cosmos-db-credentials": {
@@ -3384,7 +3467,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.3.5"
+          "version": "0.3.6"
         }
       },
       "azureml-credentials": {
@@ -3449,7 +3532,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.3.5"
+          "version": "0.3.6"
         }
       }
     }
