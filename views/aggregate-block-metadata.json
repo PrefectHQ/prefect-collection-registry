@@ -3064,7 +3064,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "0.3.6"
+          "version": "0.3.7"
         }
       },
       "azure-blob-storage-credentials": {
@@ -3101,7 +3101,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.3.6"
+          "version": "0.3.7"
         }
       },
       "azure-container-instance-credentials": {
@@ -3148,7 +3148,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.3.6"
+          "version": "0.3.7"
         }
       },
       "azure-container-instance-job": {
@@ -3432,7 +3432,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "0.3.6"
+          "version": "0.3.7"
         }
       },
       "azure-cosmos-db-credentials": {
@@ -3467,7 +3467,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.3.6"
+          "version": "0.3.7"
         }
       },
       "azureml-credentials": {
@@ -3532,7 +3532,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "0.3.6"
+          "version": "0.3.7"
         }
       }
     }
