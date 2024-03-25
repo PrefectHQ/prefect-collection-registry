@@ -6,13 +6,13 @@
         "slug": "azure",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/54e3fa7e00197a4fbd1d82ed62494cb58d08c96a-250x250.png",
         "documentation_url": "https://docs.prefect.io/concepts/filesystems/#azure",
-        "description": "Store data as a file on Azure Datalake and Azure Blob Storage.",
+        "description": "DEPRECATION WARNING:\n\nThis class is deprecated as of March 2024 and will not be available after September 2024.\nIt has been replaced by `AzureBlobStorageContainer` from the `prefect-azure` package, which\noffers enhanced functionality and better a better user experience.\n\nStore data as a file on Azure Datalake and Azure Blob Storage.",
         "code_example": "Load stored Azure config:\n```python\nfrom prefect.filesystems import Azure\n\naz_block = Azure.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:2b14da50694ba737bfe4d32f9cbba09630681e2f067befc07086a6bd2c255a5a",
+          "checksum": "sha256:e6668231221d9dd766db61cca85fffd174f5943cb359a0ac77b7821e167d24d3",
           "fields": {
             "title": "Azure",
-            "description": "Store data as a file on Azure Datalake and Azure Blob Storage.",
+            "description": "DEPRECATION WARNING:\n\nThis class is deprecated as of March 2024 and will not be available after September 2024.\nIt has been replaced by `AzureBlobStorageContainer` from the `prefect-azure` package, which\noffers enhanced functionality and better a better user experience.\n\nStore data as a file on Azure Datalake and Azure Blob Storage.",
             "type": "object",
             "properties": {
               "bucket_path": {
@@ -98,7 +98,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.16.2"
+          "version": "2.16.6"
         }
       },
       "date-time": {
@@ -130,7 +130,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.16.2"
+          "version": "2.16.6"
         }
       },
       "discord-webhook": {
@@ -218,7 +218,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.16.2"
+          "version": "2.16.6"
         }
       },
       "docker-container": {
@@ -419,7 +419,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.16.2"
+          "version": "2.16.6"
         }
       },
       "docker-registry": {
@@ -474,7 +474,7 @@
           "capabilities": [
             "docker-login"
           ],
-          "version": "2.16.2"
+          "version": "2.16.6"
         }
       },
       "gcs": {
@@ -482,13 +482,13 @@
         "slug": "gcs",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/422d13bb838cf247eb2b2cf229ce6a2e717d601b-256x256.png",
         "documentation_url": "https://docs.prefect.io/concepts/filesystems/#gcs",
-        "description": "Store data as a file on Google Cloud Storage.",
+        "description": "DEPRECATION WARNING:\n\nThis class is deprecated as of March 2024 and will not be available after September 2024.\nIt has been replaced by `GcsBucket` from the `prefect-gcp` package, which offers enhanced functionality\nand better a better user experience.\nStore data as a file on Google Cloud Storage.",
         "code_example": "Load stored GCS config:\n```python\nfrom prefect.filesystems import GCS\n\ngcs_block = GCS.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:1daf535b60cf9304103bcb4015280a30fd6bdd9686aa0c059eb9715082b5b3ec",
+          "checksum": "sha256:ab666c051c984fef8dac13724a0629491ea67365c577ab5e7a2fd7ebcc1fbd27",
           "fields": {
             "title": "GCS",
-            "description": "Store data as a file on Google Cloud Storage.",
+            "description": "DEPRECATION WARNING:\n\nThis class is deprecated as of March 2024 and will not be available after September 2024.\nIt has been replaced by `GcsBucket` from the `prefect-gcp` package, which offers enhanced functionality\nand better a better user experience.\nStore data as a file on Google Cloud Storage.",
             "type": "object",
             "properties": {
               "bucket_path": {
@@ -525,7 +525,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.16.2"
+          "version": "2.16.6"
         }
       },
       "github": {
@@ -533,13 +533,13 @@
         "slug": "github",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/41971cfecfea5f79ff334164f06ecb34d1038dd4-250x250.png",
         "documentation_url": "https://docs.prefect.io/concepts/filesystems/#github",
-        "description": "Interact with files stored on GitHub repositories.",
+        "description": "DEPRECATION WARNING:\n\n    This class is deprecated as of March 2024 and will not be available after September 2024.\n    It has been replaced by `GitHubRepository` from the `prefect-github` package, which offers\n    enhanced functionality and better a better user experience.\nq\n    Interact with files stored on GitHub repositories.",
         "code_example": "```python\nfrom prefect.filesystems import GitHub\n\ngithub_block = GitHub.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:2ef39d2f6324c4fd0fc1be8c4203e16b4c4f7479cb90c8babadfdcb7116b0155",
+          "checksum": "sha256:1a646071d2e07191f2d3934dd7a15a38c27dd60e5e6f74b21c550437b471b8ef",
           "fields": {
             "title": "GitHub",
-            "description": "Interact with files stored on GitHub repositories.",
+            "description": "DEPRECATION WARNING:\n\n    This class is deprecated as of March 2024 and will not be available after September 2024.\n    It has been replaced by `GitHubRepository` from the `prefect-github` package, which offers\n    enhanced functionality and better a better user experience.\nq\n    Interact with files stored on GitHub repositories.",
             "type": "object",
             "properties": {
               "repository": {
@@ -579,7 +579,7 @@
           "capabilities": [
             "get-directory"
           ],
-          "version": "2.16.2"
+          "version": "2.16.6"
         }
       },
       "json": {
@@ -609,7 +609,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.16.2"
+          "version": "2.16.6"
         }
       },
       "kubernetes-cluster-config": {
@@ -646,7 +646,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.16.2"
+          "version": "2.16.6"
         }
       },
       "kubernetes-job": {
@@ -820,7 +820,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.16.2"
+          "version": "2.16.6"
         }
       },
       "local-file-system": {
@@ -853,7 +853,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.16.2"
+          "version": "2.16.6"
         }
       },
       "mattermost-webhook": {
@@ -940,7 +940,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.16.2"
+          "version": "2.16.6"
         }
       },
       "ms-teams-webhook": {
@@ -991,7 +991,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.16.2"
+          "version": "2.16.6"
         }
       },
       "opsgenie-webhook": {
@@ -1113,7 +1113,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.16.2"
+          "version": "2.16.6"
         }
       },
       "pager-duty-webhook": {
@@ -1226,7 +1226,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.16.2"
+          "version": "2.16.6"
         }
       },
       "process": {
@@ -1308,7 +1308,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.16.2"
+          "version": "2.16.6"
         }
       },
       "remote-file-system": {
@@ -1350,7 +1350,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.16.2"
+          "version": "2.16.6"
         }
       },
       "s3": {
@@ -1358,13 +1358,13 @@
         "slug": "s3",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/d74b16fe84ce626345adf235a47008fea2869a60-225x225.png",
         "documentation_url": "https://docs.prefect.io/concepts/filesystems/#s3",
-        "description": "Store data as a file on AWS S3.",
+        "description": "DEPRECATION WARNING:\n\nThis class is deprecated as of March 2024 and will not be available after September 2024.\nIt has been replaced by `S3Bucket` from the `prefect-aws` package, which offers enhanced functionality\nand better a better user experience.\n\nStore data as a file on AWS S3.",
         "code_example": "Load stored S3 config:\n```python\nfrom prefect.filesystems import S3\n\ns3_block = S3.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:77690b4ef54ef3edc93fca6ac54bc540a32ca07169e91aecd36e49b2e1eeebc5",
+          "checksum": "sha256:4cccce9c38029d58427574550852ea4bb167f5727764612f3e4fd3527b047324",
           "fields": {
             "title": "S3",
-            "description": "Store data as a file on AWS S3.",
+            "description": "DEPRECATION WARNING:\n\nThis class is deprecated as of March 2024 and will not be available after September 2024.\nIt has been replaced by `S3Bucket` from the `prefect-aws` package, which offers enhanced functionality\nand better a better user experience.\n\nStore data as a file on AWS S3.",
             "type": "object",
             "properties": {
               "bucket_path": {
@@ -1406,7 +1406,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.16.2"
+          "version": "2.16.6"
         }
       },
       "secret": {
@@ -1441,7 +1441,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.16.2"
+          "version": "2.16.6"
         }
       },
       "sendgrid-email": {
@@ -1508,7 +1508,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.16.2"
+          "version": "2.16.6"
         }
       },
       "slack-webhook": {
@@ -1559,7 +1559,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.16.2"
+          "version": "2.16.6"
         }
       },
       "smb": {
@@ -1625,7 +1625,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.16.2"
+          "version": "2.16.6"
         }
       },
       "string": {
@@ -1656,7 +1656,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.16.2"
+          "version": "2.16.6"
         }
       },
       "twilio-sms": {
@@ -1729,7 +1729,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.16.2"
+          "version": "2.16.6"
         }
       },
       "webhook": {
@@ -1784,7 +1784,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.16.2"
+          "version": "2.16.6"
         }
       }
     }
@@ -7815,7 +7815,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.3.6"
+          "version": "0.3.7"
         }
       }
     }
