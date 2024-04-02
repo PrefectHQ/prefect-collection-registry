@@ -1,18 +1,16 @@
 import asyncio
 import subprocess
 
-import github3
 import pendulum
-from prefect import flow, task
-from prefect.deployments import run_deployment
-from prefect.server.schemas.core import FlowRun
-from prefect.states import Completed, Failed, State
-from prefect.utilities.collections import listrepr
-
 import utils
 from generate_block_metadata import update_block_metadata_for_collection
 from generate_flow_metadata import update_flow_metadata_for_collection
 from generate_worker_metadata import update_worker_metadata_for_package
+from prefect import flow
+from prefect.client.schemas.objects import FlowRun
+from prefect.deployments import run_deployment
+from prefect.states import Completed, Failed, State
+from prefect.utilities.collections import listrepr
 
 UPDATE_ALL_DESCRIPTION = """
 The `update_all_collections` triggers many instances of `update_collection_metadata` in order to
@@ -22,90 +20,6 @@ with metadata generated from new releases of select packages (prefect collection
 `update_all_collections` flow will check if any packages have a release not recorded by the registry repo,
 and will trigger a run of `update_collection_metadata` for each such package.
 """  # noqa
-
-
-async def collection_needs_update(collection_name: str) -> tuple[str, bool]:
-    """
-    Checks if the collection needs to be updated.
-    """
-    collection_repo = await utils.get_repo(collection_name)
-    registry_repo = await utils.get_repo("prefect-collection-registry")
-    try:
-        latest_recorded_release = sorted(
-            [
-                name
-                for name, _ in registry_repo.directory_contents(
-                    directory_path=f"collections/{collection_name}/blocks", ref="main"
-                )
-            ]
-        )[-1].replace(".json", "")
-    except github3.exceptions.NotFoundError:
-        return collection_name, True
-
-    latest_release = collection_repo.latest_release().tag_name
-
-    if collection_name == "prefect":
-        latest_release = "v" + latest_release
-
-    if latest_release == latest_recorded_release:
-        print(
-            f"Package {collection_name!r} is up to date! - "
-            f"(latest release: {latest_release})"
-        )
-        return collection_name, False
-
-    return collection_name, True
-
-
-@task(name="Create Branch / PR if possible")
-async def create_ref_if_not_exists(branch_name: str) -> str:
-    """
-    Creates a branch and PR for latest releases if they don't already exist.
-    """
-    registry_repo = await utils.get_repo("prefect-collection-registry")
-    PR_TITLE = "Update metadata for collection releases"
-    new_branch_name = f"{branch_name}-{pendulum.now().format('MM-DD-YYYY')}"
-
-    try:
-        registry_repo.create_ref(
-            ref=f"refs/heads/{new_branch_name}",
-            sha=registry_repo.commit(sha="main").sha,
-        )
-        print(f"Created ref {new_branch_name!r} on {registry_repo.full_name!r}!")
-
-    except github3.exceptions.UnprocessableEntity as e:
-        if "Reference already exists" in str(e):
-            print(f"Ref {new_branch_name!r} already exists!")
-        else:
-            raise
-
-    if registry_repo.compare_commits("main", new_branch_name).ahead_by == 0:
-        print(f"Cannot create PR - no difference between main and {new_branch_name!r}.")
-        return new_branch_name
-
-    prs = list(registry_repo.pull_requests(state="open"))
-
-    pr_already_exists = any(
-        pr.title == PR_TITLE and pr.head.ref == new_branch_name for pr in prs
-    )
-
-    if pr_already_exists:
-        print(f"PR for {new_branch_name!r} already exists!")
-        return new_branch_name
-
-    new_pr = registry_repo.create_pull(
-        title=PR_TITLE,
-        body="Collection metadata updates are submitted to this PR by a Prefect flow.",
-        head=new_branch_name,
-        base="main",
-        maintainer_can_modify=True,
-    )
-
-    new_pr.issue().add_labels("automated-pr", "collection-metadata")
-
-    print(f"Created PR for {new_branch_name!r} on {registry_repo.full_name!r}!")
-
-    return new_branch_name
 
 
 @flow(log_prints=True, name="update-collection-metadata")
@@ -151,30 +65,20 @@ def update_collection_metadata(
     description=UPDATE_ALL_DESCRIPTION,
     log_prints=True,
     name="update-all-collections",
-    result_storage=utils.result_storage_from_env(),
     retries=2,
     retry_delay_seconds=10,
 )
 async def update_all_collections(
-    branch_name: str = "update-metadata",
+    branch_name: str | None = None,
 ):
     """
     Checks all collections for releases and updates the metadata if needed.
     """
-    branch_name = await create_ref_if_not_exists(branch_name)
 
-    collections_to_update = [
-        collection_name
-        for collection_name, needs_update in await asyncio.gather(
-            *[
-                collection_needs_update(collection_name)
-                for collection_name in utils.get_collection_names()
-            ]
-        )
-        if needs_update
-    ]
+    if branch_name is None:
+        branch_name = f"update-metadata-{pendulum.now().strftime('%Y-%m-%d')}"
 
-    if not collections_to_update:
+    if not (collections_to_update := await utils.get_collections_to_update()):
         return Completed(message="No new releases to record.")
 
     print(f"Recording new release(s) for: {listrepr(collections_to_update)}...")
@@ -201,9 +105,9 @@ async def update_all_collections(
 
 
 # if __name__ == "__main__":
-    # # ALL COLLECTIONS
-    # asyncio.run(update_all_collections())
+# # ALL COLLECTIONS
+# asyncio.run(update_all_collections())
 
-    # # MANUAL RUNS
-    # for collection in ["prefect-sqlalchemy"]:
-    #     update_collection_metadata(collection, "update-metadata-manually")
+# # MANUAL RUNS
+# for collection in ["prefect-sqlalchemy"]:
+#     update_collection_metadata(collection, "update-metadata-manually")

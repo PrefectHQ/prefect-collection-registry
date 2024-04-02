@@ -10,8 +10,45 @@ build: null
 # push section allows you to manage if and how this project is uploaded to remote locations
 push: null
 
+
+definitions:
+  work_pools:
+    kubernetes_prd_internal_tools: &kubernetes_prd_internal_tools
+      name: kubernetes-prd-internal-tools
+      job_variables:
+        image: prefecthq/prefect:2-python3.12
+        env: 
+          EXTRA_PIP_PACKAGES: gh-util fastjsonschema gcsfs
+
+    local-docker: &local-docker
+      name: local-docker
+      job_variables:
+        image: prefecthq/prefect:2-python3.12
+        env: 
+          EXTRA_PIP_PACKAGES: gh-util fastjsonschema gcsfs
+
 # pull section allows you to provide instructions for cloning this project in remote locations
 pull:
   - prefect.deployments.steps.git_clone:
       repository: https://github.com/PrefectHQ/prefect-collection-registry
       branch: main
+
+deployments:
+  - name: update-a-collection
+    description: Updates each variety of metadata for a given package.
+    entrypoint: src/update_collection_metadata.py:update_collection_metadata
+    work_pool: *kubernetes_prd_internal_tools
+
+  - name: update-all-collections
+    description: |-
+      `update-all-collections` triggers many instances of `update-collection-metadata` 
+      in order to update the [prefect-collection-registry](https://github.com/PrefectHQ/prefect-collection-registry) 
+      with metadata generated from new releases of select packages (prefect collections + prefect core).
+
+      `update-all-collections` flow will check if any packages have a release and are not 
+      recorded by the registry repo, and will trigger a run of `update_collection_metadata` for each such package.
+    schedule:
+      cron: 0 6,12,18 * * 1-5
+      timezone: EST
+    entrypoint: src/update_collection_metadata.py:update_all_collections
+    work_pool: *kubernetes_prd_internal_tools
