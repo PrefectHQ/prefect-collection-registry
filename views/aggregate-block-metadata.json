@@ -9,7 +9,7 @@
         "description": "DEPRECATION WARNING:\n\nThis class is deprecated as of March 2024 and will not be available after September 2024.\nIt has been replaced by `AzureBlobStorageContainer` from the `prefect-azure` package, which\noffers enhanced functionality and better a better user experience.\n\nStore data as a file on Azure Datalake and Azure Blob Storage.",
         "code_example": "Load stored Azure config:\n```python\nfrom prefect.filesystems import Azure\n\naz_block = Azure.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:e6668231221d9dd766db61cca85fffd174f5943cb359a0ac77b7821e167d24d3",
+          "checksum": "sha256:bb71661a7d11812c5e31fe5143a04bd6d4879a4913a7ae0f0dc5122092e3b98a",
           "fields": {
             "title": "Azure",
             "description": "DEPRECATION WARNING:\n\nThis class is deprecated as of March 2024 and will not be available after September 2024.\nIt has been replaced by `AzureBlobStorageContainer` from the `prefect-azure` package, which\noffers enhanced functionality and better a better user experience.\n\nStore data as a file on Azure Datalake and Azure Blob Storage.",
@@ -18,7 +18,9 @@
               "bucket_path": {
                 "title": "Bucket Path",
                 "description": "An Azure storage bucket path.",
-                "example": "my-bucket/a-directory-within",
+                "examples": [
+                  "my-bucket/a-directory-within"
+                ],
                 "type": "string"
               },
               "azure_storage_connection_string": {
@@ -98,7 +100,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.16.9"
+          "version": "2.17.1"
         }
       },
       "date-time": {
@@ -130,7 +132,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.16.9"
+          "version": "2.17.1"
         }
       },
       "discord-webhook": {
@@ -218,7 +220,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.16.9"
+          "version": "2.17.1"
         }
       },
       "docker-container": {
@@ -419,7 +421,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.16.9"
+          "version": "2.17.1"
         }
       },
       "docker-registry": {
@@ -474,7 +476,7 @@
           "capabilities": [
             "docker-login"
           ],
-          "version": "2.16.9"
+          "version": "2.17.1"
         }
       },
       "gcs": {
@@ -485,7 +487,7 @@
         "description": "DEPRECATION WARNING:\n\nThis class is deprecated as of March 2024 and will not be available after September 2024.\nIt has been replaced by `GcsBucket` from the `prefect-gcp` package, which offers enhanced functionality\nand better a better user experience.\nStore data as a file on Google Cloud Storage.",
         "code_example": "Load stored GCS config:\n```python\nfrom prefect.filesystems import GCS\n\ngcs_block = GCS.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:ab666c051c984fef8dac13724a0629491ea67365c577ab5e7a2fd7ebcc1fbd27",
+          "checksum": "sha256:a283caa25f404ba9fc5690334e556a68bc09ce85fcd2a3f8452205b68281a85b",
           "fields": {
             "title": "GCS",
             "description": "DEPRECATION WARNING:\n\nThis class is deprecated as of March 2024 and will not be available after September 2024.\nIt has been replaced by `GcsBucket` from the `prefect-gcp` package, which offers enhanced functionality\nand better a better user experience.\nStore data as a file on Google Cloud Storage.",
@@ -494,7 +496,9 @@
               "bucket_path": {
                 "title": "Bucket Path",
                 "description": "A GCS bucket path.",
-                "example": "my-bucket/a-directory-within",
+                "examples": [
+                  "my-bucket/a-directory-within"
+                ],
                 "type": "string"
               },
               "service_account_info": {
@@ -525,7 +529,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.16.9"
+          "version": "2.17.1"
         }
       },
       "github": {
@@ -579,7 +583,7 @@
           "capabilities": [
             "get-directory"
           ],
-          "version": "2.16.9"
+          "version": "2.17.1"
         }
       },
       "json": {
@@ -609,7 +613,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.16.9"
+          "version": "2.17.1"
         }
       },
       "kubernetes-cluster-config": {
@@ -646,7 +650,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.16.9"
+          "version": "2.17.1"
         }
       },
       "kubernetes-job": {
@@ -820,7 +824,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.16.9"
+          "version": "2.17.1"
         }
       },
       "local-file-system": {
@@ -853,7 +857,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.16.9"
+          "version": "2.17.1"
         }
       },
       "mattermost-webhook": {
@@ -864,7 +868,7 @@
         "description": "Enables sending notifications via a provided Mattermost webhook.",
         "code_example": "Load a saved Mattermost webhook and send a message:\n```python\nfrom prefect.blocks.notifications import MattermostWebhook\n\nmattermost_webhook_block = MattermostWebhook.load(\"BLOCK_NAME\")\n\nmattermost_webhook_block.notify(\"Hello from Prefect!\")\n```",
         "block_schema": {
-          "checksum": "sha256:26d8cbaab33eb653eca72e8c403405d738ed3f1095aba4b64d06c6426253d6cb",
+          "checksum": "sha256:1ee75a85f08d5a50b762c1fe3c067f9e6e173d3630b3994646e6278ee75a7fdb",
           "fields": {
             "title": "MattermostWebhook",
             "description": "Enables sending notifications via a provided Mattermost webhook.",
@@ -886,7 +890,9 @@
               "hostname": {
                 "title": "Hostname",
                 "description": "The hostname of your Mattermost server.",
-                "example": "Mattermost.example.com",
+                "examples": [
+                  "Mattermost.example.com"
+                ],
                 "type": "string"
               },
               "token": {
@@ -940,7 +946,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.16.9"
+          "version": "2.17.1"
         }
       },
       "ms-teams-webhook": {
@@ -951,7 +957,7 @@
         "description": "Enables sending notifications via a provided Microsoft Teams webhook.",
         "code_example": "Load a saved Teams webhook and send a message:\n```python\nfrom prefect.blocks.notifications import MicrosoftTeamsWebhook\nteams_webhook_block = MicrosoftTeamsWebhook.load(\"BLOCK_NAME\")\nteams_webhook_block.notify(\"Hello from Prefect!\")\n```",
         "block_schema": {
-          "checksum": "sha256:0a5c2b435930bf8553391878475c5b976592526d2f801e8e559c0119aa393032",
+          "checksum": "sha256:27328b5c9d5f9e8127acfc310d2b9b369d245f0f5caa6caef62e6fd478db92b7",
           "fields": {
             "title": "MicrosoftTeamsWebhook",
             "description": "Enables sending notifications via a provided Microsoft Teams webhook.",
@@ -973,7 +979,9 @@
               "url": {
                 "title": "Webhook URL",
                 "description": "The Teams incoming webhook URL used to send notifications.",
-                "example": "https://your-org.webhook.office.com/webhookb2/XXX/IncomingWebhook/YYY/ZZZ",
+                "examples": [
+                  "https://your-org.webhook.office.com/webhookb2/XXX/IncomingWebhook/YYY/ZZZ"
+                ],
                 "type": "string",
                 "writeOnly": true,
                 "format": "password"
@@ -991,7 +999,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.16.9"
+          "version": "2.17.1"
         }
       },
       "opsgenie-webhook": {
@@ -1002,7 +1010,7 @@
         "description": "Enables sending notifications via a provided Opsgenie webhook.",
         "code_example": "Load a saved Opsgenie webhook and send a message:\n```python\nfrom prefect.blocks.notifications import OpsgenieWebhook\nopsgenie_webhook_block = OpsgenieWebhook.load(\"BLOCK_NAME\")\nopsgenie_webhook_block.notify(\"Hello from Prefect!\")\n```",
         "block_schema": {
-          "checksum": "sha256:df4b3a253e6c2d2a0e6ef4831e7bd77ee920a75201f9c132a5516b42fcd80112",
+          "checksum": "sha256:d4f132a133952ed6e73dfd5727ce318c5f1de089cdc542f89e4a74c0a40bfa00",
           "fields": {
             "title": "OpsgenieWebhook",
             "description": "Enables sending notifications via a provided Opsgenie webhook.",
@@ -1071,7 +1079,9 @@
               "tags": {
                 "title": "Tags",
                 "description": "A comma-separated list of tags you can associate with your Opsgenie message.",
-                "example": "[\"tag1\", \"tag2\"]",
+                "examples": [
+                  "[\"tag1\", \"tag2\"]"
+                ],
                 "type": "array",
                 "items": {}
               },
@@ -1094,7 +1104,9 @@
               "details": {
                 "title": "Details",
                 "description": "Additional details composed of key/values pairs.",
-                "example": "{\"key1\": \"value1\", \"key2\": \"value2\"}",
+                "examples": [
+                  "{\"key1\": \"value1\", \"key2\": \"value2\"}"
+                ],
                 "type": "object",
                 "additionalProperties": {
                   "type": "string"
@@ -1113,7 +1125,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.16.9"
+          "version": "2.17.1"
         }
       },
       "pager-duty-webhook": {
@@ -1124,7 +1136,7 @@
         "description": "Enables sending notifications via a provided PagerDuty webhook.",
         "code_example": "Load a saved PagerDuty webhook and send a message:\n```python\nfrom prefect.blocks.notifications import PagerDutyWebHook\npagerduty_webhook_block = PagerDutyWebHook.load(\"BLOCK_NAME\")\npagerduty_webhook_block.notify(\"Hello from Prefect!\")\n```",
         "block_schema": {
-          "checksum": "sha256:4dd2ac9d4e446f3d2717414cf34bd6a62a40f5da4437f99dd61473ac117b1438",
+          "checksum": "sha256:e740fec7e031645ea97ee769eb37b66ee15b8a353e5e1723ef708b4cd5433069",
           "fields": {
             "title": "PagerDutyWebHook",
             "description": "Enables sending notifications via a provided PagerDuty webhook.",
@@ -1205,7 +1217,9 @@
               "custom_details": {
                 "title": "Custom Details",
                 "description": "Additional details to include as part of the payload.",
-                "example": "{\"disk_space_left\": \"145GB\"}",
+                "examples": [
+                  "{\"disk_space_left\": \"145GB\"}"
+                ],
                 "type": "object",
                 "additionalProperties": {
                   "type": "string"
@@ -1226,7 +1240,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.16.9"
+          "version": "2.17.1"
         }
       },
       "process": {
@@ -1308,7 +1322,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.16.9"
+          "version": "2.17.1"
         }
       },
       "remote-file-system": {
@@ -1319,7 +1333,7 @@
         "description": "Store data as a file on a remote file system.\n\nSupports any remote file system supported by `fsspec`. The file system is specified\nusing a protocol. For example, \"s3://my-bucket/my-folder/\" will use S3.",
         "code_example": "Load stored remote file system config:\n```python\nfrom prefect.filesystems import RemoteFileSystem\n\nremote_file_system_block = RemoteFileSystem.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:f6998c8723a78207471938f5f74d6d4815ff14c2900caf8e9c3b3ece47bfeb40",
+          "checksum": "sha256:efb6b7304d9cadaf09a18abc60be7ae86aec60dbd7dba345faa7ba1e960b211f",
           "fields": {
             "title": "RemoteFileSystem",
             "description": "Store data as a file on a remote file system.\n\nSupports any remote file system supported by `fsspec`. The file system is specified\nusing a protocol. For example, \"s3://my-bucket/my-folder/\" will use S3.",
@@ -1328,7 +1342,9 @@
               "basepath": {
                 "title": "Basepath",
                 "description": "Default path for this block to write to.",
-                "example": "s3://my-bucket/my-folder/",
+                "examples": [
+                  "s3://my-bucket/my-folder/"
+                ],
                 "type": "string"
               },
               "settings": {
@@ -1350,7 +1366,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.16.9"
+          "version": "2.17.1"
         }
       },
       "s3": {
@@ -1361,7 +1377,7 @@
         "description": "DEPRECATION WARNING:\n\nThis class is deprecated as of March 2024 and will not be available after September 2024.\nIt has been replaced by `S3Bucket` from the `prefect-aws` package, which offers enhanced functionality\nand better a better user experience.\n\nStore data as a file on AWS S3.",
         "code_example": "Load stored S3 config:\n```python\nfrom prefect.filesystems import S3\n\ns3_block = S3.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:4cccce9c38029d58427574550852ea4bb167f5727764612f3e4fd3527b047324",
+          "checksum": "sha256:43f3850279e9ff1844e84099832a5f5190aa0f2e2331959b1d891e9c65e9107b",
           "fields": {
             "title": "S3",
             "description": "DEPRECATION WARNING:\n\nThis class is deprecated as of March 2024 and will not be available after September 2024.\nIt has been replaced by `S3Bucket` from the `prefect-aws` package, which offers enhanced functionality\nand better a better user experience.\n\nStore data as a file on AWS S3.",
@@ -1370,13 +1386,17 @@
               "bucket_path": {
                 "title": "Bucket Path",
                 "description": "An S3 bucket path.",
-                "example": "my-bucket/a-directory-within",
+                "examples": [
+                  "my-bucket/a-directory-within"
+                ],
                 "type": "string"
               },
               "aws_access_key_id": {
                 "title": "AWS Access Key ID",
                 "description": "Equivalent to the AWS_ACCESS_KEY_ID environment variable.",
-                "example": "AKIAIOSFODNN7EXAMPLE",
+                "examples": [
+                  "AKIAIOSFODNN7EXAMPLE"
+                ],
                 "type": "string",
                 "writeOnly": true,
                 "format": "password"
@@ -1384,7 +1404,9 @@
               "aws_secret_access_key": {
                 "title": "AWS Secret Access Key",
                 "description": "Equivalent to the AWS_SECRET_ACCESS_KEY environment variable.",
-                "example": "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",
+                "examples": [
+                  "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+                ],
                 "type": "string",
                 "writeOnly": true,
                 "format": "password"
@@ -1406,7 +1428,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.16.9"
+          "version": "2.17.1"
         }
       },
       "secret": {
@@ -1441,7 +1463,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.16.9"
+          "version": "2.17.1"
         }
       },
       "sendgrid-email": {
@@ -1452,7 +1474,7 @@
         "description": "Enables sending notifications via Sendgrid email service.",
         "code_example": "Load a saved Sendgrid and send a email message:\n```python\nfrom prefect.blocks.notifications import SendgridEmail\n\nsendgrid_block = SendgridEmail.load(\"BLOCK_NAME\")\n\nsendgrid_block.notify(\"Hello from Prefect!\")",
         "block_schema": {
-          "checksum": "sha256:1cc8c52107aea9ab75bc71e9b29c5404655980d6c9f9aebfb773fe166d17a637",
+          "checksum": "sha256:ca1ce43172228b65a570b1a5de9cdbd9813945e672807dc42d21b69d9d3977e7",
           "fields": {
             "title": "SendgridEmail",
             "description": "Enables sending notifications via Sendgrid email service.",
@@ -1481,13 +1503,17 @@
               "sender_email": {
                 "title": "Sender email id",
                 "description": "The sender email id.",
-                "example": "test-support@gmail.com",
+                "examples": [
+                  "test-support@gmail.com"
+                ],
                 "type": "string"
               },
               "to_emails": {
                 "title": "Recipient emails",
                 "description": "Email ids of all recipients.",
-                "example": "\"recipient1@gmail.com\"",
+                "examples": [
+                  "\"recipient1@gmail.com\""
+                ],
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -1508,7 +1534,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.16.9"
+          "version": "2.17.1"
         }
       },
       "slack-webhook": {
@@ -1519,7 +1545,7 @@
         "description": "Enables sending notifications via a provided Slack webhook.",
         "code_example": "Load a saved Slack webhook and send a message:\n```python\nfrom prefect.blocks.notifications import SlackWebhook\n\nslack_webhook_block = SlackWebhook.load(\"BLOCK_NAME\")\nslack_webhook_block.notify(\"Hello from Prefect!\")\n```",
         "block_schema": {
-          "checksum": "sha256:273dfe712133cba3cdb092d88741da37e33cee892bfcf4fcf2895bdcee49a965",
+          "checksum": "sha256:ae15fcfa93f3668490d37fa653127c0af0cade360cded6a37fcdadd49486abff",
           "fields": {
             "title": "SlackWebhook",
             "description": "Enables sending notifications via a provided Slack webhook.",
@@ -1541,7 +1567,9 @@
               "url": {
                 "title": "Webhook URL",
                 "description": "Slack incoming webhook URL used to send notifications.",
-                "example": "https://hooks.slack.com/XXX",
+                "examples": [
+                  "https://hooks.slack.com/XXX"
+                ],
                 "type": "string",
                 "writeOnly": true,
                 "format": "password"
@@ -1559,7 +1587,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.16.9"
+          "version": "2.17.1"
         }
       },
       "smb": {
@@ -1570,7 +1598,7 @@
         "description": "Store data as a file on a SMB share.",
         "code_example": "Load stored SMB config:\n\n```python\nfrom prefect.filesystems import SMB\nsmb_block = SMB.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:d5746a564cf05bec13770a882f76ca8e8f562c8bdc7a6d2d45732b079bf72045",
+          "checksum": "sha256:75c58ad4a657fcb859ee31662b04f7bbbe515bffc037c741e57072d28b9b0816",
           "fields": {
             "title": "SMB",
             "description": "Store data as a file on a SMB share.",
@@ -1579,7 +1607,9 @@
               "share_path": {
                 "title": "Share Path",
                 "description": "SMB target (requires <SHARE>, followed by <PATH>).",
-                "example": "/SHARE/dir/subdir",
+                "examples": [
+                  "/SHARE/dir/subdir"
+                ],
                 "type": "string"
               },
               "smb_username": {
@@ -1625,7 +1655,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.16.9"
+          "version": "2.17.1"
         }
       },
       "string": {
@@ -1656,7 +1686,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.16.9"
+          "version": "2.17.1"
         }
       },
       "twilio-sms": {
@@ -1667,7 +1697,7 @@
         "description": "Enables sending notifications via Twilio SMS.",
         "code_example": "Load a saved `TwilioSMS` block and send a message:\n```python\nfrom prefect.blocks.notifications import TwilioSMS\ntwilio_webhook_block = TwilioSMS.load(\"BLOCK_NAME\")\ntwilio_webhook_block.notify(\"Hello from Prefect!\")\n```",
         "block_schema": {
-          "checksum": "sha256:46c6934a4ea723f515caf9e7b0f8ce313c5deca4050d31d32adf5abdf1de05c2",
+          "checksum": "sha256:a3c827e6f0554918bbd7a4161795ad86a5e5baf980993cdc6e9e0d58c08b9aec",
           "fields": {
             "title": "TwilioSMS",
             "description": "Enables sending notifications via Twilio SMS.",
@@ -1701,13 +1731,17 @@
               "from_phone_number": {
                 "title": "From Phone Number",
                 "description": "The valid Twilio phone number to send the message from.",
-                "example": "18001234567",
+                "examples": [
+                  "18001234567"
+                ],
                 "type": "string"
               },
               "to_phone_numbers": {
                 "title": "To Phone Numbers",
                 "description": "A list of valid Twilio phone number(s) to send the message to.",
-                "example": "18004242424",
+                "examples": [
+                  "18004242424"
+                ],
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -1729,7 +1763,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.16.9"
+          "version": "2.17.1"
         }
       },
       "webhook": {
@@ -1740,7 +1774,7 @@
         "description": "Block that enables calling webhooks.",
         "code_example": "```python\nfrom prefect.blocks.webhook import Webhook\n\nwebhook_block = Webhook.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:0207cea0ff5b9d2b39e52007c3ba1d797f1aca7906fb3bf26dd409abae953a85",
+          "checksum": "sha256:11d0a5b876e99f1209eea7a9f722702a14eff26f29a96869111fa77fbfe3c2a7",
           "fields": {
             "title": "Webhook",
             "description": "Block that enables calling webhooks.",
@@ -1762,7 +1796,9 @@
               "url": {
                 "title": "Webhook URL",
                 "description": "The webhook URL.",
-                "example": "https://hooks.slack.com/XXX",
+                "examples": [
+                  "https://hooks.slack.com/XXX"
+                ],
                 "type": "string",
                 "writeOnly": true,
                 "format": "password"
@@ -1784,7 +1820,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.16.9"
+          "version": "2.17.1"
         }
       }
     }
