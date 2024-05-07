@@ -184,15 +184,14 @@ def submit_updates(
 
 def get_collection_names():
     repo_owner = "PrefectHQ"
-    repo_name = "prefect-collection-registry"
-    path = "collections"
+    repo_name = "Prefect"
+    path = "docs/integrations/catalog"
 
     response = httpx.get(
         url=f"https://api.github.com/repos/{repo_owner}/{repo_name}/contents/{path}",
         headers={"Accept": "application/vnd.github+json"},
     )
-
-    return [item["name"] for item in response.json() if item["type"] == "dir"]
+    return [file['name'] for file in response if file['type'] == 'file' and file['name'] != "TEMPLATE.yaml"]
 
 
 def get_logo_url_for_collection(collection_name: str) -> str:
