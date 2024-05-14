@@ -3,16 +3,15 @@ import subprocess
 
 import github3
 import pendulum
+import utils
+from generate_block_metadata import update_block_metadata_for_collection
+from generate_flow_metadata import update_flow_metadata_for_collection
+from generate_worker_metadata import update_worker_metadata_for_package
 from prefect import flow, task
 from prefect.deployments import run_deployment
 from prefect.server.schemas.core import FlowRun
 from prefect.states import Completed, Failed, State
 from prefect.utilities.collections import listrepr
-
-import utils
-from generate_block_metadata import update_block_metadata_for_collection
-from generate_flow_metadata import update_flow_metadata_for_collection
-from generate_worker_metadata import update_worker_metadata_for_package
 
 UPDATE_ALL_DESCRIPTION = """
 The `update_all_collections` triggers many instances of `update_collection_metadata` in order to
@@ -168,7 +167,7 @@ async def update_all_collections(
         for collection_name, needs_update in await asyncio.gather(
             *[
                 collection_needs_update(collection_name)
-                for collection_name in utils.get_collection_names()
+                for collection_name in await utils.get_collection_names()
             ]
         )
         if needs_update
@@ -201,9 +200,9 @@ async def update_all_collections(
 
 
 # if __name__ == "__main__":
-    # # ALL COLLECTIONS
-    # asyncio.run(update_all_collections())
+# # ALL COLLECTIONS
+# asyncio.run(update_all_collections())
 
-    # # MANUAL RUNS
-    # for collection in ["prefect-sqlalchemy"]:
-    #     update_collection_metadata(collection, "update-metadata-manually")
+# # MANUAL RUNS
+# for collection in ["prefect-sqlalchemy"]:
+#     update_collection_metadata(collection, "update-metadata-manually")

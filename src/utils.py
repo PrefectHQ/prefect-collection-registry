@@ -1,3 +1,4 @@
+import asyncio
 import inspect
 import json
 from pkgutil import iter_modules
@@ -7,13 +8,16 @@ from typing import Any, Callable, Dict, Generator, List, Union
 import fastjsonschema
 import github3
 import httpx
+import yaml
 from prefect import Flow, task
 from prefect.blocks.core import Block
 from prefect.blocks.system import Secret
 from prefect.client.cloud import get_cloud_client
 from prefect.settings import PREFECT_API_URL
-from prefect.utilities.asyncutils import run_sync_in_worker_thread  # noqa
-from prefect.utilities.asyncutils import sync_compatible
+from prefect.utilities.asyncutils import (
+    run_sync_in_worker_thread,  # noqa
+    sync_compatible,
+)
 from prefect.utilities.importtools import load_module, to_qualified_name
 from typing_extensions import Literal
 
@@ -182,18 +186,36 @@ def submit_updates(
         )
 
 
-def get_collection_names():
+async def get_file_content(url):
+    async with httpx.AsyncClient() as client:
+        response = await client.get(url)
+        response.raise_for_status()
+        return response.text
+
+
+async def get_collection_names():
     repo_owner = "PrefectHQ"
     repo_name = "Prefect"
     path = "docs/integrations/catalog"
 
-    response = httpx.get(
-        url=f"https://api.github.com/repos/{repo_owner}/{repo_name}/contents/{path}",
-        headers={"Accept": "application/vnd.github+json"},
-    )
+    async with httpx.AsyncClient() as client:
+        response = await client.get(
+            url=f"https://api.github.com/repos/{repo_owner}/{repo_name}/contents/{path}",
+            headers={"Accept": "application/vnd.github+json"},
+        )
+        response.raise_for_status()
+        files = response.json()
 
-    response.raise_for_status()
-    collections = [file['name'] for file in response.json() if file['type'] == 'file' and file['name'] != "TEMPLATE.yaml"]
+    collections = []
+
+    async def process_file(file):
+        if file["type"] == "file" and file["name"].endswith(".yaml"):
+            file_content = await get_file_content(file["download_url"])
+            yaml_data = yaml.safe_load(file_content)
+            if yaml_data.get("author") == "Prefect":
+                collections.append(file["name"].replace(".yaml", ""))
+
+    await asyncio.gather(*[process_file(file) for file in files])
     collections.append("prefect")
     return collections
 
