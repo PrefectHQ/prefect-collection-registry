@@ -192,7 +192,8 @@ def get_collection_names():
         headers={"Accept": "application/vnd.github+json"},
     )
 
-    collections = [file['name'] for file in response if file['type'] == 'file' and file['name'] != "TEMPLATE.yaml"]
+    response.raise_for_status()
+    collections = [file['name'] for file in response.json() if file['type'] == 'file' and file['name'] != "TEMPLATE.yaml"]
     collections.append("prefect")
     return collections
 
