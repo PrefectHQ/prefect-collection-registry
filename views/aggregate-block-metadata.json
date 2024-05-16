@@ -7281,6 +7281,9 @@
       }
     }
   },
+  "prefect-ray": {
+    "block_types": {}
+  },
   "prefect-shell": {
     "block_types": {
       "shell-operation": {
