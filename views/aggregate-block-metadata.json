@@ -100,7 +100,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.19.4"
+          "version": "2.19.5"
         }
       },
       "date-time": {
@@ -132,7 +132,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.19.4"
+          "version": "2.19.5"
         }
       },
       "discord-webhook": {
@@ -220,7 +220,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.19.4"
+          "version": "2.19.5"
         }
       },
       "docker-container": {
@@ -231,7 +231,7 @@
         "description": "Runs a command in a container.\n\nRequires a Docker Engine to be connectable. Docker settings will be retrieved from\nthe environment.\n\nClick [here](https://docs.prefect.io/guides/deployment/docker) to see a tutorial.",
         "code_example": "```python\nfrom prefect.infrastructure.container import DockerContainer\n\ndocker_container_block = DockerContainer.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:9fa3c84ee0632559f0d2643757143de99f3cf633d0b78af4300467f74ccb5798",
+          "checksum": "sha256:8492ae879cf429c54f27816717769d4348e05eafdfd579158a2d0a6406ec08eb",
           "fields": {
             "title": "DockerContainer",
             "description": "Runs a command in a container.\n\nRequires a Docker Engine to be connectable. Docker settings will be retrieved from\nthe environment.\n\nClick [here](https://docs.prefect.io/guides/deployment/docker) to see a tutorial.",
@@ -362,7 +362,7 @@
             "block_schema_references": {
               "image_registry": {
                 "block_type_slug": "docker-registry",
-                "block_schema_checksum": "sha256:6db1457676eee0b54ca2834b06f80a80f7c90112e64f1bdd26afb2e62fcceed9"
+                "block_schema_checksum": "sha256:7f51876d1b567d9c712e2f72ab76b078b2f288503e4ba3a68aca478d368a982d"
               }
             },
             "definitions": {
@@ -378,7 +378,7 @@
               },
               "DockerRegistry": {
                 "title": "DockerRegistry",
-                "description": "Connects to a Docker registry.\n\nRequires a Docker Engine to be connectable.",
+                "description": "DEPRECATION WARNING:\n\nThis class is deprecated as of March 2024 and will not be available after September 2024.\nIt has been replaced by `DockerRegistryCredentials` from the `prefect-docker` package, which\noffers enhanced functionality and better a better user experience.\n\nConnects to a Docker registry.\n\nRequires a Docker Engine to be connectable.",
                 "type": "object",
                 "properties": {
                   "username": {
@@ -421,7 +421,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.19.4"
+          "version": "2.19.5"
         }
       },
       "docker-registry": {
@@ -429,13 +429,13 @@
         "slug": "docker-registry",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/14a315b79990200db7341e42553e23650b34bb96-250x250.png",
         "documentation_url": "https://docs.prefect.io/api-ref/prefect/infrastructure/#prefect.infrastructure.docker.DockerRegistry",
-        "description": "Connects to a Docker registry.\n\nRequires a Docker Engine to be connectable.",
+        "description": "DEPRECATION WARNING:\n\nThis class is deprecated as of March 2024 and will not be available after September 2024.\nIt has been replaced by `DockerRegistryCredentials` from the `prefect-docker` package, which\noffers enhanced functionality and better a better user experience.\n\nConnects to a Docker registry.\n\nRequires a Docker Engine to be connectable.",
         "code_example": "```python\nfrom prefect.infrastructure.container import DockerRegistry\n\ndocker_registry_block = DockerRegistry.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:6db1457676eee0b54ca2834b06f80a80f7c90112e64f1bdd26afb2e62fcceed9",
+          "checksum": "sha256:7f51876d1b567d9c712e2f72ab76b078b2f288503e4ba3a68aca478d368a982d",
           "fields": {
             "title": "DockerRegistry",
-            "description": "Connects to a Docker registry.\n\nRequires a Docker Engine to be connectable.",
+            "description": "DEPRECATION WARNING:\n\nThis class is deprecated as of March 2024 and will not be available after September 2024.\nIt has been replaced by `DockerRegistryCredentials` from the `prefect-docker` package, which\noffers enhanced functionality and better a better user experience.\n\nConnects to a Docker registry.\n\nRequires a Docker Engine to be connectable.",
             "type": "object",
             "properties": {
               "username": {
@@ -476,7 +476,7 @@
           "capabilities": [
             "docker-login"
           ],
-          "version": "2.19.4"
+          "version": "2.19.5"
         }
       },
       "gcs": {
@@ -529,7 +529,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.19.4"
+          "version": "2.19.5"
         }
       },
       "github": {
@@ -583,7 +583,7 @@
           "capabilities": [
             "get-directory"
           ],
-          "version": "2.19.4"
+          "version": "2.19.5"
         }
       },
       "json": {
@@ -613,7 +613,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.19.4"
+          "version": "2.19.5"
         }
       },
       "kubernetes-cluster-config": {
@@ -650,7 +650,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.19.4"
+          "version": "2.19.5"
         }
       },
       "kubernetes-job": {
@@ -824,7 +824,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.19.4"
+          "version": "2.19.5"
         }
       },
       "local-file-system": {
@@ -857,7 +857,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.19.4"
+          "version": "2.19.5"
         }
       },
       "mattermost-webhook": {
@@ -946,7 +946,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.19.4"
+          "version": "2.19.5"
         }
       },
       "ms-teams-webhook": {
@@ -999,7 +999,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.19.4"
+          "version": "2.19.5"
         }
       },
       "opsgenie-webhook": {
@@ -1125,7 +1125,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.19.4"
+          "version": "2.19.5"
         }
       },
       "pager-duty-webhook": {
@@ -1240,7 +1240,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.19.4"
+          "version": "2.19.5"
         }
       },
       "process": {
@@ -1322,7 +1322,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.19.4"
+          "version": "2.19.5"
         }
       },
       "remote-file-system": {
@@ -1366,7 +1366,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.19.4"
+          "version": "2.19.5"
         }
       },
       "s3": {
@@ -1428,7 +1428,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.19.4"
+          "version": "2.19.5"
         }
       },
       "secret": {
@@ -1463,7 +1463,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.19.4"
+          "version": "2.19.5"
         }
       },
       "sendgrid-email": {
@@ -1534,7 +1534,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.19.4"
+          "version": "2.19.5"
         }
       },
       "slack-webhook": {
@@ -1587,7 +1587,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.19.4"
+          "version": "2.19.5"
         }
       },
       "smb": {
@@ -1655,7 +1655,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.19.4"
+          "version": "2.19.5"
         }
       },
       "string": {
@@ -1686,7 +1686,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.19.4"
+          "version": "2.19.5"
         }
       },
       "twilio-sms": {
@@ -1763,7 +1763,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.19.4"
+          "version": "2.19.5"
         }
       },
       "webhook": {
@@ -1820,7 +1820,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.19.4"
+          "version": "2.19.5"
         }
       }
     }
