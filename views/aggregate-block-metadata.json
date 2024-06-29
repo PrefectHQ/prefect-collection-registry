@@ -591,7 +591,7 @@
         "slug": "json",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/4fcef2294b6eeb423b1332d1ece5156bf296ff96-48x48.png",
         "documentation_url": "https://docs.prefect.io/api-ref/prefect/blocks/system/#prefect.blocks.system.JSON",
-        "description": "A block that represents JSON",
+        "A block that represents JSON. Deprecated, please use Variables to store json data instead.",
         "code_example": "Load a stored JSON value:\n```python\nfrom prefect.blocks.system import JSON\n\njson_block = JSON.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
           "checksum": "sha256:ef9b76010e0545bd7f2212029460731f66ccfce289affe4b504cbeb702fc8ea3",
