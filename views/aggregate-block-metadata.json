@@ -108,7 +108,7 @@
         "slug": "date-time",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/8b3da9a6621e92108b8e6a75b82e15374e170ff7-48x48.png",
         "documentation_url": "https://docs.prefect.io/api-ref/prefect/blocks/system/#prefect.blocks.system.DateTime",
-        "description": "A block that represents a datetime",
+        "description": "A block that represents a datetime. Deprecated, please use Variables to store datetime data instead.",
         "code_example": "Load a stored JSON value:\n```python\nfrom prefect.blocks.system import DateTime\n\ndata_time_block = DateTime.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
           "checksum": "sha256:7943c88ca6ab22804082b595b9847d035a1364bdb23474c927317bcab9cb5d9c",
