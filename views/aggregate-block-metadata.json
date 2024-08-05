@@ -100,7 +100,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.19.9"
+          "version": "2.20.0"
         }
       },
       "date-time": {
@@ -108,7 +108,7 @@
         "slug": "date-time",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/8b3da9a6621e92108b8e6a75b82e15374e170ff7-48x48.png",
         "documentation_url": "https://docs.prefect.io/api-ref/prefect/blocks/system/#prefect.blocks.system.DateTime",
-        "description": "A block that represents a datetime. Deprecated, please use Variables to store datetime data instead.",
+        "description": "A block that represents a datetime",
         "code_example": "Load a stored JSON value:\n```python\nfrom prefect.blocks.system import DateTime\n\ndata_time_block = DateTime.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
           "checksum": "sha256:7943c88ca6ab22804082b595b9847d035a1364bdb23474c927317bcab9cb5d9c",
@@ -132,7 +132,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.19.9"
+          "version": "2.20.0"
         }
       },
       "discord-webhook": {
@@ -220,7 +220,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.19.9"
+          "version": "2.20.0"
         }
       },
       "docker-container": {
@@ -421,7 +421,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.19.9"
+          "version": "2.20.0"
         }
       },
       "docker-registry": {
@@ -476,7 +476,7 @@
           "capabilities": [
             "docker-login"
           ],
-          "version": "2.19.9"
+          "version": "2.20.0"
         }
       },
       "gcs": {
@@ -529,7 +529,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.19.9"
+          "version": "2.20.0"
         }
       },
       "github": {
@@ -583,7 +583,7 @@
           "capabilities": [
             "get-directory"
           ],
-          "version": "2.19.9"
+          "version": "2.20.0"
         }
       },
       "json": {
@@ -591,7 +591,7 @@
         "slug": "json",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/4fcef2294b6eeb423b1332d1ece5156bf296ff96-48x48.png",
         "documentation_url": "https://docs.prefect.io/api-ref/prefect/blocks/system/#prefect.blocks.system.JSON",
-        "description": "A block that represents JSON. Deprecated, please use Variables to store json data instead.",
+        "description": "A block that represents JSON",
         "code_example": "Load a stored JSON value:\n```python\nfrom prefect.blocks.system import JSON\n\njson_block = JSON.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
           "checksum": "sha256:ef9b76010e0545bd7f2212029460731f66ccfce289affe4b504cbeb702fc8ea3",
@@ -613,7 +613,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.19.9"
+          "version": "2.20.0"
         }
       },
       "kubernetes-cluster-config": {
@@ -650,7 +650,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.19.9"
+          "version": "2.20.0"
         }
       },
       "kubernetes-job": {
@@ -824,7 +824,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.19.9"
+          "version": "2.20.0"
         }
       },
       "local-file-system": {
@@ -857,7 +857,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.19.9"
+          "version": "2.20.0"
         }
       },
       "mattermost-webhook": {
@@ -946,7 +946,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.19.9"
+          "version": "2.20.0"
         }
       },
       "ms-teams-webhook": {
@@ -957,7 +957,7 @@
         "description": "Enables sending notifications via a provided Microsoft Teams webhook.",
         "code_example": "Load a saved Teams webhook and send a message:\n```python\nfrom prefect.blocks.notifications import MicrosoftTeamsWebhook\nteams_webhook_block = MicrosoftTeamsWebhook.load(\"BLOCK_NAME\")\nteams_webhook_block.notify(\"Hello from Prefect!\")\n```",
         "block_schema": {
-          "checksum": "sha256:27328b5c9d5f9e8127acfc310d2b9b369d245f0f5caa6caef62e6fd478db92b7",
+          "checksum": "sha256:a45c53a4495f34235de9f050bc14a44a2b854864851ece61f32bfa7384f4e9ce",
           "fields": {
             "title": "MicrosoftTeamsWebhook",
             "description": "Enables sending notifications via a provided Microsoft Teams webhook.",
@@ -978,13 +978,25 @@
               },
               "url": {
                 "title": "Webhook URL",
-                "description": "The Teams incoming webhook URL used to send notifications.",
+                "description": "The Microsoft Power Automate (Workflows) URL used to send notifications to Teams.",
                 "examples": [
-                  "https://your-org.webhook.office.com/webhookb2/XXX/IncomingWebhook/YYY/ZZZ"
+                  "https://prod-NO.LOCATION.logic.azure.com:443/workflows/WFID/triggers/manual/paths/invoke?sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=SIGNATURE"
                 ],
                 "type": "string",
                 "writeOnly": true,
                 "format": "password"
+              },
+              "include_image": {
+                "title": "Include Image",
+                "description": "Include an image with the notification.",
+                "default": true,
+                "type": "boolean"
+              },
+              "wrap": {
+                "title": "Wrap",
+                "description": "Wrap the notification text.",
+                "default": true,
+                "type": "boolean"
               }
             },
             "required": [
@@ -999,7 +1011,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.19.9"
+          "version": "2.20.0"
         }
       },
       "opsgenie-webhook": {
@@ -1125,7 +1137,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.19.9"
+          "version": "2.20.0"
         }
       },
       "pager-duty-webhook": {
@@ -1240,7 +1252,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.19.9"
+          "version": "2.20.0"
         }
       },
       "process": {
@@ -1322,7 +1334,7 @@
           "capabilities": [
             "run-infrastructure"
           ],
-          "version": "2.19.9"
+          "version": "2.20.0"
         }
       },
       "remote-file-system": {
@@ -1366,7 +1378,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.19.9"
+          "version": "2.20.0"
         }
       },
       "s3": {
@@ -1428,7 +1440,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.19.9"
+          "version": "2.20.0"
         }
       },
       "secret": {
@@ -1463,7 +1475,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.19.9"
+          "version": "2.20.0"
         }
       },
       "sendgrid-email": {
@@ -1534,7 +1546,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.19.9"
+          "version": "2.20.0"
         }
       },
       "slack-webhook": {
@@ -1587,7 +1599,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.19.9"
+          "version": "2.20.0"
         }
       },
       "smb": {
@@ -1655,7 +1667,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.19.9"
+          "version": "2.20.0"
         }
       },
       "string": {
@@ -1663,7 +1675,7 @@
         "slug": "string",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/c262ea2c80a2c043564e8763f3370c3db5a6b3e6-48x48.png",
         "documentation_url": "https://docs.prefect.io/api-ref/prefect/blocks/system/#prefect.blocks.system.String",
-        "description": "A block that represents a string. Deprecated, please use Variables to store string data instead.",
+        "description": "A block that represents a string",
         "code_example": "Load a stored string value:\n```python\nfrom prefect.blocks.system import String\n\nstring_block = String.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
           "checksum": "sha256:e9f3f43e55b73bc94ee2a355f1e4ef7064645268cba22571c2a95d90a2af8dd0",
@@ -1686,7 +1698,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.19.9"
+          "version": "2.20.0"
         }
       },
       "twilio-sms": {
@@ -1763,7 +1775,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "2.19.9"
+          "version": "2.20.0"
         }
       },
       "webhook": {
@@ -1820,7 +1832,7 @@
             "block_schema_references": {}
           },
           "capabilities": [],
-          "version": "2.19.9"
+          "version": "2.20.0"
         }
       }
     }
