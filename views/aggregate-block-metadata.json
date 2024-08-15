@@ -1675,7 +1675,7 @@
         "slug": "string",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/c262ea2c80a2c043564e8763f3370c3db5a6b3e6-48x48.png",
         "documentation_url": "https://docs.prefect.io/api-ref/prefect/blocks/system/#prefect.blocks.system.String",
-        "description": "A block that represents a string",
+        "description": "A block that represents a string. Deprecated, please use Variables to store string data instead.",
         "code_example": "Load a stored string value:\n```python\nfrom prefect.blocks.system import String\n\nstring_block = String.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
           "checksum": "sha256:e9f3f43e55b73bc94ee2a355f1e4ef7064645268cba22571c2a95d90a2af8dd0",
