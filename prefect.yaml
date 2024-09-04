@@ -11,12 +11,6 @@ definitions:
         env:
           EXTRA_PIP_PACKAGES: github3.py fastjsonschema prefect-gcp
 
-    docker_work: &docker_work
-      name: docker-work
-      job_variables:
-        image: prefecthq/prefect:3.0.0-python3.12
-        env:
-          EXTRA_PIP_PACKAGES: github3.py fastjsonschema prefect-gcp
 
 build:
 
