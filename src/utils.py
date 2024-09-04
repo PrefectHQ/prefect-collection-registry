@@ -10,10 +10,7 @@ import github3
 import httpx
 import yaml
 from prefect import Flow, task
-from prefect.blocks.core import Block
 from prefect.blocks.system import Secret
-from prefect.client.cloud import get_cloud_client
-from prefect.settings import PREFECT_API_URL
 from prefect.utilities.asyncutils import (
     run_sync_in_worker_thread,  # noqa
     sync_compatible,
@@ -270,21 +267,3 @@ def validate_view_content(view_dict: dict, variety: CollectionViewVariety) -> No
         except IndexError:  # to catch something like {"prefect-X": {}}
             raise ValueError("There's a key with empty value in this view!")
         print(f"  Validated {collection_name} summary in {variety} view!")
-
-
-@sync_compatible
-async def result_storage_from_env() -> Block | None:
-    env_to_storage_block_name = {
-        "inconspicuous-pond": "s3/flow-script-storage",
-        "integrations": "gcs/collection-registry-result-storage",
-    }
-
-    async with get_cloud_client() as client:
-        current_workspace_id = PREFECT_API_URL.value().split("/")[-1]
-
-        for workspace in await client.read_workspaces():
-            if str(workspace.workspace_id) == current_workspace_id:
-                result_storage_name = env_to_storage_block_name[
-                    workspace.workspace_name
-                ]
-                return await Block.load(name=result_storage_name)

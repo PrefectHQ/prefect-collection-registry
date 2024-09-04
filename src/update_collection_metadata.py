@@ -3,15 +3,16 @@ import subprocess
 
 import github3
 import pendulum
+from prefect import flow, task
+from prefect.client.schemas.objects import FlowRun
+from prefect.deployments import run_deployment
+from prefect.states import Completed, Failed, State
+from prefect.utilities.collections import listrepr
+
 import utils
 from generate_block_metadata import update_block_metadata_for_collection
 from generate_flow_metadata import update_flow_metadata_for_collection
 from generate_worker_metadata import update_worker_metadata_for_package
-from prefect import flow, task
-from prefect.deployments import run_deployment
-from prefect.server.schemas.core import FlowRun
-from prefect.states import Completed, Failed, State
-from prefect.utilities.collections import listrepr
 
 UPDATE_ALL_DESCRIPTION = """
 The `update_all_collections` triggers many instances of `update_collection_metadata` in order to
@@ -147,12 +148,12 @@ def update_collection_metadata(
 
 
 @flow(
-    description=UPDATE_ALL_DESCRIPTION,
-    log_prints=True,
     name="update-all-collections",
-    result_storage=utils.result_storage_from_env(),
+    description=UPDATE_ALL_DESCRIPTION,
+    result_storage="gcs-bucket/collection-registry-storage",
     retries=2,
     retry_delay_seconds=10,
+    log_prints=True,
 )
 async def update_all_collections(
     branch_name: str = "update-metadata",
@@ -199,9 +200,9 @@ async def update_all_collections(
     return Completed(message="All new releases have been recorded.")
 
 
-# if __name__ == "__main__":
-# # ALL COLLECTIONS
-# asyncio.run(update_all_collections())
+if __name__ == "__main__":
+    # ALL COLLECTIONS
+    asyncio.run(update_all_collections())
 
 # # MANUAL RUNS
 # for collection in ["prefect-sqlalchemy"]:
