@@ -25,7 +25,7 @@ push:
 pull:
 - prefect.deployments.steps.git_clone:
     repository: https://github.com/PrefectHQ/prefect-collection-registry
-    branch: 3.0
+    branch: main
 
 
 deployments:
@@ -35,7 +35,7 @@ deployments:
   schedules:
   entrypoint: src/update_collection_metadata.py:update_collection_metadata
   parameters: {}
-  work_pool: *docker_work
+  work_pool: *kubernetes_prd_internal_tools
 
 - name: update-all-collections
   tags: []
@@ -53,6 +53,6 @@ deployments:
     max_active_runs:
     catchup: false
   entrypoint: src/update_collection_metadata.py:update_all_collections
-  work_pool: *docker_work
+  work_pool: *kubernetes_prd_internal_tools
   parameters: {}
   enforce_parameter_schema: true
