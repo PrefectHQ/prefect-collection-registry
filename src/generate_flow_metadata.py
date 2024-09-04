@@ -2,9 +2,7 @@ from collections import defaultdict
 from typing import Any, Callable, Dict, List
 
 import fastjsonschema
-from griffe.dataclasses import Docstring
-from griffe.docstrings.dataclasses import DocstringSectionKind
-from griffe.docstrings.parsers import Parser, parse
+from griffe import Docstring, DocstringSectionKind, Parser, parse
 from prefect import Flow, flow, task
 from prefect.states import Completed
 from prefect.utilities.importtools import load_module

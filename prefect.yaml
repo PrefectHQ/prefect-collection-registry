@@ -1,17 +1,58 @@
-# File for configuring project / deployment build, push and pull steps
-
-# Generic metadata about this project
 name: prefect-collection-registry
-prefect-version: 2.10.6
+prefect-version: 3.0.0
 
-# build section allows you to manage and build docker images
-build: null
 
-# push section allows you to manage if and how this project is uploaded to remote locations
-push: null
+definitions:
+  work_pools:
+    kubernetes_prd_internal_tools: &kubernetes_prd_internal_tools
+      name: kubernetes-prd-internal-tools
+      job_variables:
+        image: prefecthq/prefect:3.0.0-python3.12
+        env:
+          EXTRA_PIP_PACKAGES: github3.py fastjsonschema prefect-gcp
 
-# pull section allows you to provide instructions for cloning this project in remote locations
+    docker_work: &docker_work
+      name: docker-work
+      job_variables:
+        image: prefecthq/prefect:3.0.0-python3.12
+        env:
+          EXTRA_PIP_PACKAGES: github3.py fastjsonschema prefect-gcp
+
+build:
+
+push:
+
 pull:
-  - prefect.deployments.steps.git_clone:
-      repository: https://github.com/PrefectHQ/prefect-collection-registry
-      branch: main
+- prefect.deployments.steps.git_clone:
+    repository: https://github.com/PrefectHQ/prefect-collection-registry
+    branch: 3.0
+
+
+deployments:
+- name: update-a-collection
+  tags: []
+  description: Updates each variety of metadata for a given package.
+  schedules:
+  entrypoint: src/update_collection_metadata.py:update_collection_metadata
+  parameters: {}
+  work_pool: *docker_work
+
+- name: update-all-collections
+  tags: []
+  description: "`update-all-collections` triggers many instances of `update-collection-metadata`
+    \nin order to update the [prefect-collection-registry](https://github.com/PrefectHQ/prefect-collection-registry)
+    \nwith metadata generated from new releases of select packages (prefect collections
+    + prefect core).\n\n`update-all-collections` flow will check if any packages have
+    a release and are not \nrecorded by the registry repo, and will trigger a run
+    of `update_collection_metadata` for each such package."
+  schedules:
+  - cron: 0 6,12,18 * * 1-5
+    timezone: EST
+    day_or: true
+    active: true
+    max_active_runs:
+    catchup: false
+  entrypoint: src/update_collection_metadata.py:update_all_collections
+  work_pool: *docker_work
+  parameters: {}
+  enforce_parameter_schema: true
