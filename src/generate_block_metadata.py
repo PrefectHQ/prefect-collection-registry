@@ -28,13 +28,14 @@ def generate_block_metadata(block_subcls: Type[Block]) -> Dict[str, Any]:
     its corresponding block type and block schema.
     """
     block_type_dict = block_subcls._to_block_type().model_dump(
-        exclude={"id", "created", "updated", "is_protected"}, json_compatible=True
+        exclude={"id", "created", "updated", "is_protected"},
+        mode="json",
     )
     block_type_dict["block_schema"] = block_subcls._to_block_schema(
         block_type_id=uuid4()
     ).model_dump(
         exclude={"id", "created", "updated", "block_type_id", "block_type"},
-        json_compatible=True,
+        mode="json",
     )
 
     # make it deterministic to prevent false positives of changes
