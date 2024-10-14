@@ -27,12 +27,12 @@ def generate_block_metadata(block_subcls: Type[Block]) -> Dict[str, Any]:
     Takes a block subclass and returns a JSON dict representation of
     its corresponding block type and block schema.
     """
-    block_type_dict = block_subcls._to_block_type().dict(
+    block_type_dict = block_subcls._to_block_type().model_dump(
         exclude={"id", "created", "updated", "is_protected"}, json_compatible=True
     )
     block_type_dict["block_schema"] = block_subcls._to_block_schema(
         block_type_id=uuid4()
-    ).dict(
+    ).model_dump(
         exclude={"id", "created", "updated", "block_type_id", "block_type"},
         json_compatible=True,
     )
