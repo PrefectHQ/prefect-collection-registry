@@ -30,7 +30,7 @@
             "type": "object"
           },
           "capabilities": [],
-          "version": "3.0.9"
+          "version": "3.0.10"
         }
       },
       "discord-webhook": {
@@ -133,7 +133,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.0.9"
+          "version": "3.0.10"
         }
       },
       "json": {
@@ -163,7 +163,7 @@
             "type": "object"
           },
           "capabilities": [],
-          "version": "3.0.9"
+          "version": "3.0.10"
         }
       },
       "local-file-system": {
@@ -204,7 +204,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "3.0.9"
+          "version": "3.0.10"
         }
       },
       "mattermost-webhook": {
@@ -317,7 +317,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.0.9"
+          "version": "3.0.10"
         }
       },
       "ms-teams-webhook": {
@@ -388,7 +388,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.0.9"
+          "version": "3.0.10"
         }
       },
       "opsgenie-webhook": {
@@ -585,7 +585,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.0.9"
+          "version": "3.0.10"
         }
       },
       "pager-duty-webhook": {
@@ -738,7 +738,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.0.9"
+          "version": "3.0.10"
         }
       },
       "remote-file-system": {
@@ -782,7 +782,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "3.0.9"
+          "version": "3.0.10"
         }
       },
       "secret": {
@@ -841,7 +841,7 @@
             }
           },
           "capabilities": [],
-          "version": "3.0.9"
+          "version": "3.0.10"
         }
       },
       "sendgrid-email": {
@@ -912,7 +912,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.0.9"
+          "version": "3.0.10"
         }
       },
       "slack-webhook": {
@@ -971,7 +971,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.0.9"
+          "version": "3.0.10"
         }
       },
       "smb": {
@@ -1062,7 +1062,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "3.0.9"
+          "version": "3.0.10"
         }
       },
       "string": {
@@ -1093,7 +1093,7 @@
             "type": "object"
           },
           "capabilities": [],
-          "version": "3.0.9"
+          "version": "3.0.10"
         }
       },
       "twilio-sms": {
@@ -1170,7 +1170,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.0.9"
+          "version": "3.0.10"
         }
       },
       "webhook": {
@@ -1239,7 +1239,7 @@
             "type": "object"
           },
           "capabilities": [],
-          "version": "3.0.9"
+          "version": "3.0.10"
         }
       }
     }
