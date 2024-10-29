@@ -1,158 +1,55 @@
 {
   "prefect": {
     "block_types": {
-      "azure": {
-        "name": "Azure",
-        "slug": "azure",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/54e3fa7e00197a4fbd1d82ed62494cb58d08c96a-250x250.png",
-        "documentation_url": "https://docs.prefect.io/concepts/filesystems/#azure",
-        "description": "DEPRECATION WARNING:\n\nThis class is deprecated as of March 2024 and will not be available after September 2024.\nIt has been replaced by `AzureBlobStorageContainer` from the `prefect-azure` package, which\noffers enhanced functionality and better a better user experience.\n\nStore data as a file on Azure Datalake and Azure Blob Storage.",
-        "code_example": "Load stored Azure config:\n```python\nfrom prefect.filesystems import Azure\n\naz_block = Azure.load(\"BLOCK_NAME\")\n```",
-        "block_schema": {
-          "checksum": "sha256:bb71661a7d11812c5e31fe5143a04bd6d4879a4913a7ae0f0dc5122092e3b98a",
-          "fields": {
-            "title": "Azure",
-            "description": "DEPRECATION WARNING:\n\nThis class is deprecated as of March 2024 and will not be available after September 2024.\nIt has been replaced by `AzureBlobStorageContainer` from the `prefect-azure` package, which\noffers enhanced functionality and better a better user experience.\n\nStore data as a file on Azure Datalake and Azure Blob Storage.",
-            "type": "object",
-            "properties": {
-              "bucket_path": {
-                "title": "Bucket Path",
-                "description": "An Azure storage bucket path.",
-                "examples": [
-                  "my-bucket/a-directory-within"
-                ],
-                "type": "string"
-              },
-              "azure_storage_connection_string": {
-                "title": "Azure storage connection string",
-                "description": "Equivalent to the AZURE_STORAGE_CONNECTION_STRING environment variable.",
-                "type": "string",
-                "writeOnly": true,
-                "format": "password"
-              },
-              "azure_storage_account_name": {
-                "title": "Azure storage account name",
-                "description": "Equivalent to the AZURE_STORAGE_ACCOUNT_NAME environment variable.",
-                "type": "string",
-                "writeOnly": true,
-                "format": "password"
-              },
-              "azure_storage_account_key": {
-                "title": "Azure storage account key",
-                "description": "Equivalent to the AZURE_STORAGE_ACCOUNT_KEY environment variable.",
-                "type": "string",
-                "writeOnly": true,
-                "format": "password"
-              },
-              "azure_storage_tenant_id": {
-                "title": "Azure storage tenant ID",
-                "description": "Equivalent to the AZURE_TENANT_ID environment variable.",
-                "type": "string",
-                "writeOnly": true,
-                "format": "password"
-              },
-              "azure_storage_client_id": {
-                "title": "Azure storage client ID",
-                "description": "Equivalent to the AZURE_CLIENT_ID environment variable.",
-                "type": "string",
-                "writeOnly": true,
-                "format": "password"
-              },
-              "azure_storage_client_secret": {
-                "title": "Azure storage client secret",
-                "description": "Equivalent to the AZURE_CLIENT_SECRET environment variable.",
-                "type": "string",
-                "writeOnly": true,
-                "format": "password"
-              },
-              "azure_storage_anon": {
-                "title": "Azure storage anonymous connection",
-                "description": "Set the 'anon' flag for ADLFS. This should be False for systems that require ADLFS to use DefaultAzureCredentials.",
-                "default": true,
-                "type": "boolean"
-              },
-              "azure_storage_container": {
-                "title": "Azure storage container",
-                "description": "Blob Container in Azure Storage Account. If set the 'bucket_path' will be interpreted using the following URL format:'az://<container>@<storage_account>.dfs.core.windows.net/<bucket_path>'.",
-                "type": "string",
-                "writeOnly": true,
-                "format": "password"
-              }
-            },
-            "required": [
-              "bucket_path"
-            ],
-            "block_type_slug": "azure",
-            "secret_fields": [
-              "azure_storage_connection_string",
-              "azure_storage_account_name",
-              "azure_storage_account_key",
-              "azure_storage_tenant_id",
-              "azure_storage_client_id",
-              "azure_storage_client_secret",
-              "azure_storage_container"
-            ],
-            "block_schema_references": {}
-          },
-          "capabilities": [
-            "get-directory",
-            "put-directory",
-            "read-path",
-            "write-path"
-          ],
-          "version": "2.20.2"
-        }
-      },
       "date-time": {
         "name": "Date Time",
         "slug": "date-time",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/8b3da9a6621e92108b8e6a75b82e15374e170ff7-48x48.png",
-        "documentation_url": "https://docs.prefect.io/api-ref/prefect/blocks/system/#prefect.blocks.system.DateTime",
+        "documentation_url": "https://docs.prefect.io/latest/develop/blocks",
         "description": "A block that represents a datetime. Deprecated, please use Variables to store datetime data instead.",
         "code_example": "Load a stored JSON value:\n```python\nfrom prefect.blocks.system import DateTime\n\ndata_time_block = DateTime.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:7943c88ca6ab22804082b595b9847d035a1364bdb23474c927317bcab9cb5d9c",
+          "checksum": "sha256:94cacaae861dc63b4fcfef96972d9269bb7cb8897a0591a6fd2ac6d0ee64571f",
           "fields": {
-            "title": "DateTime",
-            "description": "A block that represents a datetime",
-            "type": "object",
+            "block_schema_references": {},
+            "block_type_slug": "date-time",
+            "description": "A block that represents a datetime. Deprecated, please use Variables to store datetime data instead.",
             "properties": {
               "value": {
-                "title": "Value",
                 "description": "An ISO 8601-compatible datetime value.",
-                "type": "string",
-                "format": "date-time"
+                "format": "date-time",
+                "title": "Value",
+                "type": "string"
               }
             },
             "required": [
               "value"
             ],
-            "block_type_slug": "date-time",
             "secret_fields": [],
-            "block_schema_references": {}
+            "title": "DateTime",
+            "type": "object"
           },
           "capabilities": [],
-          "version": "2.20.2"
+          "version": "3.0.11"
         }
       },
       "discord-webhook": {
         "name": "Discord Webhook",
         "slug": "discord-webhook",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/9e94976c80ef925b66d24e5d14f0d47baa6b8f88-250x250.png",
-        "documentation_url": "https://docs.prefect.io/api-ref/prefect/blocks/notifications/#prefect.blocks.notifications.DiscordWebhook",
+        "documentation_url": "https://docs.prefect.io/latest/automate/events/automations-triggers#sending-notifications-with-automations",
         "description": "Enables sending notifications via a provided Discord webhook.",
         "code_example": "Load a saved Discord webhook and send a message:\n```python\nfrom prefect.blocks.notifications import DiscordWebhook\n\ndiscord_webhook_block = DiscordWebhook.load(\"BLOCK_NAME\")\n\ndiscord_webhook_block.notify(\"Hello from Prefect!\")\n```",
         "block_schema": {
-          "checksum": "sha256:d618d2f8553ac78a1d23fbcda4080e2b2e22bc38d45da21dc1f074cb85384e11",
+          "checksum": "sha256:6a52b1831a9e289e74a3dc03986ca1b00aaf8c4c523fd9dcacd1982e45bfe956",
           "fields": {
-            "title": "DiscordWebhook",
+            "block_schema_references": {},
+            "block_type_slug": "discord-webhook",
             "description": "Enables sending notifications via a provided Discord webhook.",
-            "type": "object",
             "properties": {
               "notify_type": {
-                "title": "Notify Type",
-                "description": "The type of notification being performed; the prefect_default is a plain notification that does not attach an image.",
                 "default": "prefect_default",
+                "description": "The type of notification being performed; the prefect_default is a plain notification that does not attach an image.",
                 "enum": [
                   "prefect_default",
                   "info",
@@ -160,696 +57,146 @@
                   "warning",
                   "failure"
                 ],
+                "title": "Notify Type",
                 "type": "string"
               },
               "webhook_id": {
-                "title": "Webhook Id",
                 "description": "The first part of 2 tokens provided to you after creating a incoming-webhook.",
+                "format": "password",
+                "title": "Webhook Id",
                 "type": "string",
-                "writeOnly": true,
-                "format": "password"
+                "writeOnly": true
               },
               "webhook_token": {
-                "title": "Webhook Token",
                 "description": "The second part of 2 tokens provided to you after creating a incoming-webhook.",
+                "format": "password",
+                "title": "Webhook Token",
                 "type": "string",
-                "writeOnly": true,
-                "format": "password"
+                "writeOnly": true
               },
               "botname": {
-                "title": "Bot name",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "Identify the name of the bot that should issue the message. If one isn't specified then the default is to just use your account (associated with the incoming-webhook).",
-                "type": "string"
+                "title": "Bot name"
               },
               "tts": {
-                "title": "Tts",
-                "description": "Whether to enable Text-To-Speech.",
                 "default": false,
+                "description": "Whether to enable Text-To-Speech.",
+                "title": "Tts",
                 "type": "boolean"
               },
               "include_image": {
-                "title": "Include Image",
-                "description": "Whether to include an image in-line with the message describing the notification type.",
                 "default": false,
+                "description": "Whether to include an image in-line with the message describing the notification type.",
+                "title": "Include Image",
                 "type": "boolean"
               },
               "avatar": {
-                "title": "Avatar",
-                "description": "Whether to override the default discord avatar icon.",
                 "default": false,
+                "description": "Whether to override the default discord avatar icon.",
+                "title": "Avatar",
                 "type": "boolean"
               },
               "avatar_url": {
-                "title": "Avatar URL",
-                "description": "Over-ride the default discord avatar icon URL. By default this is not set and Apprise chooses the URL dynamically based on the type of message (info, success, warning, or error).",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
                 "default": false,
-                "type": "string"
+                "description": "Over-ride the default discord avatar icon URL. By default this is not set and Apprise chooses the URL dynamically based on the type of message (info, success, warning, or error).",
+                "title": "Avatar URL"
               }
             },
             "required": [
               "webhook_id",
               "webhook_token"
             ],
-            "block_type_slug": "discord-webhook",
             "secret_fields": [
               "webhook_id",
               "webhook_token"
             ],
-            "block_schema_references": {}
+            "title": "DiscordWebhook",
+            "type": "object"
           },
           "capabilities": [
             "notify"
           ],
-          "version": "2.20.2"
-        }
-      },
-      "docker-container": {
-        "name": "Docker Container",
-        "slug": "docker-container",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/14a315b79990200db7341e42553e23650b34bb96-250x250.png",
-        "documentation_url": "https://docs.prefect.io/api-ref/prefect/infrastructure/#prefect.infrastructure.DockerContainer",
-        "description": "Runs a command in a container.\n\nRequires a Docker Engine to be connectable. Docker settings will be retrieved from\nthe environment.\n\nClick [here](https://docs.prefect.io/guides/deployment/docker) to see a tutorial.",
-        "code_example": "```python\nfrom prefect.infrastructure.container import DockerContainer\n\ndocker_container_block = DockerContainer.load(\"BLOCK_NAME\")\n```",
-        "block_schema": {
-          "checksum": "sha256:8492ae879cf429c54f27816717769d4348e05eafdfd579158a2d0a6406ec08eb",
-          "fields": {
-            "title": "DockerContainer",
-            "description": "Runs a command in a container.\n\nRequires a Docker Engine to be connectable. Docker settings will be retrieved from\nthe environment.\n\nClick [here](https://docs.prefect.io/guides/deployment/docker) to see a tutorial.",
-            "type": "object",
-            "properties": {
-              "type": {
-                "title": "Type",
-                "description": "The type of infrastructure.",
-                "default": "docker-container",
-                "enum": [
-                  "docker-container"
-                ],
-                "type": "string"
-              },
-              "env": {
-                "title": "Environment",
-                "description": "Environment variables to set in the configured infrastructure.",
-                "type": "object",
-                "additionalProperties": {
-                  "type": "string"
-                }
-              },
-              "labels": {
-                "title": "Labels",
-                "description": "Labels applied to the infrastructure for metadata purposes.",
-                "type": "object",
-                "additionalProperties": {
-                  "type": "string"
-                }
-              },
-              "name": {
-                "title": "Name",
-                "description": "Name applied to the infrastructure for identification.",
-                "type": "string"
-              },
-              "command": {
-                "title": "Command",
-                "description": "The command to run in the infrastructure.",
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "image": {
-                "title": "Image",
-                "description": "Tag of a Docker image to use. Defaults to the Prefect image.",
-                "type": "string"
-              },
-              "image_pull_policy": {
-                "description": "Specifies if the image should be pulled.",
-                "allOf": [
-                  {
-                    "$ref": "#/definitions/ImagePullPolicy"
-                  }
-                ]
-              },
-              "image_registry": {
-                "$ref": "#/definitions/DockerRegistry"
-              },
-              "networks": {
-                "title": "Networks",
-                "description": "A list of strings specifying Docker networks to connect the container to.",
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "network_mode": {
-                "title": "Network Mode",
-                "description": "The network mode for the created container (e.g. host, bridge). If 'networks' is set, this cannot be set.",
-                "type": "string"
-              },
-              "auto_remove": {
-                "title": "Auto Remove",
-                "description": "If set, the container will be removed on completion.",
-                "default": false,
-                "type": "boolean"
-              },
-              "volumes": {
-                "title": "Volumes",
-                "description": "A list of volume mount strings in the format of \"local_path:container_path\".",
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "stream_output": {
-                "title": "Stream Output",
-                "description": "If set, the output will be streamed from the container to local standard output.",
-                "default": true,
-                "type": "boolean"
-              },
-              "memswap_limit": {
-                "title": "Memswap Limit",
-                "description": "Total memory (memory + swap), -1 to disable swap. Should only be set if `mem_limit` is also set. If `mem_limit` is set, this defaults toallowing the container to use as much swap as memory. For example, if `mem_limit` is 300m and `memswap_limit` is not set, the container can use 600m in total of memory and swap.",
-                "anyOf": [
-                  {
-                    "type": "integer"
-                  },
-                  {
-                    "type": "string"
-                  }
-                ]
-              },
-              "mem_limit": {
-                "title": "Mem Limit",
-                "description": "Memory limit of the created container. Accepts float values to enforce a limit in bytes or a string with a unit e.g. 100000b, 1000k, 128m, 1g. If a string is given without a unit, bytes are assumed.",
-                "anyOf": [
-                  {
-                    "type": "number"
-                  },
-                  {
-                    "type": "string"
-                  }
-                ]
-              },
-              "privileged": {
-                "title": "Privileged",
-                "description": "Give extended privileges to this container.",
-                "default": false,
-                "type": "boolean"
-              }
-            },
-            "block_type_slug": "docker-container",
-            "secret_fields": [
-              "image_registry.password"
-            ],
-            "block_schema_references": {
-              "image_registry": {
-                "block_type_slug": "docker-registry",
-                "block_schema_checksum": "sha256:7f51876d1b567d9c712e2f72ab76b078b2f288503e4ba3a68aca478d368a982d"
-              }
-            },
-            "definitions": {
-              "ImagePullPolicy": {
-                "title": "ImagePullPolicy",
-                "description": "An enumeration.",
-                "enum": [
-                  "IF_NOT_PRESENT",
-                  "ALWAYS",
-                  "NEVER"
-                ],
-                "type": "string"
-              },
-              "DockerRegistry": {
-                "title": "DockerRegistry",
-                "description": "DEPRECATION WARNING:\n\nThis class is deprecated as of March 2024 and will not be available after September 2024.\nIt has been replaced by `DockerRegistryCredentials` from the `prefect-docker` package, which\noffers enhanced functionality and better a better user experience.\n\nConnects to a Docker registry.\n\nRequires a Docker Engine to be connectable.",
-                "type": "object",
-                "properties": {
-                  "username": {
-                    "title": "Username",
-                    "description": "The username to log into the registry with.",
-                    "type": "string"
-                  },
-                  "password": {
-                    "title": "Password",
-                    "description": "The password to log into the registry with.",
-                    "type": "string",
-                    "writeOnly": true,
-                    "format": "password"
-                  },
-                  "registry_url": {
-                    "title": "Registry Url",
-                    "description": "The URL to the registry. Generally, \"http\" or \"https\" can be omitted.",
-                    "type": "string"
-                  },
-                  "reauth": {
-                    "title": "Reauth",
-                    "description": "Whether or not to reauthenticate on each interaction.",
-                    "default": true,
-                    "type": "boolean"
-                  }
-                },
-                "required": [
-                  "username",
-                  "password",
-                  "registry_url"
-                ],
-                "block_type_slug": "docker-registry",
-                "secret_fields": [
-                  "password"
-                ],
-                "block_schema_references": {}
-              }
-            }
-          },
-          "capabilities": [
-            "run-infrastructure"
-          ],
-          "version": "2.20.2"
-        }
-      },
-      "docker-registry": {
-        "name": "Docker Registry",
-        "slug": "docker-registry",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/14a315b79990200db7341e42553e23650b34bb96-250x250.png",
-        "documentation_url": "https://docs.prefect.io/api-ref/prefect/infrastructure/#prefect.infrastructure.docker.DockerRegistry",
-        "description": "DEPRECATION WARNING:\n\nThis class is deprecated as of March 2024 and will not be available after September 2024.\nIt has been replaced by `DockerRegistryCredentials` from the `prefect-docker` package, which\noffers enhanced functionality and better a better user experience.\n\nConnects to a Docker registry.\n\nRequires a Docker Engine to be connectable.",
-        "code_example": "```python\nfrom prefect.infrastructure.container import DockerRegistry\n\ndocker_registry_block = DockerRegistry.load(\"BLOCK_NAME\")\n```",
-        "block_schema": {
-          "checksum": "sha256:7f51876d1b567d9c712e2f72ab76b078b2f288503e4ba3a68aca478d368a982d",
-          "fields": {
-            "title": "DockerRegistry",
-            "description": "DEPRECATION WARNING:\n\nThis class is deprecated as of March 2024 and will not be available after September 2024.\nIt has been replaced by `DockerRegistryCredentials` from the `prefect-docker` package, which\noffers enhanced functionality and better a better user experience.\n\nConnects to a Docker registry.\n\nRequires a Docker Engine to be connectable.",
-            "type": "object",
-            "properties": {
-              "username": {
-                "title": "Username",
-                "description": "The username to log into the registry with.",
-                "type": "string"
-              },
-              "password": {
-                "title": "Password",
-                "description": "The password to log into the registry with.",
-                "type": "string",
-                "writeOnly": true,
-                "format": "password"
-              },
-              "registry_url": {
-                "title": "Registry Url",
-                "description": "The URL to the registry. Generally, \"http\" or \"https\" can be omitted.",
-                "type": "string"
-              },
-              "reauth": {
-                "title": "Reauth",
-                "description": "Whether or not to reauthenticate on each interaction.",
-                "default": true,
-                "type": "boolean"
-              }
-            },
-            "required": [
-              "username",
-              "password",
-              "registry_url"
-            ],
-            "block_type_slug": "docker-registry",
-            "secret_fields": [
-              "password"
-            ],
-            "block_schema_references": {}
-          },
-          "capabilities": [
-            "docker-login"
-          ],
-          "version": "2.20.2"
-        }
-      },
-      "gcs": {
-        "name": "GCS",
-        "slug": "gcs",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/422d13bb838cf247eb2b2cf229ce6a2e717d601b-256x256.png",
-        "documentation_url": "https://docs.prefect.io/concepts/filesystems/#gcs",
-        "description": "DEPRECATION WARNING:\n\nThis class is deprecated as of March 2024 and will not be available after September 2024.\nIt has been replaced by `GcsBucket` from the `prefect-gcp` package, which offers enhanced functionality\nand better a better user experience.\nStore data as a file on Google Cloud Storage.",
-        "code_example": "Load stored GCS config:\n```python\nfrom prefect.filesystems import GCS\n\ngcs_block = GCS.load(\"BLOCK_NAME\")\n```",
-        "block_schema": {
-          "checksum": "sha256:a283caa25f404ba9fc5690334e556a68bc09ce85fcd2a3f8452205b68281a85b",
-          "fields": {
-            "title": "GCS",
-            "description": "DEPRECATION WARNING:\n\nThis class is deprecated as of March 2024 and will not be available after September 2024.\nIt has been replaced by `GcsBucket` from the `prefect-gcp` package, which offers enhanced functionality\nand better a better user experience.\nStore data as a file on Google Cloud Storage.",
-            "type": "object",
-            "properties": {
-              "bucket_path": {
-                "title": "Bucket Path",
-                "description": "A GCS bucket path.",
-                "examples": [
-                  "my-bucket/a-directory-within"
-                ],
-                "type": "string"
-              },
-              "service_account_info": {
-                "title": "Service Account Info",
-                "description": "The contents of a service account keyfile as a JSON string.",
-                "type": "string",
-                "writeOnly": true,
-                "format": "password"
-              },
-              "project": {
-                "title": "Project",
-                "description": "The project the GCS bucket resides in. If not provided, the project will be inferred from the credentials or environment.",
-                "type": "string"
-              }
-            },
-            "required": [
-              "bucket_path"
-            ],
-            "block_type_slug": "gcs",
-            "secret_fields": [
-              "service_account_info"
-            ],
-            "block_schema_references": {}
-          },
-          "capabilities": [
-            "get-directory",
-            "put-directory",
-            "read-path",
-            "write-path"
-          ],
-          "version": "2.20.2"
-        }
-      },
-      "github": {
-        "name": "GitHub",
-        "slug": "github",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/41971cfecfea5f79ff334164f06ecb34d1038dd4-250x250.png",
-        "documentation_url": "https://docs.prefect.io/concepts/filesystems/#github",
-        "description": "DEPRECATION WARNING:\n\n    This class is deprecated as of March 2024 and will not be available after September 2024.\n    It has been replaced by `GitHubRepository` from the `prefect-github` package, which offers\n    enhanced functionality and better a better user experience.\nq\n    Interact with files stored on GitHub repositories.",
-        "code_example": "```python\nfrom prefect.filesystems import GitHub\n\ngithub_block = GitHub.load(\"BLOCK_NAME\")\n```",
-        "block_schema": {
-          "checksum": "sha256:1a646071d2e07191f2d3934dd7a15a38c27dd60e5e6f74b21c550437b471b8ef",
-          "fields": {
-            "title": "GitHub",
-            "description": "DEPRECATION WARNING:\n\n    This class is deprecated as of March 2024 and will not be available after September 2024.\n    It has been replaced by `GitHubRepository` from the `prefect-github` package, which offers\n    enhanced functionality and better a better user experience.\nq\n    Interact with files stored on GitHub repositories.",
-            "type": "object",
-            "properties": {
-              "repository": {
-                "title": "Repository",
-                "description": "The URL of a GitHub repository to read from, in either HTTPS or SSH format.",
-                "type": "string"
-              },
-              "reference": {
-                "title": "Reference",
-                "description": "An optional reference to pin to; can be a branch name or tag.",
-                "type": "string"
-              },
-              "access_token": {
-                "title": "Access Token",
-                "description": "A GitHub Personal Access Token (PAT) with repo scope. To use a fine-grained PAT, provide '{username}:{PAT}' as the value.",
-                "name": "Personal Access Token",
-                "type": "string",
-                "writeOnly": true,
-                "format": "password"
-              },
-              "include_git_objects": {
-                "title": "Include Git Objects",
-                "description": "Whether to include git objects when copying the repo contents to a directory.",
-                "default": true,
-                "type": "boolean"
-              }
-            },
-            "required": [
-              "repository"
-            ],
-            "block_type_slug": "github",
-            "secret_fields": [
-              "access_token"
-            ],
-            "block_schema_references": {}
-          },
-          "capabilities": [
-            "get-directory"
-          ],
-          "version": "2.20.2"
+          "version": "3.0.11"
         }
       },
       "json": {
         "name": "JSON",
         "slug": "json",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/4fcef2294b6eeb423b1332d1ece5156bf296ff96-48x48.png",
-        "documentation_url": "https://docs.prefect.io/api-ref/prefect/blocks/system/#prefect.blocks.system.JSON",
-        "description": "A block that represents JSON. Deprecated, please use Variables to store json data instead.",
+        "documentation_url": "https://docs.prefect.io/latest/develop/blocks",
+        "description": "A block that represents JSON. Deprecated, please use Variables to store JSON data instead.",
         "code_example": "Load a stored JSON value:\n```python\nfrom prefect.blocks.system import JSON\n\njson_block = JSON.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:ef9b76010e0545bd7f2212029460731f66ccfce289affe4b504cbeb702fc8ea3",
+          "checksum": "sha256:0f01d400eb1ebd964d491132cda72e6a6d843f8ce940397b3dba7be219852106",
           "fields": {
-            "title": "JSON",
-            "description": "A block that represents JSON",
-            "type": "object",
+            "block_schema_references": {},
+            "block_type_slug": "json",
+            "description": "A block that represents JSON. Deprecated, please use Variables to store JSON data instead.",
             "properties": {
               "value": {
-                "title": "Value",
-                "description": "A JSON-compatible value."
+                "description": "A JSON-compatible value.",
+                "title": "Value"
               }
             },
             "required": [
               "value"
             ],
-            "block_type_slug": "json",
             "secret_fields": [],
-            "block_schema_references": {}
+            "title": "JSON",
+            "type": "object"
           },
           "capabilities": [],
-          "version": "2.20.2"
-        }
-      },
-      "kubernetes-cluster-config": {
-        "name": "Kubernetes Cluster Config",
-        "slug": "kubernetes-cluster-config",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/2d0b896006ad463b49c28aaac14f31e00e32cfab-250x250.png",
-        "documentation_url": "https://docs.prefect.io/api-ref/prefect/blocks/kubernetes/#prefect.blocks.kubernetes.KubernetesClusterConfig",
-        "description": "Stores configuration for interaction with Kubernetes clusters.\n\nSee `from_file` for creation.",
-        "code_example": "Load a saved Kubernetes cluster config:\n```python\nfrom prefect.blocks.kubernetes import KubernetesClusterConfig\n\ncluster_config_block = KubernetesClusterConfig.load(\"BLOCK_NAME\")\n```",
-        "block_schema": {
-          "checksum": "sha256:90d421e948bfbe4cdc98b124995f0edd0f84b0837549ad1390423bad8e31cf3b",
-          "fields": {
-            "title": "KubernetesClusterConfig",
-            "description": "Stores configuration for interaction with Kubernetes clusters.\n\nSee `from_file` for creation.",
-            "type": "object",
-            "properties": {
-              "config": {
-                "title": "Config",
-                "description": "The entire contents of a kubectl config file.",
-                "type": "object"
-              },
-              "context_name": {
-                "title": "Context Name",
-                "description": "The name of the kubectl context to use.",
-                "type": "string"
-              }
-            },
-            "required": [
-              "config",
-              "context_name"
-            ],
-            "block_type_slug": "kubernetes-cluster-config",
-            "secret_fields": [],
-            "block_schema_references": {}
-          },
-          "capabilities": [],
-          "version": "2.20.2"
-        }
-      },
-      "kubernetes-job": {
-        "name": "Kubernetes Job",
-        "slug": "kubernetes-job",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/2d0b896006ad463b49c28aaac14f31e00e32cfab-250x250.png",
-        "documentation_url": "https://docs.prefect.io/api-ref/prefect/infrastructure/#prefect.infrastructure.KubernetesJob",
-        "description": "Runs a command as a Kubernetes Job.\n\nFor a guided tutorial, see [How to use Kubernetes with Prefect](https://medium.com/the-prefect-blog/how-to-use-kubernetes-with-prefect-419b2e8b8cb2/).\nFor more information, including examples for customizing the resulting manifest, see [`KubernetesJob` infrastructure concepts](https://docs.prefect.io/concepts/infrastructure/#kubernetesjob).",
-        "code_example": "```python\nfrom prefect.infrastructure.kubernetes import KubernetesJob\n\nkubernetes_job_block = KubernetesJob.load(\"BLOCK_NAME\")\n```",
-        "block_schema": {
-          "checksum": "sha256:6323febcd3533e86e1a062793f3ce17d40a132388e1ddc16d3bb1a30d3ea0a6b",
-          "fields": {
-            "title": "KubernetesJob",
-            "description": "Runs a command as a Kubernetes Job.\n\nFor a guided tutorial, see [How to use Kubernetes with Prefect](https://medium.com/the-prefect-blog/how-to-use-kubernetes-with-prefect-419b2e8b8cb2/).\nFor more information, including examples for customizing the resulting manifest, see [`KubernetesJob` infrastructure concepts](https://docs.prefect.io/concepts/infrastructure/#kubernetesjob).",
-            "type": "object",
-            "properties": {
-              "type": {
-                "title": "Type",
-                "description": "The type of infrastructure.",
-                "default": "kubernetes-job",
-                "enum": [
-                  "kubernetes-job"
-                ],
-                "type": "string"
-              },
-              "env": {
-                "title": "Environment",
-                "description": "Environment variables to set in the configured infrastructure.",
-                "type": "object",
-                "additionalProperties": {
-                  "type": "string"
-                }
-              },
-              "labels": {
-                "title": "Labels",
-                "description": "Labels applied to the infrastructure for metadata purposes.",
-                "type": "object",
-                "additionalProperties": {
-                  "type": "string"
-                }
-              },
-              "name": {
-                "title": "Name",
-                "description": "Name applied to the infrastructure for identification.",
-                "type": "string"
-              },
-              "command": {
-                "title": "Command",
-                "description": "The command to run in the infrastructure.",
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "image": {
-                "title": "Image",
-                "description": "The image reference of a container image to use for the job, for example, `docker.io/prefecthq/prefect:2-latest`.The behavior is as described in the Kubernetes documentation and uses the latest version of Prefect by default, unless an image is already present in a provided job manifest.",
-                "type": "string"
-              },
-              "namespace": {
-                "title": "Namespace",
-                "description": "The Kubernetes namespace to use for this job. Defaults to 'default' unless a namespace is already present in a provided job manifest.",
-                "type": "string"
-              },
-              "service_account_name": {
-                "title": "Service Account Name",
-                "description": "The Kubernetes service account to use for this job.",
-                "type": "string"
-              },
-              "image_pull_policy": {
-                "description": "The Kubernetes image pull policy to use for job containers.",
-                "allOf": [
-                  {
-                    "$ref": "#/definitions/KubernetesImagePullPolicy"
-                  }
-                ]
-              },
-              "cluster_config": {
-                "title": "Cluster Config",
-                "description": "The Kubernetes cluster config to use for this job.",
-                "allOf": [
-                  {
-                    "$ref": "#/definitions/KubernetesClusterConfig"
-                  }
-                ]
-              },
-              "job": {
-                "title": "Base Job Manifest",
-                "description": "The base manifest for the Kubernetes Job.",
-                "type": "object"
-              },
-              "customizations": {
-                "title": "Customizations",
-                "description": "A list of JSON 6902 patches to apply to the base Job manifest.",
-                "type": "array",
-                "format": "rfc6902",
-                "items": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "type": "string"
-                  }
-                }
-              },
-              "job_watch_timeout_seconds": {
-                "title": "Job Watch Timeout Seconds",
-                "description": "Number of seconds to wait for the job to complete before marking it as crashed. Defaults to `None`, which means no timeout will be enforced.",
-                "type": "integer"
-              },
-              "pod_watch_timeout_seconds": {
-                "title": "Pod Watch Timeout Seconds",
-                "description": "Number of seconds to watch for pod creation before timing out.",
-                "default": 60,
-                "type": "integer"
-              },
-              "stream_output": {
-                "title": "Stream Output",
-                "description": "If set, output will be streamed from the job to local standard output.",
-                "default": true,
-                "type": "boolean"
-              },
-              "finished_job_ttl": {
-                "title": "Finished Job Ttl",
-                "description": "The number of seconds to retain jobs after completion. If set, finished jobs will be cleaned up by Kubernetes after the given delay. If None (default), jobs will need to be manually removed.",
-                "type": "integer"
-              }
-            },
-            "block_type_slug": "kubernetes-job",
-            "secret_fields": [],
-            "block_schema_references": {
-              "cluster_config": {
-                "block_type_slug": "kubernetes-cluster-config",
-                "block_schema_checksum": "sha256:90d421e948bfbe4cdc98b124995f0edd0f84b0837549ad1390423bad8e31cf3b"
-              }
-            },
-            "definitions": {
-              "KubernetesImagePullPolicy": {
-                "title": "KubernetesImagePullPolicy",
-                "description": "An enumeration.",
-                "enum": [
-                  "IfNotPresent",
-                  "Always",
-                  "Never"
-                ]
-              },
-              "KubernetesClusterConfig": {
-                "title": "KubernetesClusterConfig",
-                "description": "Stores configuration for interaction with Kubernetes clusters.\n\nSee `from_file` for creation.",
-                "type": "object",
-                "properties": {
-                  "config": {
-                    "title": "Config",
-                    "description": "The entire contents of a kubectl config file.",
-                    "type": "object"
-                  },
-                  "context_name": {
-                    "title": "Context Name",
-                    "description": "The name of the kubectl context to use.",
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "config",
-                  "context_name"
-                ],
-                "block_type_slug": "kubernetes-cluster-config",
-                "secret_fields": [],
-                "block_schema_references": {}
-              }
-            }
-          },
-          "capabilities": [
-            "run-infrastructure"
-          ],
-          "version": "2.20.2"
+          "version": "3.0.11"
         }
       },
       "local-file-system": {
         "name": "Local File System",
         "slug": "local-file-system",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/ad39089fa66d273b943394a68f003f7a19aa850e-48x48.png",
-        "documentation_url": "https://docs.prefect.io/concepts/filesystems/#local-filesystem",
+        "documentation_url": "https://docs.prefect.io/latest/develop/results#specifying-a-default-filesystem",
         "description": "Store data as a file on a local file system.",
         "code_example": "Load stored local file system config:\n```python\nfrom prefect.filesystems import LocalFileSystem\n\nlocal_file_system_block = LocalFileSystem.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:6db1ab242e7b2b88a52dc137a7da3a373af63e0a103b9a91e060ed54a26f395a",
+          "checksum": "sha256:80dd31d7cc72fba9f3005c9692797050a118b5b24f3354df05ec1b7de9f0abbd",
           "fields": {
-            "title": "LocalFileSystem",
+            "block_schema_references": {},
+            "block_type_slug": "local-file-system",
             "description": "Store data as a file on a local file system.",
-            "type": "object",
             "properties": {
               "basepath": {
-                "title": "Basepath",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "Default local path for this block to write to.",
-                "type": "string"
+                "title": "Basepath"
               }
             },
-            "block_type_slug": "local-file-system",
             "secret_fields": [],
-            "block_schema_references": {}
+            "title": "LocalFileSystem",
+            "type": "object"
           },
           "capabilities": [
             "get-directory",
@@ -857,27 +204,26 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.20.2"
+          "version": "3.0.11"
         }
       },
       "mattermost-webhook": {
         "name": "Mattermost Webhook",
         "slug": "mattermost-webhook",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/1350a147130bf82cbc799a5f868d2c0116207736-250x250.png",
-        "documentation_url": "https://docs.prefect.io/api-ref/prefect/blocks/notifications/#prefect.blocks.notifications.MattermostWebhook",
+        "documentation_url": "https://docs.prefect.io/latest/automate/events/automations-triggers#sending-notifications-with-automations",
         "description": "Enables sending notifications via a provided Mattermost webhook.",
         "code_example": "Load a saved Mattermost webhook and send a message:\n```python\nfrom prefect.blocks.notifications import MattermostWebhook\n\nmattermost_webhook_block = MattermostWebhook.load(\"BLOCK_NAME\")\n\nmattermost_webhook_block.notify(\"Hello from Prefect!\")\n```",
         "block_schema": {
-          "checksum": "sha256:1ee75a85f08d5a50b762c1fe3c067f9e6e173d3630b3994646e6278ee75a7fdb",
+          "checksum": "sha256:01f4ee2616acf43a554c44388e36439ebe3ad0f8e58e67279a0116d476dd5e61",
           "fields": {
-            "title": "MattermostWebhook",
+            "block_schema_references": {},
+            "block_type_slug": "mattermost-webhook",
             "description": "Enables sending notifications via a provided Mattermost webhook.",
-            "type": "object",
             "properties": {
               "notify_type": {
-                "title": "Notify Type",
-                "description": "The type of notification being performed; the prefect_default is a plain notification that does not attach an image.",
                 "default": "prefect_default",
+                "description": "The type of notification being performed; the prefect_default is a plain notification that does not attach an image.",
                 "enum": [
                   "prefect_default",
                   "info",
@@ -885,51 +231,76 @@
                   "warning",
                   "failure"
                 ],
+                "title": "Notify Type",
                 "type": "string"
               },
               "hostname": {
-                "title": "Hostname",
                 "description": "The hostname of your Mattermost server.",
                 "examples": [
                   "Mattermost.example.com"
                 ],
+                "title": "Hostname",
                 "type": "string"
               },
               "token": {
-                "title": "Token",
                 "description": "The token associated with your Mattermost webhook.",
+                "format": "password",
+                "title": "Token",
                 "type": "string",
-                "writeOnly": true,
-                "format": "password"
+                "writeOnly": true
               },
               "botname": {
-                "title": "Bot name",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "The name of the bot that will send the message.",
-                "type": "string"
+                "title": "Bot name"
               },
               "channels": {
-                "title": "Channels",
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "The channel(s) you wish to notify.",
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
+                "title": "Channels"
               },
               "include_image": {
-                "title": "Include Image",
-                "description": "Whether to include the Apprise status image in the message.",
                 "default": false,
+                "description": "Whether to include the Apprise status image in the message.",
+                "title": "Include Image",
                 "type": "boolean"
               },
               "path": {
-                "title": "Path",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "An optional sub-path specification to append to the hostname.",
-                "type": "string"
+                "title": "Path"
               },
               "port": {
-                "title": "Port",
-                "description": "The port of your Mattermost server.",
                 "default": 8065,
+                "description": "The port of your Mattermost server.",
+                "title": "Port",
                 "type": "integer"
               }
             },
@@ -937,36 +308,35 @@
               "hostname",
               "token"
             ],
-            "block_type_slug": "mattermost-webhook",
             "secret_fields": [
               "token"
             ],
-            "block_schema_references": {}
+            "title": "MattermostWebhook",
+            "type": "object"
           },
           "capabilities": [
             "notify"
           ],
-          "version": "2.20.2"
+          "version": "3.0.11"
         }
       },
       "ms-teams-webhook": {
         "name": "Microsoft Teams Webhook",
         "slug": "ms-teams-webhook",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/817efe008a57f0a24f3587414714b563e5e23658-250x250.png",
-        "documentation_url": "https://docs.prefect.io/api-ref/prefect/blocks/notifications/#prefect.blocks.notifications.MicrosoftTeamsWebhook",
+        "documentation_url": "https://docs.prefect.io/latest/automate/events/automations-triggers#sending-notifications-with-automations",
         "description": "Enables sending notifications via a provided Microsoft Teams webhook.",
         "code_example": "Load a saved Teams webhook and send a message:\n```python\nfrom prefect.blocks.notifications import MicrosoftTeamsWebhook\nteams_webhook_block = MicrosoftTeamsWebhook.load(\"BLOCK_NAME\")\nteams_webhook_block.notify(\"Hello from Prefect!\")\n```",
         "block_schema": {
-          "checksum": "sha256:a45c53a4495f34235de9f050bc14a44a2b854864851ece61f32bfa7384f4e9ce",
+          "checksum": "sha256:d3ad686c4c75d7f4c4db5075e18170ce22a1f25f98f04c7cc8e2cc12656e9c2f",
           "fields": {
-            "title": "MicrosoftTeamsWebhook",
+            "block_schema_references": {},
+            "block_type_slug": "ms-teams-webhook",
             "description": "Enables sending notifications via a provided Microsoft Teams webhook.",
-            "type": "object",
             "properties": {
               "notify_type": {
-                "title": "Notify Type",
-                "description": "The type of notification being performed; the prefect_default is a plain notification that does not attach an image.",
                 "default": "prefect_default",
+                "description": "The type of notification being performed; the prefect_default is a plain notification that does not attach an image.",
                 "enum": [
                   "prefect_default",
                   "info",
@@ -974,64 +344,70 @@
                   "warning",
                   "failure"
                 ],
+                "title": "Notify Type",
                 "type": "string"
               },
               "url": {
-                "title": "Webhook URL",
                 "description": "The Microsoft Power Automate (Workflows) URL used to send notifications to Teams.",
                 "examples": [
-                  "https://prod-NO.LOCATION.logic.azure.com:443/workflows/WFID/triggers/manual/paths/invoke?sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=SIGNATURE"
+                  "https://prod-NO.LOCATION.logic.azure.com:443/workflows/WFID/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=SIGNATURE"
                 ],
+                "format": "password",
+                "title": "Webhook URL",
                 "type": "string",
-                "writeOnly": true,
-                "format": "password"
+                "writeOnly": true
+              },
+              "allow_private_urls": {
+                "default": true,
+                "description": "Whether to allow notifications to private URLs. Defaults to True.",
+                "title": "Allow Private Urls",
+                "type": "boolean"
               },
               "include_image": {
-                "title": "Include Image",
-                "description": "Include an image with the notification.",
                 "default": true,
+                "description": "Include an image with the notification.",
+                "title": "Include Image",
                 "type": "boolean"
               },
               "wrap": {
-                "title": "Wrap",
-                "description": "Wrap the notification text.",
                 "default": true,
+                "description": "Wrap the notification text.",
+                "title": "Wrap",
                 "type": "boolean"
               }
             },
             "required": [
               "url"
             ],
-            "block_type_slug": "ms-teams-webhook",
             "secret_fields": [
               "url"
             ],
-            "block_schema_references": {}
+            "title": "MicrosoftTeamsWebhook",
+            "type": "object"
           },
           "capabilities": [
             "notify"
           ],
-          "version": "2.20.2"
+          "version": "3.0.11"
         }
       },
       "opsgenie-webhook": {
         "name": "Opsgenie Webhook",
         "slug": "opsgenie-webhook",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/d8b5bc6244ae6cd83b62ec42f10d96e14d6e9113-280x280.png",
-        "documentation_url": "https://docs.prefect.io/api-ref/prefect/blocks/notifications/#prefect.blocks.notifications.OpsgenieWebhook",
+        "documentation_url": "https://docs.prefect.io/latest/automate/events/automations-triggers#sending-notifications-with-automations",
         "description": "Enables sending notifications via a provided Opsgenie webhook.",
         "code_example": "Load a saved Opsgenie webhook and send a message:\n```python\nfrom prefect.blocks.notifications import OpsgenieWebhook\nopsgenie_webhook_block = OpsgenieWebhook.load(\"BLOCK_NAME\")\nopsgenie_webhook_block.notify(\"Hello from Prefect!\")\n```",
         "block_schema": {
-          "checksum": "sha256:d4f132a133952ed6e73dfd5727ce318c5f1de089cdc542f89e4a74c0a40bfa00",
+          "checksum": "sha256:748fdf50db8e686cd50865d2079273095912697aefd180b690c8dbfd80f0b362",
           "fields": {
-            "title": "OpsgenieWebhook",
+            "block_schema_references": {},
+            "block_type_slug": "opsgenie-webhook",
             "description": "Enables sending notifications via a provided Opsgenie webhook.",
-            "type": "object",
             "properties": {
               "notify_type": {
-                "title": "Notify Type",
-                "description": "The type of notification being performed; the prefect_default is a plain notification that does not attach an image.",
                 "default": "prefect_default",
+                "description": "The type of notification being performed; the prefect_default is a plain notification that does not attach an image.",
                 "enum": [
                   "prefect_default",
                   "info",
@@ -1039,338 +415,366 @@
                   "warning",
                   "failure"
                 ],
+                "title": "Notify Type",
                 "type": "string"
               },
               "apikey": {
-                "title": "API Key",
                 "description": "The API Key associated with your Opsgenie account.",
+                "format": "password",
+                "title": "API Key",
                 "type": "string",
-                "writeOnly": true,
-                "format": "password"
+                "writeOnly": true
               },
               "target_user": {
-                "title": "Target User",
+                "anyOf": [
+                  {
+                    "items": {},
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "The user(s) you wish to notify.",
-                "type": "array",
-                "items": {}
+                "title": "Target User"
               },
               "target_team": {
-                "title": "Target Team",
+                "anyOf": [
+                  {
+                    "items": {},
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "The team(s) you wish to notify.",
-                "type": "array",
-                "items": {}
+                "title": "Target Team"
               },
               "target_schedule": {
-                "title": "Target Schedule",
+                "anyOf": [
+                  {
+                    "items": {},
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "The schedule(s) you wish to notify.",
-                "type": "array",
-                "items": {}
+                "title": "Target Schedule"
               },
               "target_escalation": {
-                "title": "Target Escalation",
+                "anyOf": [
+                  {
+                    "items": {},
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "The escalation(s) you wish to notify.",
-                "type": "array",
-                "items": {}
+                "title": "Target Escalation"
               },
               "region_name": {
-                "title": "Region Name",
-                "description": "The 2-character region code.",
                 "default": "us",
+                "description": "The 2-character region code.",
                 "enum": [
                   "us",
                   "eu"
                 ],
+                "title": "Region Name",
                 "type": "string"
               },
               "batch": {
-                "title": "Batch",
-                "description": "Notify all targets in batches (instead of individually).",
                 "default": false,
+                "description": "Notify all targets in batches (instead of individually).",
+                "title": "Batch",
                 "type": "boolean"
               },
               "tags": {
-                "title": "Tags",
+                "anyOf": [
+                  {
+                    "items": {},
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "A comma-separated list of tags you can associate with your Opsgenie message.",
                 "examples": [
                   "[\"tag1\", \"tag2\"]"
                 ],
-                "type": "array",
-                "items": {}
+                "title": "Tags"
               },
               "priority": {
-                "title": "Priority",
-                "description": "The priority to associate with the message. It is on a scale between 1 (LOW) and 5 (EMERGENCY).",
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
                 "default": 3,
-                "type": "string"
+                "description": "The priority to associate with the message. It is on a scale between 1 (LOW) and 5 (EMERGENCY).",
+                "title": "Priority"
               },
               "alias": {
-                "title": "Alias",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "The alias to associate with the message.",
-                "type": "string"
+                "title": "Alias"
               },
               "entity": {
-                "title": "Entity",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "The entity to associate with the message.",
-                "type": "string"
+                "title": "Entity"
               },
               "details": {
-                "title": "Details",
+                "anyOf": [
+                  {
+                    "additionalProperties": {
+                      "type": "string"
+                    },
+                    "type": "object"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "Additional details composed of key/values pairs.",
                 "examples": [
                   "{\"key1\": \"value1\", \"key2\": \"value2\"}"
                 ],
-                "type": "object",
-                "additionalProperties": {
-                  "type": "string"
-                }
+                "title": "Details"
               }
             },
             "required": [
               "apikey"
             ],
-            "block_type_slug": "opsgenie-webhook",
             "secret_fields": [
               "apikey"
             ],
-            "block_schema_references": {}
+            "title": "OpsgenieWebhook",
+            "type": "object"
           },
           "capabilities": [
             "notify"
           ],
-          "version": "2.20.2"
+          "version": "3.0.11"
         }
       },
       "pager-duty-webhook": {
         "name": "Pager Duty Webhook",
         "slug": "pager-duty-webhook",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/8dbf37d17089c1ce531708eac2e510801f7b3aee-250x250.png",
-        "documentation_url": "https://docs.prefect.io/api-ref/prefect/blocks/notifications/#prefect.blocks.notifications.PagerDutyWebHook",
+        "documentation_url": "https://docs.prefect.io/latest/automate/events/automations-triggers#sending-notifications-with-automations",
         "description": "Enables sending notifications via a provided PagerDuty webhook.",
         "code_example": "Load a saved PagerDuty webhook and send a message:\n```python\nfrom prefect.blocks.notifications import PagerDutyWebHook\npagerduty_webhook_block = PagerDutyWebHook.load(\"BLOCK_NAME\")\npagerduty_webhook_block.notify(\"Hello from Prefect!\")\n```",
         "block_schema": {
-          "checksum": "sha256:e740fec7e031645ea97ee769eb37b66ee15b8a353e5e1723ef708b4cd5433069",
+          "checksum": "sha256:133ccf80404b874c09cc28c5fca18afb8e6e5409fff1b2615775f5f9b73c878e",
           "fields": {
-            "title": "PagerDutyWebHook",
+            "block_schema_references": {},
+            "block_type_slug": "pager-duty-webhook",
             "description": "Enables sending notifications via a provided PagerDuty webhook.",
-            "type": "object",
             "properties": {
               "notify_type": {
-                "title": "Notify Type",
-                "description": "The severity of the notification.",
                 "default": "info",
+                "description": "The severity of the notification.",
                 "enum": [
                   "info",
                   "success",
                   "warning",
                   "failure"
                 ],
+                "title": "Notify Type",
                 "type": "string"
               },
               "integration_key": {
-                "title": "Integration Key",
                 "description": "This can be found on the Events API V2 integration's detail page, and is also referred to as a Routing Key. This must be provided alongside `api_key`, but will error if provided alongside `url`.",
+                "format": "password",
+                "title": "Integration Key",
                 "type": "string",
-                "writeOnly": true,
-                "format": "password"
+                "writeOnly": true
               },
               "api_key": {
-                "title": "API Key",
                 "description": "This can be found under Integrations. This must be provided alongside `integration_key`, but will error if provided alongside `url`.",
+                "format": "password",
+                "title": "API Key",
                 "type": "string",
-                "writeOnly": true,
-                "format": "password"
+                "writeOnly": true
               },
               "source": {
-                "title": "Source",
-                "description": "The source string as part of the payload.",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
                 "default": "Prefect",
-                "type": "string"
+                "description": "The source string as part of the payload.",
+                "title": "Source"
               },
               "component": {
-                "title": "Component",
-                "description": "The component string as part of the payload.",
                 "default": "Notification",
+                "description": "The component string as part of the payload.",
+                "title": "Component",
                 "type": "string"
               },
               "group": {
-                "title": "Group",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "The group string as part of the payload.",
-                "type": "string"
+                "title": "Group"
               },
               "class_id": {
-                "title": "Class ID",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "The class string as part of the payload.",
-                "type": "string"
+                "title": "Class ID"
               },
               "region_name": {
-                "title": "Region Name",
-                "description": "The region name.",
                 "default": "us",
+                "description": "The region name.",
                 "enum": [
                   "us",
                   "eu"
                 ],
+                "title": "Region Name",
                 "type": "string"
               },
               "clickable_url": {
-                "title": "Clickable URL",
+                "anyOf": [
+                  {
+                    "format": "uri",
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "A clickable URL to associate with the notice.",
-                "minLength": 1,
-                "maxLength": 65536,
-                "format": "uri",
-                "type": "string"
+                "title": "Clickable URL"
               },
               "include_image": {
-                "title": "Include Image",
-                "description": "Associate the notification status via a represented icon.",
                 "default": true,
+                "description": "Associate the notification status via a represented icon.",
+                "title": "Include Image",
                 "type": "boolean"
               },
               "custom_details": {
-                "title": "Custom Details",
+                "anyOf": [
+                  {
+                    "additionalProperties": {
+                      "type": "string"
+                    },
+                    "type": "object"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "Additional details to include as part of the payload.",
                 "examples": [
                   "{\"disk_space_left\": \"145GB\"}"
                 ],
-                "type": "object",
-                "additionalProperties": {
-                  "type": "string"
-                }
+                "title": "Custom Details"
               }
             },
             "required": [
               "integration_key",
               "api_key"
             ],
-            "block_type_slug": "pager-duty-webhook",
             "secret_fields": [
               "integration_key",
               "api_key"
             ],
-            "block_schema_references": {}
+            "title": "PagerDutyWebHook",
+            "type": "object"
           },
           "capabilities": [
             "notify"
           ],
-          "version": "2.20.2"
-        }
-      },
-      "process": {
-        "name": "Process",
-        "slug": "process",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/356e6766a91baf20e1d08bbe16e8b5aaef4d8643-48x48.png",
-        "documentation_url": "https://docs.prefect.io/concepts/infrastructure/#process",
-        "description": "Run a command in a new process.\n\nCurrent environment variables and Prefect settings will be included in the created\nprocess. Configured environment variables will override any current environment\nvariables.",
-        "code_example": "```python\nfrom prefect.infrastructure.process import Process\n\nprocess_block = Process.load(\"BLOCK_NAME\")\n```",
-        "block_schema": {
-          "checksum": "sha256:47c4ac364708f4a6f27fb10b18086ad92c0a53fbbdd9ba07c030467067979f84",
-          "fields": {
-            "title": "Process",
-            "description": "Run a command in a new process.\n\nCurrent environment variables and Prefect settings will be included in the created\nprocess. Configured environment variables will override any current environment\nvariables.",
-            "type": "object",
-            "properties": {
-              "type": {
-                "title": "Type",
-                "description": "The type of infrastructure.",
-                "default": "process",
-                "enum": [
-                  "process"
-                ],
-                "type": "string"
-              },
-              "env": {
-                "title": "Environment",
-                "description": "Environment variables to set in the configured infrastructure.",
-                "type": "object",
-                "additionalProperties": {
-                  "type": "string"
-                }
-              },
-              "labels": {
-                "title": "Labels",
-                "description": "Labels applied to the infrastructure for metadata purposes.",
-                "type": "object",
-                "additionalProperties": {
-                  "type": "string"
-                }
-              },
-              "name": {
-                "title": "Name",
-                "description": "Name applied to the infrastructure for identification.",
-                "type": "string"
-              },
-              "command": {
-                "title": "Command",
-                "description": "The command to run in the infrastructure.",
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "stream_output": {
-                "title": "Stream Output",
-                "description": "If set, output will be streamed from the process to local standard output.",
-                "default": true,
-                "type": "boolean"
-              },
-              "working_dir": {
-                "title": "Working Dir",
-                "description": "If set, the process will open within the specified path as the working directory. Otherwise, a temporary directory will be created.",
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "string",
-                    "format": "path"
-                  }
-                ]
-              }
-            },
-            "block_type_slug": "process",
-            "secret_fields": [],
-            "block_schema_references": {}
-          },
-          "capabilities": [
-            "run-infrastructure"
-          ],
-          "version": "2.20.2"
+          "version": "3.0.11"
         }
       },
       "remote-file-system": {
         "name": "Remote File System",
         "slug": "remote-file-system",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/e86b41bc0f9c99ba9489abeee83433b43d5c9365-48x48.png",
-        "documentation_url": "https://docs.prefect.io/concepts/filesystems/#remote-file-system",
+        "documentation_url": "https://docs.prefect.io/latest/develop/results#specifying-a-default-filesystem",
         "description": "Store data as a file on a remote file system.\n\nSupports any remote file system supported by `fsspec`. The file system is specified\nusing a protocol. For example, \"s3://my-bucket/my-folder/\" will use S3.",
         "code_example": "Load stored remote file system config:\n```python\nfrom prefect.filesystems import RemoteFileSystem\n\nremote_file_system_block = RemoteFileSystem.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
           "checksum": "sha256:efb6b7304d9cadaf09a18abc60be7ae86aec60dbd7dba345faa7ba1e960b211f",
           "fields": {
-            "title": "RemoteFileSystem",
+            "block_schema_references": {},
+            "block_type_slug": "remote-file-system",
             "description": "Store data as a file on a remote file system.\n\nSupports any remote file system supported by `fsspec`. The file system is specified\nusing a protocol. For example, \"s3://my-bucket/my-folder/\" will use S3.",
-            "type": "object",
             "properties": {
               "basepath": {
-                "title": "Basepath",
                 "description": "Default path for this block to write to.",
                 "examples": [
                   "s3://my-bucket/my-folder/"
                 ],
+                "title": "Basepath",
                 "type": "string"
               },
               "settings": {
-                "title": "Settings",
                 "description": "Additional settings to pass through to fsspec.",
+                "title": "Settings",
                 "type": "object"
               }
             },
             "required": [
               "basepath"
             ],
-            "block_type_slug": "remote-file-system",
             "secret_fields": [],
-            "block_schema_references": {}
+            "title": "RemoteFileSystem",
+            "type": "object"
           },
           "capabilities": [
             "get-directory",
@@ -1378,124 +782,85 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.20.2"
-        }
-      },
-      "s3": {
-        "name": "S3",
-        "slug": "s3",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/d74b16fe84ce626345adf235a47008fea2869a60-225x225.png",
-        "documentation_url": "https://docs.prefect.io/concepts/filesystems/#s3",
-        "description": "DEPRECATION WARNING:\n\nThis class is deprecated as of March 2024 and will not be available after September 2024.\nIt has been replaced by `S3Bucket` from the `prefect-aws` package, which offers enhanced functionality\nand better a better user experience.\n\nStore data as a file on AWS S3.",
-        "code_example": "Load stored S3 config:\n```python\nfrom prefect.filesystems import S3\n\ns3_block = S3.load(\"BLOCK_NAME\")\n```",
-        "block_schema": {
-          "checksum": "sha256:43f3850279e9ff1844e84099832a5f5190aa0f2e2331959b1d891e9c65e9107b",
-          "fields": {
-            "title": "S3",
-            "description": "DEPRECATION WARNING:\n\nThis class is deprecated as of March 2024 and will not be available after September 2024.\nIt has been replaced by `S3Bucket` from the `prefect-aws` package, which offers enhanced functionality\nand better a better user experience.\n\nStore data as a file on AWS S3.",
-            "type": "object",
-            "properties": {
-              "bucket_path": {
-                "title": "Bucket Path",
-                "description": "An S3 bucket path.",
-                "examples": [
-                  "my-bucket/a-directory-within"
-                ],
-                "type": "string"
-              },
-              "aws_access_key_id": {
-                "title": "AWS Access Key ID",
-                "description": "Equivalent to the AWS_ACCESS_KEY_ID environment variable.",
-                "examples": [
-                  "AKIAIOSFODNN7EXAMPLE"
-                ],
-                "type": "string",
-                "writeOnly": true,
-                "format": "password"
-              },
-              "aws_secret_access_key": {
-                "title": "AWS Secret Access Key",
-                "description": "Equivalent to the AWS_SECRET_ACCESS_KEY environment variable.",
-                "examples": [
-                  "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
-                ],
-                "type": "string",
-                "writeOnly": true,
-                "format": "password"
-              }
-            },
-            "required": [
-              "bucket_path"
-            ],
-            "block_type_slug": "s3",
-            "secret_fields": [
-              "aws_access_key_id",
-              "aws_secret_access_key"
-            ],
-            "block_schema_references": {}
-          },
-          "capabilities": [
-            "get-directory",
-            "put-directory",
-            "read-path",
-            "write-path"
-          ],
-          "version": "2.20.2"
+          "version": "3.0.11"
         }
       },
       "secret": {
         "name": "Secret",
         "slug": "secret",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/c6f20e556dd16effda9df16551feecfb5822092b-48x48.png",
-        "documentation_url": "https://docs.prefect.io/api-ref/prefect/blocks/system/#prefect.blocks.system.Secret",
-        "description": "A block that represents a secret value. The value stored in this block will be obfuscated when\nthis block is logged or shown in the UI.",
-        "code_example": "```python\nfrom prefect.blocks.system import Secret\n\nsecret_block = Secret.load(\"BLOCK_NAME\")\n\n# Access the stored secret\nsecret_block.get()\n```",
+        "documentation_url": "https://docs.prefect.io/latest/develop/blocks",
+        "description": "A block that represents a secret value. The value stored in this block will be obfuscated when\nthis block is viewed or edited in the UI.",
+        "code_example": "```python\nfrom prefect.blocks.system import Secret\n\nSecret(value=\"sk-1234567890\").save(\"BLOCK_NAME\", overwrite=True)\n\nsecret_block = Secret.load(\"BLOCK_NAME\")\n\n# Access the stored secret\nsecret_block.get()\n```",
         "block_schema": {
-          "checksum": "sha256:e6b26e0a0240eb112e604608338f863e5ca2f137936e310014bfa2139d0a9b6c",
+          "checksum": "sha256:fab1c36f1340a9fee1a4de830018147ac5266bf9121de8df9c1c23d8897cd701",
           "fields": {
-            "title": "Secret",
-            "description": "A block that represents a secret value. The value stored in this block will be obfuscated when\nthis block is logged or shown in the UI.",
-            "type": "object",
+            "block_schema_references": {},
+            "block_type_slug": "secret",
+            "description": "A block that represents a secret value. The value stored in this block will be obfuscated when\nthis block is viewed or edited in the UI.",
             "properties": {
               "value": {
+                "anyOf": [
+                  {
+                    "format": "password",
+                    "type": "string",
+                    "writeOnly": true
+                  },
+                  {
+                    "title": "string",
+                    "type": "string"
+                  },
+                  {
+                    "$ref": "#/definitions/JsonValue",
+                    "title": "JSON"
+                  }
+                ],
+                "description": "A value that should be kept secret.",
+                "examples": [
+                  "sk-1234567890",
+                  {
+                    "password": "s3cr3t",
+                    "username": "johndoe"
+                  }
+                ],
+                "format": "password",
                 "title": "Value",
-                "description": "A string value that should be kept secret.",
-                "type": "string",
-                "writeOnly": true,
-                "format": "password"
+                "writeOnly": true
               }
             },
             "required": [
               "value"
             ],
-            "block_type_slug": "secret",
             "secret_fields": [
               "value"
             ],
-            "block_schema_references": {}
+            "title": "Secret",
+            "type": "object",
+            "definitions": {
+              "JsonValue": {}
+            }
           },
           "capabilities": [],
-          "version": "2.20.2"
+          "version": "3.0.11"
         }
       },
       "sendgrid-email": {
         "name": "Sendgrid Email",
         "slug": "sendgrid-email",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/82bc6ed16ca42a2252a5512c72233a253b8a58eb-250x250.png",
-        "documentation_url": "https://docs.prefect.io/api-ref/prefect/blocks/notifications/#prefect.blocks.notifications.SendgridEmail",
+        "documentation_url": "https://docs.prefect.io/latest/automate/events/automations-triggers#sending-notifications-with-automations",
         "description": "Enables sending notifications via Sendgrid email service.",
         "code_example": "Load a saved Sendgrid and send a email message:\n```python\nfrom prefect.blocks.notifications import SendgridEmail\n\nsendgrid_block = SendgridEmail.load(\"BLOCK_NAME\")\n\nsendgrid_block.notify(\"Hello from Prefect!\")",
         "block_schema": {
           "checksum": "sha256:ca1ce43172228b65a570b1a5de9cdbd9813945e672807dc42d21b69d9d3977e7",
           "fields": {
-            "title": "SendgridEmail",
+            "block_schema_references": {},
+            "block_type_slug": "sendgrid-email",
             "description": "Enables sending notifications via Sendgrid email service.",
-            "type": "object",
             "properties": {
               "notify_type": {
-                "title": "Notify Type",
-                "description": "The type of notification being performed; the prefect_default is a plain notification that does not attach an image.",
                 "default": "prefect_default",
+                "description": "The type of notification being performed; the prefect_default is a plain notification that does not attach an image.",
                 "enum": [
                   "prefect_default",
                   "info",
@@ -1503,33 +868,34 @@
                   "warning",
                   "failure"
                 ],
+                "title": "Notify Type",
                 "type": "string"
               },
               "api_key": {
-                "title": "API Key",
                 "description": "The API Key associated with your sendgrid account.",
+                "format": "password",
+                "title": "API Key",
                 "type": "string",
-                "writeOnly": true,
-                "format": "password"
+                "writeOnly": true
               },
               "sender_email": {
-                "title": "Sender email id",
                 "description": "The sender email id.",
                 "examples": [
                   "test-support@gmail.com"
                 ],
+                "title": "Sender email id",
                 "type": "string"
               },
               "to_emails": {
-                "title": "Recipient emails",
                 "description": "Email ids of all recipients.",
                 "examples": [
                   "\"recipient1@gmail.com\""
                 ],
-                "type": "array",
                 "items": {
                   "type": "string"
-                }
+                },
+                "title": "Recipient emails",
+                "type": "array"
               }
             },
             "required": [
@@ -1537,36 +903,35 @@
               "sender_email",
               "to_emails"
             ],
-            "block_type_slug": "sendgrid-email",
             "secret_fields": [
               "api_key"
             ],
-            "block_schema_references": {}
+            "title": "SendgridEmail",
+            "type": "object"
           },
           "capabilities": [
             "notify"
           ],
-          "version": "2.20.2"
+          "version": "3.0.11"
         }
       },
       "slack-webhook": {
         "name": "Slack Webhook",
         "slug": "slack-webhook",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/c1965ecbf8704ee1ea20d77786de9a41ce1087d1-500x500.png",
-        "documentation_url": "https://docs.prefect.io/api-ref/prefect/blocks/notifications/#prefect.blocks.notifications.SlackWebhook",
+        "documentation_url": "https://docs.prefect.io/latest/automate/events/automations-triggers#sending-notifications-with-automations",
         "description": "Enables sending notifications via a provided Slack webhook.",
         "code_example": "Load a saved Slack webhook and send a message:\n```python\nfrom prefect.blocks.notifications import SlackWebhook\n\nslack_webhook_block = SlackWebhook.load(\"BLOCK_NAME\")\nslack_webhook_block.notify(\"Hello from Prefect!\")\n```",
         "block_schema": {
-          "checksum": "sha256:ae15fcfa93f3668490d37fa653127c0af0cade360cded6a37fcdadd49486abff",
+          "checksum": "sha256:27d4fa59cceca2b98793d6ef0f97fd3b416f9cacd26912573d8edc05ca1666b4",
           "fields": {
-            "title": "SlackWebhook",
+            "block_schema_references": {},
+            "block_type_slug": "slack-webhook",
             "description": "Enables sending notifications via a provided Slack webhook.",
-            "type": "object",
             "properties": {
               "notify_type": {
-                "title": "Notify Type",
-                "description": "The type of notification being performed; the prefect_default is a plain notification that does not attach an image.",
                 "default": "prefect_default",
+                "description": "The type of notification being performed; the prefect_default is a plain notification that does not attach an image.",
                 "enum": [
                   "prefect_default",
                   "info",
@@ -1574,92 +939,122 @@
                   "warning",
                   "failure"
                 ],
+                "title": "Notify Type",
                 "type": "string"
               },
               "url": {
-                "title": "Webhook URL",
                 "description": "Slack incoming webhook URL used to send notifications.",
                 "examples": [
                   "https://hooks.slack.com/XXX"
                 ],
+                "format": "password",
+                "title": "Webhook URL",
                 "type": "string",
-                "writeOnly": true,
-                "format": "password"
+                "writeOnly": true
+              },
+              "allow_private_urls": {
+                "default": true,
+                "description": "Whether to allow notifications to private URLs. Defaults to True.",
+                "title": "Allow Private Urls",
+                "type": "boolean"
               }
             },
             "required": [
               "url"
             ],
-            "block_type_slug": "slack-webhook",
             "secret_fields": [
               "url"
             ],
-            "block_schema_references": {}
+            "title": "SlackWebhook",
+            "type": "object"
           },
           "capabilities": [
             "notify"
           ],
-          "version": "2.20.2"
+          "version": "3.0.11"
         }
       },
       "smb": {
         "name": "SMB",
         "slug": "smb",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/3f624663f7beb97d011d011bffd51ecf6c499efc-195x195.png",
-        "documentation_url": "https://docs.prefect.io/concepts/filesystems/#smb",
+        "documentation_url": "https://docs.prefect.io/latest/develop/results#specifying-a-default-filesystem",
         "description": "Store data as a file on a SMB share.",
         "code_example": "Load stored SMB config:\n\n```python\nfrom prefect.filesystems import SMB\nsmb_block = SMB.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:75c58ad4a657fcb859ee31662b04f7bbbe515bffc037c741e57072d28b9b0816",
+          "checksum": "sha256:43bb8145a5f701e6453ca0f91ccd5640f291960b02d916055ff1523bab896f33",
           "fields": {
-            "title": "SMB",
+            "block_schema_references": {},
+            "block_type_slug": "smb",
             "description": "Store data as a file on a SMB share.",
-            "type": "object",
             "properties": {
               "share_path": {
-                "title": "Share Path",
                 "description": "SMB target (requires <SHARE>, followed by <PATH>).",
                 "examples": [
                   "/SHARE/dir/subdir"
                 ],
+                "title": "Share Path",
                 "type": "string"
               },
               "smb_username": {
-                "title": "SMB Username",
+                "anyOf": [
+                  {
+                    "format": "password",
+                    "type": "string",
+                    "writeOnly": true
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "Username with access to the target SMB SHARE.",
-                "type": "string",
-                "writeOnly": true,
-                "format": "password"
+                "title": "SMB Username"
               },
               "smb_password": {
-                "title": "SMB Password",
+                "anyOf": [
+                  {
+                    "format": "password",
+                    "type": "string",
+                    "writeOnly": true
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "Password for SMB access.",
-                "type": "string",
-                "writeOnly": true,
-                "format": "password"
+                "title": "SMB Password"
               },
               "smb_host": {
-                "title": "Smb Host",
                 "description": "SMB server/hostname.",
-                "tile": "SMB server/hostname",
+                "title": "SMB server/hostname",
                 "type": "string"
               },
               "smb_port": {
-                "title": "SMB port",
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "SMB port (default: 445).",
-                "type": "integer"
+                "title": "SMB port"
               }
             },
             "required": [
               "share_path",
               "smb_host"
             ],
-            "block_type_slug": "smb",
             "secret_fields": [
               "smb_username",
               "smb_password"
             ],
-            "block_schema_references": {}
+            "title": "SMB",
+            "type": "object"
           },
           "capabilities": [
             "get-directory",
@@ -1667,58 +1062,57 @@
             "read-path",
             "write-path"
           ],
-          "version": "2.20.2"
+          "version": "3.0.11"
         }
       },
       "string": {
         "name": "String",
         "slug": "string",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/c262ea2c80a2c043564e8763f3370c3db5a6b3e6-48x48.png",
-        "documentation_url": "https://docs.prefect.io/api-ref/prefect/blocks/system/#prefect.blocks.system.String",
+        "documentation_url": "https://docs.prefect.io/latest/develop/blocks",
         "description": "A block that represents a string. Deprecated, please use Variables to store string data instead.",
         "code_example": "Load a stored string value:\n```python\nfrom prefect.blocks.system import String\n\nstring_block = String.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:e9f3f43e55b73bc94ee2a355f1e4ef7064645268cba22571c2a95d90a2af8dd0",
+          "checksum": "sha256:d1323de7a11a0fcd1854515cf86358ad819f51e8d43f5ba176578965f54b2f9f",
           "fields": {
-            "title": "String",
-            "description": "A block that represents a string",
-            "type": "object",
+            "block_schema_references": {},
+            "block_type_slug": "string",
+            "description": "A block that represents a string. Deprecated, please use Variables to store string data instead.",
             "properties": {
               "value": {
-                "title": "Value",
                 "description": "A string value.",
+                "title": "Value",
                 "type": "string"
               }
             },
             "required": [
               "value"
             ],
-            "block_type_slug": "string",
             "secret_fields": [],
-            "block_schema_references": {}
+            "title": "String",
+            "type": "object"
           },
           "capabilities": [],
-          "version": "2.20.2"
+          "version": "3.0.11"
         }
       },
       "twilio-sms": {
         "name": "Twilio SMS",
         "slug": "twilio-sms",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/8bd8777999f82112c09b9c8d57083ac75a4a0d65-250x250.png",
-        "documentation_url": "https://docs.prefect.io/api-ref/prefect/blocks/notifications/#prefect.blocks.notifications.TwilioSMS",
+        "documentation_url": "https://docs.prefect.io/latest/automate/events/automations-triggers#sending-notifications-with-automations",
         "description": "Enables sending notifications via Twilio SMS.",
         "code_example": "Load a saved `TwilioSMS` block and send a message:\n```python\nfrom prefect.blocks.notifications import TwilioSMS\ntwilio_webhook_block = TwilioSMS.load(\"BLOCK_NAME\")\ntwilio_webhook_block.notify(\"Hello from Prefect!\")\n```",
         "block_schema": {
           "checksum": "sha256:a3c827e6f0554918bbd7a4161795ad86a5e5baf980993cdc6e9e0d58c08b9aec",
           "fields": {
-            "title": "TwilioSMS",
+            "block_schema_references": {},
+            "block_type_slug": "twilio-sms",
             "description": "Enables sending notifications via Twilio SMS.",
-            "type": "object",
             "properties": {
               "notify_type": {
-                "title": "Notify Type",
-                "description": "The type of notification being performed; the prefect_default is a plain notification that does not attach an image.",
                 "default": "prefect_default",
+                "description": "The type of notification being performed; the prefect_default is a plain notification that does not attach an image.",
                 "enum": [
                   "prefect_default",
                   "info",
@@ -1726,38 +1120,39 @@
                   "warning",
                   "failure"
                 ],
+                "title": "Notify Type",
                 "type": "string"
               },
               "account_sid": {
-                "title": "Account Sid",
                 "description": "The Twilio Account SID - it can be found on the homepage of the Twilio console.",
+                "title": "Account Sid",
                 "type": "string"
               },
               "auth_token": {
-                "title": "Auth Token",
                 "description": "The Twilio Authentication Token - it can be found on the homepage of the Twilio console.",
+                "format": "password",
+                "title": "Auth Token",
                 "type": "string",
-                "writeOnly": true,
-                "format": "password"
+                "writeOnly": true
               },
               "from_phone_number": {
-                "title": "From Phone Number",
                 "description": "The valid Twilio phone number to send the message from.",
                 "examples": [
                   "18001234567"
                 ],
+                "title": "From Phone Number",
                 "type": "string"
               },
               "to_phone_numbers": {
-                "title": "To Phone Numbers",
                 "description": "A list of valid Twilio phone number(s) to send the message to.",
                 "examples": [
                   "18004242424"
                 ],
-                "type": "array",
                 "items": {
                   "type": "string"
-                }
+                },
+                "title": "To Phone Numbers",
+                "type": "array"
               }
             },
             "required": [
@@ -1766,36 +1161,35 @@
               "from_phone_number",
               "to_phone_numbers"
             ],
-            "block_type_slug": "twilio-sms",
             "secret_fields": [
               "auth_token"
             ],
-            "block_schema_references": {}
+            "title": "TwilioSMS",
+            "type": "object"
           },
           "capabilities": [
             "notify"
           ],
-          "version": "2.20.2"
+          "version": "3.0.11"
         }
       },
       "webhook": {
         "name": "Webhook",
         "slug": "webhook",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/c7247cb359eb6cf276734d4b1fbf00fb8930e89e-250x250.png",
-        "documentation_url": "https://docs.prefect.io/api-ref/prefect/blocks/webhook/#prefect.blocks.webhook.Webhook",
+        "documentation_url": "https://docs.prefect.io/latest/automate/events/webhook-triggers",
         "description": "Block that enables calling webhooks.",
         "code_example": "```python\nfrom prefect.blocks.webhook import Webhook\n\nwebhook_block = Webhook.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:11d0a5b876e99f1209eea7a9f722702a14eff26f29a96869111fa77fbfe3c2a7",
+          "checksum": "sha256:61e9dbea14935ccb2cfac7eb38f01c4e878a81073806f2aec993820fa0d91eb3",
           "fields": {
-            "title": "Webhook",
+            "block_schema_references": {},
+            "block_type_slug": "webhook",
             "description": "Block that enables calling webhooks.",
-            "type": "object",
             "properties": {
               "method": {
-                "title": "Method",
-                "description": "The webhook request method. Defaults to `POST`.",
                 "default": "POST",
+                "description": "The webhook request method. Defaults to `POST`.",
                 "enum": [
                   "GET",
                   "POST",
@@ -1803,36 +1197,49 @@
                   "PATCH",
                   "DELETE"
                 ],
+                "title": "Method",
                 "type": "string"
               },
               "url": {
-                "title": "Webhook URL",
                 "description": "The webhook URL.",
                 "examples": [
                   "https://hooks.slack.com/XXX"
                 ],
+                "format": "password",
+                "title": "Webhook URL",
                 "type": "string",
-                "writeOnly": true,
-                "format": "password"
+                "writeOnly": true
               },
               "headers": {
-                "title": "Webhook Headers",
                 "description": "A dictionary of headers to send with the webhook request.",
+                "title": "Webhook Headers",
                 "type": "object"
+              },
+              "allow_private_urls": {
+                "default": true,
+                "description": "Whether to allow notifications to private URLs. Defaults to True.",
+                "title": "Allow Private Urls",
+                "type": "boolean"
+              },
+              "verify": {
+                "default": true,
+                "description": "Whether or not to enforce a secure connection to the webhook.",
+                "title": "Verify",
+                "type": "boolean"
               }
             },
             "required": [
               "url"
             ],
-            "block_type_slug": "webhook",
             "secret_fields": [
               "url",
               "headers.*"
             ],
-            "block_schema_references": {}
+            "title": "Webhook",
+            "type": "object"
           },
           "capabilities": [],
-          "version": "2.20.2"
+          "version": "3.0.11"
         }
       }
     }
