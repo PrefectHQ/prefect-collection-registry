@@ -30,7 +30,7 @@
             "type": "object"
           },
           "capabilities": [],
-          "version": "3.1.5"
+          "version": "3.1.11"
         }
       },
       "discord-webhook": {
@@ -133,7 +133,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.1.5"
+          "version": "3.1.11"
         }
       },
       "json": {
@@ -163,7 +163,7 @@
             "type": "object"
           },
           "capabilities": [],
-          "version": "3.1.5"
+          "version": "3.1.11"
         }
       },
       "local-file-system": {
@@ -204,7 +204,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "3.1.5"
+          "version": "3.1.11"
         }
       },
       "mattermost-webhook": {
@@ -317,7 +317,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.1.5"
+          "version": "3.1.11"
         }
       },
       "ms-teams-webhook": {
@@ -388,7 +388,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.1.5"
+          "version": "3.1.11"
         }
       },
       "opsgenie-webhook": {
@@ -585,7 +585,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.1.5"
+          "version": "3.1.11"
         }
       },
       "pager-duty-webhook": {
@@ -738,7 +738,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.1.5"
+          "version": "3.1.11"
         }
       },
       "remote-file-system": {
@@ -782,7 +782,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "3.1.5"
+          "version": "3.1.11"
         }
       },
       "secret": {
@@ -790,14 +790,14 @@
         "slug": "secret",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/c6f20e556dd16effda9df16551feecfb5822092b-48x48.png",
         "documentation_url": "https://docs.prefect.io/latest/develop/blocks",
-        "description": "A block that represents a secret value. The value stored in this block will be obfuscated when\nthis block is viewed or edited in the UI.",
+        "description": "A block that represents a secret value. The value stored in this block will be obfuscated when this block is viewed or edited in the UI.",
         "code_example": "```python\nfrom prefect.blocks.system import Secret\n\nSecret(value=\"sk-1234567890\").save(\"BLOCK_NAME\", overwrite=True)\n\nsecret_block = Secret.load(\"BLOCK_NAME\")\n\n# Access the stored secret\nsecret_block.get()\n```",
         "block_schema": {
-          "checksum": "sha256:fab1c36f1340a9fee1a4de830018147ac5266bf9121de8df9c1c23d8897cd701",
+          "checksum": "sha256:f290d6bec2665ff8179b4b88a1ba1942bc93b228504da8b65ce66e8aa70d6159",
           "fields": {
             "block_schema_references": {},
             "block_type_slug": "secret",
-            "description": "A block that represents a secret value. The value stored in this block will be obfuscated when\nthis block is viewed or edited in the UI.",
+            "description": "A block that represents a secret value. The value stored in this block will be obfuscated when this block is viewed or edited in the UI.",
             "properties": {
               "value": {
                 "anyOf": [
@@ -841,7 +841,58 @@
             }
           },
           "capabilities": [],
-          "version": "3.1.5"
+          "version": "3.1.11"
+        }
+      },
+      "secret-str": {
+        "name": "Secret[str]",
+        "slug": "secret-str",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/c6f20e556dd16effda9df16551feecfb5822092b-48x48.png",
+        "documentation_url": "https://docs.prefect.io/latest/develop/blocks",
+        "description": "A block that represents a secret value. The value stored in this block will be obfuscated when this block is viewed or edited in the UI.",
+        "code_example": "```python\nfrom prefect.blocks.system import Secret\n\nsecret_str_block = Secret.load(\"BLOCK_NAME\")\n```",
+        "block_schema": {
+          "checksum": "sha256:83bdf90a91eee7fa35b1be9187a59f53976f8e056cada7d5b7b67d79fa6b7f3e",
+          "fields": {
+            "block_schema_references": {},
+            "block_type_slug": "secret-str",
+            "description": "A block that represents a secret value. The value stored in this block will be obfuscated when this block is viewed or edited in the UI.",
+            "properties": {
+              "value": {
+                "anyOf": [
+                  {
+                    "format": "password",
+                    "type": "string",
+                    "writeOnly": true
+                  },
+                  {
+                    "type": "string"
+                  }
+                ],
+                "description": "A value that should be kept secret.",
+                "examples": [
+                  "sk-1234567890",
+                  {
+                    "password": "s3cr3t",
+                    "username": "johndoe"
+                  }
+                ],
+                "format": "password",
+                "title": "Value",
+                "writeOnly": true
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "secret_fields": [
+              "value"
+            ],
+            "title": "Secret[str]",
+            "type": "object"
+          },
+          "capabilities": [],
+          "version": "3.1.11"
         }
       },
       "sendgrid-email": {
@@ -912,7 +963,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.1.5"
+          "version": "3.1.11"
         }
       },
       "slack-webhook": {
@@ -971,7 +1022,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.1.5"
+          "version": "3.1.11"
         }
       },
       "smb": {
@@ -1062,7 +1113,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "3.1.5"
+          "version": "3.1.11"
         }
       },
       "string": {
@@ -1093,7 +1144,7 @@
             "type": "object"
           },
           "capabilities": [],
-          "version": "3.1.5"
+          "version": "3.1.11"
         }
       },
       "twilio-sms": {
@@ -1170,7 +1221,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.1.5"
+          "version": "3.1.11"
         }
       },
       "webhook": {
@@ -1239,7 +1290,7 @@
             "type": "object"
           },
           "capabilities": [],
-          "version": "3.1.5"
+          "version": "3.1.11"
         }
       }
     }
