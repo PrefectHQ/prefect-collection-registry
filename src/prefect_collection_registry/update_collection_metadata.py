@@ -14,9 +14,6 @@ from prefect.utilities.collections import listrepr
 from prefect_collection_registry.generate_block_metadata import (
     update_block_metadata_for_collection,
 )
-from prefect_collection_registry.generate_flow_metadata import (
-    update_flow_metadata_for_collection,
-)
 from prefect_collection_registry.generate_worker_metadata import (
     update_worker_metadata_for_package,
 )
@@ -106,7 +103,6 @@ async def update_collection_metadata(
 ) -> State:
     """Updates each variety of metadata for a given package."""
     # Run updates sequentially to avoid conflicts in aggregate files
-    await update_flow_metadata_for_collection(collection_name, branch_name)
     await update_block_metadata_for_collection(collection_name, branch_name)
     await update_worker_metadata_for_package(collection_name, branch_name)
 
