@@ -20,9 +20,6 @@ jobs:
     steps:
 
       - uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-          fetch-depth: 0
 
       - name: Install the latest version of uv
         uses: astral-sh/setup-uv@v5
@@ -33,4 +30,4 @@ jobs:
         env:
           PREFECT_SERVER_DATABASE_CONNECTION_URL: "sqlite+aiosqlite:///./collection-tests.db"
         run: |
-          uv run pytest -vv
+          uv run --with-editable '.[dev]' pytest -vv

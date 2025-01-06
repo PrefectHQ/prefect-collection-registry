@@ -15,8 +15,8 @@ from prefect.utilities.dispatch import get_registry_for_type
 from prefect.utilities.importtools import to_qualified_name
 from prefect.workers.base import BaseWorker
 
-import utils
-from metadata_schemas import worker_schema
+from prefect_collection_registry.metadata_schemas import worker_schema
+from prefect_collection_registry.utils import submit_updates
 
 # `block` work pool types should only be created via
 # `Infrastructure.publish_as_work_pool`
@@ -156,7 +156,7 @@ def generate_worker_metadata_for_package(package_name: str) -> dict[str, Any]:
 @flow
 async def update_worker_metadata_for_package(package_name: str, branch_name: str):
     worker_metadata = generate_worker_metadata_for_package(package_name=package_name)
-    await utils.submit_updates(
+    await submit_updates(
         collection_metadata=worker_metadata,
         collection_name=package_name,
         branch_name=branch_name,

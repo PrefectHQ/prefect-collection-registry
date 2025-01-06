@@ -7,8 +7,12 @@ from prefect import Flow, flow, task
 from prefect.states import Completed
 from prefect.utilities.importtools import load_module
 
-import utils
-from metadata_schemas import flow_schema
+from prefect_collection_registry.metadata_schemas import flow_schema
+from prefect_collection_registry.utils import (
+    find_flows_in_module,
+    get_logo_url_for_collection,
+    submit_updates,
+)
 
 SKIP_DOCSTRING_SECTIONS = {"parameters", "raises"}
 
@@ -75,15 +79,15 @@ def summarize_flow(flow: Flow[..., Any], collection_name: str) -> dict[str, Any]
 
     flow_filepath = f"{flow.fn.__module__.replace('.', '/')}.py"
 
-    flow_summary = dict(
+    flow_summary: dict[str, Any] = dict(
         sorted(
-            {
+            {  # type: ignore
                 "name": flow.name,
                 "slug": flow.fn.__name__,
                 "parameters": dict(flow.parameters),
                 "description": {**parse_flow_docstring(flow)},
                 "documentation_url": get_doc_url(flow),
-                "logo_url": utils.get_logo_url_for_collection(collection_name),
+                "logo_url": get_logo_url_for_collection(collection_name),
                 "install_command": f"pip install {collection_name}",
                 "path_containing_flow": flow_filepath,
                 "entrypoint": f"{flow_filepath}:{flow.fn.__name__}",
@@ -108,7 +112,7 @@ def generate_flow_metadata(collection_name: str) -> dict[str, Any]:
 
     return {
         flow.fn.__name__: summarize_flow(flow, collection_name)
-        for flow in utils.find_flows_in_module(collection_slug)
+        for flow in find_flows_in_module(collection_slug)
     }
 
 
@@ -119,7 +123,7 @@ async def update_flow_metadata_for_collection(collection_name: str, branch_name:
         return Completed(message="No flow metadata to update for Prefect core.")
 
     collection_flow_metadata = generate_flow_metadata(collection_name)
-    await utils.submit_updates(
+    await submit_updates(
         collection_metadata=collection_flow_metadata,
         collection_name=collection_name,
         branch_name=branch_name,

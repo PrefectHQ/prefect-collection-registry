@@ -1,8 +1,10 @@
 import fastjsonschema
 import pytest
 
-from generate_worker_metadata import generate_worker_metadata_for_package
-from metadata_schemas import worker_schema
+from prefect_collection_registry.generate_worker_metadata import (
+    generate_worker_metadata_for_package,
+)
+from prefect_collection_registry.metadata_schemas import worker_schema
 
 
 @pytest.mark.parametrize(
@@ -20,7 +22,7 @@ def test_generate_worker_metadata_for_package(
     result = generate_worker_metadata_for_package(package_name)
     assert set(result.keys()) == expected_worker_types
 
-    validate = fastjsonschema.compile(worker_schema)
+    validate = fastjsonschema.compile(worker_schema)  # type: ignore
     for worker_metadata in result.values():
         # will raise if metadata is invalid
-        validate(worker_metadata)
+        validate(worker_metadata)  # type: ignore

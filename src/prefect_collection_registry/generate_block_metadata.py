@@ -14,8 +14,8 @@ from prefect import flow
 from prefect.blocks.core import Block
 from prefect.plugins import safe_load_entrypoints
 
-import utils
-from metadata_schemas import block_schema
+from prefect_collection_registry import utils
+from prefect_collection_registry.metadata_schemas import block_schema
 
 # Some collection blocks share names with core blocks. We exclude them
 # from the registry for now to avoid confusion.

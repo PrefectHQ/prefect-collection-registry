@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-from utils import validate_view_content
+from prefect_collection_registry.utils import validate_view_content
 
 EXCLUDE_TYPES = {"demo-flow"}
 

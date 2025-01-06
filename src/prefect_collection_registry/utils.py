@@ -127,7 +127,7 @@ async def submit_updates(
     branch_name: str,
     variety: CollectionViewVariety,
     repo_name: str = "prefect-collection-registry",
-):
+) -> None:
     """
     Submits updates to the collection registry.
     """
@@ -368,7 +368,7 @@ def validate_view_content(
     view_dict: dict[str, Any], variety: CollectionViewVariety
 ) -> None:
     """Raises an error if the view content is not valid."""
-    import metadata_schemas
+    from . import metadata_schemas
 
     schema = getattr(metadata_schemas, f"{variety}_schema")
     validate = fastjsonschema.compile(schema)  # type: ignore

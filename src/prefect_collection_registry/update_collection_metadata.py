@@ -10,10 +10,24 @@ from prefect.states import Completed, Failed, State
 from prefect.types import DateTime
 from prefect.utilities.collections import listrepr
 
-import utils
-from generate_block_metadata import update_block_metadata_for_collection
-from generate_flow_metadata import update_flow_metadata_for_collection
-from generate_worker_metadata import update_worker_metadata_for_package
+from prefect_collection_registry.generate_block_metadata import (
+    update_block_metadata_for_collection,
+)
+from prefect_collection_registry.generate_flow_metadata import (
+    update_flow_metadata_for_collection,
+)
+from prefect_collection_registry.generate_worker_metadata import (
+    update_worker_metadata_for_package,
+)
+from prefect_collection_registry.utils import (
+    branch_exists,
+    create_pull_request,
+    create_repo_ref,
+    get_collection_names,
+    get_commit_sha,
+    get_latest_release,
+    get_repo_contents,
+)
 
 UPDATE_ALL_DESCRIPTION = """
 The `update_all_collections` triggers many instances of `update_collection_metadata` in order to
@@ -30,7 +44,7 @@ async def collection_needs_update(collection_name: str) -> tuple[str, bool]:
     Checks if the collection needs to be updated.
     """
     try:
-        registry_contents = await utils.get_repo_contents(
+        registry_contents = await get_repo_contents(
             "PrefectHQ",
             "prefect-collection-registry",
             f"collections/{collection_name}/blocks",
@@ -43,7 +57,7 @@ async def collection_needs_update(collection_name: str) -> tuple[str, bool]:
             [content["name"] for content in registry_contents]
         )[-1].replace(".json", "")
 
-        latest_release = await utils.get_latest_release("PrefectHQ", collection_name)
+        latest_release = await get_latest_release("PrefectHQ", collection_name)
 
         if collection_name == "prefect":
             latest_release = "v" + latest_release
@@ -70,13 +84,13 @@ async def create_ref_if_not_exists(branch_name: str) -> str:
     new_branch_name = f"{branch_name}-{DateTime.now().format('MM-DD-YYYY')}"
 
     # Check if branch exists first
-    if not await utils.branch_exists(
+    if not await branch_exists(
         "PrefectHQ", "prefect-collection-registry", new_branch_name
     ):
-        main_sha = await utils.get_commit_sha(
+        main_sha = await get_commit_sha(
             "PrefectHQ", "prefect-collection-registry", "main"
         )
-        await utils.create_repo_ref(
+        await create_repo_ref(
             "PrefectHQ",
             "prefect-collection-registry",
             f"refs/heads/{new_branch_name}",
@@ -88,7 +102,7 @@ async def create_ref_if_not_exists(branch_name: str) -> str:
 
     # Create PR if needed
     try:
-        await utils.create_pull_request(
+        await create_pull_request(
             "PrefectHQ",
             "prefect-collection-registry",
             PR_TITLE,
@@ -117,20 +131,12 @@ async def update_collection_metadata(
     Updates each variety of metadata for a given package.
     """
 
-    await update_flow_metadata_for_collection(
-        collection_name=collection_name,
-        branch_name=branch_name,
+    await asyncio.gather(
+        update_flow_metadata_for_collection(collection_name, branch_name),
+        update_block_metadata_for_collection(collection_name, branch_name),
+        update_worker_metadata_for_package(collection_name, branch_name),
     )
 
-    await update_block_metadata_for_collection(
-        collection_name=collection_name,
-        branch_name=branch_name,
-    )
-
-    await update_worker_metadata_for_package(
-        package_name=collection_name,
-        branch_name=branch_name,
-    )
     return Completed(message=f"Successfully updated {collection_name}")
 
 
@@ -219,7 +225,7 @@ async def update_all_collections(
         for collection_name, needs_update in await asyncio.gather(
             *[
                 collection_needs_update(collection_name)
-                for collection_name in await utils.get_collection_names()
+                for collection_name in await get_collection_names()
             ]
         )
         if needs_update
@@ -236,16 +242,18 @@ async def update_all_collections(
     ).result()
 
     # Check for failures
-    failed_collections = [
-        collection_name for succeeded, collection_name in results if not succeeded
+    failed_collections = [  # type: ignore
+        collection_name
+        for succeeded, collection_name in results  # type: ignore
+        if not succeeded
     ]
 
     if failed_collections:
-        return Failed(message=f"Updates failed for: {listrepr(failed_collections)}")
+        return Failed(message=f"Updates failed for: {listrepr(failed_collections)}")  # type: ignore
 
     return Completed(message="All new releases have been recorded.")
 
 
 if __name__ == "__main__":
-    os.environ["GITHUB_TOKEN"] = Secret.load("gh-util-token").get()
+    os.environ["GITHUB_TOKEN"] = Secret.load("gh-util-token").get()  # type: ignore
     asyncio.run(update_all_collections())

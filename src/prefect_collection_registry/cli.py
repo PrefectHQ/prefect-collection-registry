@@ -2,7 +2,7 @@ import asyncio
 import sys
 from typing import NoReturn
 
-from update_collection_metadata import (
+from prefect_collection_registry.update_collection_metadata import (
     update_all_collections,
     update_collection_metadata,
 )
