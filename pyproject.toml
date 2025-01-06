@@ -1,16 +1,11 @@
-[build-system]
-requires = ["setuptools", "setuptools-scm"]
-build-backend = "setuptools.build_meta"
-
 [project]
 name = "prefect-collection-registry"
-authors = [{ name = "Prefect Technologies", email = "help@prefect.io" }]
+version = "0.1.0"
 description = "Maintaining the Prefect Collection Registry"
 readme = "README.md"
-requires-python = ">=3.10"
-classifiers = ["Programming Language :: Python :: 3"]
-dependencies = ["prefect>=3.0.0", "fastjsonschema==2.16.2", "github3.py>=3.2.0"]
-dynamic = ["version"]
-
-[project.optional-dependencies]
-dev = ["pytest", "coverage", "prefect-kubernetes"]
+requires-python = ">=3.12"
+dependencies = [
+    "prefect@git+https://github.com/PrefectHQ/prefect.git",
+    "fastjsonschema==2.16.2",
+    "gh-util",
+]

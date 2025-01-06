@@ -1,0 +1,3 @@
+- always dict[str, Any], never dict or Dict or Dict[str, Any]
+- always list[str], never List or List[str]
+- incremental and testable changes are the best changes

@@ -1,5 +1,5 @@
 from collections import defaultdict
-from typing import Any, Callable, Dict, List
+from typing import Any, Callable
 
 import fastjsonschema
 from griffe import Docstring, DocstringSectionKind, Parser, parse
@@ -13,12 +13,12 @@ from metadata_schemas import flow_schema
 SKIP_DOCSTRING_SECTIONS = {"parameters", "raises"}
 
 
-def get_code_examples(obj: Callable) -> List[str]:
+def get_code_examples(obj: Callable[..., Any]) -> list[str]:
     """
     Gathers all code examples within a callable that has a Google style docstring.
     """
-    code_examples = set()
-    docstring = Docstring(obj.__doc__)
+    code_examples: set[str] = set()
+    docstring = Docstring(obj.__doc__ or "")
     parsed_sections = parse(docstring, Parser.google)
 
     for section in parsed_sections:
@@ -35,13 +35,13 @@ def get_code_examples(obj: Callable) -> List[str]:
     return list(code_examples)
 
 
-def parse_flow_docstring(flow: Flow) -> Dict[str, Any]:
+def parse_flow_docstring(flow: Flow[..., Any]) -> dict[str, Any]:
     """
     Parses the docstring of a flow.
     """
-    sections = parse(Docstring(flow.description), Parser.google)
+    sections = parse(Docstring(flow.description or ""), Parser.google)
 
-    docstring_sections = defaultdict(list)
+    docstring_sections: defaultdict[str, Any] = defaultdict(list)
 
     for section in sections:
         section = section.as_dict()
@@ -59,7 +59,7 @@ def parse_flow_docstring(flow: Flow) -> Dict[str, Any]:
     return docstring_sections
 
 
-def get_doc_url(flow: Flow) -> str:
+def get_doc_url(flow: Flow[..., Any]) -> str:
     return (
         "https://prefecthq.github.io/"
         f"{flow.fn.__module__.replace('.', '/').replace('_', '-')}/"
@@ -68,7 +68,7 @@ def get_doc_url(flow: Flow) -> str:
     )
 
 
-def summarize_flow(flow: Flow, collection_name: str) -> Dict[str, Any]:
+def summarize_flow(flow: Flow[..., Any], collection_name: str) -> dict[str, Any]:
     """Generates a summary of a flow that should match the flow JSON schema,
     and validates it against the schema.
     """
@@ -91,13 +91,13 @@ def summarize_flow(flow: Flow, collection_name: str) -> Dict[str, Any]:
             }.items()
         )
     )
-    validate = fastjsonschema.compile(flow_schema)
-    validate(flow_summary)
+    validate = fastjsonschema.compile(flow_schema)  # type: ignore
+    validate(flow_summary)  # type: ignore
     return flow_summary
 
 
 @task
-def generate_flow_metadata(collection_name: str) -> Dict[str, Any]:
+def generate_flow_metadata(collection_name: str) -> dict[str, Any]:
     """
     Generates a JSON file containing metadata about all flows in a given collection.
     """
@@ -113,13 +113,13 @@ def generate_flow_metadata(collection_name: str) -> Dict[str, Any]:
 
 
 @flow(name="update-flow-metadata-for-collection")
-def update_flow_metadata_for_collection(collection_name: str, branch_name: str):
+async def update_flow_metadata_for_collection(collection_name: str, branch_name: str):
     """Generates and submits flow metadata for a given collection."""
     if collection_name == "prefect":
         return Completed(message="No flow metadata to update for Prefect core.")
 
     collection_flow_metadata = generate_flow_metadata(collection_name)
-    utils.submit_updates(
+    await utils.submit_updates(
         collection_metadata=collection_flow_metadata,
         collection_name=collection_name,
         branch_name=branch_name,

@@ -1,12 +1,13 @@
 import asyncio
-import subprocess
+import os
+from typing import Any
 
-import github3
-import pendulum
-from prefect import flow, task
-from prefect.client.schemas.objects import FlowRun
-from prefect.deployments import run_deployment
+import httpx
+from prefect import flow, task, unmapped
+from prefect.artifacts import create_markdown_artifact
+from prefect.blocks.system import Secret
 from prefect.states import Completed, Failed, State
+from prefect.types import DateTime
 from prefect.utilities.collections import listrepr
 
 import utils
@@ -28,88 +29,87 @@ async def collection_needs_update(collection_name: str) -> tuple[str, bool]:
     """
     Checks if the collection needs to be updated.
     """
-    collection_repo = await utils.get_repo(collection_name)
-    registry_repo = await utils.get_repo("prefect-collection-registry")
     try:
+        registry_contents = await utils.get_repo_contents(
+            "PrefectHQ",
+            "prefect-collection-registry",
+            f"collections/{collection_name}/blocks",
+            ref="main",
+        )
+        if not registry_contents:
+            return collection_name, True
+
         latest_recorded_release = sorted(
-            [
-                name
-                for name, _ in registry_repo.directory_contents(
-                    directory_path=f"collections/{collection_name}/blocks", ref="main"
-                )
-            ]
+            [content["name"] for content in registry_contents]
         )[-1].replace(".json", "")
-    except github3.exceptions.NotFoundError:
+
+        latest_release = await utils.get_latest_release("PrefectHQ", collection_name)
+
+        if collection_name == "prefect":
+            latest_release = "v" + latest_release
+
+        if latest_release == latest_recorded_release:
+            print(
+                f"Package {collection_name!r} is up to date! - "
+                f"(latest release: {latest_release})"
+            )
+            return collection_name, False
+
         return collection_name, True
 
-    latest_release = collection_repo.latest_release().tag_name
-
-    if collection_name == "prefect":
-        latest_release = "v" + latest_release
-
-    if latest_release == latest_recorded_release:
-        print(
-            f"Package {collection_name!r} is up to date! - "
-            f"(latest release: {latest_release})"
-        )
-        return collection_name, False
-
-    return collection_name, True
+    except Exception as e:
+        if "Not Found" in str(e):
+            return collection_name, True
+        raise
 
 
 @task(name="Create Branch / PR if possible")
 async def create_ref_if_not_exists(branch_name: str) -> str:
-    """
-    Creates a branch and PR for latest releases if they don't already exist.
-    """
-    registry_repo = await utils.get_repo("prefect-collection-registry")
+    """Creates a branch and PR for latest releases if they don't already exist."""
     PR_TITLE = "Update metadata for collection releases"
-    new_branch_name = f"{branch_name}-{pendulum.now().format('MM-DD-YYYY')}"
+    new_branch_name = f"{branch_name}-{DateTime.now().format('MM-DD-YYYY')}"
 
-    try:
-        registry_repo.create_ref(
-            ref=f"refs/heads/{new_branch_name}",
-            sha=registry_repo.commit(sha="main").sha,
+    # Check if branch exists first
+    if not await utils.branch_exists(
+        "PrefectHQ", "prefect-collection-registry", new_branch_name
+    ):
+        main_sha = await utils.get_commit_sha(
+            "PrefectHQ", "prefect-collection-registry", "main"
         )
-        print(f"Created ref {new_branch_name!r} on {registry_repo.full_name!r}!")
+        await utils.create_repo_ref(
+            "PrefectHQ",
+            "prefect-collection-registry",
+            f"refs/heads/{new_branch_name}",
+            main_sha,
+        )
+        print(f"Created ref {new_branch_name!r}!")
+    else:
+        print(f"Ref {new_branch_name!r} already exists!")
 
-    except github3.exceptions.UnprocessableEntity as e:
-        if "Reference already exists" in str(e):
-            print(f"Ref {new_branch_name!r} already exists!")
+    # Create PR if needed
+    try:
+        await utils.create_pull_request(
+            "PrefectHQ",
+            "prefect-collection-registry",
+            PR_TITLE,
+            "Collection metadata updates are submitted to this PR by a Prefect flow.",
+            new_branch_name,
+        )
+        print(f"Created PR for {new_branch_name!r}!")
+    except httpx.HTTPStatusError as e:
+        response_data = e.response.json()
+        if any(
+            error.get("message", "").startswith("A pull request already exists")
+            for error in response_data.get("errors", [])
+        ):
+            print(f"PR for {new_branch_name!r} already exists!")
         else:
             raise
-
-    if registry_repo.compare_commits("main", new_branch_name).ahead_by == 0:
-        print(f"Cannot create PR - no difference between main and {new_branch_name!r}.")
-        return new_branch_name
-
-    prs = list(registry_repo.pull_requests(state="open"))
-
-    pr_already_exists = any(
-        pr.title == PR_TITLE and pr.head.ref == new_branch_name for pr in prs
-    )
-
-    if pr_already_exists:
-        print(f"PR for {new_branch_name!r} already exists!")
-        return new_branch_name
-
-    new_pr = registry_repo.create_pull(
-        title=PR_TITLE,
-        body="Collection metadata updates are submitted to this PR by a Prefect flow.",
-        head=new_branch_name,
-        base="main",
-        maintainer_can_modify=True,
-    )
-
-    new_pr.issue().add_labels("automated-pr", "collection-metadata")
-
-    print(f"Created PR for {new_branch_name!r} on {registry_repo.full_name!r}!")
 
     return new_branch_name
 
 
-@flow(log_prints=True, name="update-collection-metadata")
-def update_collection_metadata(
+async def update_collection_metadata(
     collection_name: str,
     branch_name: str,
 ) -> State:
@@ -117,50 +117,101 @@ def update_collection_metadata(
     Updates each variety of metadata for a given package.
     """
 
-    # install the collection
-    PIP_INSTALL_OUTPUT = subprocess.run(
-        f"pip install -U {collection_name}[dev]".split(), stdout=subprocess.PIPE
-    ).stdout.decode("utf-8")
-
-    print(utils.pad_text(PIP_INSTALL_OUTPUT))
-
-    update_flow_metadata_for_collection.with_options(
-        flow_run_name=f"Gather / Submit FLOW metadata for {collection_name}"
-    )(
+    await update_flow_metadata_for_collection(
         collection_name=collection_name,
         branch_name=branch_name,
     )
 
-    update_block_metadata_for_collection.with_options(
-        flow_run_name=f"Gather / Submit BLOCK metadata for {collection_name}"
-    )(
+    await update_block_metadata_for_collection(
         collection_name=collection_name,
         branch_name=branch_name,
     )
 
-    update_worker_metadata_for_package.with_options(
-        flow_run_name=f"Gather / Submit WORKER metadata for {collection_name}"
-    )(
+    await update_worker_metadata_for_package(
         package_name=collection_name,
         branch_name=branch_name,
     )
     return Completed(message=f"Successfully updated {collection_name}")
 
 
+@task(log_prints=True, task_run_name="update-metadata-for-{collection_name}")
+async def run_collection_update(
+    collection_name: str, branch_name: str
+) -> tuple[bool, str]:
+    """Run a single collection update in an isolated environment."""
+    process = await asyncio.create_subprocess_exec(
+        "uv",
+        "run",
+        "--isolated",
+        "--with",
+        f"{collection_name}[dev]",
+        "src/cli.py",
+        collection_name,
+        branch_name,
+        stdout=asyncio.subprocess.PIPE,
+        stderr=asyncio.subprocess.PIPE,
+    )
+
+    stdout_buffer: list[str] = []
+    stderr_buffer: list[str] = []
+
+    async def read_stream(stream: Any, buffer: list[str]) -> None:
+        while line := await stream.readline():
+            line = line.decode().strip()
+            if line:
+                buffer.append(line)
+
+    # Read both streams concurrently
+    await asyncio.gather(
+        read_stream(process.stdout, stdout_buffer),
+        read_stream(process.stderr, stderr_buffer),
+    )
+
+    return_code = await process.wait()
+
+    # Format the output as markdown with headers
+    output: list[str] = []
+    if stdout_buffer:
+        output.extend(
+            [
+                "## Standard Output",
+                "",
+                "```",
+                *stdout_buffer,
+                "```",
+                "",
+            ]
+        )
+    if stderr_buffer:
+        output.extend(
+            [
+                "## Standard Error",
+                "",
+                "```",
+                *stderr_buffer,
+                "```",
+                "",
+            ]
+        )
+
+    if output:
+        await create_markdown_artifact(  # type: ignore
+            key=f"update-metadata-output-{collection_name}-{branch_name}",
+            markdown="\n".join(output),
+        )
+
+    return return_code == 0, collection_name
+
+
 @flow(
     name="update-all-collections",
     description=UPDATE_ALL_DESCRIPTION,
-    result_storage="gcs-bucket/collection-registry-storage",
-    retries=2,
-    retry_delay_seconds=10,
     log_prints=True,
 )
 async def update_all_collections(
     branch_name: str = "update-metadata",
 ):
-    """
-    Checks all collections for releases and updates the metadata if needed.
-    """
+    """Checks all collections for releases and updates the metadata if needed."""
     branch_name = await create_ref_if_not_exists(branch_name)
 
     collections_to_update = [
@@ -179,31 +230,22 @@ async def update_all_collections(
 
     print(f"Recording new release(s) for: {listrepr(collections_to_update)}...")
 
-    subflow_runs: list[FlowRun] = await asyncio.gather(
-        *[
-            run_deployment(
-                name="update-collection-metadata/update-a-collection",
-                parameters=dict(
-                    collection_name=collection_name, branch_name=branch_name
-                ),
-                flow_run_name=f"update-{collection_name}-{str(pendulum.now())}",
-            )
-            for collection_name in collections_to_update
-        ]
-    )
+    results = run_collection_update.map(
+        [collection_name for collection_name in collections_to_update],
+        unmapped(branch_name),
+    ).result()
 
-    if failed_subflow_runs := [
-        run.name for run in subflow_runs if run.state.is_failed()
-    ]:
-        return Failed(message=f"Some subflows failed: {listrepr(failed_subflow_runs)} ")
+    # Check for failures
+    failed_collections = [
+        collection_name for succeeded, collection_name in results if not succeeded
+    ]
+
+    if failed_collections:
+        return Failed(message=f"Updates failed for: {listrepr(failed_collections)}")
 
     return Completed(message="All new releases have been recorded.")
 
 
 if __name__ == "__main__":
-    # ALL COLLECTIONS
+    os.environ["GITHUB_TOKEN"] = Secret.load("gh-util-token").get()
     asyncio.run(update_all_collections())
-
-# # MANUAL RUNS
-# for collection in ["prefect-sqlalchemy"]:
-#     update_collection_metadata(collection, "update-metadata-manually")

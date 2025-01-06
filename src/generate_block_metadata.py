@@ -6,7 +6,7 @@ from abc import ABC
 from importlib.metadata import entry_points
 from pathlib import Path
 from types import ModuleType
-from typing import Any, Dict, List, Type
+from typing import Any
 from uuid import uuid4
 
 import fastjsonschema
@@ -19,19 +19,28 @@ from metadata_schemas import block_schema
 
 # Some collection blocks share names with core blocks. We exclude them
 # from the registry for now to avoid confusion.
-BLOCKS_BLOCKLIST = {"k8s-job", "custom-webhook", "slack-incoming-webhook"}
+BLOCKS_BLOCKLIST: set[str] = {
+    "k8s-job",
+    "custom-webhook",
+    "slack-incoming-webhook",
+    "secret-str",
+    "secret-int",
+    "secret-dict",
+    "secret-list",
+    "secret-float",
+}
 
 
-def generate_block_metadata(block_subcls: Type[Block]) -> Dict[str, Any]:
+def generate_block_metadata(block_subcls: type[Block]) -> dict[str, Any]:
     """
     Takes a block subclass and returns a JSON dict representation of
     its corresponding block type and block schema.
     """
-    block_type_dict = block_subcls._to_block_type().model_dump(
+    block_type_dict = block_subcls._to_block_type().model_dump(  # type: ignore
         exclude={"id", "created", "updated", "is_protected"},
         mode="json",
     )
-    block_type_dict["block_schema"] = block_subcls._to_block_schema(
+    block_type_dict["block_schema"] = block_subcls._to_block_schema(  # type: ignore
         block_type_id=uuid4()
     ).model_dump(
         exclude={"id", "created", "updated", "block_type_id", "block_type"},
@@ -42,13 +51,13 @@ def generate_block_metadata(block_subcls: Type[Block]) -> Dict[str, Any]:
     block_type_dict["block_schema"]["capabilities"] = sorted(
         block_type_dict["block_schema"]["capabilities"]
     )
-    validate = fastjsonschema.compile(block_schema)
-    validate(block_type_dict)
+    validate = fastjsonschema.compile(block_schema)  # type: ignore
+    validate(block_type_dict)  # type: ignore
 
     return block_type_dict
 
 
-def generate_prefect_block_metadata():
+def generate_prefect_block_metadata() -> dict[str, Any]:
     """Generates block metadata from the prefect package."""
     from prefect.utilities.dispatch import get_registry_for_type
 
@@ -67,7 +76,7 @@ def generate_prefect_block_metadata():
     }
 
 
-def generate_block_metadata_for_module(module: ModuleType):
+def generate_block_metadata_for_module(module: ModuleType) -> dict[str, Any]:
     block_subclasses = discover_block_subclasses(module)
     return dict(
         sorted(
@@ -82,7 +91,7 @@ def generate_block_metadata_for_module(module: ModuleType):
     )
 
 
-def discover_block_subclasses(module: ModuleType) -> List[Type[Block]]:
+def discover_block_subclasses(module: ModuleType) -> list[type[Block]]:
     return [
         cls
         for _, cls in inspect.getmembers(module)
@@ -92,13 +101,13 @@ def discover_block_subclasses(module: ModuleType) -> List[Type[Block]]:
     ]
 
 
-def generate_block_metadata_for_collection(collection_name: str):
+def generate_block_metadata_for_collection(collection_name: str) -> dict[str, Any]:
     if collection_name == "prefect":
         return generate_prefect_block_metadata()
 
     # group is only available for Python 3.10+
     collections = safe_load_entrypoints(entry_points(group="prefect.collections"))
-    output_dict = {}
+    output_dict: dict[str, Any] = {}
     for ep_name, module in collections.items():
         if isinstance(module, Exception):
             logging.warning(f"Error loading collection entrypoint {ep_name} - skipping")
@@ -124,7 +133,7 @@ def generate_block_metadata_for_collection(collection_name: str):
     return output_dict
 
 
-def write_block_metadata(collection_metadata: Dict[str, Any], collection_name: str):
+def write_block_metadata(collection_metadata: dict[str, Any], collection_name: str):
     if "_" in collection_name:
         raise ValueError(
             f"Names can only contain dashes, not underscores, got: {collection_name!r}"
@@ -141,9 +150,9 @@ def write_block_metadata(collection_metadata: Dict[str, Any], collection_name: s
 
 
 @flow(name="update-block-metadata-for-collection")
-def update_block_metadata_for_collection(collection_name: str, branch_name: str):
+async def update_block_metadata_for_collection(collection_name: str, branch_name: str):
     block_metadata = generate_block_metadata_for_collection(collection_name)
-    utils.submit_updates(
+    await utils.submit_updates(
         collection_metadata=block_metadata,
         collection_name=collection_name,
         branch_name=branch_name,

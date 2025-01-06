@@ -15,4 +15,4 @@ if __name__ == "__main__":
         variety = file.stem.split("-")[-2]
         view_dict = json.loads(file.read_text())
 
-        validate_view_content(view_dict, variety)
+        validate_view_content(view_dict, variety)  # type: ignore

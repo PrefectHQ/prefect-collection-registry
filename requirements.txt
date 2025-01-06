@@ -1,4 +1,0 @@
-fastjsonschema
-gcsfs
-github3.py==3.2.0
-prefect>=3.0.0

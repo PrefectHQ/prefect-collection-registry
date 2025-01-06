@@ -6,7 +6,7 @@ from importlib.metadata import entry_points
 from pathlib import Path
 from sys import argv
 from types import ModuleType
-from typing import Any, Dict, List, Type
+from typing import Any, Dict
 
 import fastjsonschema
 from prefect import flow, task
@@ -15,22 +15,24 @@ from prefect.utilities.dispatch import get_registry_for_type
 from prefect.utilities.importtools import to_qualified_name
 from prefect.workers.base import BaseWorker
 
-from metadata_schemas import worker_schema
 import utils
+from metadata_schemas import worker_schema
 
 # `block` work pool types should only be created via
 # `Infrastructure.publish_as_work_pool`
 # See https://github.com/PrefectHQ/prefect/pull/11180 for more details
-WORKERS_BLOCKLIST = {"BaseWorker", "BlockWorker"}
+WORKERS_BLOCKLIST: set[str] = {"BaseWorker", "BlockWorker"}
 
 
 @task
-def generate_worker_metadata(worker_subcls: Type[BaseWorker], package_name: str):
+def generate_worker_metadata(
+    worker_subcls: type[BaseWorker], package_name: str
+) -> dict[str, Any]:
     """Generates worker metadata."""
 
-    worker_metadata = dict(
+    worker_metadata: dict[str, Any] = dict(
         sorted(
-            {
+            {  # type: ignore
                 "type": worker_subcls.type,
                 "install_command": f"pip install {package_name}",
                 "description": worker_subcls.get_description(),
@@ -40,14 +42,14 @@ def generate_worker_metadata(worker_subcls: Type[BaseWorker], package_name: str)
                 "logo_url": worker_subcls.get_logo_url(),
                 "documentation_url": worker_subcls.get_documentation_url(),
                 "default_base_job_configuration": (
-                    worker_subcls.get_default_base_job_template()
+                    worker_subcls.get_default_base_job_template()  # type: ignore
                 ),  # noqa E501
                 "is_beta": getattr(worker_subcls, "_is_beta", False),
             }.items()
         )
     )
-    validate = fastjsonschema.compile(worker_schema)
-    validate(worker_metadata)
+    validate = fastjsonschema.compile(worker_schema)  # type: ignore
+    validate(worker_metadata)  # type: ignore
 
     return worker_metadata
 
@@ -58,7 +60,7 @@ def get_worker_metadata_from_prefect():
 
     worker_registry = get_registry_for_type(BaseWorker) or {}
 
-    output = {
+    output: dict[str, Any] = {
         "prefect-agent": {
             "type": "prefect-agent",
             "documentation_url": (
@@ -75,7 +77,7 @@ def get_worker_metadata_from_prefect():
         }
     }
 
-    metadata = {
+    metadata: dict[str, Any] = {
         worker_subcls.type: generate_worker_metadata(
             worker_subcls=worker_subcls, package_name="prefect"
         )
@@ -84,7 +86,6 @@ def get_worker_metadata_from_prefect():
             to_qualified_name(worker_subcls).startswith("prefect.")
             and worker_subcls.__name__ not in WORKERS_BLOCKLIST
         )
-        
     }
 
     output.update(metadata)
@@ -93,11 +94,11 @@ def get_worker_metadata_from_prefect():
 
 
 @flow
-def get_worker_metadata_from_collection(collection_name: str):
+def get_worker_metadata_from_collection(collection_name: str) -> dict[str, Any]:
     """Gets worker metadata from a given collection."""
     collections = safe_load_entrypoints(entry_points(group="prefect.collections"))
 
-    output = {}
+    output: dict[str, Any] = {}
     for ep_name, module in collections.items():
         if isinstance(module, Exception):
             logging.warning(f"Error loading collection entrypoint {ep_name} - skipping")
@@ -117,7 +118,7 @@ def get_worker_metadata_from_collection(collection_name: str):
 
 
 @task
-def discover_base_worker_subclasses(module: ModuleType) -> List[Type[BaseWorker]]:
+def discover_base_worker_subclasses(module: ModuleType) -> list[type[BaseWorker]]:
     return [
         cls
         for _, cls in inspect.getmembers(module)
@@ -144,7 +145,7 @@ def write_worker_metadata(worker_metadata: Dict[str, Any], package_name: str):
 
 
 @flow
-def generate_worker_metadata_for_package(package_name: str):
+def generate_worker_metadata_for_package(package_name: str) -> dict[str, Any]:
     """Updates the worker metadata for workers in a given package."""
     if package_name == "prefect":
         return get_worker_metadata_from_prefect()
@@ -153,9 +154,9 @@ def generate_worker_metadata_for_package(package_name: str):
 
 
 @flow
-def update_worker_metadata_for_package(package_name: str, branch_name: str):
+async def update_worker_metadata_for_package(package_name: str, branch_name: str):
     worker_metadata = generate_worker_metadata_for_package(package_name=package_name)
-    utils.submit_updates(
+    await utils.submit_updates(
         collection_metadata=worker_metadata,
         collection_name=package_name,
         branch_name=branch_name,
