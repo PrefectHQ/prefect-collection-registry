@@ -1,6 +1,14 @@
 import asyncio
+import os
 import sys
 from typing import NoReturn
+from uuid import UUID
+
+from prefect import get_client
+from prefect.blocks.system import Secret
+from prefect.context import FlowRunContext
+from prefect.results import ResultStore
+from prefect.task_runners import ThreadPoolTaskRunner
 
 from prefect_collection_registry.update_collection_metadata import (
     update_all_collections,
@@ -20,14 +28,22 @@ async def run_all_collections(branch_name: str = "update-metadata") -> None:
 
 def main() -> NoReturn:
     """CLI entrypoint."""
+    os.environ["GITHUB_TOKEN"] = Secret.load("gh-util-token", _sync=True).get()  # type: ignore
     if len(sys.argv) == 1:
         # No args - run all collections
         asyncio.run(run_all_collections())
         sys.exit(0)
-    elif len(sys.argv) == 3:
-        # Two args - run single collection
-        collection_name, branch_name = sys.argv[1:]
-        asyncio.run(run_single_collection(collection_name, branch_name))
+    elif len(sys.argv) == 4:
+        # Three args - run single collection
+        collection_name, branch_name, flow_run_id = sys.argv[1:]
+        flow_run = get_client(sync_client=True).read_flow_run(UUID(flow_run_id))
+        with FlowRunContext(
+            flow_run=flow_run,
+            client=get_client(sync_client=True),
+            task_runner=ThreadPoolTaskRunner(),
+            result_store=ResultStore(),
+        ):
+            asyncio.run(run_single_collection(collection_name, branch_name))
         sys.exit(0)
     else:
         print("Usage: python -m cli [<collection_name> <branch_name>]")

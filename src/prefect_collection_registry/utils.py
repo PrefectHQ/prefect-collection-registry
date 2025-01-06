@@ -2,9 +2,13 @@ import asyncio
 import base64
 import inspect
 import json
+import os
+import tempfile
+from collections.abc import Callable, Generator
+from multiprocessing import Lock
 from pkgutil import iter_modules
 from types import ModuleType
-from typing import Any, Callable, Dict, Generator, Union
+from typing import Any, Literal
 
 import fastjsonschema
 import httpx
@@ -14,40 +18,22 @@ from gh_util.types import GitHubRepo
 from prefect import Flow, task
 from prefect.blocks.system import Secret
 from prefect.utilities.importtools import load_module, to_qualified_name
-from typing_extensions import Literal
+from pydantic_core import from_json
 
 CollectionViewVariety = Literal["block", "flow", "worker"]
 
-
-def pad_text(
-    text: str | list[str],
-    header: str | None = None,
-    padding_character: str = "\n",
-    n_padding: int = 3,
-) -> str:
-    """
-    Adds padding characters to either side of `text` and an optional header
-    padded with the same spacing.
-
-    Defaults to 3 newlines and no header.
-    """
-    padding = padding_character * n_padding
-    padded_header = header + padding if header else ""
-
-    text = "".join(text) if isinstance(text, list) else text
-
-    return f"{padding}{padded_header}{text}{padding}"
+# Create a lock file in a location accessible to all processes
+LOCK_FILE = os.path.join(tempfile.gettempdir(), "prefect_collection_registry.lock")
+_file_lock = Lock()
 
 
 def skip_parsing(
-    name: str, obj: Union[ModuleType, Callable[..., Any]], module_nesting: str
+    name: str, obj: ModuleType | Callable[..., Any], module_nesting: str
 ) -> bool:
-    """
-    Skips parsing the object if it's a private object or if it's not in the
+    """Skips parsing the object if it's a private object or if it's not in the
     module nesting, preventing imports from other libraries from being added to the
     examples catalog.
     """
-
     try:
         wrong_module = not to_qualified_name(obj).startswith(module_nesting)
     except AttributeError:
@@ -58,9 +44,7 @@ def skip_parsing(
 def find_flows_in_module(
     module_name: str,
 ) -> Generator[Flow[..., Any], None, None]:
-    """
-    Finds all flows in a module.
-    """
+    """Finds all flows in a module."""
     module = load_module(module_name)
 
     for _, name, ispkg in iter_modules(module.__path__):
@@ -128,8 +112,8 @@ async def submit_updates(
     variety: CollectionViewVariety,
     repo_name: str = "prefect-collection-registry",
 ) -> None:
-    """
-    Submits updates to the collection registry.
+    """Submits updates to the collection registry.
+    Uses a multiprocessing lock to prevent concurrent modifications across processes.
     """
     if branch_name == "main":
         raise ValueError("Cannot submit updates directly to main!")
@@ -141,30 +125,13 @@ async def submit_updates(
     if not latest_release.startswith("v"):
         latest_release = "v" + latest_release
 
-    # Get existing metadata content
-    try:
-        content, sha = await get_file_contents(
-            "PrefectHQ", repo_name, metadata_file, branch_name
-        )
-        existing_metadata_dict: dict[str, Any] = json.loads(content)
-    except Exception as e:
-        if "Not Found" in str(e):
-            existing_metadata_dict: dict[str, Any] = {}
-            sha = None
-        else:
-            raise
-
-    # Update metadata
-    collection_metadata_with_outer_key = {collection_name: collection_metadata}
-    existing_metadata_dict.update(collection_metadata_with_outer_key)
-    updated_metadata_dict = dict(sorted(existing_metadata_dict.items()))
-
-    # Create collection version metadata file
+    # First handle the version-specific file which can't have conflicts
     collection_version_path = (
         f"collections/{collection_name}/{variety}s/{latest_release}.json"
     )
-    try:
-        # Try to get existing file's SHA
+
+    with _file_lock:
+        # Get version file SHA
         try:
             _, version_sha = await get_file_contents(
                 "PrefectHQ", repo_name, collection_version_path, branch_name
@@ -175,13 +142,14 @@ async def submit_updates(
             else:
                 raise
 
+        # Create version-specific file
         try:
             await create_or_update_file(
                 "PrefectHQ",
                 repo_name,
                 collection_version_path,
                 f"Add `{collection_name}` `{latest_release}` to {variety} records",
-                json.dumps(collection_metadata_with_outer_key, indent=2),
+                json.dumps({collection_name: collection_metadata}, indent=2),
                 branch_name,
                 sha=version_sha,
             )
@@ -193,44 +161,67 @@ async def submit_updates(
                 )
                 return
             raise
-    except Exception as e:
-        if "already exists" in str(e):
-            print(
-                f"{variety} metadata for {collection_name} {latest_release} already exists!"
-            )
-            return
-        raise
 
-    # Update aggregate metadata file
+    # Now handle the aggregate file with retries
     if collection_metadata:
-        validate_view_content(updated_metadata_dict, variety)
+        while True:
+            with _file_lock:
+                try:
+                    # Get latest content and SHA
+                    content, aggregate_sha = await get_file_contents(
+                        "PrefectHQ", repo_name, metadata_file, branch_name
+                    )
+                    existing_metadata_dict: dict[str, Any] = from_json(content)
+                except Exception as e:
+                    if "Not Found" in str(e):
+                        existing_metadata_dict = {}
+                        aggregate_sha = None
+                    else:
+                        raise
 
-        await create_or_update_file(
-            "PrefectHQ",
-            repo_name,
-            metadata_file,
-            f"Update aggregate {variety} metadata with `{collection_name}` `{latest_release}`",
-            json.dumps(updated_metadata_dict, indent=2),
-            branch_name,
-            sha=sha,
-        )
-        print(
-            f"Updated aggregate {variety} metadata for {collection_name} {latest_release}!"
-        )
+                existing_metadata_dict[collection_name] = collection_metadata
+                updated_metadata_dict = dict(sorted(existing_metadata_dict.items()))
+
+                validate_view_content(updated_metadata_dict, variety)
+
+                try:
+                    await create_or_update_file(
+                        "PrefectHQ",
+                        repo_name,
+                        metadata_file,
+                        f"Update aggregate {variety} metadata with `{collection_name}` `{latest_release}`",
+                        json.dumps(updated_metadata_dict, indent=2),
+                        branch_name,
+                        sha=aggregate_sha,
+                    )
+                    print(
+                        f"Updated aggregate {variety} metadata for {collection_name} {latest_release}!"
+                    )
+                    return  # Success, we're done
+                except httpx.HTTPStatusError as e:
+                    if e.response.status_code == 409:
+                        print(
+                            "Conflict updating aggregate file, retrying with fresh SHA..."
+                        )
+                        # Release lock and try again
+                        continue
+                    raise
 
 
 async def get_file_content(url: str) -> str:
+    """Get the content of a file from a URL."""
     async with httpx.AsyncClient() as client:
         response = await client.get(url)
         response.raise_for_status()
         return response.text
 
 
-async def get_collection_names() -> list[str]:
-    repo_owner = "PrefectHQ"
-    repo_name = "Prefect"
-    path = "docs/integrations/catalog"
-
+async def get_collection_names(
+    repo_owner: str = "PrefectHQ",
+    repo_name: str = "Prefect",
+    path: str = "docs/integrations/catalog",
+) -> list[str]:
+    """Get the names of all collections."""
     async with httpx.AsyncClient() as client:
         response = await client.get(
             url=f"https://api.github.com/repos/{repo_owner}/{repo_name}/contents/{path}",
@@ -255,7 +246,6 @@ async def get_collection_names() -> list[str]:
 
 def get_logo_url_for_collection(collection_name: str) -> str:
     """Returns the URL of the logo for a collection."""
-
     blocks_metadata = read_view_content("block")
 
     block_types_from_collection = blocks_metadata[collection_name]["block_types"]
@@ -263,9 +253,8 @@ def get_logo_url_for_collection(collection_name: str) -> str:
     return block_types_from_collection.popitem()[1]["logo_url"]
 
 
-def read_view_content(view: CollectionViewVariety) -> Dict[str, Any]:
+def read_view_content(view: CollectionViewVariety) -> dict[str, Any]:
     """Reads the content of a view from the views directory."""
-
     repo_organization = "PrefectHQ"
     repo_name = "prefect-collection-registry"
 
@@ -321,8 +310,10 @@ async def create_pull_request(
     body: str,
     head: str,
     base: str = "main",
+    labels: list[str] | None = None,
 ) -> dict[str, Any]:
     """Create a pull request."""
+    labels = labels or []
     # First check if branches are different
     async with GHClient() as client:
         # Compare branches
@@ -347,7 +338,12 @@ async def create_pull_request(
                     "maintainer_can_modify": True,
                 },
             )
-            return response.json()
+            data = response.json()
+            await client.post(
+                f"/repos/{repo_owner}/{repo_name}/issues/{data['number']}/labels",
+                json={"labels": labels},
+            )
+            return data
         except httpx.HTTPStatusError as e:
             if "A pull request already exists" in str(e):
                 print(f"PR from {head} to {base} already exists")
@@ -394,3 +390,65 @@ async def branch_exists(repo_owner: str, repo_name: str, branch_name: str) -> bo
             if e.response.status_code == 404:
                 return False
             raise
+
+
+async def close_old_metadata_prs(
+    repo_owner: str = "PrefectHQ",
+    repo_name: str = "prefect-collection-registry",
+) -> None:
+    """Closes all metadata PRs except for the one associated with the latest branch.
+    Also deletes all old metadata branches except the latest one.
+    """
+    async with GHClient() as client:
+        # Get all branches to find the latest
+        branches_response = await client.get(
+            f"/repos/{repo_owner}/{repo_name}/branches"
+        )
+        metadata_branches = [
+            branch["name"]
+            for branch in branches_response.json()
+            if branch["name"].startswith("update-metadata-")
+        ]
+
+        if not metadata_branches:
+            return
+
+        # Sort by the timestamp part of the branch name to get truly latest
+        latest_branch = max(
+            metadata_branches,
+            key=lambda x: x.split("-", 2)[
+                2
+            ],  # Get the timestamp part after "update-metadata-"
+        )
+
+        # Delete all old metadata branches except latest
+        for branch in metadata_branches:
+            if branch != latest_branch:
+                try:
+                    await client.delete(
+                        f"/repos/{repo_owner}/{repo_name}/git/refs/heads/{branch}"
+                    )
+                    print(f"Deleted branch {branch}")
+                except httpx.HTTPStatusError as e:
+                    if e.response.status_code == 404:
+                        print(f"Branch {branch} already deleted")
+                    else:
+                        raise
+
+        # Get all open PRs and close them if they're for metadata branches
+        response = await client.get(
+            f"/repos/{repo_owner}/{repo_name}/pulls",
+            params={"state": "open"},
+        )
+
+        # Close all metadata PRs except latest
+        for pr in response.json():
+            if (
+                pr["head"]["ref"].startswith("update-metadata-")
+                and pr["head"]["ref"] != latest_branch
+            ):
+                await client.patch(
+                    f"/repos/{repo_owner}/{repo_name}/pulls/{pr['number']}",
+                    json={"state": "closed"},
+                )
+                print(f"Closed PR #{pr['number']}: {pr['title']}")

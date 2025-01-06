@@ -10,7 +10,7 @@ from typing import Any
 from uuid import uuid4
 
 import fastjsonschema
-from prefect import flow
+from prefect import task
 from prefect.blocks.core import Block
 from prefect.plugins import safe_load_entrypoints
 
@@ -32,8 +32,7 @@ BLOCKS_BLOCKLIST: set[str] = {
 
 
 def generate_block_metadata(block_subcls: type[Block]) -> dict[str, Any]:
-    """
-    Takes a block subclass and returns a JSON dict representation of
+    """Takes a block subclass and returns a JSON dict representation of
     its corresponding block type and block schema.
     """
     block_type_dict = block_subcls._to_block_type().model_dump(  # type: ignore
@@ -77,6 +76,7 @@ def generate_prefect_block_metadata() -> dict[str, Any]:
 
 
 def generate_block_metadata_for_module(module: ModuleType) -> dict[str, Any]:
+    """Generates block metadata for a given module."""
     block_subclasses = discover_block_subclasses(module)
     return dict(
         sorted(
@@ -92,6 +92,7 @@ def generate_block_metadata_for_module(module: ModuleType) -> dict[str, Any]:
 
 
 def discover_block_subclasses(module: ModuleType) -> list[type[Block]]:
+    """Discovers all subclasses of Block in a given module."""
     return [
         cls
         for _, cls in inspect.getmembers(module)
@@ -102,6 +103,7 @@ def discover_block_subclasses(module: ModuleType) -> list[type[Block]]:
 
 
 def generate_block_metadata_for_collection(collection_name: str) -> dict[str, Any]:
+    """Generates block metadata for a given collection."""
     if collection_name == "prefect":
         return generate_prefect_block_metadata()
 
@@ -134,6 +136,7 @@ def generate_block_metadata_for_collection(collection_name: str) -> dict[str, An
 
 
 def write_block_metadata(collection_metadata: dict[str, Any], collection_name: str):
+    """Writes block metadata to a file."""
     if "_" in collection_name:
         raise ValueError(
             f"Names can only contain dashes, not underscores, got: {collection_name!r}"
@@ -149,8 +152,9 @@ def write_block_metadata(collection_metadata: dict[str, Any], collection_name: s
         json.dump(collection_metadata, f, indent=2)
 
 
-@flow(name="update-block-metadata-for-collection")
+@task(name="update-block-metadata-for-collection")
 async def update_block_metadata_for_collection(collection_name: str, branch_name: str):
+    """Generates and submits block metadata for a given collection."""
     block_metadata = generate_block_metadata_for_collection(collection_name)
     await utils.submit_updates(
         collection_metadata=block_metadata,

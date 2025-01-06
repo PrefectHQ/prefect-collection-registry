@@ -21,3 +21,25 @@ allow-direct-references = true
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]
+
+[tool.ruff]
+target-version = "py312"
+include = ["src/**/*.py", "tests/**/*.py"]
+
+[tool.ruff.lint]
+extend-select = ["Q", "RUF100", "C90", "UP", "I", "D"]
+mccabe = { max-complexity = 15 }
+ignore = [
+    "D100", # ignore missing docstring in module
+    "D102", # ignore missing docstring in public method
+    "D104", # ignore missing docstring in public package
+    "D105", # ignore missing docstring in magic methods
+    "D107", # ignore missing docstring in __init__ methods
+    "D205", # ignore extra line requirement in docstrings
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["D101", "D103"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"

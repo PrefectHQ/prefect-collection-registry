@@ -6,10 +6,10 @@ from importlib.metadata import entry_points
 from pathlib import Path
 from sys import argv
 from types import ModuleType
-from typing import Any, Dict
+from typing import Any
 
 import fastjsonschema
-from prefect import flow, task
+from prefect import task
 from prefect.plugins import safe_load_entrypoints
 from prefect.utilities.dispatch import get_registry_for_type
 from prefect.utilities.importtools import to_qualified_name
@@ -29,7 +29,6 @@ def generate_worker_metadata(
     worker_subcls: type[BaseWorker], package_name: str
 ) -> dict[str, Any]:
     """Generates worker metadata."""
-
     worker_metadata: dict[str, Any] = dict(
         sorted(
             {  # type: ignore
@@ -43,7 +42,7 @@ def generate_worker_metadata(
                 "documentation_url": worker_subcls.get_documentation_url(),
                 "default_base_job_configuration": (
                     worker_subcls.get_default_base_job_template()  # type: ignore
-                ),  # noqa E501
+                ),
                 "is_beta": getattr(worker_subcls, "_is_beta", False),
             }.items()
         )
@@ -54,10 +53,9 @@ def generate_worker_metadata(
     return worker_metadata
 
 
-@flow
+@task
 def get_worker_metadata_from_prefect():
     """Gets worker metadata from prefect."""
-
     worker_registry = get_registry_for_type(BaseWorker) or {}
 
     output: dict[str, Any] = {
@@ -93,7 +91,7 @@ def get_worker_metadata_from_prefect():
     return output
 
 
-@flow
+@task
 def get_worker_metadata_from_collection(collection_name: str) -> dict[str, Any]:
     """Gets worker metadata from a given collection."""
     collections = safe_load_entrypoints(entry_points(group="prefect.collections"))
@@ -119,6 +117,7 @@ def get_worker_metadata_from_collection(collection_name: str) -> dict[str, Any]:
 
 @task
 def discover_base_worker_subclasses(module: ModuleType) -> list[type[BaseWorker]]:
+    """Discovers all subclasses of BaseWorker in a given module."""
     return [
         cls
         for _, cls in inspect.getmembers(module)
@@ -128,7 +127,8 @@ def discover_base_worker_subclasses(module: ModuleType) -> list[type[BaseWorker]
     ]
 
 
-def write_worker_metadata(worker_metadata: Dict[str, Any], package_name: str):
+def write_worker_metadata(worker_metadata: dict[str, Any], package_name: str):
+    """Writes worker metadata to a file."""
     if "_" in package_name:
         raise ValueError(
             f"Names can only contain dashes, not underscores, got: {package_name!r}"
@@ -144,17 +144,18 @@ def write_worker_metadata(worker_metadata: Dict[str, Any], package_name: str):
         json.dump(worker_metadata, f, indent=2)
 
 
-@flow
+@task
 def generate_worker_metadata_for_package(package_name: str) -> dict[str, Any]:
-    """Updates the worker metadata for workers in a given package."""
+    """Generates worker metadata for workers in a given package."""
     if package_name == "prefect":
         return get_worker_metadata_from_prefect()
     else:
         return get_worker_metadata_from_collection(package_name)
 
 
-@flow
+@task
 async def update_worker_metadata_for_package(package_name: str, branch_name: str):
+    """Generates and submits worker metadata for a given package."""
     worker_metadata = generate_worker_metadata_for_package(package_name=package_name)
     await submit_updates(
         collection_metadata=worker_metadata,
