@@ -6,7 +6,7 @@ definitions:
       name: kubernetes-prd-internal-tools
       job_variables:
         image: prefecthq/prefect:3.1.11-python3.12
-        command: uv run --with git+https://github.com/PrefectHQ/prefect-collection-registry.git@revamp-registry-flow python -m prefect.engine
+        command: uv run --with git+https://github.com/PrefectHQ/prefect-collection-registry.git@main python -m prefect.engine
 build:
 
 push:
@@ -14,7 +14,7 @@ push:
 pull:
 - prefect.deployments.steps.git_clone:
     repository: https://github.com/PrefectHQ/prefect-collection-registry.git
-    branch: revamp-registry-flow
+    branch: main
 
 deployments:
 - name: update-all-collections
