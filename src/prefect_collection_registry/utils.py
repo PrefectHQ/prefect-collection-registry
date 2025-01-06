@@ -208,14 +208,6 @@ async def submit_updates(
                     raise
 
 
-async def get_file_content(url: str) -> str:
-    """Get the content of a file from a URL."""
-    async with httpx.AsyncClient() as client:
-        response = await client.get(url)
-        response.raise_for_status()
-        return response.text
-
-
 async def get_collection_names(
     repo_owner: str = "PrefectHQ",
     repo_name: str = "Prefect",
@@ -234,8 +226,10 @@ async def get_collection_names(
 
     async def process_file(file: dict[str, Any]):
         if file["type"] == "file" and file["name"].endswith(".yaml"):
-            file_content = await get_file_content(file["download_url"])
-            yaml_data = yaml.safe_load(file_content)  # type: ignore
+            content, _ = await get_file_contents(
+                repo_owner, repo_name, f"{path}/{file['name']}", "main"
+            )
+            yaml_data = yaml.safe_load(content)  # type: ignore
             if yaml_data.get("author") == "Prefect":  # type: ignore
                 collections.append(file["name"].replace(".yaml", ""))
 
