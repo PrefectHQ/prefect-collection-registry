@@ -33,20 +33,28 @@ def main() -> NoReturn:
         # No args - run all collections
         asyncio.run(run_all_collections())
         sys.exit(0)
-    elif len(sys.argv) == 4:
-        # Three args - run single collection
-        collection_name, branch_name, flow_run_id = sys.argv[1:]
-        flow_run = get_client(sync_client=True).read_flow_run(UUID(flow_run_id))
-        with FlowRunContext(
-            flow_run=flow_run,
-            client=get_client(sync_client=True),
-            task_runner=ThreadPoolTaskRunner(),
-            result_store=ResultStore(),
-        ):
+    elif len(sys.argv) in [3, 4]:
+        # Two or three args - run single collection
+        collection_name = sys.argv[1]
+        branch_name = sys.argv[2]
+
+        if len(sys.argv) == 4:
+            # With flow run context
+            flow_run_id = sys.argv[3]
+            flow_run = get_client(sync_client=True).read_flow_run(UUID(flow_run_id))
+            with FlowRunContext(
+                flow_run=flow_run,
+                client=get_client(sync_client=True),
+                task_runner=ThreadPoolTaskRunner(),
+                result_store=ResultStore(),
+            ):
+                asyncio.run(run_single_collection(collection_name, branch_name))
+        else:
+            # Without flow run context
             asyncio.run(run_single_collection(collection_name, branch_name))
         sys.exit(0)
     else:
-        print("Usage: python -m cli [<collection_name> <branch_name>]")
+        print("Usage: python -m cli [<collection_name> <branch_name> [<flow_run_id>]]")
         sys.exit(1)
 
 
