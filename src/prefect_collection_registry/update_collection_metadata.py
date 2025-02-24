@@ -117,6 +117,7 @@ async def run_collection_update(collection_name: str, branch_name: str) -> str:
         "run",
         "--isolated",
         "--no-cache",
+        "--upgrade",
         "--with",
         f"{collection_name}",
         "src/prefect_collection_registry/cli.py",
