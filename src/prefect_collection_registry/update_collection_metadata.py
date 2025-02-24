@@ -113,7 +113,7 @@ async def run_collection_update(collection_name: str, branch_name: str) -> str:
         "run",
         "--isolated",
         "--with",
-        f"{collection_name}[dev]",
+        f"{collection_name}",
         "src/prefect_collection_registry/cli.py",
         collection_name,
         branch_name,
@@ -183,6 +183,7 @@ async def run_collection_update(collection_name: str, branch_name: str) -> str:
 )
 async def update_all_collections(
     branch_name: str = "update-metadata",
+    include_collections: list[str] | None = None,
 ):
     """Updates all collections for releases and updates the metadata if needed."""
     os.environ["GITHUB_TOKEN"] = (await Secret.aload("gh-util-token")).get()  # type: ignore
@@ -206,6 +207,9 @@ async def update_all_collections(
         )
         if needs_update
     )
+
+    if include_collections:
+        collections_to_update = collections_to_update.intersection(include_collections)
 
     if not collections_to_update:
         return Completed(message="No new releases to record.")
@@ -252,7 +256,4 @@ async def update_all_collections(
 
 
 if __name__ == "__main__":
-    # manually run one or many collections
-    asyncio.run(update_collection_metadata("prefect-kubernetes", "update-metadata"))
-
-    # asyncio.run(update_all_collections())
+    asyncio.run(update_all_collections(include_collections=["prefect-kubernetes"]))
