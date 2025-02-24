@@ -104,6 +104,25 @@ async def create_or_update_file(
         return response.json()
 
 
+async def get_latest_pypi_release(package_name: str) -> str:
+    """Get the latest release version from PyPI for a package."""
+    # For prefect, we need to use the GitHub release
+    if package_name == "prefect":
+        latest_release = await get_latest_release("PrefectHQ", package_name)
+        return (
+            "v" + latest_release
+            if not latest_release.startswith("v")
+            else latest_release
+        )
+
+    # For other packages, use PyPI
+    async with httpx.AsyncClient() as client:
+        response = await client.get(f"https://pypi.org/pypi/{package_name}/json")
+        response.raise_for_status()
+        data = response.json()
+        return "v" + data["info"]["version"]
+
+
 @task
 async def submit_updates(
     collection_metadata: dict[str, Any],
@@ -120,10 +139,8 @@ async def submit_updates(
 
     metadata_file = f"views/aggregate-{variety}-metadata.json"
 
-    # Get latest release
-    latest_release = await get_latest_release("PrefectHQ", collection_name)
-    if not latest_release.startswith("v"):
-        latest_release = "v" + latest_release
+    # Get latest release from PyPI instead of GitHub
+    latest_release = await get_latest_pypi_release(collection_name)
 
     # First handle the version-specific file which can't have conflicts
     collection_version_path = (

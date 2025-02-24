@@ -24,7 +24,7 @@ from prefect_collection_registry.utils import (
     create_repo_ref,
     get_collection_names,
     get_commit_sha,
-    get_latest_release,
+    get_latest_pypi_release,
     get_repo_contents,
 )
 
@@ -54,10 +54,7 @@ async def collection_needs_update(collection_name: str) -> tuple[str, bool]:
             [content["name"] for content in registry_contents]
         )[-1].replace(".json", "")
 
-        latest_release = await get_latest_release("PrefectHQ", collection_name)
-
-        if collection_name == "prefect":
-            latest_release = "v" + latest_release
+        latest_release = await get_latest_pypi_release(collection_name)
 
         if latest_release == latest_recorded_release:
             print(
@@ -255,4 +252,11 @@ async def update_all_collections(
 
 
 if __name__ == "__main__":
-    asyncio.run(update_all_collections())
+    # manually run one or many collections
+    asyncio.run(
+        update_collection_metadata(
+            "prefect-kubernetes", "update-metadata-02-24-2025-21-02-80"
+        )
+    )
+
+    # asyncio.run(update_all_collections())
