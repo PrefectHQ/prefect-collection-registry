@@ -1,14 +1,19 @@
 repos:
-  - repo: https://github.com/charliermarsh/ruff-pre-commit
+  - repo: https://github.com/astral-sh/ruff-pre-commit
     # Ruff version.
-    rev: 'v0.0.260'
+    rev: 'v0.6.3'
     hooks:
+      # Run the linter.
       - id: ruff
         args: [--fix]
+      # Run the formatter.
+      - id: ruff-format
 
-  - repo: https://github.com/psf/black
-    rev: 23.1.0
+  - repo: local
     hooks:
-      - id: black
-        args: ["--preview"]
-        language_version: python3.10
+      - id: json-schema-validation
+        name: JSON Schema Validation
+        entry: uv run src/prefect_collection_registry/view_schema_validation.py
+        language: system
+        pass_filenames: false
+        types: [json]

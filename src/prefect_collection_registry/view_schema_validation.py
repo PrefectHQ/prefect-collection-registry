@@ -1,7 +1,8 @@
-import json
 from pathlib import Path
 
-from utils import validate_view_content
+from pydantic_core import from_json
+
+from prefect_collection_registry.utils import validate_view_content
 
 EXCLUDE_TYPES = {"demo-flow"}
 
@@ -13,6 +14,6 @@ if __name__ == "__main__":
         print(f"validating {file} ...")
 
         variety = file.stem.split("-")[-2]
-        view_dict = json.loads(file.read_text())
+        view_dict = from_json(file.read_bytes())
 
-        validate_view_content(view_dict, variety)
+        validate_view_content(view_dict, variety)  # type: ignore

@@ -1,16 +1,45 @@
-[build-system]
-requires = ["setuptools", "setuptools-scm"]
-build-backend = "setuptools.build_meta"
-
 [project]
 name = "prefect-collection-registry"
-authors = [{ name = "Prefect Technologies", email = "help@prefect.io" }]
+version = "0.1.0"
 description = "Maintaining the Prefect Collection Registry"
 readme = "README.md"
-requires-python = ">=3.10"
-classifiers = ["Programming Language :: Python :: 3"]
-dependencies = ["prefect>=3.0.0", "fastjsonschema==2.16.2", "github3.py>=3.2.0"]
-dynamic = ["version"]
+requires-python = ">=3.12"
+dependencies = ["prefect", "fastjsonschema==2.16.2", "gh-util"]
 
 [project.optional-dependencies]
-dev = ["pytest", "coverage", "prefect-kubernetes"]
+dev = ["pytest", "hatchling", "prefect[kubernetes]", "pre-commit"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/prefect_collection_registry"]
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+
+[tool.ruff]
+target-version = "py312"
+include = ["src/**/*.py", "tests/**/*.py"]
+
+[tool.ruff.lint]
+extend-select = ["Q", "RUF100", "C90", "UP", "I", "D"]
+mccabe = { max-complexity = 15 }
+ignore = [
+    "D100", # ignore missing docstring in module
+    "D102", # ignore missing docstring in public method
+    "D104", # ignore missing docstring in public package
+    "D105", # ignore missing docstring in magic methods
+    "D107", # ignore missing docstring in __init__ methods
+    "D205", # ignore extra line requirement in docstrings
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["D101", "D103"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
