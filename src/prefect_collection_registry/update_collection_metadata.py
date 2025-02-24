@@ -1,12 +1,11 @@
 import asyncio
 import os
-from typing import Any, cast
+from typing import Any
 
 import prefect.runtime.flow_run
 from prefect import flow, task, unmapped
 from prefect.artifacts import create_markdown_artifact
 from prefect.blocks.system import Secret
-from prefect.futures import PrefectFutureList
 from prefect.states import Completed, Failed, State
 from prefect.types import DateTime
 from prefect.utilities.collections import listrepr
@@ -214,15 +213,16 @@ async def update_all_collections(
     print(f"Recording new release(s) for: {listrepr(collections_to_update)}...")
 
     # Run updates and collect results
-    futures = run_collection_update.map(
+    states = run_collection_update.map(
         collections_to_update,
         unmapped(branch_name),
+        return_state=True,
     )
 
     succeeded_collections: set[str] = set()
-    for future in cast(PrefectFutureList[str], futures):
+    for state in states:
         try:
-            collection = future.result()
+            collection = state.result()
             succeeded_collections.add(collection)
         except Exception as e:
             print(f"Failed to update collection: {e}")
@@ -253,10 +253,6 @@ async def update_all_collections(
 
 if __name__ == "__main__":
     # manually run one or many collections
-    asyncio.run(
-        update_collection_metadata(
-            "prefect-kubernetes", "update-metadata-02-24-2025-21-02-80"
-        )
-    )
+    asyncio.run(update_collection_metadata("prefect-kubernetes", "update-metadata"))
 
     # asyncio.run(update_all_collections())
