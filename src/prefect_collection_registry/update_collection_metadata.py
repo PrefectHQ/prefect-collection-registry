@@ -1,12 +1,11 @@
 import asyncio
 import os
-from typing import Any, cast
+from typing import Any
 
 import prefect.runtime.flow_run
 from prefect import flow, task, unmapped
 from prefect.artifacts import create_markdown_artifact
 from prefect.blocks.system import Secret
-from prefect.futures import PrefectFutureList
 from prefect.states import Completed, Failed, State
 from prefect.types import DateTime
 from prefect.utilities.collections import listrepr
@@ -113,8 +112,10 @@ async def run_collection_update(collection_name: str, branch_name: str) -> str:
         "uv",
         "run",
         "--isolated",
+        "--no-cache",
+        "--upgrade",
         "--with",
-        f"{collection_name}[dev]",
+        f"{collection_name}",
         "src/prefect_collection_registry/cli.py",
         collection_name,
         branch_name,
@@ -184,6 +185,7 @@ async def run_collection_update(collection_name: str, branch_name: str) -> str:
 )
 async def update_all_collections(
     branch_name: str = "update-metadata",
+    include_collections: list[str] | None = None,
 ):
     """Updates all collections for releases and updates the metadata if needed."""
     os.environ["GITHUB_TOKEN"] = (await Secret.aload("gh-util-token")).get()  # type: ignore
@@ -208,21 +210,25 @@ async def update_all_collections(
         if needs_update
     )
 
+    if include_collections:
+        collections_to_update = collections_to_update.intersection(include_collections)
+
     if not collections_to_update:
         return Completed(message="No new releases to record.")
 
     print(f"Recording new release(s) for: {listrepr(collections_to_update)}...")
 
     # Run updates and collect results
-    futures = run_collection_update.map(
+    states = run_collection_update.map(
         collections_to_update,
         unmapped(branch_name),
+        return_state=True,
     )
 
     succeeded_collections: set[str] = set()
-    for future in cast(PrefectFutureList[str], futures):
+    for state in states:
         try:
-            collection = future.result()
+            collection = state.result()
             succeeded_collections.add(collection)
         except Exception as e:
             print(f"Failed to update collection: {e}")
@@ -252,11 +258,4 @@ async def update_all_collections(
 
 
 if __name__ == "__main__":
-    # manually run one or many collections
-    asyncio.run(
-        update_collection_metadata(
-            "prefect-kubernetes", "update-metadata-02-24-2025-21-02-80"
-        )
-    )
-
-    # asyncio.run(update_all_collections())
+    asyncio.run(update_all_collections(include_collections=["prefect-kubernetes"]))
