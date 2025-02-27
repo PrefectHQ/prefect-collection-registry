@@ -93,13 +93,14 @@ def generate_block_metadata_for_module(module: ModuleType) -> dict[str, Any]:
 
 def discover_block_subclasses(module: ModuleType) -> list[type[Block]]:
     """Discovers all subclasses of Block in a given module."""
-    return [
+    classes = [
         cls
         for _, cls in inspect.getmembers(module)
         if Block.is_block_class(cls)
         and cls.__name__ != "Block"
         and ABC not in getattr(cls, "__bases__", [])
     ]
+    return classes
 
 
 def generate_block_metadata_for_collection(collection_name: str) -> dict[str, Any]:
