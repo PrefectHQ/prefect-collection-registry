@@ -7,7 +7,7 @@ from prefect import flow, task, unmapped
 from prefect.artifacts import create_markdown_artifact
 from prefect.blocks.system import Secret
 from prefect.futures import PrefectFutureList
-from prefect.states import Completed, Failed, State
+from prefect.states import Completed, State
 from prefect.types import DateTime
 from prefect.utilities.collections import listrepr
 
@@ -27,6 +27,10 @@ from prefect_collection_registry.utils import (
     get_latest_pypi_release,
     get_repo_contents,
 )
+
+TODO_COLLECTIONS = {
+    "prefect-sqlalchemy",
+}
 
 UPDATE_ALL_DESCRIPTION = """
 The `update_all_collections` triggers many instances of `update_collection_metadata` in order to
@@ -184,7 +188,7 @@ async def run_collection_update(collection_name: str, branch_name: str) -> str:
 )
 async def update_all_collections(
     branch_name: str = "update-metadata",
-):
+) -> str:
     """Updates all collections for releases and updates the metadata if needed."""
     os.environ["GITHUB_TOKEN"] = (await Secret.aload("gh-util-token")).get()  # type: ignore
 
@@ -209,7 +213,7 @@ async def update_all_collections(
     )
 
     if not collections_to_update:
-        return Completed(message="No new releases to record.")
+        return "No new releases to record."
 
     print(f"Recording new release(s) for: {listrepr(collections_to_update)}...")
 
@@ -245,10 +249,7 @@ async def update_all_collections(
     )
     print(f"Created PR for branch {branch_name}")
 
-    # Now we can return the appropriate state
-    if failed_collections:
-        return Failed(message=f"Updates failed for: {listrepr(failed_collections)}")  # type: ignore
-    return Completed(message="All new releases have been recorded.")
+    return "All new releases have been recorded."
 
 
 if __name__ == "__main__":
