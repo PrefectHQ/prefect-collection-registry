@@ -5630,46 +5630,72 @@
         "description": "Store settings for interacting with a Docker host. This block is part of the prefect-docker collection. Install prefect-docker with `pip install prefect-docker` to use this block.",
         "code_example": "Get a Docker Host client.\n```python\nfrom prefect_docker import DockerHost\n\ndocker_host = DockerHost(\nbase_url=\"tcp://127.0.0.1:1234\",\n    max_pool_size=4\n)\nwith docker_host.get_client() as client:\n    ... # Use the client for Docker operations\n```",
         "block_schema": {
-          "checksum": "sha256:bf0961e9f2d88fd81bca2c7b78c025bd289776ad84ae8ef22d8f3db8b9561478",
+          "checksum": "sha256:f0c510448c337e115f0ca70147400f350d959df4ba21edea4caec3d57085175b",
           "fields": {
-            "title": "DockerHost",
+            "block_schema_references": {},
+            "block_type_slug": "docker-host",
             "description": "Store settings for interacting with a Docker host.",
-            "type": "object",
             "properties": {
               "base_url": {
-                "title": "Base URL",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "URL to the Docker host.",
-                "example": "unix:///var/run/docker.sock",
-                "type": "string"
+                "examples": [
+                  "unix:///var/run/docker.sock"
+                ],
+                "title": "Base URL"
               },
               "version": {
-                "title": "Version",
-                "description": "The version of the API to use",
                 "default": "auto",
+                "description": "The version of the API to use",
+                "title": "Version",
                 "type": "string"
               },
               "timeout": {
-                "title": "Timeout",
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "Default timeout for API calls, in seconds.",
-                "type": "integer"
+                "title": "Timeout"
               },
               "max_pool_size": {
-                "title": "Max Pool Size",
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "The maximum number of connections to save in the pool.",
-                "type": "integer"
+                "title": "Max Pool Size"
               },
               "client_kwargs": {
-                "title": "Additional Configuration",
                 "description": "Additional keyword arguments to pass to `docker.from_env()` or `DockerClient`.",
+                "title": "Additional Configuration",
                 "type": "object"
               }
             },
-            "block_type_slug": "docker-host",
             "secret_fields": [],
-            "block_schema_references": {}
+            "title": "DockerHost",
+            "type": "object"
           },
           "capabilities": [],
-          "version": "0.4.5"
+          "version": "0.6.2"
         }
       },
       "docker-registry-credentials": {
@@ -5680,34 +5706,36 @@
         "description": "Store credentials for interacting with a Docker Registry. This block is part of the prefect-docker collection. Install prefect-docker with `pip install prefect-docker` to use this block.",
         "code_example": "Log into Docker Registry.\n```python\nfrom prefect_docker import DockerHost, DockerRegistryCredentials\n\ndocker_host = DockerHost()\ndocker_registry_credentials = DockerRegistryCredentials(\n    username=\"my_username\",\n    password=\"my_password\",\n    registry_url=\"registry.hub.docker.com\",\n)\nwith docker_host.get_client() as client:\n    docker_registry_credentials.login(client)\n```",
         "block_schema": {
-          "checksum": "sha256:d5cbcfdf092e1f904ea26c274fcd0f23d86ecbbd0afae0f254f575ac3e40915d",
+          "checksum": "sha256:e9ccd3b2e2650e710931d41ee8adf81d2028dbf19cbb50f4847e2f18885ecd7a",
           "fields": {
-            "title": "DockerRegistryCredentials",
+            "block_schema_references": {},
+            "block_type_slug": "docker-registry-credentials",
             "description": "Store credentials for interacting with a Docker Registry.",
-            "type": "object",
             "properties": {
               "username": {
-                "title": "Username",
                 "description": "The username to log into the registry with.",
+                "title": "Username",
                 "type": "string"
               },
               "password": {
-                "title": "Password",
                 "description": "The password to log into the registry with.",
+                "format": "password",
+                "title": "Password",
                 "type": "string",
-                "writeOnly": true,
-                "format": "password"
+                "writeOnly": true
               },
               "registry_url": {
-                "title": "Registry Url",
                 "description": "The URL to the registry. Generally, \"http\" or \"https\" can be omitted.",
-                "example": "index.docker.io",
+                "examples": [
+                  "index.docker.io"
+                ],
+                "title": "Registry Url",
                 "type": "string"
               },
               "reauth": {
-                "title": "Reauth",
-                "description": "Whether or not to reauthenticate on each interaction.",
                 "default": true,
+                "description": "Whether or not to reauthenticate on each interaction.",
+                "title": "Reauth",
                 "type": "boolean"
               }
             },
@@ -5716,14 +5744,14 @@
               "password",
               "registry_url"
             ],
-            "block_type_slug": "docker-registry-credentials",
             "secret_fields": [
               "password"
             ],
-            "block_schema_references": {}
+            "title": "DockerRegistryCredentials",
+            "type": "object"
           },
           "capabilities": [],
-          "version": "0.4.5"
+          "version": "0.6.2"
         }
       }
     }
