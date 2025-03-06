@@ -30,7 +30,7 @@
             "type": "object"
           },
           "capabilities": [],
-          "version": "3.1.5"
+          "version": "3.2.11"
         }
       },
       "discord-webhook": {
@@ -41,7 +41,7 @@
         "description": "Enables sending notifications via a provided Discord webhook.",
         "code_example": "Load a saved Discord webhook and send a message:\n```python\nfrom prefect.blocks.notifications import DiscordWebhook\n\ndiscord_webhook_block = DiscordWebhook.load(\"BLOCK_NAME\")\n\ndiscord_webhook_block.notify(\"Hello from Prefect!\")\n```",
         "block_schema": {
-          "checksum": "sha256:6a52b1831a9e289e74a3dc03986ca1b00aaf8c4c523fd9dcacd1982e45bfe956",
+          "checksum": "sha256:d30e56c56e578d6d3e6b6c06f069c8cb8a7c5c924a182731961c846bbe4d7fb3",
           "fields": {
             "block_schema_references": {},
             "block_type_slug": "discord-webhook",
@@ -114,7 +114,7 @@
                     "type": "null"
                   }
                 ],
-                "default": false,
+                "default": null,
                 "description": "Over-ride the default discord avatar icon URL. By default this is not set and Apprise chooses the URL dynamically based on the type of message (info, success, warning, or error).",
                 "title": "Avatar URL"
               }
@@ -133,7 +133,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.1.5"
+          "version": "3.2.11"
         }
       },
       "json": {
@@ -163,7 +163,7 @@
             "type": "object"
           },
           "capabilities": [],
-          "version": "3.1.5"
+          "version": "3.2.11"
         }
       },
       "local-file-system": {
@@ -204,7 +204,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "3.1.5"
+          "version": "3.2.11"
         }
       },
       "mattermost-webhook": {
@@ -215,7 +215,7 @@
         "description": "Enables sending notifications via a provided Mattermost webhook.",
         "code_example": "Load a saved Mattermost webhook and send a message:\n```python\nfrom prefect.blocks.notifications import MattermostWebhook\n\nmattermost_webhook_block = MattermostWebhook.load(\"BLOCK_NAME\")\n\nmattermost_webhook_block.notify(\"Hello from Prefect!\")\n```",
         "block_schema": {
-          "checksum": "sha256:01f4ee2616acf43a554c44388e36439ebe3ad0f8e58e67279a0116d476dd5e61",
+          "checksum": "sha256:91621fb148a6f1039ca713efc60d7c0592a8110745c105bd4aa34add4546028c",
           "fields": {
             "block_schema_references": {},
             "block_type_slug": "mattermost-webhook",
@@ -241,6 +241,12 @@
                 ],
                 "title": "Hostname",
                 "type": "string"
+              },
+              "secure": {
+                "default": false,
+                "description": "Whether to use secure https connection.",
+                "title": "Secure",
+                "type": "boolean"
               },
               "token": {
                 "description": "The token associated with your Mattermost webhook.",
@@ -317,7 +323,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.1.5"
+          "version": "3.2.11"
         }
       },
       "ms-teams-webhook": {
@@ -388,7 +394,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.1.5"
+          "version": "3.2.11"
         }
       },
       "opsgenie-webhook": {
@@ -399,7 +405,7 @@
         "description": "Enables sending notifications via a provided Opsgenie webhook.",
         "code_example": "Load a saved Opsgenie webhook and send a message:\n```python\nfrom prefect.blocks.notifications import OpsgenieWebhook\nopsgenie_webhook_block = OpsgenieWebhook.load(\"BLOCK_NAME\")\nopsgenie_webhook_block.notify(\"Hello from Prefect!\")\n```",
         "block_schema": {
-          "checksum": "sha256:748fdf50db8e686cd50865d2079273095912697aefd180b690c8dbfd80f0b362",
+          "checksum": "sha256:7b8fc322908aafb477ada9c61f875f0b1a1acc0f8ba74672ff020bb22936e35e",
           "fields": {
             "block_schema_references": {},
             "block_type_slug": "opsgenie-webhook",
@@ -428,7 +434,9 @@
               "target_user": {
                 "anyOf": [
                   {
-                    "items": {},
+                    "items": {
+                      "type": "string"
+                    },
                     "type": "array"
                   },
                   {
@@ -442,7 +450,9 @@
               "target_team": {
                 "anyOf": [
                   {
-                    "items": {},
+                    "items": {
+                      "type": "string"
+                    },
                     "type": "array"
                   },
                   {
@@ -456,7 +466,9 @@
               "target_schedule": {
                 "anyOf": [
                   {
-                    "items": {},
+                    "items": {
+                      "type": "string"
+                    },
                     "type": "array"
                   },
                   {
@@ -470,7 +482,9 @@
               "target_escalation": {
                 "anyOf": [
                   {
-                    "items": {},
+                    "items": {
+                      "type": "string"
+                    },
                     "type": "array"
                   },
                   {
@@ -500,7 +514,9 @@
               "tags": {
                 "anyOf": [
                   {
-                    "items": {},
+                    "items": {
+                      "type": "string"
+                    },
                     "type": "array"
                   },
                   {
@@ -585,7 +601,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.1.5"
+          "version": "3.2.11"
         }
       },
       "pager-duty-webhook": {
@@ -738,7 +754,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.1.5"
+          "version": "3.2.11"
         }
       },
       "remote-file-system": {
@@ -782,7 +798,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "3.1.5"
+          "version": "3.2.11"
         }
       },
       "secret": {
@@ -790,14 +806,14 @@
         "slug": "secret",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/c6f20e556dd16effda9df16551feecfb5822092b-48x48.png",
         "documentation_url": "https://docs.prefect.io/latest/develop/blocks",
-        "description": "A block that represents a secret value. The value stored in this block will be obfuscated when\nthis block is viewed or edited in the UI.",
+        "description": "A block that represents a secret value. The value stored in this block will be obfuscated when this block is viewed or edited in the UI.",
         "code_example": "```python\nfrom prefect.blocks.system import Secret\n\nSecret(value=\"sk-1234567890\").save(\"BLOCK_NAME\", overwrite=True)\n\nsecret_block = Secret.load(\"BLOCK_NAME\")\n\n# Access the stored secret\nsecret_block.get()\n```",
         "block_schema": {
-          "checksum": "sha256:fab1c36f1340a9fee1a4de830018147ac5266bf9121de8df9c1c23d8897cd701",
+          "checksum": "sha256:f290d6bec2665ff8179b4b88a1ba1942bc93b228504da8b65ce66e8aa70d6159",
           "fields": {
             "block_schema_references": {},
             "block_type_slug": "secret",
-            "description": "A block that represents a secret value. The value stored in this block will be obfuscated when\nthis block is viewed or edited in the UI.",
+            "description": "A block that represents a secret value. The value stored in this block will be obfuscated when this block is viewed or edited in the UI.",
             "properties": {
               "value": {
                 "anyOf": [
@@ -841,7 +857,7 @@
             }
           },
           "capabilities": [],
-          "version": "3.1.5"
+          "version": "3.2.11"
         }
       },
       "sendgrid-email": {
@@ -850,7 +866,7 @@
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/82bc6ed16ca42a2252a5512c72233a253b8a58eb-250x250.png",
         "documentation_url": "https://docs.prefect.io/latest/automate/events/automations-triggers#sending-notifications-with-automations",
         "description": "Enables sending notifications via Sendgrid email service.",
-        "code_example": "Load a saved Sendgrid and send a email message:\n```python\nfrom prefect.blocks.notifications import SendgridEmail\n\nsendgrid_block = SendgridEmail.load(\"BLOCK_NAME\")\n\nsendgrid_block.notify(\"Hello from Prefect!\")",
+        "code_example": "Load a saved Sendgrid and send a email message:\n```python\nfrom prefect.blocks.notifications import SendgridEmail\n\nsendgrid_block = SendgridEmail.load(\"BLOCK_NAME\")\n\nsendgrid_block.notify(\"Hello from Prefect!\")\n```",
         "block_schema": {
           "checksum": "sha256:ca1ce43172228b65a570b1a5de9cdbd9813945e672807dc42d21b69d9d3977e7",
           "fields": {
@@ -912,7 +928,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.1.5"
+          "version": "3.2.11"
         }
       },
       "slack-webhook": {
@@ -971,7 +987,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.1.5"
+          "version": "3.2.11"
         }
       },
       "smb": {
@@ -1062,7 +1078,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "3.1.5"
+          "version": "3.2.11"
         }
       },
       "string": {
@@ -1093,7 +1109,7 @@
             "type": "object"
           },
           "capabilities": [],
-          "version": "3.1.5"
+          "version": "3.2.11"
         }
       },
       "twilio-sms": {
@@ -1170,7 +1186,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.1.5"
+          "version": "3.2.11"
         }
       },
       "webhook": {
@@ -1239,7 +1255,7 @@
             "type": "object"
           },
           "capabilities": [],
-          "version": "3.1.5"
+          "version": "3.2.11"
         }
       }
     }
