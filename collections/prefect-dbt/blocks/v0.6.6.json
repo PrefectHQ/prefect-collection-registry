@@ -1,0 +1,1272 @@
+{
+  "prefect-dbt": {
+    "block_types": {
+      "dbt-cli-global-configs": {
+        "name": "dbt CLI Global Configs",
+        "slug": "dbt-cli-global-configs",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5zE9lxfzBHjw3tnEup4wWL/9a001902ed43a84c6c96d23b24622e19/dbt-bit_tm.png?h=250",
+        "documentation_url": "https://docs.prefect.io/integrations/prefect-dbt",
+        "description": "Global configs control things like the visual output\nof logs, the manner in which dbt parses your project,\nand what to do when dbt finds a version mismatch\nor a failing model. Docs can be found [here](\nhttps://docs.getdbt.com/reference/global-configs). This block is part of the prefect-dbt collection. Install prefect-dbt with `pip install prefect-dbt` to use this block.",
+        "code_example": "Load stored GlobalConfigs:\n```python\nfrom prefect_dbt.cli.configs import GlobalConfigs\n\ndbt_cli_global_configs = GlobalConfigs.load(\"BLOCK_NAME\")\n```",
+        "block_schema": {
+          "checksum": "sha256:41b950975ec465d2eb985b375710eb6a44378c260fde4bc48d89097b61f8a0fe",
+          "fields": {
+            "block_schema_references": {},
+            "block_type_slug": "dbt-cli-global-configs",
+            "description": "Global configs control things like the visual output\nof logs, the manner in which dbt parses your project,\nand what to do when dbt finds a version mismatch\nor a failing model. Docs can be found [here](\nhttps://docs.getdbt.com/reference/global-configs).",
+            "properties": {
+              "extras": {
+                "anyOf": [
+                  {
+                    "type": "object"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Extra target configs' keywords, not yet exposed in prefect-dbt, but available in dbt.",
+                "title": "Extras"
+              },
+              "allow_field_overrides": {
+                "default": false,
+                "description": "If enabled, fields from dbt target configs will override fields provided in extras and credentials.",
+                "title": "Allow Field Overrides",
+                "type": "boolean"
+              },
+              "send_anonymous_usage_stats": {
+                "anyOf": [
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Whether usage stats are sent to dbt.",
+                "title": "Send Anonymous Usage Stats"
+              },
+              "use_colors": {
+                "anyOf": [
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Colorize the output it prints in your terminal.",
+                "title": "Use Colors"
+              },
+              "partial_parse": {
+                "anyOf": [
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "When partial parsing is enabled, dbt will use an stored internal manifest to determine which files have been changed (if any) since it last parsed the project.",
+                "title": "Partial Parse"
+              },
+              "printer_width": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Length of characters before starting a new line.",
+                "title": "Printer Width"
+              },
+              "write_json": {
+                "anyOf": [
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Determines whether dbt writes JSON artifacts to the target/ directory.",
+                "title": "Write Json"
+              },
+              "warn_error": {
+                "anyOf": [
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Whether to convert dbt warnings into errors.",
+                "title": "Warn Error"
+              },
+              "log_format": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "The LOG_FORMAT config specifies how dbt's logs should be formatted. If the value of this config is json, dbt will output fully structured logs in JSON format.",
+                "title": "Log Format"
+              },
+              "debug": {
+                "anyOf": [
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Whether to redirect dbt's debug logs to standard out.",
+                "title": "Debug"
+              },
+              "version_check": {
+                "anyOf": [
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Whether to raise an error if a project's version is used with an incompatible dbt version.",
+                "title": "Version Check"
+              },
+              "fail_fast": {
+                "anyOf": [
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Make dbt exit immediately if a single resource fails to build.",
+                "title": "Fail Fast"
+              },
+              "use_experimental_parser": {
+                "anyOf": [
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Opt into the latest experimental version of the static parser.",
+                "title": "Use Experimental Parser"
+              },
+              "static_parser": {
+                "anyOf": [
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Whether to use the [static parser](https://docs.getdbt.com/reference/parsing#static-parser).",
+                "title": "Static Parser"
+              }
+            },
+            "secret_fields": [],
+            "title": "GlobalConfigs",
+            "type": "object"
+          },
+          "capabilities": [],
+          "version": "0.6.6"
+        }
+      },
+      "dbt-cli-profile": {
+        "name": "dbt CLI Profile",
+        "slug": "dbt-cli-profile",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5zE9lxfzBHjw3tnEup4wWL/9a001902ed43a84c6c96d23b24622e19/dbt-bit_tm.png?h=250",
+        "documentation_url": "https://docs.prefect.io/integrations/prefect-dbt",
+        "description": "Profile for use across dbt CLI tasks and flows. This block is part of the prefect-dbt collection. Install prefect-dbt with `pip install prefect-dbt` to use this block.",
+        "code_example": "Load stored dbt CLI profile:\n```python\nfrom prefect_dbt.cli import DbtCliProfile\ndbt_cli_profile = DbtCliProfile.load(\"BLOCK_NAME\").get_profile()\n```\n\nGet a dbt Snowflake profile from DbtCliProfile by using SnowflakeTargetConfigs:\n```python\nfrom prefect_dbt.cli import DbtCliProfile\nfrom prefect_dbt.cli.configs import SnowflakeTargetConfigs\nfrom prefect_snowflake.credentials import SnowflakeCredentials\nfrom prefect_snowflake.database import SnowflakeConnector\n\ncredentials = SnowflakeCredentials(\n    user=\"user\",\n    password=\"password\",\n    account=\"account.region.aws\",\n    role=\"role\",\n)\nconnector = SnowflakeConnector(\n    schema=\"public\",\n    database=\"database\",\n    warehouse=\"warehouse\",\n    credentials=credentials,\n)\ntarget_configs = SnowflakeTargetConfigs(\n    connector=connector\n)\ndbt_cli_profile = DbtCliProfile(\n    name=\"jaffle_shop\",\n    target=\"dev\",\n    target_configs=target_configs,\n)\nprofile = dbt_cli_profile.get_profile()\n```\n\nGet a dbt Redshift profile from DbtCliProfile by using generic TargetConfigs:\n```python\nfrom prefect_dbt.cli import DbtCliProfile\nfrom prefect_dbt.cli.configs import GlobalConfigs, TargetConfigs\n\ntarget_configs_extras = dict(\n    host=\"hostname.region.redshift.amazonaws.com\",\n    user=\"username\",\n    password=\"password1\",\n    port=5439,\n    dbname=\"analytics\",\n)\ntarget_configs = TargetConfigs(\n    type=\"redshift\",\n    schema=\"schema\",\n    threads=4,\n    extras=target_configs_extras\n)\ndbt_cli_profile = DbtCliProfile(\n    name=\"jaffle_shop\",\n    target=\"dev\",\n    target_configs=target_configs,\n)\nprofile = dbt_cli_profile.get_profile()\n```",
+        "block_schema": {
+          "checksum": "sha256:9da2327a7bac95eed18ee66db0735b86ef2f8dd3c876bab7ca0f954139906b37",
+          "fields": {
+            "block_schema_references": {
+              "global_configs": {
+                "block_schema_checksum": "sha256:41b950975ec465d2eb985b375710eb6a44378c260fde4bc48d89097b61f8a0fe",
+                "block_type_slug": "dbt-cli-global-configs"
+              }
+            },
+            "block_type_slug": "dbt-cli-profile",
+            "description": "Profile for use across dbt CLI tasks and flows.",
+            "properties": {
+              "name": {
+                "description": "Profile name used for populating profiles.yml.",
+                "title": "Name",
+                "type": "string"
+              },
+              "target": {
+                "description": "The default target your dbt project will use.",
+                "title": "Target",
+                "type": "string"
+              },
+              "target_configs": {
+                "description": "Target configs contain credentials and settings, specific to the warehouse you're connecting to.",
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "$ref": "#/definitions/TargetConfigs"
+                  }
+                ],
+                "title": "Target Configs"
+              },
+              "global_configs": {
+                "anyOf": [
+                  {
+                    "$ref": "#/definitions/GlobalConfigs"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Global configs control things like the visual output of logs, the manner in which dbt parses your project, and what to do when dbt finds a version mismatch or a failing model."
+              }
+            },
+            "required": [
+              "name",
+              "target",
+              "target_configs"
+            ],
+            "secret_fields": [],
+            "title": "DbtCliProfile",
+            "type": "object",
+            "definitions": {
+              "GlobalConfigs": {
+                "block_schema_references": {},
+                "block_type_slug": "dbt-cli-global-configs",
+                "description": "Global configs control things like the visual output\nof logs, the manner in which dbt parses your project,\nand what to do when dbt finds a version mismatch\nor a failing model. Docs can be found [here](\nhttps://docs.getdbt.com/reference/global-configs).",
+                "properties": {
+                  "extras": {
+                    "anyOf": [
+                      {
+                        "type": "object"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Extra target configs' keywords, not yet exposed in prefect-dbt, but available in dbt.",
+                    "title": "Extras"
+                  },
+                  "allow_field_overrides": {
+                    "default": false,
+                    "description": "If enabled, fields from dbt target configs will override fields provided in extras and credentials.",
+                    "title": "Allow Field Overrides",
+                    "type": "boolean"
+                  },
+                  "send_anonymous_usage_stats": {
+                    "anyOf": [
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Whether usage stats are sent to dbt.",
+                    "title": "Send Anonymous Usage Stats"
+                  },
+                  "use_colors": {
+                    "anyOf": [
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Colorize the output it prints in your terminal.",
+                    "title": "Use Colors"
+                  },
+                  "partial_parse": {
+                    "anyOf": [
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "When partial parsing is enabled, dbt will use an stored internal manifest to determine which files have been changed (if any) since it last parsed the project.",
+                    "title": "Partial Parse"
+                  },
+                  "printer_width": {
+                    "anyOf": [
+                      {
+                        "type": "integer"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Length of characters before starting a new line.",
+                    "title": "Printer Width"
+                  },
+                  "write_json": {
+                    "anyOf": [
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Determines whether dbt writes JSON artifacts to the target/ directory.",
+                    "title": "Write Json"
+                  },
+                  "warn_error": {
+                    "anyOf": [
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Whether to convert dbt warnings into errors.",
+                    "title": "Warn Error"
+                  },
+                  "log_format": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The LOG_FORMAT config specifies how dbt's logs should be formatted. If the value of this config is json, dbt will output fully structured logs in JSON format.",
+                    "title": "Log Format"
+                  },
+                  "debug": {
+                    "anyOf": [
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Whether to redirect dbt's debug logs to standard out.",
+                    "title": "Debug"
+                  },
+                  "version_check": {
+                    "anyOf": [
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Whether to raise an error if a project's version is used with an incompatible dbt version.",
+                    "title": "Version Check"
+                  },
+                  "fail_fast": {
+                    "anyOf": [
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Make dbt exit immediately if a single resource fails to build.",
+                    "title": "Fail Fast"
+                  },
+                  "use_experimental_parser": {
+                    "anyOf": [
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Opt into the latest experimental version of the static parser.",
+                    "title": "Use Experimental Parser"
+                  },
+                  "static_parser": {
+                    "anyOf": [
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Whether to use the [static parser](https://docs.getdbt.com/reference/parsing#static-parser).",
+                    "title": "Static Parser"
+                  }
+                },
+                "secret_fields": [],
+                "title": "GlobalConfigs",
+                "type": "object"
+              },
+              "TargetConfigs": {
+                "block_schema_references": {},
+                "block_type_slug": "dbt-cli-target-configs",
+                "description": "Target configs contain credentials and\nsettings, specific to the warehouse you're connecting to.\nTo find valid keys, head to the [Available adapters](\nhttps://docs.getdbt.com/docs/available-adapters) page and\nclick the desired adapter's \"Profile Setup\" hyperlink.",
+                "properties": {
+                  "extras": {
+                    "anyOf": [
+                      {
+                        "type": "object"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Extra target configs' keywords, not yet exposed in prefect-dbt, but available in dbt.",
+                    "title": "Extras"
+                  },
+                  "allow_field_overrides": {
+                    "default": false,
+                    "description": "If enabled, fields from dbt target configs will override fields provided in extras and credentials.",
+                    "title": "Allow Field Overrides",
+                    "type": "boolean"
+                  },
+                  "type": {
+                    "description": "The name of the database warehouse.",
+                    "title": "Type",
+                    "type": "string"
+                  },
+                  "schema": {
+                    "description": "The schema that dbt will build objects into; in BigQuery, a schema is actually a dataset.",
+                    "title": "Schema",
+                    "type": "string"
+                  },
+                  "threads": {
+                    "default": 4,
+                    "description": "The number of threads representing the max number of paths through the graph dbt may work on at once.",
+                    "title": "Threads",
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "type",
+                  "schema"
+                ],
+                "secret_fields": [],
+                "title": "TargetConfigs",
+                "type": "object"
+              }
+            }
+          },
+          "capabilities": [],
+          "version": "0.6.6"
+        }
+      },
+      "dbt-cli-target-configs": {
+        "name": "dbt CLI Target Configs",
+        "slug": "dbt-cli-target-configs",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5zE9lxfzBHjw3tnEup4wWL/9a001902ed43a84c6c96d23b24622e19/dbt-bit_tm.png?h=250",
+        "documentation_url": "https://docs.prefect.io/integrations/prefect-dbt",
+        "description": "Target configs contain credentials and\nsettings, specific to the warehouse you're connecting to.\nTo find valid keys, head to the [Available adapters](\nhttps://docs.getdbt.com/docs/available-adapters) page and\nclick the desired adapter's \"Profile Setup\" hyperlink. This block is part of the prefect-dbt collection. Install prefect-dbt with `pip install prefect-dbt` to use this block.",
+        "code_example": "Load stored TargetConfigs:\n```python\nfrom prefect_dbt.cli.configs import TargetConfigs\n\ndbt_cli_target_configs = TargetConfigs.load(\"BLOCK_NAME\")\n```",
+        "block_schema": {
+          "checksum": "sha256:03132eeb1e7450554ae8511c94adc9d4a3446693269a0f830e3fd1bc94a77e1b",
+          "fields": {
+            "block_schema_references": {},
+            "block_type_slug": "dbt-cli-target-configs",
+            "description": "Target configs contain credentials and\nsettings, specific to the warehouse you're connecting to.\nTo find valid keys, head to the [Available adapters](\nhttps://docs.getdbt.com/docs/available-adapters) page and\nclick the desired adapter's \"Profile Setup\" hyperlink.",
+            "properties": {
+              "extras": {
+                "anyOf": [
+                  {
+                    "type": "object"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Extra target configs' keywords, not yet exposed in prefect-dbt, but available in dbt.",
+                "title": "Extras"
+              },
+              "allow_field_overrides": {
+                "default": false,
+                "description": "If enabled, fields from dbt target configs will override fields provided in extras and credentials.",
+                "title": "Allow Field Overrides",
+                "type": "boolean"
+              },
+              "type": {
+                "description": "The name of the database warehouse.",
+                "title": "Type",
+                "type": "string"
+              },
+              "schema": {
+                "description": "The schema that dbt will build objects into; in BigQuery, a schema is actually a dataset.",
+                "title": "Schema",
+                "type": "string"
+              },
+              "threads": {
+                "default": 4,
+                "description": "The number of threads representing the max number of paths through the graph dbt may work on at once.",
+                "title": "Threads",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "type",
+              "schema"
+            ],
+            "secret_fields": [],
+            "title": "TargetConfigs",
+            "type": "object"
+          },
+          "capabilities": [],
+          "version": "0.6.6"
+        }
+      },
+      "dbt-cloud-credentials": {
+        "name": "dbt Cloud Credentials",
+        "slug": "dbt-cloud-credentials",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5zE9lxfzBHjw3tnEup4wWL/9a001902ed43a84c6c96d23b24622e19/dbt-bit_tm.png?h=250",
+        "documentation_url": "https://docs.prefect.io/integrations/prefect-dbt",
+        "description": "Credentials block for credential use across dbt Cloud tasks and flows. This block is part of the prefect-dbt collection. Install prefect-dbt with `pip install prefect-dbt` to use this block.",
+        "code_example": "Load stored dbt Cloud credentials:\n```python\nfrom prefect_dbt.cloud import DbtCloudCredentials\n\ndbt_cloud_credentials = DbtCloudCredentials.load(\"BLOCK_NAME\")\n```\n\nUse DbtCloudCredentials instance to trigger a job run:\n```python\nfrom prefect_dbt.cloud import DbtCloudCredentials\n\ncredentials = DbtCloudCredentials(api_key=\"my_api_key\", account_id=123456789)\n\nasync with dbt_cloud_credentials.get_administrative_client() as client:\n    client.trigger_job_run(job_id=1)\n```\n\nLoad saved dbt Cloud credentials within a flow:\n```python\nfrom prefect import flow\n\nfrom prefect_dbt.cloud import DbtCloudCredentials\nfrom prefect_dbt.cloud.jobs import trigger_dbt_cloud_job_run\n\n\n@flow\ndef trigger_dbt_cloud_job_run_flow():\n    credentials = DbtCloudCredentials.load(\"my-dbt-credentials\")\n    trigger_dbt_cloud_job_run(dbt_cloud_credentials=credentials, job_id=1)\n\ntrigger_dbt_cloud_job_run_flow()\n```",
+        "block_schema": {
+          "checksum": "sha256:0e1b2e94e09041e7d732822354503e87b99ddb31422d9d2c83c671be249aa231",
+          "fields": {
+            "block_schema_references": {},
+            "block_type_slug": "dbt-cloud-credentials",
+            "description": "Credentials block for credential use across dbt Cloud tasks and flows.",
+            "properties": {
+              "api_key": {
+                "description": "A dbt Cloud API key to use for authentication.",
+                "format": "password",
+                "title": "API Key",
+                "type": "string",
+                "writeOnly": true
+              },
+              "account_id": {
+                "description": "The ID of your dbt Cloud account.",
+                "title": "Account ID",
+                "type": "integer"
+              },
+              "domain": {
+                "default": "cloud.getdbt.com",
+                "description": "The base domain of your dbt Cloud instance.",
+                "title": "Domain",
+                "type": "string"
+              }
+            },
+            "required": [
+              "api_key",
+              "account_id"
+            ],
+            "secret_fields": [
+              "api_key"
+            ],
+            "title": "DbtCloudCredentials",
+            "type": "object"
+          },
+          "capabilities": [],
+          "version": "0.6.6"
+        }
+      },
+      "dbt-cloud-job": {
+        "name": "dbt Cloud Job",
+        "slug": "dbt-cloud-job",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5zE9lxfzBHjw3tnEup4wWL/9a001902ed43a84c6c96d23b24622e19/dbt-bit_tm.png?h=250",
+        "documentation_url": "https://docs.prefect.io/integrations/prefect-dbt",
+        "description": "Block that holds the information and methods to interact with a dbt Cloud job. This block is part of the prefect-dbt collection. Install prefect-dbt with `pip install prefect-dbt` to use this block.",
+        "code_example": "Load a configured dbt Cloud job block.\n```python\nfrom prefect_dbt.cloud import DbtCloudJob\n\ndbt_cloud_job = DbtCloudJob.load(\"BLOCK_NAME\")\n```\n\nTriggers a dbt Cloud job, waits for completion, and fetches the results.\n```python\nfrom prefect import flow\nfrom prefect_dbt.cloud import DbtCloudCredentials, DbtCloudJob\n\n@flow\ndef dbt_cloud_job_flow():\n    dbt_cloud_credentials = DbtCloudCredentials.load(\"dbt-token\")\n    dbt_cloud_job = DbtCloudJob.load(\n        dbt_cloud_credentials=dbt_cloud_credentials,\n        job_id=154217\n    )\n    dbt_cloud_job_run = dbt_cloud_job.trigger()\n    dbt_cloud_job_run.wait_for_completion()\n    dbt_cloud_job_run.fetch_result()\n    return dbt_cloud_job_run\n\ndbt_cloud_job_flow()\n```",
+        "block_schema": {
+          "checksum": "sha256:3aac5884b6efe2d85628c67c47518a329bdd1e4b3b84ca95fd7ee93a326a11d2",
+          "fields": {
+            "block_schema_references": {
+              "dbt_cloud_credentials": {
+                "block_schema_checksum": "sha256:0e1b2e94e09041e7d732822354503e87b99ddb31422d9d2c83c671be249aa231",
+                "block_type_slug": "dbt-cloud-credentials"
+              }
+            },
+            "block_type_slug": "dbt-cloud-job",
+            "description": "Block that holds the information and methods to interact with a dbt Cloud job.",
+            "properties": {
+              "dbt_cloud_credentials": {
+                "$ref": "#/definitions/DbtCloudCredentials",
+                "description": "The dbt Cloud credentials to use to authenticate with dbt Cloud."
+              },
+              "job_id": {
+                "description": "The id of the dbt Cloud job.",
+                "title": "Job ID",
+                "type": "integer"
+              },
+              "timeout_seconds": {
+                "default": 900,
+                "description": "The number of seconds to wait for the job to complete.",
+                "title": "Timeout Seconds",
+                "type": "integer"
+              },
+              "interval_seconds": {
+                "default": 10,
+                "description": "The number of seconds to wait between polling for job completion.",
+                "title": "Interval Seconds",
+                "type": "integer"
+              },
+              "trigger_job_run_options": {
+                "$ref": "#/definitions/TriggerJobRunOptions",
+                "description": "The options to use when triggering a job run."
+              }
+            },
+            "required": [
+              "dbt_cloud_credentials",
+              "job_id"
+            ],
+            "secret_fields": [
+              "dbt_cloud_credentials.api_key"
+            ],
+            "title": "DbtCloudJob",
+            "type": "object",
+            "definitions": {
+              "DbtCloudCredentials": {
+                "block_schema_references": {},
+                "block_type_slug": "dbt-cloud-credentials",
+                "description": "Credentials block for credential use across dbt Cloud tasks and flows.",
+                "properties": {
+                  "api_key": {
+                    "description": "A dbt Cloud API key to use for authentication.",
+                    "format": "password",
+                    "title": "API Key",
+                    "type": "string",
+                    "writeOnly": true
+                  },
+                  "account_id": {
+                    "description": "The ID of your dbt Cloud account.",
+                    "title": "Account ID",
+                    "type": "integer"
+                  },
+                  "domain": {
+                    "default": "cloud.getdbt.com",
+                    "description": "The base domain of your dbt Cloud instance.",
+                    "title": "Domain",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "api_key",
+                  "account_id"
+                ],
+                "secret_fields": [
+                  "api_key"
+                ],
+                "title": "DbtCloudCredentials",
+                "type": "object"
+              },
+              "TriggerJobRunOptions": {
+                "description": "Defines options that can be defined when triggering a dbt Cloud job run.",
+                "properties": {
+                  "cause": {
+                    "description": "A text description of the reason for running this job.",
+                    "title": "Cause",
+                    "type": "string"
+                  },
+                  "git_sha": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The git sha to check out before running this job.",
+                    "title": "Git Sha"
+                  },
+                  "git_branch": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The git branch to check out before running this job.",
+                    "title": "Git Branch"
+                  },
+                  "schema_override": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Override the destination schema in the configured target for this job.",
+                    "title": "Schema Override"
+                  },
+                  "dbt_version_override": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Override the version of dbt used to run this job.",
+                    "title": "Dbt Version Override"
+                  },
+                  "threads_override": {
+                    "anyOf": [
+                      {
+                        "type": "integer"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Override the number of threads used to run this job.",
+                    "title": "Threads Override"
+                  },
+                  "target_name_override": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Override the target.name context variable used when running this job",
+                    "title": "Target Name Override"
+                  },
+                  "generate_docs_override": {
+                    "anyOf": [
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Override whether or not this job generates docs (true=yes, false=no).",
+                    "title": "Generate Docs Override"
+                  },
+                  "timeout_seconds_override": {
+                    "anyOf": [
+                      {
+                        "type": "integer"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Override the timeout in seconds for this job.",
+                    "title": "Timeout Seconds Override"
+                  },
+                  "steps_override": {
+                    "anyOf": [
+                      {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Override the list of steps for this job.",
+                    "title": "Steps Override"
+                  }
+                },
+                "title": "TriggerJobRunOptions",
+                "type": "object"
+              }
+            }
+          },
+          "capabilities": [],
+          "version": "0.6.6"
+        }
+      },
+      "dbt-core-operation": {
+        "name": "dbt Core Operation",
+        "slug": "dbt-core-operation",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5zE9lxfzBHjw3tnEup4wWL/9a001902ed43a84c6c96d23b24622e19/dbt-bit_tm.png?h=250",
+        "documentation_url": "https://docs.prefect.io/integrations/prefect-dbt",
+        "description": "A block representing a dbt operation, containing multiple dbt and shell commands.\n\nFor long-lasting operations, use the trigger method and utilize the block as a\ncontext manager for automatic closure of processes when context is exited.\nIf not, manually call the close method to close processes.\n\nFor short-lasting operations, use the run method. Context is automatically managed\nwith this method. This block is part of the prefect-dbt collection. Install prefect-dbt with `pip install prefect-dbt` to use this block.",
+        "code_example": "Load a configured block.\n```python\nfrom prefect_dbt import DbtCoreOperation\n\ndbt_op = DbtCoreOperation.load(\"BLOCK_NAME\")\n```\n\nExecute short-lasting dbt debug and list with a custom DbtCliProfile.\n```python\nfrom prefect_dbt import DbtCoreOperation, DbtCliProfile\nfrom prefect_dbt.cli.configs import SnowflakeTargetConfigs\nfrom prefect_snowflake import SnowflakeConnector\n\nsnowflake_connector = await SnowflakeConnector.load(\"snowflake-connector\")\ntarget_configs = SnowflakeTargetConfigs(connector=snowflake_connector)\ndbt_cli_profile = DbtCliProfile(\n    name=\"jaffle_shop\",\n    target=\"dev\",\n    target_configs=target_configs,\n)\ndbt_init = DbtCoreOperation(\n    commands=[\"dbt debug\", \"dbt list\"],\n    dbt_cli_profile=dbt_cli_profile,\n    overwrite_profiles=True\n)\ndbt_init.run()\n```\n\nExecute a longer-lasting dbt run as a context manager.\n```python\nwith DbtCoreOperation(commands=[\"dbt run\"]) as dbt_run:\n    dbt_process = dbt_run.trigger()\n    # do other things\n    dbt_process.wait_for_completion()\n    dbt_output = dbt_process.fetch_result()\n```",
+        "block_schema": {
+          "checksum": "sha256:730d35144f5402be8d1499daec76a1b97e2b02c12f47e151ebdeb432b4750c8f",
+          "fields": {
+            "block_schema_references": {
+              "dbt_cli_profile": {
+                "block_schema_checksum": "sha256:9da2327a7bac95eed18ee66db0735b86ef2f8dd3c876bab7ca0f954139906b37",
+                "block_type_slug": "dbt-cli-profile"
+              }
+            },
+            "block_type_slug": "dbt-core-operation",
+            "description": "A block representing a dbt operation, containing multiple dbt and shell commands.\n\nFor long-lasting operations, use the trigger method and utilize the block as a\ncontext manager for automatic closure of processes when context is exited.\nIf not, manually call the close method to close processes.\n\nFor short-lasting operations, use the run method. Context is automatically managed\nwith this method.",
+            "properties": {
+              "commands": {
+                "description": "A list of commands to execute sequentially.",
+                "items": {
+                  "type": "string"
+                },
+                "title": "Commands",
+                "type": "array"
+              },
+              "stream_output": {
+                "default": true,
+                "description": "Whether to stream output.",
+                "title": "Stream Output",
+                "type": "boolean"
+              },
+              "env": {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "description": "Environment variables to use for the subprocess.",
+                "title": "Environment Variables",
+                "type": "object"
+              },
+              "working_dir": {
+                "anyOf": [
+                  {
+                    "format": "directory-path",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "The absolute path to the working directory the command will be executed within.",
+                "title": "Working Directory"
+              },
+              "shell": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "The shell to run the command with; if unset, defaults to `powershell` on Windows and `bash` on other platforms.",
+                "title": "Shell"
+              },
+              "extension": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "The extension to use for the temporary file; if unset, defaults to `.ps1` on Windows and `.sh` on other platforms.",
+                "title": "Extension"
+              },
+              "profiles_dir": {
+                "anyOf": [
+                  {
+                    "format": "path",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "The directory to search for the profiles.yml file. Setting this appends the `--profiles-dir` option to the dbt commands provided. If this is not set, will try using the DBT_PROFILES_DIR environment variable, but if that's also not set, will use the default directory `$HOME/.dbt/`.",
+                "title": "Profiles Dir"
+              },
+              "project_dir": {
+                "anyOf": [
+                  {
+                    "format": "path",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "The directory to search for the dbt_project.yml file. Default is the current working directory and its parents.",
+                "title": "Project Dir"
+              },
+              "overwrite_profiles": {
+                "default": false,
+                "description": "Whether the existing profiles.yml file under profiles_dir should be overwritten with a new profile.",
+                "title": "Overwrite Profiles",
+                "type": "boolean"
+              },
+              "dbt_cli_profile": {
+                "anyOf": [
+                  {
+                    "$ref": "#/definitions/DbtCliProfile"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Profiles class containing the profile written to profiles.yml. Note! This is optional and will raise an error if profiles.yml already exists under profile_dir and overwrite_profiles is set to False."
+              }
+            },
+            "required": [
+              "commands"
+            ],
+            "secret_fields": [],
+            "title": "DbtCoreOperation",
+            "type": "object",
+            "definitions": {
+              "DbtCliProfile": {
+                "block_schema_references": {
+                  "global_configs": {
+                    "block_schema_checksum": "sha256:41b950975ec465d2eb985b375710eb6a44378c260fde4bc48d89097b61f8a0fe",
+                    "block_type_slug": "dbt-cli-global-configs"
+                  }
+                },
+                "block_type_slug": "dbt-cli-profile",
+                "description": "Profile for use across dbt CLI tasks and flows.",
+                "properties": {
+                  "name": {
+                    "description": "Profile name used for populating profiles.yml.",
+                    "title": "Name",
+                    "type": "string"
+                  },
+                  "target": {
+                    "description": "The default target your dbt project will use.",
+                    "title": "Target",
+                    "type": "string"
+                  },
+                  "target_configs": {
+                    "description": "Target configs contain credentials and settings, specific to the warehouse you're connecting to.",
+                    "oneOf": [
+                      {
+                        "type": "null"
+                      },
+                      {
+                        "$ref": "#/definitions/TargetConfigs"
+                      }
+                    ],
+                    "title": "Target Configs"
+                  },
+                  "global_configs": {
+                    "anyOf": [
+                      {
+                        "$ref": "#/definitions/GlobalConfigs"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Global configs control things like the visual output of logs, the manner in which dbt parses your project, and what to do when dbt finds a version mismatch or a failing model."
+                  }
+                },
+                "required": [
+                  "name",
+                  "target",
+                  "target_configs"
+                ],
+                "secret_fields": [],
+                "title": "DbtCliProfile",
+                "type": "object"
+              },
+              "GlobalConfigs": {
+                "block_schema_references": {},
+                "block_type_slug": "dbt-cli-global-configs",
+                "description": "Global configs control things like the visual output\nof logs, the manner in which dbt parses your project,\nand what to do when dbt finds a version mismatch\nor a failing model. Docs can be found [here](\nhttps://docs.getdbt.com/reference/global-configs).",
+                "properties": {
+                  "extras": {
+                    "anyOf": [
+                      {
+                        "type": "object"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Extra target configs' keywords, not yet exposed in prefect-dbt, but available in dbt.",
+                    "title": "Extras"
+                  },
+                  "allow_field_overrides": {
+                    "default": false,
+                    "description": "If enabled, fields from dbt target configs will override fields provided in extras and credentials.",
+                    "title": "Allow Field Overrides",
+                    "type": "boolean"
+                  },
+                  "send_anonymous_usage_stats": {
+                    "anyOf": [
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Whether usage stats are sent to dbt.",
+                    "title": "Send Anonymous Usage Stats"
+                  },
+                  "use_colors": {
+                    "anyOf": [
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Colorize the output it prints in your terminal.",
+                    "title": "Use Colors"
+                  },
+                  "partial_parse": {
+                    "anyOf": [
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "When partial parsing is enabled, dbt will use an stored internal manifest to determine which files have been changed (if any) since it last parsed the project.",
+                    "title": "Partial Parse"
+                  },
+                  "printer_width": {
+                    "anyOf": [
+                      {
+                        "type": "integer"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Length of characters before starting a new line.",
+                    "title": "Printer Width"
+                  },
+                  "write_json": {
+                    "anyOf": [
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Determines whether dbt writes JSON artifacts to the target/ directory.",
+                    "title": "Write Json"
+                  },
+                  "warn_error": {
+                    "anyOf": [
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Whether to convert dbt warnings into errors.",
+                    "title": "Warn Error"
+                  },
+                  "log_format": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The LOG_FORMAT config specifies how dbt's logs should be formatted. If the value of this config is json, dbt will output fully structured logs in JSON format.",
+                    "title": "Log Format"
+                  },
+                  "debug": {
+                    "anyOf": [
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Whether to redirect dbt's debug logs to standard out.",
+                    "title": "Debug"
+                  },
+                  "version_check": {
+                    "anyOf": [
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Whether to raise an error if a project's version is used with an incompatible dbt version.",
+                    "title": "Version Check"
+                  },
+                  "fail_fast": {
+                    "anyOf": [
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Make dbt exit immediately if a single resource fails to build.",
+                    "title": "Fail Fast"
+                  },
+                  "use_experimental_parser": {
+                    "anyOf": [
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Opt into the latest experimental version of the static parser.",
+                    "title": "Use Experimental Parser"
+                  },
+                  "static_parser": {
+                    "anyOf": [
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Whether to use the [static parser](https://docs.getdbt.com/reference/parsing#static-parser).",
+                    "title": "Static Parser"
+                  }
+                },
+                "secret_fields": [],
+                "title": "GlobalConfigs",
+                "type": "object"
+              },
+              "TargetConfigs": {
+                "block_schema_references": {},
+                "block_type_slug": "dbt-cli-target-configs",
+                "description": "Target configs contain credentials and\nsettings, specific to the warehouse you're connecting to.\nTo find valid keys, head to the [Available adapters](\nhttps://docs.getdbt.com/docs/available-adapters) page and\nclick the desired adapter's \"Profile Setup\" hyperlink.",
+                "properties": {
+                  "extras": {
+                    "anyOf": [
+                      {
+                        "type": "object"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Extra target configs' keywords, not yet exposed in prefect-dbt, but available in dbt.",
+                    "title": "Extras"
+                  },
+                  "allow_field_overrides": {
+                    "default": false,
+                    "description": "If enabled, fields from dbt target configs will override fields provided in extras and credentials.",
+                    "title": "Allow Field Overrides",
+                    "type": "boolean"
+                  },
+                  "type": {
+                    "description": "The name of the database warehouse.",
+                    "title": "Type",
+                    "type": "string"
+                  },
+                  "schema": {
+                    "description": "The schema that dbt will build objects into; in BigQuery, a schema is actually a dataset.",
+                    "title": "Schema",
+                    "type": "string"
+                  },
+                  "threads": {
+                    "default": 4,
+                    "description": "The number of threads representing the max number of paths through the graph dbt may work on at once.",
+                    "title": "Threads",
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "type",
+                  "schema"
+                ],
+                "secret_fields": [],
+                "title": "TargetConfigs",
+                "type": "object"
+              }
+            }
+          },
+          "capabilities": [],
+          "version": "0.6.6"
+        }
+      }
+    }
+  }
+}
