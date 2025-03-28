@@ -1,0 +1,110 @@
+{
+  "prefect-kubernetes": {
+    "block_types": {
+      "kubernetes-cluster-config": {
+        "name": "Kubernetes Cluster Config",
+        "slug": "kubernetes-cluster-config",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/2d0b896006ad463b49c28aaac14f31e00e32cfab-250x250.png",
+        "documentation_url": "https://docs.prefect.io/integrations/prefect-kubernetes",
+        "description": "Stores configuration for interaction with Kubernetes clusters.\n\nSee `from_file` for creation. This block is part of the prefect-kubernetes collection. Install prefect-kubernetes with `pip install prefect-kubernetes` to use this block.",
+        "code_example": "Load a saved Kubernetes cluster config:\n```python\nfrom prefect_kubernetes.credentials import import KubernetesClusterConfig\n\ncluster_config_block = KubernetesClusterConfig.load(\"BLOCK_NAME\")\n```",
+        "block_schema": {
+          "checksum": "sha256:a36c99dab92a2a9461d6fffb9948d7b9bfd85c8b0f1f2163df13bf8af2b1e3b8",
+          "fields": {
+            "block_schema_references": {},
+            "block_type_slug": "kubernetes-cluster-config",
+            "description": "Stores configuration for interaction with Kubernetes clusters.\n\nSee `from_file` for creation.",
+            "properties": {
+              "config": {
+                "additionalProperties": true,
+                "description": "The entire contents of a kubectl config file.",
+                "title": "Config",
+                "type": "object"
+              },
+              "context_name": {
+                "description": "The name of the kubectl context to use.",
+                "title": "Context Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "config",
+              "context_name"
+            ],
+            "secret_fields": [],
+            "title": "KubernetesClusterConfig",
+            "type": "object"
+          },
+          "capabilities": [],
+          "version": "0.5.9"
+        }
+      },
+      "kubernetes-credentials": {
+        "name": "Kubernetes Credentials",
+        "slug": "kubernetes-credentials",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/2d0b896006ad463b49c28aaac14f31e00e32cfab-250x250.png",
+        "documentation_url": "https://docs.prefect.io/integrations/prefect-kubernetes",
+        "description": "Credentials block for generating configured Kubernetes API clients. This block is part of the prefect-kubernetes collection. Install prefect-kubernetes with `pip install prefect-kubernetes` to use this block.",
+        "code_example": "Load stored Kubernetes credentials:\n```python\nfrom prefect_kubernetes.credentials import KubernetesCredentials\n\nkubernetes_credentials = KubernetesCredentials.load(\"BLOCK_NAME\")\n```",
+        "block_schema": {
+          "checksum": "sha256:e4dfb990a57049191c4754abfdb041dfb58b2ff82fa22fcc1308d41c67704d19",
+          "fields": {
+            "block_schema_references": {
+              "cluster_config": {
+                "block_schema_checksum": "sha256:a36c99dab92a2a9461d6fffb9948d7b9bfd85c8b0f1f2163df13bf8af2b1e3b8",
+                "block_type_slug": "kubernetes-cluster-config"
+              }
+            },
+            "block_type_slug": "kubernetes-credentials",
+            "description": "Credentials block for generating configured Kubernetes API clients.",
+            "properties": {
+              "cluster_config": {
+                "anyOf": [
+                  {
+                    "$ref": "#/definitions/KubernetesClusterConfig"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null
+              }
+            },
+            "secret_fields": [],
+            "title": "KubernetesCredentials",
+            "type": "object",
+            "definitions": {
+              "KubernetesClusterConfig": {
+                "block_schema_references": {},
+                "block_type_slug": "kubernetes-cluster-config",
+                "description": "Stores configuration for interaction with Kubernetes clusters.\n\nSee `from_file` for creation.",
+                "properties": {
+                  "config": {
+                    "additionalProperties": true,
+                    "description": "The entire contents of a kubectl config file.",
+                    "title": "Config",
+                    "type": "object"
+                  },
+                  "context_name": {
+                    "description": "The name of the kubectl context to use.",
+                    "title": "Context Name",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "config",
+                  "context_name"
+                ],
+                "secret_fields": [],
+                "title": "KubernetesClusterConfig",
+                "type": "object"
+              }
+            }
+          },
+          "capabilities": [],
+          "version": "0.5.9"
+        }
+      }
+    }
+  }
+}
