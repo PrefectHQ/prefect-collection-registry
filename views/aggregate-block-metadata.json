@@ -6696,13 +6696,14 @@
         "description": "Stores configuration for interaction with Kubernetes clusters.\n\nSee `from_file` for creation. This block is part of the prefect-kubernetes collection. Install prefect-kubernetes with `pip install prefect-kubernetes` to use this block.",
         "code_example": "Load a saved Kubernetes cluster config:\n```python\nfrom prefect_kubernetes.credentials import import KubernetesClusterConfig\n\ncluster_config_block = KubernetesClusterConfig.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:90d421e948bfbe4cdc98b124995f0edd0f84b0837549ad1390423bad8e31cf3b",
+          "checksum": "sha256:a36c99dab92a2a9461d6fffb9948d7b9bfd85c8b0f1f2163df13bf8af2b1e3b8",
           "fields": {
             "block_schema_references": {},
             "block_type_slug": "kubernetes-cluster-config",
             "description": "Stores configuration for interaction with Kubernetes clusters.\n\nSee `from_file` for creation.",
             "properties": {
               "config": {
+                "additionalProperties": true,
                 "description": "The entire contents of a kubectl config file.",
                 "title": "Config",
                 "type": "object"
@@ -6722,7 +6723,7 @@
             "type": "object"
           },
           "capabilities": [],
-          "version": "0.5.5"
+          "version": "0.5.9"
         }
       },
       "kubernetes-credentials": {
@@ -6733,11 +6734,11 @@
         "description": "Credentials block for generating configured Kubernetes API clients. This block is part of the prefect-kubernetes collection. Install prefect-kubernetes with `pip install prefect-kubernetes` to use this block.",
         "code_example": "Load stored Kubernetes credentials:\n```python\nfrom prefect_kubernetes.credentials import KubernetesCredentials\n\nkubernetes_credentials = KubernetesCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:205323083b1cc3076ead5dc1bf6f6cd5f94d6644e54c05bcd0c9789c20915256",
+          "checksum": "sha256:e4dfb990a57049191c4754abfdb041dfb58b2ff82fa22fcc1308d41c67704d19",
           "fields": {
             "block_schema_references": {
               "cluster_config": {
-                "block_schema_checksum": "sha256:90d421e948bfbe4cdc98b124995f0edd0f84b0837549ad1390423bad8e31cf3b",
+                "block_schema_checksum": "sha256:a36c99dab92a2a9461d6fffb9948d7b9bfd85c8b0f1f2163df13bf8af2b1e3b8",
                 "block_type_slug": "kubernetes-cluster-config"
               }
             },
@@ -6766,6 +6767,7 @@
                 "description": "Stores configuration for interaction with Kubernetes clusters.\n\nSee `from_file` for creation.",
                 "properties": {
                   "config": {
+                    "additionalProperties": true,
                     "description": "The entire contents of a kubectl config file.",
                     "title": "Config",
                     "type": "object"
@@ -6787,7 +6789,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.5.5"
+          "version": "0.5.9"
         }
       }
     }
