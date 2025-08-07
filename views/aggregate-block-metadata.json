@@ -7073,220 +7073,78 @@
   },
   "prefect-sqlalchemy": {
     "block_types": {
-      "database-credentials": {
-        "name": "Database Credentials",
-        "slug": "database-credentials",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/fb3f4debabcda1c5a3aeea4f5b3f94c28845e23e-250x250.png",
-        "documentation_url": "https://prefecthq.github.io/prefect-sqlalchemy/credentials/#prefect_sqlalchemy.credentials.DatabaseCredentials",
-        "description": "Block used to manage authentication with a database. This block is part of the prefect-sqlalchemy collection. Install prefect-sqlalchemy with `pip install prefect-sqlalchemy` to use this block.",
-        "code_example": "Load stored database credentials:\n```python\nfrom prefect_sqlalchemy import DatabaseCredentials\ndatabase_block = DatabaseCredentials.load(\"BLOCK_NAME\")\n```",
-        "block_schema": {
-          "checksum": "sha256:76d1ccbf0ab2038fea77e9689b91a7c8b6398e080e95d9303f65a93a4c03162e",
-          "fields": {
-            "title": "DatabaseCredentials",
-            "description": "Block used to manage authentication with a database.",
-            "type": "object",
-            "properties": {
-              "driver": {
-                "title": "Driver",
-                "description": "The driver name to use.",
-                "anyOf": [
-                  {
-                    "$ref": "#/definitions/AsyncDriver"
-                  },
-                  {
-                    "$ref": "#/definitions/SyncDriver"
-                  },
-                  {
-                    "type": "string"
-                  }
-                ]
-              },
-              "username": {
-                "title": "Username",
-                "description": "The user name used to authenticate.",
-                "type": "string"
-              },
-              "password": {
-                "title": "Password",
-                "description": "The password used to authenticate.",
-                "type": "string",
-                "writeOnly": true,
-                "format": "password"
-              },
-              "database": {
-                "title": "Database",
-                "description": "The name of the database to use.",
-                "type": "string"
-              },
-              "host": {
-                "title": "Host",
-                "description": "The host address of the database.",
-                "type": "string"
-              },
-              "port": {
-                "title": "Port",
-                "description": "The port to connect to the database.",
-                "type": "string"
-              },
-              "query": {
-                "title": "Query",
-                "description": "A dictionary of string keys to string values to be passed to the dialect and/or the DBAPI upon connect. To specify non-string parameters to a Python DBAPI directly, use connect_args.",
-                "type": "object",
-                "additionalProperties": {
-                  "type": "string"
-                }
-              },
-              "url": {
-                "title": "Url",
-                "description": "Manually create and provide a URL to create the engine, this is useful for external dialects, e.g. Snowflake, because some of the params, such as 'warehouse', is not directly supported in the vanilla `sqlalchemy.engine.URL.create` method; do not provide this alongside with other URL params as it will raise a `ValueError`.",
-                "minLength": 1,
-                "maxLength": 65536,
-                "format": "uri",
-                "type": "string"
-              },
-              "connect_args": {
-                "title": "Connect Args",
-                "description": "The options which will be passed directly to the DBAPI's connect() method as additional keyword arguments.",
-                "type": "object"
-              }
-            },
-            "block_type_slug": "database-credentials",
-            "secret_fields": [
-              "password"
-            ],
-            "block_schema_references": {},
-            "definitions": {
-              "AsyncDriver": {
-                "title": "AsyncDriver",
-                "description": "Known dialects with their corresponding async drivers.\n\nAttributes:\n    POSTGRESQL_ASYNCPG (Enum): [postgresql+asyncpg](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.asyncpg)\n\n    SQLITE_AIOSQLITE (Enum): [sqlite+aiosqlite](https://docs.sqlalchemy.org/en/14/dialects/sqlite.html#module-sqlalchemy.dialects.sqlite.aiosqlite)\n\n    MYSQL_ASYNCMY (Enum): [mysql+asyncmy](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.asyncmy)\n    MYSQL_AIOMYSQL (Enum): [mysql+aiomysql](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.aiomysql)",
-                "enum": [
-                  "postgresql+asyncpg",
-                  "sqlite+aiosqlite",
-                  "mysql+asyncmy",
-                  "mysql+aiomysql"
-                ]
-              },
-              "SyncDriver": {
-                "title": "SyncDriver",
-                "description": "Known dialects with their corresponding sync drivers.\n\nAttributes:\n    POSTGRESQL_PSYCOPG2 (Enum): [postgresql+psycopg2](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.psycopg2)\n    POSTGRESQL_PG8000 (Enum): [postgresql+pg8000](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.pg8000)\n    POSTGRESQL_PSYCOPG2CFFI (Enum): [postgresql+psycopg2cffi](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.psycopg2cffi)\n    POSTGRESQL_PYPOSTGRESQL (Enum): [postgresql+pypostgresql](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.pypostgresql)\n    POSTGRESQL_PYGRESQL (Enum): [postgresql+pygresql](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.pygresql)\n\n    MYSQL_MYSQLDB (Enum): [mysql+mysqldb](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.mysqldb)\n    MYSQL_PYMYSQL (Enum): [mysql+pymysql](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.pymysql)\n    MYSQL_MYSQLCONNECTOR (Enum): [mysql+mysqlconnector](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.mysqlconnector)\n    MYSQL_CYMYSQL (Enum): [mysql+cymysql](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.cymysql)\n    MYSQL_OURSQL (Enum): [mysql+oursql](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.oursql)\n    MYSQL_PYODBC (Enum): [mysql+pyodbc](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.pyodbc)\n\n    SQLITE_PYSQLITE (Enum): [sqlite+pysqlite](https://docs.sqlalchemy.org/en/14/dialects/sqlite.html#module-sqlalchemy.dialects.sqlite.pysqlite)\n    SQLITE_PYSQLCIPHER (Enum): [sqlite+pysqlcipher](https://docs.sqlalchemy.org/en/14/dialects/sqlite.html#module-sqlalchemy.dialects.sqlite.pysqlcipher)\n\n    ORACLE_CX_ORACLE (Enum): [oracle+cx_oracle](https://docs.sqlalchemy.org/en/14/dialects/oracle.html#module-sqlalchemy.dialects.oracle.cx_oracle)\n\n    MSSQL_PYODBC (Enum): [mssql+pyodbc](https://docs.sqlalchemy.org/en/14/dialects/mssql.html#module-sqlalchemy.dialects.mssql.pyodbc)\n    MSSQL_MXODBC (Enum): [mssql+mxodbc](https://docs.sqlalchemy.org/en/14/dialects/mssql.html#module-sqlalchemy.dialects.mssql.mxodbc)\n    MSSQL_PYMSSQL (Enum): [mssql+pymssql](https://docs.sqlalchemy.org/en/14/dialects/mssql.html#module-sqlalchemy.dialects.mssql.pymssql)",
-                "enum": [
-                  "postgresql+psycopg2",
-                  "postgresql+pg8000",
-                  "postgresql+psycopg2cffi",
-                  "postgresql+pypostgresql",
-                  "postgresql+pygresql",
-                  "mysql+mysqldb",
-                  "mysql+pymysql",
-                  "mysql+mysqlconnector",
-                  "mysql+cymysql",
-                  "mysql+oursql",
-                  "mysql+pyodbc",
-                  "sqlite+pysqlite",
-                  "sqlite+pysqlcipher",
-                  "oracle+cx_oracle",
-                  "mssql+pyodbc",
-                  "mssql+mxodbc",
-                  "mssql+pymssql"
-                ]
-              }
-            }
-          },
-          "capabilities": [],
-          "version": "0.4.0"
-        }
-      },
       "sqlalchemy-connector": {
         "name": "SQLAlchemy Connector",
         "slug": "sqlalchemy-connector",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/3c7dff04f70aaf4528e184a3b028f9e40b98d68c-250x250.png",
-        "documentation_url": "https://prefecthq.github.io/prefect-sqlalchemy/database/#prefect_sqlalchemy.database.SqlAlchemyConnector",
+        "documentation_url": "https://docs.prefect.io/integrations/prefect-sqlalchemy",
         "description": "Block used to manage authentication with a database.\n\nUpon instantiating, an engine is created and maintained for the life of\nthe object until the close method is called.\n\nIt is recommended to use this block as a context manager, which will automatically\nclose the engine and its connections when the context is exited.\n\nIt is also recommended that this block is loaded and consumed within a single task\nor flow because if the block is passed across separate tasks and flows,\nthe state of the block's connection and cursor could be lost. This block is part of the prefect-sqlalchemy collection. Install prefect-sqlalchemy with `pip install prefect-sqlalchemy` to use this block.",
         "code_example": "Load stored database credentials and use in context manager:\n```python\nfrom prefect_sqlalchemy import SqlAlchemyConnector\n\ndatabase_block = SqlAlchemyConnector.load(\"BLOCK_NAME\")\nwith database_block:\n    ...\n```\n\nCreate table named customers and insert values; then fetch the first 10 rows.\n```python\nfrom prefect_sqlalchemy import (\n    SqlAlchemyConnector, SyncDriver, ConnectionComponents\n)\n\nwith SqlAlchemyConnector(\n    connection_info=ConnectionComponents(\n        driver=SyncDriver.SQLITE_PYSQLITE,\n        database=\"prefect.db\"\n    )\n) as database:\n    database.execute(\n        \"CREATE TABLE IF NOT EXISTS customers (name varchar, address varchar);\",\n    )\n    for i in range(1, 42):\n        database.execute(\n            \"INSERT INTO customers (name, address) VALUES (:name, :address);\",\n            parameters={\"name\": \"Marvin\", \"address\": f\"Highway {i}\"},\n        )\n    results = database.fetch_many(\n        \"SELECT * FROM customers WHERE name = :name;\",\n        parameters={\"name\": \"Marvin\"},\n        size=10\n    )\nprint(results)\n```",
         "block_schema": {
-          "checksum": "sha256:01e6c0bdaac125860811b201f5a5e98ffefd5f8a49f1398b6996aec362643acc",
+          "checksum": "sha256:4a748d34e5c464652239dddb5b5153f8f58771995fefdfe71308316860bb881d",
           "fields": {
-            "title": "SqlAlchemyConnector",
+            "block_schema_references": {},
+            "block_type_slug": "sqlalchemy-connector",
             "description": "Block used to manage authentication with a database.\n\nUpon instantiating, an engine is created and maintained for the life of\nthe object until the close method is called.\n\nIt is recommended to use this block as a context manager, which will automatically\nclose the engine and its connections when the context is exited.\n\nIt is also recommended that this block is loaded and consumed within a single task\nor flow because if the block is passed across separate tasks and flows,\nthe state of the block's connection and cursor could be lost.",
-            "type": "object",
             "properties": {
               "connection_info": {
-                "title": "Connection Info",
-                "description": "SQLAlchemy URL to create the engine; either create from components or create from a string.",
                 "anyOf": [
                   {
                     "$ref": "#/definitions/ConnectionComponents"
                   },
                   {
-                    "type": "string",
-                    "minLength": 1,
-                    "maxLength": 65536,
-                    "format": "uri"
+                    "type": "string"
                   }
-                ]
+                ],
+                "description": "SQLAlchemy URL to create the engine; either create from components or create from a string.",
+                "title": "Connection Info"
               },
               "connect_args": {
-                "title": "Additional Connection Arguments",
+                "anyOf": [
+                  {
+                    "additionalProperties": true,
+                    "type": "object"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "The options which will be passed directly to the DBAPI's connect() method as additional keyword arguments.",
-                "type": "object"
+                "title": "Additional Connection Arguments"
               },
               "fetch_size": {
-                "title": "Fetch Size",
-                "description": "The number of rows to fetch at a time.",
                 "default": 1,
+                "description": "The number of rows to fetch at a time.",
+                "title": "Fetch Size",
                 "type": "integer"
               }
             },
             "required": [
               "connection_info"
             ],
-            "block_type_slug": "sqlalchemy-connector",
             "secret_fields": [
               "connection_info.password"
             ],
-            "block_schema_references": {},
+            "title": "SqlAlchemyConnector",
+            "type": "object",
             "definitions": {
               "AsyncDriver": {
-                "title": "AsyncDriver",
-                "description": "Known dialects with their corresponding async drivers.\n\nAttributes:\n    POSTGRESQL_ASYNCPG (Enum): [postgresql+asyncpg](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.asyncpg)\n\n    SQLITE_AIOSQLITE (Enum): [sqlite+aiosqlite](https://docs.sqlalchemy.org/en/14/dialects/sqlite.html#module-sqlalchemy.dialects.sqlite.aiosqlite)\n\n    MYSQL_ASYNCMY (Enum): [mysql+asyncmy](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.asyncmy)\n    MYSQL_AIOMYSQL (Enum): [mysql+aiomysql](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.aiomysql)",
+                "description": "Known dialects with their corresponding async drivers.\n\nAttributes:\n    POSTGRESQL_ASYNCPG (Enum): [postgresql+asyncpg](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.asyncpg)\n\n    SQLITE_AIOSQLITE (Enum): [sqlite+aiosqlite](https://docs.sqlalchemy.org/en/14/dialects/sqlite.html#module-sqlalchemy.dialects.sqlite.aiosqlite)\n\n    MYSQL_ASYNCMY (Enum): [mysql+asyncmy](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.asyncmy)\n    MYSQL_AIOMYSQL (Enum): [mysql+aiomysql](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.aiomysql)\n\n    ORACLE_ORACLEDB_ASYNC (Enum): [oracle+oracledb_async](https://docs.sqlalchemy.org/en/20/dialects/oracle.html#module-sqlalchemy.dialects.oracle.oracledb)",
                 "enum": [
                   "postgresql+asyncpg",
                   "sqlite+aiosqlite",
                   "mysql+asyncmy",
-                  "mysql+aiomysql"
-                ]
-              },
-              "SyncDriver": {
-                "title": "SyncDriver",
-                "description": "Known dialects with their corresponding sync drivers.\n\nAttributes:\n    POSTGRESQL_PSYCOPG2 (Enum): [postgresql+psycopg2](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.psycopg2)\n    POSTGRESQL_PG8000 (Enum): [postgresql+pg8000](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.pg8000)\n    POSTGRESQL_PSYCOPG2CFFI (Enum): [postgresql+psycopg2cffi](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.psycopg2cffi)\n    POSTGRESQL_PYPOSTGRESQL (Enum): [postgresql+pypostgresql](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.pypostgresql)\n    POSTGRESQL_PYGRESQL (Enum): [postgresql+pygresql](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.pygresql)\n\n    MYSQL_MYSQLDB (Enum): [mysql+mysqldb](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.mysqldb)\n    MYSQL_PYMYSQL (Enum): [mysql+pymysql](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.pymysql)\n    MYSQL_MYSQLCONNECTOR (Enum): [mysql+mysqlconnector](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.mysqlconnector)\n    MYSQL_CYMYSQL (Enum): [mysql+cymysql](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.cymysql)\n    MYSQL_OURSQL (Enum): [mysql+oursql](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.oursql)\n    MYSQL_PYODBC (Enum): [mysql+pyodbc](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.pyodbc)\n\n    SQLITE_PYSQLITE (Enum): [sqlite+pysqlite](https://docs.sqlalchemy.org/en/14/dialects/sqlite.html#module-sqlalchemy.dialects.sqlite.pysqlite)\n    SQLITE_PYSQLCIPHER (Enum): [sqlite+pysqlcipher](https://docs.sqlalchemy.org/en/14/dialects/sqlite.html#module-sqlalchemy.dialects.sqlite.pysqlcipher)\n\n    ORACLE_CX_ORACLE (Enum): [oracle+cx_oracle](https://docs.sqlalchemy.org/en/14/dialects/oracle.html#module-sqlalchemy.dialects.oracle.cx_oracle)\n\n    MSSQL_PYODBC (Enum): [mssql+pyodbc](https://docs.sqlalchemy.org/en/14/dialects/mssql.html#module-sqlalchemy.dialects.mssql.pyodbc)\n    MSSQL_MXODBC (Enum): [mssql+mxodbc](https://docs.sqlalchemy.org/en/14/dialects/mssql.html#module-sqlalchemy.dialects.mssql.mxodbc)\n    MSSQL_PYMSSQL (Enum): [mssql+pymssql](https://docs.sqlalchemy.org/en/14/dialects/mssql.html#module-sqlalchemy.dialects.mssql.pymssql)",
-                "enum": [
-                  "postgresql+psycopg2",
-                  "postgresql+pg8000",
-                  "postgresql+psycopg2cffi",
-                  "postgresql+pypostgresql",
-                  "postgresql+pygresql",
-                  "mysql+mysqldb",
-                  "mysql+pymysql",
-                  "mysql+mysqlconnector",
-                  "mysql+cymysql",
-                  "mysql+oursql",
-                  "mysql+pyodbc",
-                  "sqlite+pysqlite",
-                  "sqlite+pysqlcipher",
-                  "oracle+cx_oracle",
-                  "mssql+pyodbc",
-                  "mssql+mxodbc",
-                  "mssql+pymssql"
-                ]
+                  "mysql+aiomysql",
+                  "oracle+oracledb_async"
+                ],
+                "title": "AsyncDriver",
+                "type": "string"
               },
               "ConnectionComponents": {
-                "title": "ConnectionComponents",
                 "description": "Parameters to use to create a SQLAlchemy engine URL.\n\nAttributes:\n    driver: The driver name to use.\n    database: The name of the database to use.\n    username: The user name used to authenticate.\n    password: The password used to authenticate.\n    host: The host address of the database.\n    port: The port to connect to the database.\n    query: A dictionary of string keys to string values to be passed to the dialect\n        and/or the DBAPI upon connect.",
-                "type": "object",
                 "properties": {
                   "driver": {
-                    "title": "Driver",
-                    "description": "The driver name to use.",
                     "anyOf": [
                       {
                         "$ref": "#/definitions/AsyncDriver"
@@ -7297,53 +7155,129 @@
                       {
                         "type": "string"
                       }
-                    ]
+                    ],
+                    "description": "The driver name to use.",
+                    "title": "Driver"
                   },
                   "database": {
-                    "title": "Database",
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
                     "description": "The name of the database to use.",
-                    "type": "string"
+                    "title": "Database"
                   },
                   "username": {
-                    "title": "Username",
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
                     "description": "The user name used to authenticate.",
-                    "type": "string"
+                    "title": "Username"
                   },
                   "password": {
-                    "title": "Password",
+                    "anyOf": [
+                      {
+                        "format": "password",
+                        "type": "string",
+                        "writeOnly": true
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
                     "description": "The password used to authenticate.",
-                    "type": "string",
-                    "writeOnly": true,
-                    "format": "password"
+                    "title": "Password"
                   },
                   "host": {
-                    "title": "Host",
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
                     "description": "The host address of the database.",
-                    "type": "string"
+                    "title": "Host"
                   },
                   "port": {
-                    "title": "Port",
+                    "anyOf": [
+                      {
+                        "type": "integer"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
                     "description": "The port to connect to the database.",
-                    "type": "string"
+                    "title": "Port"
                   },
                   "query": {
-                    "title": "Query",
+                    "anyOf": [
+                      {
+                        "additionalProperties": {
+                          "type": "string"
+                        },
+                        "type": "object"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
                     "description": "A dictionary of string keys to string values to be passed to the dialect and/or the DBAPI upon connect. To specify non-string parameters to a Python DBAPI directly, use connect_args.",
-                    "type": "object",
-                    "additionalProperties": {
-                      "type": "string"
-                    }
+                    "title": "Query"
                   }
                 },
                 "required": [
-                  "driver",
-                  "database"
-                ]
+                  "driver"
+                ],
+                "title": "ConnectionComponents",
+                "type": "object"
+              },
+              "SyncDriver": {
+                "description": "Known dialects with their corresponding sync drivers.\n\nAttributes:\n    POSTGRESQL_PSYCOPG2 (Enum): [postgresql+psycopg2](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.psycopg2)\n    POSTGRESQL_PG8000 (Enum): [postgresql+pg8000](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.pg8000)\n    POSTGRESQL_PSYCOPG2CFFI (Enum): [postgresql+psycopg2cffi](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.psycopg2cffi)\n    POSTGRESQL_PYPOSTGRESQL (Enum): [postgresql+pypostgresql](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.pypostgresql)\n    POSTGRESQL_PYGRESQL (Enum): [postgresql+pygresql](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.pygresql)\n\n    MYSQL_MYSQLDB (Enum): [mysql+mysqldb](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.mysqldb)\n    MYSQL_PYMYSQL (Enum): [mysql+pymysql](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.pymysql)\n    MYSQL_MYSQLCONNECTOR (Enum): [mysql+mysqlconnector](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.mysqlconnector)\n    MYSQL_CYMYSQL (Enum): [mysql+cymysql](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.cymysql)\n    MYSQL_OURSQL (Enum): [mysql+oursql](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.oursql)\n    MYSQL_PYODBC (Enum): [mysql+pyodbc](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.pyodbc)\n\n    SQLITE_PYSQLITE (Enum): [sqlite+pysqlite](https://docs.sqlalchemy.org/en/14/dialects/sqlite.html#module-sqlalchemy.dialects.sqlite.pysqlite)\n    SQLITE_PYSQLCIPHER (Enum): [sqlite+pysqlcipher](https://docs.sqlalchemy.org/en/14/dialects/sqlite.html#module-sqlalchemy.dialects.sqlite.pysqlcipher)\n\n    ORACLE_CX_ORACLE (Enum): [oracle+cx_oracle](https://docs.sqlalchemy.org/en/14/dialects/oracle.html#module-sqlalchemy.dialects.oracle.cx_oracle)\n    ORACLE_ORACLEDB (Enum): [oracle+oracledb](https://docs.sqlalchemy.org/en/20/dialects/oracle.html#module-sqlalchemy.dialects.oracle.oracledb)\n\n    MSSQL_PYODBC (Enum): [mssql+pyodbc](https://docs.sqlalchemy.org/en/14/dialects/mssql.html#module-sqlalchemy.dialects.mssql.pyodbc)\n    MSSQL_MXODBC (Enum): [mssql+mxodbc](https://docs.sqlalchemy.org/en/14/dialects/mssql.html#module-sqlalchemy.dialects.mssql.mxodbc)\n    MSSQL_PYMSSQL (Enum): [mssql+pymssql](https://docs.sqlalchemy.org/en/14/dialects/mssql.html#module-sqlalchemy.dialects.mssql.pymssql)",
+                "enum": [
+                  "postgresql+psycopg2",
+                  "postgresql+pg8000",
+                  "postgresql+psycopg2cffi",
+                  "postgresql+pypostgresql",
+                  "postgresql+pygresql",
+                  "mysql+mysqldb",
+                  "mysql+pymysql",
+                  "mysql+mysqlconnector",
+                  "mysql+cymysql",
+                  "mysql+oursql",
+                  "mysql+pyodbc",
+                  "sqlite+pysqlite",
+                  "sqlite+pysqlcipher",
+                  "oracle+cx_oracle",
+                  "oracle+oracledb",
+                  "mssql+pyodbc",
+                  "mssql+mxodbc",
+                  "mssql+pymssql"
+                ],
+                "title": "SyncDriver",
+                "type": "string"
               }
             }
           },
           "capabilities": [],
-          "version": "0.4.0"
+          "version": "0.5.3"
         }
       }
     }
