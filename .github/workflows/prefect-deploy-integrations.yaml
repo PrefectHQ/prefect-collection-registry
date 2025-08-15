@@ -7,9 +7,14 @@ name: Build and publish Prefect Integrations (workspace) Deployments
       - main
     paths:
       - .github/workflows/prefect-deploy-integrations.yaml
-      - deployment.yaml
       - prefect.yaml
       - src/**
+  pull_request:
+    paths:
+      - .github/workflows/prefect-deploy-integrations.yaml
+      - prefect.yaml
+      - src/**
+
   workflow_dispatch: {}
 
 # Limit concurrency by workflow/branch combination.
@@ -24,6 +29,10 @@ concurrency:
 
 # Do not grant jobs any permissions by default
 permissions: {}
+
+env:
+  PREFECT_API_URL: ${{ secrets.PREFECT_PRD_INTEGRATIONS_WORKSPACE_API_URL }}
+  PREFECT_API_KEY: ${{ secrets.PREFECT_PRD_INTEGRATIONS_WORKSPACE_API_KEY }}
 
 jobs:
   deploy_flows:
@@ -47,23 +56,9 @@ jobs:
 
       - name: Configure Google Cloud credential helper
         run: gcloud auth configure-docker --quiet us-docker.pkg.dev
-
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-
-      # This may be able to be removed in the future
-      - name: Install requirements 
-        run: |
-          pip install prefect
-          pip install -r requirements.txt
-
-      - name: Auth to Prefect Cloud
-        uses: PrefectHQ/actions-prefect-auth@v1
-        with:
-          prefect-api-key: ${{ secrets.PREFECT_PRD_INTEGRATIONS_WORKSPACE_API_KEY }}
-          prefect-workspace: prefect-technologies/integrations
+      
+      - name: Install the latest version of uv
+        uses: astral-sh/setup-uv@v5
 
       - name: Deploy all integrations flows
-        run: prefect deploy --all
+        run: uv run prefect --no-prompt deploy --all
