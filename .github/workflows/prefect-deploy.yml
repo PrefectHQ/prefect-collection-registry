@@ -55,5 +55,9 @@ jobs:
         with:
           python-version: '3.10'
 
+      - name: Install Prefect
+        shell: bash
+        run: pip install -q prefect
+
       - name: Deploy all product engineering flows
         run: prefect deploy --all
