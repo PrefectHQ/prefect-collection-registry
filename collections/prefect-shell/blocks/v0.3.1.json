@@ -1,0 +1,91 @@
+{
+  "prefect-shell": {
+    "block_types": {
+      "shell-operation": {
+        "name": "Shell Operation",
+        "slug": "shell-operation",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/0b47a017e1b40381de770c17647c49cdf6388d1c-250x250.png",
+        "documentation_url": "https://prefecthq.github.io/prefect-shell/commands/#prefect_shell.commands.ShellOperation",
+        "description": "A block representing a shell operation, containing multiple commands.\n\nFor long-lasting operations, use the trigger method and utilize the block as a\ncontext manager for automatic closure of processes when context is exited.\nIf not, manually call the close method to close processes.\n\nFor short-lasting operations, use the run method. Context is automatically managed\nwith this method. This block is part of the prefect-shell collection. Install prefect-shell with `pip install prefect-shell` to use this block.",
+        "code_example": "Load a configured block:\n```python\nfrom prefect_shell import ShellOperation\n\nshell_operation = ShellOperation.load(\"BLOCK_NAME\")\n```",
+        "block_schema": {
+          "checksum": "sha256:56c42125a85e8506e96dc84a3427e6bafb9971f6be749dce88f0b689849bab56",
+          "fields": {
+            "block_schema_references": {},
+            "block_type_slug": "shell-operation",
+            "description": "A block representing a shell operation, containing multiple commands.\n\nFor long-lasting operations, use the trigger method and utilize the block as a\ncontext manager for automatic closure of processes when context is exited.\nIf not, manually call the close method to close processes.\n\nFor short-lasting operations, use the run method. Context is automatically managed\nwith this method.",
+            "properties": {
+              "commands": {
+                "description": "A list of commands to execute sequentially.",
+                "items": {
+                  "type": "string"
+                },
+                "title": "Commands",
+                "type": "array"
+              },
+              "stream_output": {
+                "default": true,
+                "description": "Whether to stream output.",
+                "title": "Stream Output",
+                "type": "boolean"
+              },
+              "env": {
+                "description": "Environment variables to use for the subprocess.",
+                "title": "Environment Variables",
+                "type": "object"
+              },
+              "working_dir": {
+                "anyOf": [
+                  {
+                    "format": "directory-path",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "The absolute path to the working directory the command will be executed within.",
+                "title": "Working Directory"
+              },
+              "shell": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "The shell to run the command with; if unset, defaults to `powershell` on Windows and `bash` on other platforms.",
+                "title": "Shell"
+              },
+              "extension": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "The extension to use for the temporary file; if unset, defaults to `.ps1` on Windows and `.sh` on other platforms.",
+                "title": "Extension"
+              }
+            },
+            "required": [
+              "commands"
+            ],
+            "secret_fields": [],
+            "title": "ShellOperation",
+            "type": "object"
+          },
+          "capabilities": [],
+          "version": "0.3.1"
+        }
+      }
+    }
+  }
+}

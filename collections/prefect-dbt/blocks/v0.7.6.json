@@ -1,0 +1,280 @@
+{
+  "prefect-dbt": {
+    "block_types": {
+      "dbt-cloud-credentials": {
+        "name": "dbt Cloud Credentials",
+        "slug": "dbt-cloud-credentials",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5zE9lxfzBHjw3tnEup4wWL/9a001902ed43a84c6c96d23b24622e19/dbt-bit_tm.png?h=250",
+        "documentation_url": "https://docs.prefect.io/integrations/prefect-dbt",
+        "description": "Credentials block for credential use across dbt Cloud tasks and flows. This block is part of the prefect-dbt collection. Install prefect-dbt with `pip install prefect-dbt` to use this block.",
+        "code_example": "Load stored dbt Cloud credentials:\n```python\nfrom prefect_dbt.cloud import DbtCloudCredentials\n\ndbt_cloud_credentials = DbtCloudCredentials.load(\"BLOCK_NAME\")\n```\n\nUse DbtCloudCredentials instance to trigger a job run:\n```python\nfrom prefect_dbt.cloud import DbtCloudCredentials\n\ncredentials = DbtCloudCredentials(api_key=\"my_api_key\", account_id=123456789)\n\nasync with dbt_cloud_credentials.get_administrative_client() as client:\n    client.trigger_job_run(job_id=1)\n```\n\nLoad saved dbt Cloud credentials within a flow:\n```python\nfrom prefect import flow\n\nfrom prefect_dbt.cloud import DbtCloudCredentials\nfrom prefect_dbt.cloud.jobs import trigger_dbt_cloud_job_run\n\n\n@flow\ndef trigger_dbt_cloud_job_run_flow():\n    credentials = DbtCloudCredentials.load(\"my-dbt-credentials\")\n    trigger_dbt_cloud_job_run(dbt_cloud_credentials=credentials, job_id=1)\n\ntrigger_dbt_cloud_job_run_flow()\n```",
+        "block_schema": {
+          "checksum": "sha256:0e1b2e94e09041e7d732822354503e87b99ddb31422d9d2c83c671be249aa231",
+          "fields": {
+            "block_schema_references": {},
+            "block_type_slug": "dbt-cloud-credentials",
+            "description": "Credentials block for credential use across dbt Cloud tasks and flows.",
+            "properties": {
+              "api_key": {
+                "description": "A dbt Cloud API key to use for authentication.",
+                "format": "password",
+                "title": "API Key",
+                "type": "string",
+                "writeOnly": true
+              },
+              "account_id": {
+                "description": "The ID of your dbt Cloud account.",
+                "title": "Account ID",
+                "type": "integer"
+              },
+              "domain": {
+                "default": "cloud.getdbt.com",
+                "description": "The base domain of your dbt Cloud instance.",
+                "title": "Domain",
+                "type": "string"
+              }
+            },
+            "required": [
+              "api_key",
+              "account_id"
+            ],
+            "secret_fields": [
+              "api_key"
+            ],
+            "title": "DbtCloudCredentials",
+            "type": "object"
+          },
+          "capabilities": [],
+          "version": "0.7.6"
+        }
+      },
+      "dbt-cloud-job": {
+        "name": "dbt Cloud Job",
+        "slug": "dbt-cloud-job",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5zE9lxfzBHjw3tnEup4wWL/9a001902ed43a84c6c96d23b24622e19/dbt-bit_tm.png?h=250",
+        "documentation_url": "https://docs.prefect.io/integrations/prefect-dbt",
+        "description": "Block that holds the information and methods to interact with a dbt Cloud job. This block is part of the prefect-dbt collection. Install prefect-dbt with `pip install prefect-dbt` to use this block.",
+        "code_example": "Load a configured dbt Cloud job block.\n```python\nfrom prefect_dbt.cloud import DbtCloudJob\n\ndbt_cloud_job = DbtCloudJob.load(\"BLOCK_NAME\")\n```\n\nTriggers a dbt Cloud job, waits for completion, and fetches the results.\n```python\nfrom prefect import flow\nfrom prefect_dbt.cloud import DbtCloudCredentials, DbtCloudJob\n\n@flow\ndef dbt_cloud_job_flow():\n    dbt_cloud_credentials = DbtCloudCredentials.load(\"dbt-token\")\n    dbt_cloud_job = DbtCloudJob.load(\n        dbt_cloud_credentials=dbt_cloud_credentials,\n        job_id=154217\n    )\n    dbt_cloud_job_run = dbt_cloud_job.trigger()\n    dbt_cloud_job_run.wait_for_completion()\n    dbt_cloud_job_run.fetch_result()\n    return dbt_cloud_job_run\n\ndbt_cloud_job_flow()\n```",
+        "block_schema": {
+          "checksum": "sha256:3aac5884b6efe2d85628c67c47518a329bdd1e4b3b84ca95fd7ee93a326a11d2",
+          "fields": {
+            "block_schema_references": {
+              "dbt_cloud_credentials": {
+                "block_schema_checksum": "sha256:0e1b2e94e09041e7d732822354503e87b99ddb31422d9d2c83c671be249aa231",
+                "block_type_slug": "dbt-cloud-credentials"
+              }
+            },
+            "block_type_slug": "dbt-cloud-job",
+            "description": "Block that holds the information and methods to interact with a dbt Cloud job.",
+            "properties": {
+              "dbt_cloud_credentials": {
+                "$ref": "#/definitions/DbtCloudCredentials",
+                "description": "The dbt Cloud credentials to use to authenticate with dbt Cloud."
+              },
+              "job_id": {
+                "description": "The id of the dbt Cloud job.",
+                "title": "Job ID",
+                "type": "integer"
+              },
+              "timeout_seconds": {
+                "default": 900,
+                "description": "The number of seconds to wait for the job to complete.",
+                "title": "Timeout Seconds",
+                "type": "integer"
+              },
+              "interval_seconds": {
+                "default": 10,
+                "description": "The number of seconds to wait between polling for job completion.",
+                "title": "Interval Seconds",
+                "type": "integer"
+              },
+              "trigger_job_run_options": {
+                "$ref": "#/definitions/TriggerJobRunOptions",
+                "description": "The options to use when triggering a job run."
+              }
+            },
+            "required": [
+              "dbt_cloud_credentials",
+              "job_id"
+            ],
+            "secret_fields": [
+              "dbt_cloud_credentials.api_key"
+            ],
+            "title": "DbtCloudJob",
+            "type": "object",
+            "definitions": {
+              "DbtCloudCredentials": {
+                "block_schema_references": {},
+                "block_type_slug": "dbt-cloud-credentials",
+                "description": "Credentials block for credential use across dbt Cloud tasks and flows.",
+                "properties": {
+                  "api_key": {
+                    "description": "A dbt Cloud API key to use for authentication.",
+                    "format": "password",
+                    "title": "API Key",
+                    "type": "string",
+                    "writeOnly": true
+                  },
+                  "account_id": {
+                    "description": "The ID of your dbt Cloud account.",
+                    "title": "Account ID",
+                    "type": "integer"
+                  },
+                  "domain": {
+                    "default": "cloud.getdbt.com",
+                    "description": "The base domain of your dbt Cloud instance.",
+                    "title": "Domain",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "api_key",
+                  "account_id"
+                ],
+                "secret_fields": [
+                  "api_key"
+                ],
+                "title": "DbtCloudCredentials",
+                "type": "object"
+              },
+              "TriggerJobRunOptions": {
+                "description": "Defines options that can be defined when triggering a dbt Cloud job run.",
+                "properties": {
+                  "cause": {
+                    "description": "A text description of the reason for running this job.",
+                    "title": "Cause",
+                    "type": "string"
+                  },
+                  "git_sha": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The git sha to check out before running this job.",
+                    "title": "Git Sha"
+                  },
+                  "git_branch": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The git branch to check out before running this job.",
+                    "title": "Git Branch"
+                  },
+                  "schema_override": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Override the destination schema in the configured target for this job.",
+                    "title": "Schema Override"
+                  },
+                  "dbt_version_override": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Override the version of dbt used to run this job.",
+                    "title": "Dbt Version Override"
+                  },
+                  "threads_override": {
+                    "anyOf": [
+                      {
+                        "type": "integer"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Override the number of threads used to run this job.",
+                    "title": "Threads Override"
+                  },
+                  "target_name_override": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Override the target.name context variable used when running this job",
+                    "title": "Target Name Override"
+                  },
+                  "generate_docs_override": {
+                    "anyOf": [
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Override whether or not this job generates docs (true=yes, false=no).",
+                    "title": "Generate Docs Override"
+                  },
+                  "timeout_seconds_override": {
+                    "anyOf": [
+                      {
+                        "type": "integer"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Override the timeout in seconds for this job.",
+                    "title": "Timeout Seconds Override"
+                  },
+                  "steps_override": {
+                    "anyOf": [
+                      {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Override the list of steps for this job.",
+                    "title": "Steps Override"
+                  }
+                },
+                "title": "TriggerJobRunOptions",
+                "type": "object"
+              }
+            }
+          },
+          "capabilities": [],
+          "version": "0.7.6"
+        }
+      }
+    }
+  }
+}
