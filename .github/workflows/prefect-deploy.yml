@@ -1,13 +1,12 @@
 ---
-name: Build and publish Prefect Integrations (workspace) Deployments
+name: Build and publish Prefect Product Engineering (workspace) Deployments
 
 "on":
   push:
     branches:
       - main
     paths:
-      - .github/workflows/prefect-deploy-integrations.yaml
-      - deployment.yaml
+      - .github/workflows/prefect-deploy.yml
       - prefect.yaml
       - src/**
   workflow_dispatch: {}
@@ -27,7 +26,7 @@ permissions: {}
 
 jobs:
   deploy_flows:
-    name: Build integrations workspace deployment images
+    name: Build product engineering workspace deployment images
     runs-on: ubuntu-latest
     permissions:
       # required to read from the repo
@@ -62,8 +61,8 @@ jobs:
       - name: Auth to Prefect Cloud
         uses: PrefectHQ/actions-prefect-auth@v1
         with:
-          prefect-api-key: ${{ secrets.PREFECT_PRD_INTEGRATIONS_WORKSPACE_API_KEY }}
-          prefect-workspace: prefect-technologies/integrations
+          prefect-api-key: ${{ secrets.PREFECT_PRD_PRODUCT_ENGINEERING_WORKSPACE_API_KEY }}
+          prefect-workspace: prefect-technologies/product-engineering
 
-      - name: Deploy all integrations flows
+      - name: Deploy all product engineering flows
         run: prefect deploy --all
