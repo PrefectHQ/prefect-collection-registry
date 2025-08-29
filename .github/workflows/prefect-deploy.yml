@@ -33,6 +33,9 @@ jobs:
       contents: read
       # required to obtain Google Cloud service account credentials
       id-token: write
+    env:
+      PREFECT_API_KEY: ${{ secrets.PREFECT_PRD_PRODUCT_ENGINEERING_WORKSPACE_API_KEY }}
+      PREFECT_API_URL: ${{ secrets.PREFECT_PRD_PRODUCT_ENGINEERING_WORKSPACE_API_URL }}
 
     steps:
       - name: Checkout repository
@@ -51,12 +54,6 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
-
-      - name: Auth to Prefect Cloud
-        uses: PrefectHQ/actions-prefect-auth@v1
-        with:
-          prefect-api-key: ${{ secrets.PREFECT_PRD_PRODUCT_ENGINEERING_WORKSPACE_API_KEY }}
-          prefect-workspace: prefect-technologies/product-engineering
 
       - name: Deploy all product engineering flows
         run: prefect deploy --all
