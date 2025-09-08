@@ -4468,50 +4468,50 @@
         "name": "Snowflake Connector",
         "slug": "snowflake-connector",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/bd359de0b4be76c2254bd329fe3a267a1a3879c2-250x250.png",
-        "documentation_url": "https://prefecthq.github.io/prefect-snowflake/database/#prefect_snowflake.database.SnowflakeConnector",
+        "documentation_url": "https://docs.prefect.io/integrations/prefect-snowflake",
         "description": "Perform data operations against a Snowflake database. This block is part of the prefect-snowflake collection. Install prefect-snowflake with `pip install prefect-snowflake` to use this block.",
-        "code_example": "Load stored Snowflake connector as a context manager:\n```python\nfrom prefect_snowflake.database import SnowflakeConnector\n\nsnowflake_connector = SnowflakeConnector.load(\"BLOCK_NAME\"):\n```\n\nInsert data into database and fetch results.\n```python\nfrom prefect_snowflake.database import SnowflakeConnector\n\nwith SnowflakeConnector.load(\"BLOCK_NAME\") as conn:\n    conn.execute(\n        \"CREATE TABLE IF NOT EXISTS customers (name varchar, address varchar);\"\n    )\n    conn.execute_many(\n        \"INSERT INTO customers (name, address) VALUES (%(name)s, %(address)s);\",\n        seq_of_parameters=[\n            {\"name\": \"Ford\", \"address\": \"Highway 42\"},\n            {\"name\": \"Unknown\", \"address\": \"Space\"},\n            {\"name\": \"Me\", \"address\": \"Myway 88\"},\n        ],\n    )\n    results = conn.fetch_all(\n        \"SELECT * FROM customers WHERE address = %(address)s\",\n        parameters={\"address\": \"Space\"}\n    )\n    print(results)\n```",
+        "code_example": "Load stored Snowflake connector as a context manager:\n```python\nfrom prefect_snowflake.database import SnowflakeConnector\n\nsnowflake_connector = SnowflakeConnector.load(\"BLOCK_NAME\")\n```\n\nInsert data into database and fetch results.\n```python\nfrom prefect_snowflake.database import SnowflakeConnector\n\nwith SnowflakeConnector.load(\"BLOCK_NAME\") as conn:\n    conn.execute(\n        \"CREATE TABLE IF NOT EXISTS customers (name varchar, address varchar);\"\n    )\n    conn.execute_many(\n        \"INSERT INTO customers (name, address) VALUES (%(name)s, %(address)s);\",\n        seq_of_parameters=[\n            {\"name\": \"Ford\", \"address\": \"Highway 42\"},\n            {\"name\": \"Unknown\", \"address\": \"Space\"},\n            {\"name\": \"Me\", \"address\": \"Myway 88\"},\n        ],\n    )\n    results = conn.fetch_all(\n        \"SELECT * FROM customers WHERE address = %(address)s\",\n        parameters={\"address\": \"Space\"}\n    )\n    print(results)\n```",
         "block_schema": {
-          "checksum": "sha256:dd0d36d69bbe0d44870fd754f3c00754e37e3f52209590083eaee4c585ce0bd0",
+          "checksum": "sha256:fe9cebb77cd28dcc07fcd6ecceb539f659a1bf0133949c05f4af7f2afdf57b8f",
           "fields": {
-            "title": "SnowflakeConnector",
+            "block_schema_references": {
+              "credentials": {
+                "block_schema_checksum": "sha256:ba8bad16aa7f800565c2adc75866faf8a099521ced297a2354465b543bf9208c",
+                "block_type_slug": "snowflake-credentials"
+              }
+            },
+            "block_type_slug": "snowflake-connector",
             "description": "Perform data operations against a Snowflake database.",
-            "type": "object",
             "properties": {
               "credentials": {
-                "title": "Credentials",
-                "description": "The credentials to authenticate with Snowflake.",
-                "allOf": [
-                  {
-                    "$ref": "#/definitions/SnowflakeCredentials"
-                  }
-                ]
+                "$ref": "#/definitions/SnowflakeCredentials",
+                "description": "The credentials to authenticate with Snowflake."
               },
               "database": {
-                "title": "Database",
                 "description": "The name of the default database to use.",
+                "title": "Database",
                 "type": "string"
               },
               "warehouse": {
-                "title": "Warehouse",
                 "description": "The name of the default warehouse to use.",
+                "title": "Warehouse",
                 "type": "string"
               },
-              "schema": {
-                "title": "Schema",
+              "schema_": {
                 "description": "The name of the default schema to use.",
+                "title": "Schema",
                 "type": "string"
               },
               "fetch_size": {
-                "title": "Fetch Size",
-                "description": "The default number of rows to fetch at a time.",
                 "default": 1,
+                "description": "The default number of rows to fetch at a time.",
+                "title": "Fetch Size",
                 "type": "integer"
               },
               "poll_frequency_s": {
-                "title": "Poll Frequency [seconds]",
-                "description": "The number of seconds between checking query status for long running queries.",
                 "default": 1,
+                "description": "The number of seconds between checking query status for long running queries.",
+                "title": "Poll Frequency [seconds]",
                 "type": "integer"
               }
             },
@@ -4519,69 +4519,97 @@
               "credentials",
               "database",
               "warehouse",
-              "schema"
+              "schema_"
             ],
-            "block_type_slug": "snowflake-connector",
             "secret_fields": [
               "credentials.password",
               "credentials.private_key",
               "credentials.private_key_passphrase",
               "credentials.token"
             ],
-            "block_schema_references": {
-              "credentials": {
-                "block_type_slug": "snowflake-credentials",
-                "block_schema_checksum": "sha256:b24edfb413527c951cb2a8b4b4c16aec096523f871d941889e29ac2e6e92e036"
-              }
-            },
+            "title": "SnowflakeConnector",
+            "type": "object",
             "definitions": {
               "SnowflakeCredentials": {
-                "title": "SnowflakeCredentials",
+                "block_schema_references": {},
+                "block_type_slug": "snowflake-credentials",
                 "description": "Block used to manage authentication with Snowflake.",
-                "type": "object",
                 "properties": {
                   "account": {
-                    "title": "Account",
                     "description": "The snowflake account name.",
-                    "example": "nh12345.us-east-2.aws",
+                    "examples": [
+                      "nh12345.us-east-2.aws"
+                    ],
+                    "title": "Account",
                     "type": "string"
                   },
                   "user": {
-                    "title": "User",
                     "description": "The user name used to authenticate.",
+                    "title": "User",
                     "type": "string"
                   },
                   "password": {
-                    "title": "Password",
+                    "anyOf": [
+                      {
+                        "format": "password",
+                        "type": "string",
+                        "writeOnly": true
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
                     "description": "The password used to authenticate.",
-                    "type": "string",
-                    "writeOnly": true,
-                    "format": "password"
+                    "title": "Password"
                   },
                   "private_key": {
-                    "title": "Private Key",
+                    "anyOf": [
+                      {
+                        "format": "password",
+                        "type": "string",
+                        "writeOnly": true
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
                     "description": "The PEM used to authenticate.",
-                    "type": "string",
-                    "writeOnly": true,
-                    "format": "password"
+                    "title": "Private Key"
                   },
                   "private_key_path": {
-                    "title": "Private Key Path",
+                    "anyOf": [
+                      {
+                        "format": "path",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
                     "description": "The path to the private key.",
-                    "type": "string",
-                    "format": "path"
+                    "title": "Private Key Path"
                   },
                   "private_key_passphrase": {
-                    "title": "Private Key Passphrase",
+                    "anyOf": [
+                      {
+                        "format": "password",
+                        "type": "string",
+                        "writeOnly": true
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
                     "description": "The password to use for the private key.",
-                    "type": "string",
-                    "writeOnly": true,
-                    "format": "password"
+                    "title": "Private Key Passphrase"
                   },
                   "authenticator": {
-                    "title": "Authenticator",
-                    "description": "The type of authenticator to use for initializing connection.",
                     "default": "snowflake",
+                    "description": "The type of authenticator to use for initializing connection.",
                     "enum": [
                       "snowflake",
                       "snowflake_jwt",
@@ -4590,106 +4618,172 @@
                       "oauth",
                       "username_password_mfa"
                     ],
+                    "title": "Authenticator",
                     "type": "string"
                   },
                   "token": {
-                    "title": "Token",
+                    "anyOf": [
+                      {
+                        "format": "password",
+                        "type": "string",
+                        "writeOnly": true
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
                     "description": "The OAuth or JWT Token to provide when authenticator is set to `oauth`.",
-                    "type": "string",
-                    "writeOnly": true,
-                    "format": "password"
+                    "title": "Token"
                   },
                   "endpoint": {
-                    "title": "Endpoint",
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
                     "description": "The Okta endpoint to use when authenticator is set to `okta_endpoint`.",
-                    "type": "string"
+                    "title": "Endpoint"
                   },
                   "role": {
-                    "title": "Role",
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
                     "description": "The name of the default role to use.",
-                    "type": "string"
+                    "title": "Role"
                   },
                   "autocommit": {
-                    "title": "Autocommit",
+                    "anyOf": [
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
                     "description": "Whether to automatically commit.",
-                    "type": "boolean"
+                    "title": "Autocommit"
                   }
                 },
                 "required": [
                   "account",
                   "user"
                 ],
-                "block_type_slug": "snowflake-credentials",
                 "secret_fields": [
                   "password",
                   "private_key",
                   "private_key_passphrase",
                   "token"
                 ],
-                "block_schema_references": {}
+                "title": "SnowflakeCredentials",
+                "type": "object"
               }
             }
           },
           "capabilities": [],
-          "version": "0.27.3"
+          "version": "0.28.5"
         }
       },
       "snowflake-credentials": {
         "name": "Snowflake Credentials",
         "slug": "snowflake-credentials",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/bd359de0b4be76c2254bd329fe3a267a1a3879c2-250x250.png",
-        "documentation_url": "https://prefecthq.github.io/prefect-snowflake/credentials/#prefect_snowflake.credentials.SnowflakeCredentials",
+        "documentation_url": "https://docs.prefect.io/integrations/prefect-snowflake",
         "description": "Block used to manage authentication with Snowflake. This block is part of the prefect-snowflake collection. Install prefect-snowflake with `pip install prefect-snowflake` to use this block.",
         "code_example": "Load stored Snowflake credentials:\n```python\nfrom prefect_snowflake import SnowflakeCredentials\n\nsnowflake_credentials_block = SnowflakeCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:b24edfb413527c951cb2a8b4b4c16aec096523f871d941889e29ac2e6e92e036",
+          "checksum": "sha256:ba8bad16aa7f800565c2adc75866faf8a099521ced297a2354465b543bf9208c",
           "fields": {
-            "title": "SnowflakeCredentials",
+            "block_schema_references": {},
+            "block_type_slug": "snowflake-credentials",
             "description": "Block used to manage authentication with Snowflake.",
-            "type": "object",
             "properties": {
               "account": {
-                "title": "Account",
                 "description": "The snowflake account name.",
-                "example": "nh12345.us-east-2.aws",
+                "examples": [
+                  "nh12345.us-east-2.aws"
+                ],
+                "title": "Account",
                 "type": "string"
               },
               "user": {
-                "title": "User",
                 "description": "The user name used to authenticate.",
+                "title": "User",
                 "type": "string"
               },
               "password": {
-                "title": "Password",
+                "anyOf": [
+                  {
+                    "format": "password",
+                    "type": "string",
+                    "writeOnly": true
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "The password used to authenticate.",
-                "type": "string",
-                "writeOnly": true,
-                "format": "password"
+                "title": "Password"
               },
               "private_key": {
-                "title": "Private Key",
+                "anyOf": [
+                  {
+                    "format": "password",
+                    "type": "string",
+                    "writeOnly": true
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "The PEM used to authenticate.",
-                "type": "string",
-                "writeOnly": true,
-                "format": "password"
+                "title": "Private Key"
               },
               "private_key_path": {
-                "title": "Private Key Path",
+                "anyOf": [
+                  {
+                    "format": "path",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "The path to the private key.",
-                "type": "string",
-                "format": "path"
+                "title": "Private Key Path"
               },
               "private_key_passphrase": {
-                "title": "Private Key Passphrase",
+                "anyOf": [
+                  {
+                    "format": "password",
+                    "type": "string",
+                    "writeOnly": true
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "The password to use for the private key.",
-                "type": "string",
-                "writeOnly": true,
-                "format": "password"
+                "title": "Private Key Passphrase"
               },
               "authenticator": {
-                "title": "Authenticator",
-                "description": "The type of authenticator to use for initializing connection.",
                 "default": "snowflake",
+                "description": "The type of authenticator to use for initializing connection.",
                 "enum": [
                   "snowflake",
                   "snowflake_jwt",
@@ -4698,46 +4792,79 @@
                   "oauth",
                   "username_password_mfa"
                 ],
+                "title": "Authenticator",
                 "type": "string"
               },
               "token": {
-                "title": "Token",
+                "anyOf": [
+                  {
+                    "format": "password",
+                    "type": "string",
+                    "writeOnly": true
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "The OAuth or JWT Token to provide when authenticator is set to `oauth`.",
-                "type": "string",
-                "writeOnly": true,
-                "format": "password"
+                "title": "Token"
               },
               "endpoint": {
-                "title": "Endpoint",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "The Okta endpoint to use when authenticator is set to `okta_endpoint`.",
-                "type": "string"
+                "title": "Endpoint"
               },
               "role": {
-                "title": "Role",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "The name of the default role to use.",
-                "type": "string"
+                "title": "Role"
               },
               "autocommit": {
-                "title": "Autocommit",
+                "anyOf": [
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "Whether to automatically commit.",
-                "type": "boolean"
+                "title": "Autocommit"
               }
             },
             "required": [
               "account",
               "user"
             ],
-            "block_type_slug": "snowflake-credentials",
             "secret_fields": [
               "password",
               "private_key",
               "private_key_passphrase",
               "token"
             ],
-            "block_schema_references": {}
+            "title": "SnowflakeCredentials",
+            "type": "object"
           },
           "capabilities": [],
-          "version": "0.27.3"
+          "version": "0.28.5"
         }
       }
     }
