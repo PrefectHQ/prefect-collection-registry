@@ -3306,32 +3306,37 @@
         "name": "Email Server Credentials",
         "slug": "email-server-credentials",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/82bc6ed16ca42a2252a5512c72233a253b8a58eb-250x250.png",
-        "documentation_url": "https://prefecthq.github.io/prefect-email/credentials/#prefect_email.credentials.EmailServerCredentials",
+        "documentation_url": "https://docs.prefect.io/integrations/prefect-email",
         "description": "Block used to manage generic email server authentication.\nIt is recommended you use a\n[Google App Password](https://support.google.com/accounts/answer/185833)\nif you use Gmail. This block is part of the prefect-email collection. Install prefect-email with `pip install prefect-email` to use this block.",
         "code_example": "Load stored email server credentials:\n```python\nfrom prefect_email import EmailServerCredentials\nemail_credentials_block = EmailServerCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:56d6491f4b2d4aaae5ce604652416f44d0c8fa39ca68c5f747aee7cb518a41d0",
+          "checksum": "sha256:d1c42d3fe8f599348bc0e46078ebebc13777a245256449db0cb8fec571210563",
           "fields": {
-            "title": "EmailServerCredentials",
+            "block_schema_references": {},
+            "block_type_slug": "email-server-credentials",
             "description": "Block used to manage generic email server authentication.\nIt is recommended you use a\n[Google App Password](https://support.google.com/accounts/answer/185833)\nif you use Gmail.",
-            "type": "object",
             "properties": {
               "username": {
-                "title": "Username",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "The username to use for authentication to the server. Unnecessary if SMTP login is not required.",
-                "type": "string"
+                "title": "Username"
               },
               "password": {
-                "title": "Password",
                 "description": "The password to use for authentication to the server. Unnecessary if SMTP login is not required.",
+                "format": "password",
+                "title": "Password",
                 "type": "string",
-                "writeOnly": true,
-                "format": "password"
+                "writeOnly": true
               },
               "smtp_server": {
-                "title": "SMTP Server",
-                "description": "Either the hostname of the SMTP server, or one of the keys from the built-in SMTPServer Enum members, like 'gmail'.",
-                "default": "smtp.gmail.com",
                 "anyOf": [
                   {
                     "$ref": "#/definitions/SMTPServer"
@@ -3339,12 +3344,12 @@
                   {
                     "type": "string"
                   }
-                ]
+                ],
+                "default": "smtp.gmail.com",
+                "description": "Either the hostname of the SMTP server, or one of the keys from the built-in SMTPServer Enum members, like 'gmail'.",
+                "title": "SMTP Server"
               },
               "smtp_type": {
-                "title": "SMTP Type",
-                "description": "Either 'SSL', 'STARTTLS', or 'INSECURE'.",
-                "default": 465,
                 "anyOf": [
                   {
                     "$ref": "#/definitions/SMTPType"
@@ -3352,22 +3357,45 @@
                   {
                     "type": "string"
                   }
-                ]
+                ],
+                "default": 465,
+                "description": "Either 'SSL', 'STARTTLS', or 'INSECURE'.",
+                "title": "SMTP Type"
               },
               "smtp_port": {
-                "title": "SMTP Port",
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "If provided, overrides the smtp_type's default port number.",
-                "type": "integer"
+                "title": "SMTP Port"
+              },
+              "verify": {
+                "anyOf": [
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": true,
+                "description": "If `False`, SSL certificates will not be verified. Default to `True`.",
+                "title": "Verify"
               }
             },
-            "block_type_slug": "email-server-credentials",
             "secret_fields": [
               "password"
             ],
-            "block_schema_references": {},
+            "title": "EmailServerCredentials",
+            "type": "object",
             "definitions": {
               "SMTPServer": {
-                "title": "SMTPServer",
                 "description": "Server used to send email.",
                 "enum": [
                   "smtp.aol.com",
@@ -3377,21 +3405,24 @@
                   "smtp.gmail.com",
                   "smtp-mail.outlook.com",
                   "smtp.mail.yahoo.com"
-                ]
+                ],
+                "title": "SMTPServer",
+                "type": "string"
               },
               "SMTPType": {
-                "title": "SMTPType",
                 "description": "Protocols used to secure email transmissions.",
                 "enum": [
                   465,
                   587,
                   25
-                ]
+                ],
+                "title": "SMTPType",
+                "type": "integer"
               }
             }
           },
           "capabilities": [],
-          "version": "0.3.2"
+          "version": "0.4.2"
         }
       }
     }
