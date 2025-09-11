@@ -2879,47 +2879,56 @@
       "databricks-credentials": {
         "name": "Databricks Credentials",
         "slug": "databricks-credentials",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/ff9a2573c23954bedd27b0f420465a55b1a99dfd-250x250.png",
-        "documentation_url": "https://prefecthq.github.io/prefect-databricks/credentials/#prefect_databricks.credentials.DatabricksCredentials",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5GTHI1PH2dTiantfps6Fnc/1c750fab7f4c14ea1b93a62b9fea6a94/databricks_logo_icon_170295.png?h=250",
+        "documentation_url": null,
         "description": "Block used to manage Databricks authentication. This block is part of the prefect-databricks collection. Install prefect-databricks with `pip install prefect-databricks` to use this block.",
         "code_example": "Load stored Databricks credentials:\n```python\nfrom prefect_databricks import DatabricksCredentials\ndatabricks_credentials_block = DatabricksCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:58bae1446ee7a01ec90d15cf756f8acc221329e3b3580b077b508ff0f2425e35",
+          "checksum": "sha256:249270ea944c28ccb5737053cd0dcac316916185935b19785f7a12785b22d3eb",
           "fields": {
-            "title": "DatabricksCredentials",
+            "block_schema_references": {},
+            "block_type_slug": "databricks-credentials",
             "description": "Block used to manage Databricks authentication.",
-            "type": "object",
             "properties": {
               "databricks_instance": {
-                "title": "Databricks Instance",
                 "description": "Databricks instance used in formatting the endpoint URL.",
+                "title": "Databricks Instance",
                 "type": "string"
               },
               "token": {
-                "title": "Token",
                 "description": "The token to authenticate with Databricks.",
+                "format": "password",
+                "title": "Token",
                 "type": "string",
-                "writeOnly": true,
-                "format": "password"
+                "writeOnly": true
               },
               "client_kwargs": {
-                "title": "Client Kwargs",
+                "anyOf": [
+                  {
+                    "additionalProperties": true,
+                    "type": "object"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "Additional keyword arguments to pass to AsyncClient.",
-                "type": "object"
+                "title": "Client Kwargs"
               }
             },
             "required": [
               "databricks_instance",
               "token"
             ],
-            "block_type_slug": "databricks-credentials",
             "secret_fields": [
               "token"
             ],
-            "block_schema_references": {}
+            "title": "DatabricksCredentials",
+            "type": "object"
           },
           "capabilities": [],
-          "version": "0.2.3"
+          "version": "0.3.2"
         }
       }
     }
