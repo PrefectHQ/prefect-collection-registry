@@ -30,7 +30,7 @@
             "type": "object"
           },
           "capabilities": [],
-          "version": "3.1.5"
+          "version": "3.4.18"
         }
       },
       "discord-webhook": {
@@ -41,17 +41,16 @@
         "description": "Enables sending notifications via a provided Discord webhook.",
         "code_example": "Load a saved Discord webhook and send a message:\n```python\nfrom prefect.blocks.notifications import DiscordWebhook\n\ndiscord_webhook_block = DiscordWebhook.load(\"BLOCK_NAME\")\n\ndiscord_webhook_block.notify(\"Hello from Prefect!\")\n```",
         "block_schema": {
-          "checksum": "sha256:6a52b1831a9e289e74a3dc03986ca1b00aaf8c4c523fd9dcacd1982e45bfe956",
+          "checksum": "sha256:300616b3c36b57f6f2c83874213eec897d55bb4049eedbb76ce9afc4e9f5f8d9",
           "fields": {
             "block_schema_references": {},
             "block_type_slug": "discord-webhook",
             "description": "Enables sending notifications via a provided Discord webhook.",
             "properties": {
               "notify_type": {
-                "default": "prefect_default",
-                "description": "The type of notification being performed; the prefect_default is a plain notification that does not attach an image.",
+                "default": "info",
+                "description": "The type of notification being performed.",
                 "enum": [
-                  "prefect_default",
                   "info",
                   "success",
                   "warning",
@@ -114,7 +113,7 @@
                     "type": "null"
                   }
                 ],
-                "default": false,
+                "default": null,
                 "description": "Over-ride the default discord avatar icon URL. By default this is not set and Apprise chooses the URL dynamically based on the type of message (info, success, warning, or error).",
                 "title": "Avatar URL"
               }
@@ -133,7 +132,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.1.5"
+          "version": "3.4.18"
         }
       },
       "json": {
@@ -163,7 +162,7 @@
             "type": "object"
           },
           "capabilities": [],
-          "version": "3.1.5"
+          "version": "3.4.18"
         }
       },
       "local-file-system": {
@@ -204,7 +203,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "3.1.5"
+          "version": "3.4.18"
         }
       },
       "mattermost-webhook": {
@@ -215,17 +214,16 @@
         "description": "Enables sending notifications via a provided Mattermost webhook.",
         "code_example": "Load a saved Mattermost webhook and send a message:\n```python\nfrom prefect.blocks.notifications import MattermostWebhook\n\nmattermost_webhook_block = MattermostWebhook.load(\"BLOCK_NAME\")\n\nmattermost_webhook_block.notify(\"Hello from Prefect!\")\n```",
         "block_schema": {
-          "checksum": "sha256:01f4ee2616acf43a554c44388e36439ebe3ad0f8e58e67279a0116d476dd5e61",
+          "checksum": "sha256:4c3388c861c0d76b7989ee652c6e0894c229afd448fd78b9d8219890681b3be9",
           "fields": {
             "block_schema_references": {},
             "block_type_slug": "mattermost-webhook",
             "description": "Enables sending notifications via a provided Mattermost webhook.",
             "properties": {
               "notify_type": {
-                "default": "prefect_default",
-                "description": "The type of notification being performed; the prefect_default is a plain notification that does not attach an image.",
+                "default": "info",
+                "description": "The type of notification being performed.",
                 "enum": [
-                  "prefect_default",
                   "info",
                   "success",
                   "warning",
@@ -241,6 +239,12 @@
                 ],
                 "title": "Hostname",
                 "type": "string"
+              },
+              "secure": {
+                "default": false,
+                "description": "Whether to use secure https connection.",
+                "title": "Secure",
+                "type": "boolean"
               },
               "token": {
                 "description": "The token associated with your Mattermost webhook.",
@@ -317,7 +321,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.1.5"
+          "version": "3.4.18"
         }
       },
       "ms-teams-webhook": {
@@ -328,17 +332,16 @@
         "description": "Enables sending notifications via a provided Microsoft Teams webhook.",
         "code_example": "Load a saved Teams webhook and send a message:\n```python\nfrom prefect.blocks.notifications import MicrosoftTeamsWebhook\nteams_webhook_block = MicrosoftTeamsWebhook.load(\"BLOCK_NAME\")\nteams_webhook_block.notify(\"Hello from Prefect!\")\n```",
         "block_schema": {
-          "checksum": "sha256:d3ad686c4c75d7f4c4db5075e18170ce22a1f25f98f04c7cc8e2cc12656e9c2f",
+          "checksum": "sha256:c442ad7eaddcd734e926eead9bca2251fd3cbdcb69c666cea3696b9a60766028",
           "fields": {
             "block_schema_references": {},
             "block_type_slug": "ms-teams-webhook",
             "description": "Enables sending notifications via a provided Microsoft Teams webhook.",
             "properties": {
               "notify_type": {
-                "default": "prefect_default",
-                "description": "The type of notification being performed; the prefect_default is a plain notification that does not attach an image.",
+                "default": "info",
+                "description": "The type of notification being performed.",
                 "enum": [
-                  "prefect_default",
                   "info",
                   "success",
                   "warning",
@@ -388,7 +391,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.1.5"
+          "version": "3.4.18"
         }
       },
       "opsgenie-webhook": {
@@ -399,17 +402,16 @@
         "description": "Enables sending notifications via a provided Opsgenie webhook.",
         "code_example": "Load a saved Opsgenie webhook and send a message:\n```python\nfrom prefect.blocks.notifications import OpsgenieWebhook\nopsgenie_webhook_block = OpsgenieWebhook.load(\"BLOCK_NAME\")\nopsgenie_webhook_block.notify(\"Hello from Prefect!\")\n```",
         "block_schema": {
-          "checksum": "sha256:748fdf50db8e686cd50865d2079273095912697aefd180b690c8dbfd80f0b362",
+          "checksum": "sha256:d81bd1efed107d9dab8ffac871c1d5d243da72fc96aa1eb86c79fb406b47f407",
           "fields": {
             "block_schema_references": {},
             "block_type_slug": "opsgenie-webhook",
             "description": "Enables sending notifications via a provided Opsgenie webhook.",
             "properties": {
               "notify_type": {
-                "default": "prefect_default",
-                "description": "The type of notification being performed; the prefect_default is a plain notification that does not attach an image.",
+                "default": "info",
+                "description": "The type of notification being performed.",
                 "enum": [
-                  "prefect_default",
                   "info",
                   "success",
                   "warning",
@@ -428,7 +430,9 @@
               "target_user": {
                 "anyOf": [
                   {
-                    "items": {},
+                    "items": {
+                      "type": "string"
+                    },
                     "type": "array"
                   },
                   {
@@ -442,7 +446,9 @@
               "target_team": {
                 "anyOf": [
                   {
-                    "items": {},
+                    "items": {
+                      "type": "string"
+                    },
                     "type": "array"
                   },
                   {
@@ -456,7 +462,9 @@
               "target_schedule": {
                 "anyOf": [
                   {
-                    "items": {},
+                    "items": {
+                      "type": "string"
+                    },
                     "type": "array"
                   },
                   {
@@ -470,7 +478,9 @@
               "target_escalation": {
                 "anyOf": [
                   {
-                    "items": {},
+                    "items": {
+                      "type": "string"
+                    },
                     "type": "array"
                   },
                   {
@@ -500,7 +510,9 @@
               "tags": {
                 "anyOf": [
                   {
-                    "items": {},
+                    "items": {
+                      "type": "string"
+                    },
                     "type": "array"
                   },
                   {
@@ -585,7 +597,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.1.5"
+          "version": "3.4.18"
         }
       },
       "pager-duty-webhook": {
@@ -738,7 +750,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.1.5"
+          "version": "3.4.18"
         }
       },
       "remote-file-system": {
@@ -782,7 +794,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "3.1.5"
+          "version": "3.4.18"
         }
       },
       "secret": {
@@ -790,14 +802,14 @@
         "slug": "secret",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/c6f20e556dd16effda9df16551feecfb5822092b-48x48.png",
         "documentation_url": "https://docs.prefect.io/latest/develop/blocks",
-        "description": "A block that represents a secret value. The value stored in this block will be obfuscated when\nthis block is viewed or edited in the UI.",
+        "description": "A block that represents a secret value. The value stored in this block will be obfuscated when this block is viewed or edited in the UI.",
         "code_example": "```python\nfrom prefect.blocks.system import Secret\n\nSecret(value=\"sk-1234567890\").save(\"BLOCK_NAME\", overwrite=True)\n\nsecret_block = Secret.load(\"BLOCK_NAME\")\n\n# Access the stored secret\nsecret_block.get()\n```",
         "block_schema": {
-          "checksum": "sha256:fab1c36f1340a9fee1a4de830018147ac5266bf9121de8df9c1c23d8897cd701",
+          "checksum": "sha256:f290d6bec2665ff8179b4b88a1ba1942bc93b228504da8b65ce66e8aa70d6159",
           "fields": {
             "block_schema_references": {},
             "block_type_slug": "secret",
-            "description": "A block that represents a secret value. The value stored in this block will be obfuscated when\nthis block is viewed or edited in the UI.",
+            "description": "A block that represents a secret value. The value stored in this block will be obfuscated when this block is viewed or edited in the UI.",
             "properties": {
               "value": {
                 "anyOf": [
@@ -832,6 +844,7 @@
               "value"
             ],
             "secret_fields": [
+              "value",
               "value"
             ],
             "title": "Secret",
@@ -841,7 +854,7 @@
             }
           },
           "capabilities": [],
-          "version": "3.1.5"
+          "version": "3.4.18"
         }
       },
       "sendgrid-email": {
@@ -850,19 +863,18 @@
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/82bc6ed16ca42a2252a5512c72233a253b8a58eb-250x250.png",
         "documentation_url": "https://docs.prefect.io/latest/automate/events/automations-triggers#sending-notifications-with-automations",
         "description": "Enables sending notifications via Sendgrid email service.",
-        "code_example": "Load a saved Sendgrid and send a email message:\n```python\nfrom prefect.blocks.notifications import SendgridEmail\n\nsendgrid_block = SendgridEmail.load(\"BLOCK_NAME\")\n\nsendgrid_block.notify(\"Hello from Prefect!\")",
+        "code_example": "Load a saved Sendgrid and send a email message:\n```python\nfrom prefect.blocks.notifications import SendgridEmail\n\nsendgrid_block = SendgridEmail.load(\"BLOCK_NAME\")\n\nsendgrid_block.notify(\"Hello from Prefect!\")\n```",
         "block_schema": {
-          "checksum": "sha256:ca1ce43172228b65a570b1a5de9cdbd9813945e672807dc42d21b69d9d3977e7",
+          "checksum": "sha256:9a6daced0eb910f83be027aaa8b67025ffd63650ec98ce7e8519e322af925b3b",
           "fields": {
             "block_schema_references": {},
             "block_type_slug": "sendgrid-email",
             "description": "Enables sending notifications via Sendgrid email service.",
             "properties": {
               "notify_type": {
-                "default": "prefect_default",
-                "description": "The type of notification being performed; the prefect_default is a plain notification that does not attach an image.",
+                "default": "info",
+                "description": "The type of notification being performed.",
                 "enum": [
-                  "prefect_default",
                   "info",
                   "success",
                   "warning",
@@ -912,7 +924,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.1.5"
+          "version": "3.4.18"
         }
       },
       "slack-webhook": {
@@ -923,17 +935,16 @@
         "description": "Enables sending notifications via a provided Slack webhook.",
         "code_example": "Load a saved Slack webhook and send a message:\n```python\nfrom prefect.blocks.notifications import SlackWebhook\n\nslack_webhook_block = SlackWebhook.load(\"BLOCK_NAME\")\nslack_webhook_block.notify(\"Hello from Prefect!\")\n```",
         "block_schema": {
-          "checksum": "sha256:27d4fa59cceca2b98793d6ef0f97fd3b416f9cacd26912573d8edc05ca1666b4",
+          "checksum": "sha256:4c5f58a0a665af3bec3831b2e8deee874789a390231d0b7290b381b2260e67dc",
           "fields": {
             "block_schema_references": {},
             "block_type_slug": "slack-webhook",
             "description": "Enables sending notifications via a provided Slack webhook.",
             "properties": {
               "notify_type": {
-                "default": "prefect_default",
-                "description": "The type of notification being performed; the prefect_default is a plain notification that does not attach an image.",
+                "default": "info",
+                "description": "The type of notification being performed.",
                 "enum": [
-                  "prefect_default",
                   "info",
                   "success",
                   "warning",
@@ -971,7 +982,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.1.5"
+          "version": "3.4.18"
         }
       },
       "smb": {
@@ -1062,7 +1073,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "3.1.5"
+          "version": "3.4.18"
         }
       },
       "string": {
@@ -1093,7 +1104,7 @@
             "type": "object"
           },
           "capabilities": [],
-          "version": "3.1.5"
+          "version": "3.4.18"
         }
       },
       "twilio-sms": {
@@ -1104,17 +1115,16 @@
         "description": "Enables sending notifications via Twilio SMS.",
         "code_example": "Load a saved `TwilioSMS` block and send a message:\n```python\nfrom prefect.blocks.notifications import TwilioSMS\ntwilio_webhook_block = TwilioSMS.load(\"BLOCK_NAME\")\ntwilio_webhook_block.notify(\"Hello from Prefect!\")\n```",
         "block_schema": {
-          "checksum": "sha256:a3c827e6f0554918bbd7a4161795ad86a5e5baf980993cdc6e9e0d58c08b9aec",
+          "checksum": "sha256:cd0041b2c8386c1794c554da53eacc644f0ec9ee7de59f7a0a4bcd8e161c350a",
           "fields": {
             "block_schema_references": {},
             "block_type_slug": "twilio-sms",
             "description": "Enables sending notifications via Twilio SMS.",
             "properties": {
               "notify_type": {
-                "default": "prefect_default",
-                "description": "The type of notification being performed; the prefect_default is a plain notification that does not attach an image.",
+                "default": "info",
+                "description": "The type of notification being performed.",
                 "enum": [
-                  "prefect_default",
                   "info",
                   "success",
                   "warning",
@@ -1170,7 +1180,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.1.5"
+          "version": "3.4.18"
         }
       },
       "webhook": {
@@ -1239,7 +1249,7 @@
             "type": "object"
           },
           "capabilities": [],
-          "version": "3.1.5"
+          "version": "3.4.18"
         }
       }
     }
