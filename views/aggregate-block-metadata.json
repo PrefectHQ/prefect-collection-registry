@@ -1250,133 +1250,210 @@
         "name": "AWS Credentials",
         "slug": "aws-credentials",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/d74b16fe84ce626345adf235a47008fea2869a60-225x225.png",
-        "documentation_url": "https://prefecthq.github.io/prefect-aws/credentials/#prefect_aws.credentials.AwsCredentials",
+        "documentation_url": "https://docs.prefect.io/integrations/prefect-aws",
         "description": "Block used to manage authentication with AWS. AWS authentication is\nhandled via the `boto3` module. Refer to the\n[boto3 docs](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html)\nfor more info about the possible credential configurations. This block is part of the prefect-aws collection. Install prefect-aws with `pip install prefect-aws` to use this block.",
         "code_example": "Load stored AWS credentials:\n```python\nfrom prefect_aws import AwsCredentials\n\naws_credentials_block = AwsCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:17b73297ed60f080fb235b3a5a145a6d9b28a09b3ff2d9d17810b5e2c2075ebe",
+          "checksum": "sha256:79d2e4d682d389f4823d2e1b2b206b2efe905d0ddd8d05ef2b1b3384b6ae0609",
           "fields": {
-            "title": "AwsCredentials",
+            "block_schema_references": {},
+            "block_type_slug": "aws-credentials",
             "description": "Block used to manage authentication with AWS. AWS authentication is\nhandled via the `boto3` module. Refer to the\n[boto3 docs](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html)\nfor more info about the possible credential configurations.",
-            "type": "object",
             "properties": {
               "aws_access_key_id": {
-                "title": "AWS Access Key ID",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "A specific AWS access key ID.",
-                "type": "string"
+                "title": "AWS Access Key ID"
               },
               "aws_secret_access_key": {
-                "title": "AWS Access Key Secret",
+                "anyOf": [
+                  {
+                    "format": "password",
+                    "type": "string",
+                    "writeOnly": true
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "A specific AWS secret access key.",
-                "type": "string",
-                "writeOnly": true,
-                "format": "password"
+                "title": "AWS Access Key Secret"
               },
               "aws_session_token": {
-                "title": "AWS Session Token",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "The session key for your AWS account. This is only needed when you are using temporary credentials.",
-                "type": "string"
+                "title": "AWS Session Token"
               },
               "profile_name": {
-                "title": "Profile Name",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "The profile to use when creating your session.",
-                "type": "string"
+                "title": "Profile Name"
               },
               "region_name": {
-                "title": "Region Name",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "The AWS Region where you want to create new connections.",
-                "type": "string"
+                "title": "Region Name"
               },
               "aws_client_parameters": {
-                "title": "AWS Client Parameters",
+                "$ref": "#/definitions/AwsClientParameters",
                 "description": "Extra parameters to initialize the Client.",
-                "allOf": [
-                  {
-                    "$ref": "#/definitions/AwsClientParameters"
-                  }
-                ]
+                "title": "AWS Client Parameters"
               }
             },
-            "block_type_slug": "aws-credentials",
             "secret_fields": [
               "aws_secret_access_key"
             ],
-            "block_schema_references": {},
+            "title": "AwsCredentials",
+            "type": "object",
             "definitions": {
               "AwsClientParameters": {
-                "title": "AwsClientParameters",
                 "description": "Model used to manage extra parameters that you can pass when you initialize\nthe Client. If you want to find more information, see\n[boto3 docs](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/core/session.html)\nfor more info about the possible client configurations.\n\nAttributes:\n    api_version: The API version to use. By default, botocore will\n        use the latest API version when creating a client. You only need\n        to specify this parameter if you want to use a previous API version\n        of the client.\n    use_ssl: Whether or not to use SSL. By default, SSL is used.\n        Note that not all services support non-ssl connections.\n    verify: Whether or not to verify SSL certificates. By default\n        SSL certificates are verified. If False, SSL will still be used\n        (unless use_ssl is False), but SSL certificates\n        will not be verified. Passing a file path to this is deprecated.\n    verify_cert_path: A filename of the CA cert bundle to\n        use. You can specify this argument if you want to use a\n        different CA cert bundle than the one used by botocore.\n    endpoint_url: The complete URL to use for the constructed\n        client. Normally, botocore will automatically construct the\n        appropriate URL to use when communicating with a service. You\n        can specify a complete URL (including the \"http/https\" scheme)\n        to override this behavior. If this value is provided,\n        then ``use_ssl`` is ignored.\n    config: Advanced configuration for Botocore clients. See\n        [botocore docs](https://botocore.amazonaws.com/v1/documentation/api/latest/reference/config.html)\n        for more details.",
-                "type": "object",
                 "properties": {
                   "api_version": {
-                    "title": "API Version",
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
                     "description": "The API version to use.",
-                    "type": "string"
+                    "title": "API Version"
                   },
                   "use_ssl": {
-                    "title": "Use SSL",
-                    "description": "Whether or not to use SSL.",
                     "default": true,
+                    "description": "Whether or not to use SSL.",
+                    "title": "Use SSL",
                     "type": "boolean"
                   },
                   "verify": {
-                    "title": "Verify",
-                    "description": "Whether or not to verify SSL certificates.",
-                    "default": true,
                     "anyOf": [
                       {
                         "type": "boolean"
                       },
                       {
-                        "type": "string",
-                        "format": "file-path"
+                        "format": "file-path",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
                       }
-                    ]
+                    ],
+                    "default": null,
+                    "description": "Whether or not to verify SSL certificates.",
+                    "title": "Verify"
                   },
                   "verify_cert_path": {
-                    "title": "Certificate Authority Bundle File Path",
+                    "anyOf": [
+                      {
+                        "format": "file-path",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
                     "description": "Path to the CA cert bundle to use.",
-                    "format": "file-path",
-                    "type": "string"
+                    "title": "Certificate Authority Bundle File Path"
                   },
                   "endpoint_url": {
-                    "title": "Endpoint URL",
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
                     "description": "The complete URL to use for the constructed client.",
-                    "type": "string"
+                    "title": "Endpoint URL"
                   },
                   "config": {
-                    "title": "Botocore Config",
+                    "anyOf": [
+                      {
+                        "additionalProperties": true,
+                        "type": "object"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
                     "description": "Advanced configuration for Botocore clients.",
-                    "type": "object"
+                    "title": "Botocore Config"
                   }
-                }
+                },
+                "title": "AwsClientParameters",
+                "type": "object"
               }
             }
           },
           "capabilities": [],
-          "version": "0.4.14"
+          "version": "0.5.16"
         }
       },
       "aws-secret": {
         "name": "AWS Secret",
         "slug": "aws-secret",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/d74b16fe84ce626345adf235a47008fea2869a60-225x225.png",
-        "documentation_url": "https://prefecthq.github.io/prefect-aws/secrets_manager/#prefect_aws.secrets_manager.AwsSecret",
+        "documentation_url": "https://docs.prefect.io/integrations/prefect-aws",
         "description": "Manages a secret in AWS's Secrets Manager. This block is part of the prefect-aws collection. Install prefect-aws with `pip install prefect-aws` to use this block.",
         "code_example": "```python\nfrom prefect_aws.secrets_manager import AwsSecret\n\naws_secret_block = AwsSecret.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:d10fde5ac25b10edca4859c4d0bf61b4a9106215cd79ab80997f29859b190b7d",
+          "checksum": "sha256:67f9d5acd8682089c12173e957d29944c6752df7d680cdc9a08095befe9204ba",
           "fields": {
-            "title": "AwsSecret",
+            "block_schema_references": {
+              "aws_credentials": {
+                "block_schema_checksum": "sha256:79d2e4d682d389f4823d2e1b2b206b2efe905d0ddd8d05ef2b1b3384b6ae0609",
+                "block_type_slug": "aws-credentials"
+              }
+            },
+            "block_type_slug": "aws-secret",
             "description": "Manages a secret in AWS's Secrets Manager.",
-            "type": "object",
             "properties": {
               "aws_credentials": {
                 "$ref": "#/definitions/AwsCredentials"
               },
               "secret_name": {
-                "title": "Secret Name",
                 "description": "The name of the secret.",
+                "title": "Secret Name",
                 "type": "string"
               }
             },
@@ -1384,683 +1461,587 @@
               "aws_credentials",
               "secret_name"
             ],
-            "block_type_slug": "aws-secret",
             "secret_fields": [
               "aws_credentials.aws_secret_access_key"
             ],
-            "block_schema_references": {
-              "aws_credentials": {
-                "block_type_slug": "aws-credentials",
-                "block_schema_checksum": "sha256:17b73297ed60f080fb235b3a5a145a6d9b28a09b3ff2d9d17810b5e2c2075ebe"
-              }
-            },
+            "title": "AwsSecret",
+            "type": "object",
             "definitions": {
               "AwsClientParameters": {
-                "title": "AwsClientParameters",
                 "description": "Model used to manage extra parameters that you can pass when you initialize\nthe Client. If you want to find more information, see\n[boto3 docs](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/core/session.html)\nfor more info about the possible client configurations.\n\nAttributes:\n    api_version: The API version to use. By default, botocore will\n        use the latest API version when creating a client. You only need\n        to specify this parameter if you want to use a previous API version\n        of the client.\n    use_ssl: Whether or not to use SSL. By default, SSL is used.\n        Note that not all services support non-ssl connections.\n    verify: Whether or not to verify SSL certificates. By default\n        SSL certificates are verified. If False, SSL will still be used\n        (unless use_ssl is False), but SSL certificates\n        will not be verified. Passing a file path to this is deprecated.\n    verify_cert_path: A filename of the CA cert bundle to\n        use. You can specify this argument if you want to use a\n        different CA cert bundle than the one used by botocore.\n    endpoint_url: The complete URL to use for the constructed\n        client. Normally, botocore will automatically construct the\n        appropriate URL to use when communicating with a service. You\n        can specify a complete URL (including the \"http/https\" scheme)\n        to override this behavior. If this value is provided,\n        then ``use_ssl`` is ignored.\n    config: Advanced configuration for Botocore clients. See\n        [botocore docs](https://botocore.amazonaws.com/v1/documentation/api/latest/reference/config.html)\n        for more details.",
-                "type": "object",
                 "properties": {
                   "api_version": {
-                    "title": "API Version",
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
                     "description": "The API version to use.",
-                    "type": "string"
+                    "title": "API Version"
                   },
                   "use_ssl": {
-                    "title": "Use SSL",
-                    "description": "Whether or not to use SSL.",
                     "default": true,
+                    "description": "Whether or not to use SSL.",
+                    "title": "Use SSL",
                     "type": "boolean"
                   },
                   "verify": {
-                    "title": "Verify",
-                    "description": "Whether or not to verify SSL certificates.",
-                    "default": true,
                     "anyOf": [
                       {
                         "type": "boolean"
                       },
                       {
-                        "type": "string",
-                        "format": "file-path"
+                        "format": "file-path",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
                       }
-                    ]
+                    ],
+                    "default": null,
+                    "description": "Whether or not to verify SSL certificates.",
+                    "title": "Verify"
                   },
                   "verify_cert_path": {
-                    "title": "Certificate Authority Bundle File Path",
+                    "anyOf": [
+                      {
+                        "format": "file-path",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
                     "description": "Path to the CA cert bundle to use.",
-                    "format": "file-path",
-                    "type": "string"
+                    "title": "Certificate Authority Bundle File Path"
                   },
                   "endpoint_url": {
-                    "title": "Endpoint URL",
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
                     "description": "The complete URL to use for the constructed client.",
-                    "type": "string"
+                    "title": "Endpoint URL"
                   },
                   "config": {
-                    "title": "Botocore Config",
-                    "description": "Advanced configuration for Botocore clients.",
-                    "type": "object"
-                  }
-                }
-              },
-              "AwsCredentials": {
-                "title": "AwsCredentials",
-                "description": "Block used to manage authentication with AWS. AWS authentication is\nhandled via the `boto3` module. Refer to the\n[boto3 docs](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html)\nfor more info about the possible credential configurations.",
-                "type": "object",
-                "properties": {
-                  "aws_access_key_id": {
-                    "title": "AWS Access Key ID",
-                    "description": "A specific AWS access key ID.",
-                    "type": "string"
-                  },
-                  "aws_secret_access_key": {
-                    "title": "AWS Access Key Secret",
-                    "description": "A specific AWS secret access key.",
-                    "type": "string",
-                    "writeOnly": true,
-                    "format": "password"
-                  },
-                  "aws_session_token": {
-                    "title": "AWS Session Token",
-                    "description": "The session key for your AWS account. This is only needed when you are using temporary credentials.",
-                    "type": "string"
-                  },
-                  "profile_name": {
-                    "title": "Profile Name",
-                    "description": "The profile to use when creating your session.",
-                    "type": "string"
-                  },
-                  "region_name": {
-                    "title": "Region Name",
-                    "description": "The AWS Region where you want to create new connections.",
-                    "type": "string"
-                  },
-                  "aws_client_parameters": {
-                    "title": "AWS Client Parameters",
-                    "description": "Extra parameters to initialize the Client.",
-                    "allOf": [
+                    "anyOf": [
                       {
-                        "$ref": "#/definitions/AwsClientParameters"
+                        "additionalProperties": true,
+                        "type": "object"
+                      },
+                      {
+                        "type": "null"
                       }
-                    ]
+                    ],
+                    "default": null,
+                    "description": "Advanced configuration for Botocore clients.",
+                    "title": "Botocore Config"
                   }
                 },
+                "title": "AwsClientParameters",
+                "type": "object"
+              },
+              "AwsCredentials": {
+                "block_schema_references": {},
                 "block_type_slug": "aws-credentials",
+                "description": "Block used to manage authentication with AWS. AWS authentication is\nhandled via the `boto3` module. Refer to the\n[boto3 docs](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html)\nfor more info about the possible credential configurations.",
+                "properties": {
+                  "aws_access_key_id": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "A specific AWS access key ID.",
+                    "title": "AWS Access Key ID"
+                  },
+                  "aws_secret_access_key": {
+                    "anyOf": [
+                      {
+                        "format": "password",
+                        "type": "string",
+                        "writeOnly": true
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "A specific AWS secret access key.",
+                    "title": "AWS Access Key Secret"
+                  },
+                  "aws_session_token": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The session key for your AWS account. This is only needed when you are using temporary credentials.",
+                    "title": "AWS Session Token"
+                  },
+                  "profile_name": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The profile to use when creating your session.",
+                    "title": "Profile Name"
+                  },
+                  "region_name": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The AWS Region where you want to create new connections.",
+                    "title": "Region Name"
+                  },
+                  "aws_client_parameters": {
+                    "$ref": "#/definitions/AwsClientParameters",
+                    "description": "Extra parameters to initialize the Client.",
+                    "title": "AWS Client Parameters"
+                  }
+                },
                 "secret_fields": [
                   "aws_secret_access_key"
                 ],
-                "block_schema_references": {}
+                "title": "AwsCredentials",
+                "type": "object"
               }
             }
           },
           "capabilities": [],
-          "version": "0.4.14"
-        }
-      },
-      "ecs-task": {
-        "name": "ECS Task",
-        "slug": "ecs-task",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/d74b16fe84ce626345adf235a47008fea2869a60-225x225.png",
-        "documentation_url": "https://prefecthq.github.io/prefect-aws/ecs/#prefect_aws.ecs.ECSTask",
-        "description": "DEPRECATION WARNING: This block is deprecated along with Agents and all other Infrastructure blocks. It will be removed in `prefect>=3.0.0`. Run a command as an ECS task. This block is part of the prefect-aws collection. Install prefect-aws with `pip install prefect-aws` to use this block.",
-        "code_example": "```python\nfrom prefect_aws.ecs import ECSTask\n\necs_task_block = ECSTask.load(\"BLOCK_NAME\")\n```",
-        "block_schema": {
-          "checksum": "sha256:d72b495859da39536d3e1119ddabd42a10866867b97c4834956ae231120858ca",
-          "fields": {
-            "title": "ECSTask",
-            "description": "Run a command as an ECS task.",
-            "type": "object",
-            "properties": {
-              "type": {
-                "title": "Type",
-                "description": "The slug for this task type.",
-                "default": "ecs-task",
-                "enum": [
-                  "ecs-task"
-                ],
-                "type": "string"
-              },
-              "env": {
-                "title": "Environment Variables",
-                "description": "Environment variables to provide to the task run. These variables are set on the Prefect container at task runtime. These will not be set on the task definition.",
-                "type": "object",
-                "additionalProperties": {
-                  "type": "string"
-                }
-              },
-              "labels": {
-                "title": "Labels",
-                "description": "Labels applied to the infrastructure for metadata purposes.",
-                "type": "object",
-                "additionalProperties": {
-                  "type": "string"
-                }
-              },
-              "name": {
-                "title": "Name",
-                "description": "Name applied to the infrastructure for identification.",
-                "type": "string"
-              },
-              "command": {
-                "title": "Command",
-                "description": "The command to run in the infrastructure.",
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "aws_credentials": {
-                "title": "AWS Credentials",
-                "description": "The AWS credentials to use to connect to ECS.",
-                "allOf": [
-                  {
-                    "$ref": "#/definitions/AwsCredentials"
-                  }
-                ]
-              },
-              "task_definition_arn": {
-                "title": "Task Definition Arn",
-                "description": "An identifier for an existing task definition to use. If fields are set on the `ECSTask` that conflict with the task definition, a new copy will be registered with the required values. Cannot be used with `task_definition`. If not provided, Prefect will generate and register a minimal task definition.",
-                "type": "string"
-              },
-              "task_definition": {
-                "title": "Task Definition",
-                "description": "An ECS task definition to use. Prefect may set defaults or override fields on this task definition to match other `ECSTask` fields. Cannot be used with `task_definition_arn`. If not provided, Prefect will generate and register a minimal task definition.",
-                "type": "object"
-              },
-              "family": {
-                "title": "Family",
-                "description": "A family for the task definition. If not provided, it will be inferred from the task definition. If the task definition does not have a family, the name will be generated. When flow and deployment metadata is available, the generated name will include their names. Values for this field will be slugified to match AWS character requirements.",
-                "type": "string"
-              },
-              "image": {
-                "title": "Image",
-                "description": "The image to use for the Prefect container in the task. If this value is not null, it will override the value in the task definition. This value defaults to a Prefect base image matching your local versions.",
-                "type": "string"
-              },
-              "auto_deregister_task_definition": {
-                "title": "Auto Deregister Task Definition",
-                "description": "If set, any task definitions that are created by this block will be deregistered. Existing task definitions linked by ARN will never be deregistered. Deregistering a task definition does not remove it from your AWS account, instead it will be marked as INACTIVE.",
-                "default": true,
-                "type": "boolean"
-              },
-              "cpu": {
-                "title": "CPU",
-                "description": "The amount of CPU to provide to the ECS task. Valid amounts are specified in the AWS documentation. If not provided, a default value of 1024 will be used unless present on the task definition.",
-                "type": "integer"
-              },
-              "memory": {
-                "title": "Memory",
-                "description": "The amount of memory to provide to the ECS task. Valid amounts are specified in the AWS documentation. If not provided, a default value of 2048 will be used unless present on the task definition.",
-                "type": "integer"
-              },
-              "execution_role_arn": {
-                "title": "Execution Role ARN",
-                "description": "An execution role to use for the task. This controls the permissions of the task when it is launching. If this value is not null, it will override the value in the task definition. An execution role must be provided to capture logs from the container.",
-                "type": "string"
-              },
-              "configure_cloudwatch_logs": {
-                "title": "Configure Cloudwatch Logs",
-                "description": "If `True`, the Prefect container will be configured to send its output to the AWS CloudWatch logs service. This functionality requires an execution role with logs:CreateLogStream, logs:CreateLogGroup, and logs:PutLogEvents permissions. The default for this field is `False` unless `stream_output` is set.",
-                "type": "boolean"
-              },
-              "cloudwatch_logs_options": {
-                "title": "Cloudwatch Logs Options",
-                "description": "When `configure_cloudwatch_logs` is enabled, this setting may be used to pass additional options to the CloudWatch logs configuration or override the default options. See the AWS documentation for available options. https://docs.aws.amazon.com/AmazonECS/latest/developerguide/using_awslogs.html#create_awslogs_logdriver_options.",
-                "type": "object",
-                "additionalProperties": {
-                  "type": "string"
-                }
-              },
-              "stream_output": {
-                "title": "Stream Output",
-                "description": "If `True`, logs will be streamed from the Prefect container to the local console. Unless you have configured AWS CloudWatch logs manually on your task definition, this requires the same prerequisites outlined in `configure_cloudwatch_logs`.",
-                "type": "boolean"
-              },
-              "launch_type": {
-                "title": "Launch Type",
-                "description": "The type of ECS task run infrastructure that should be used. Note that 'FARGATE_SPOT' is not a formal ECS launch type, but we will configure the proper capacity provider strategy if set here.",
-                "default": "FARGATE",
-                "enum": [
-                  "FARGATE",
-                  "EC2",
-                  "EXTERNAL",
-                  "FARGATE_SPOT"
-                ],
-                "type": "string"
-              },
-              "vpc_id": {
-                "title": "VPC ID",
-                "description": "The AWS VPC to link the task run to. This is only applicable when using the 'awsvpc' network mode for your task. FARGATE tasks require this network  mode, but for EC2 tasks the default network mode is 'bridge'. If using the 'awsvpc' network mode and this field is null, your default VPC will be used. If no default VPC can be found, the task run will fail.",
-                "type": "string"
-              },
-              "cluster": {
-                "title": "Cluster",
-                "description": "The ECS cluster to run the task in. The ARN or name may be provided. If not provided, the default cluster will be used.",
-                "type": "string"
-              },
-              "task_role_arn": {
-                "title": "Task Role ARN",
-                "description": "A role to attach to the task run. This controls the permissions of the task while it is running.",
-                "type": "string"
-              },
-              "task_customizations": {
-                "title": "Task Customizations",
-                "description": "A list of JSON 6902 patches to apply to the task run request. If a string is given, it will parsed as a JSON expression.",
-                "type": "array",
-                "format": "rfc6902",
-                "items": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "type": "string"
-                  }
-                }
-              },
-              "task_start_timeout_seconds": {
-                "title": "Task Start Timeout Seconds",
-                "description": "The amount of time to watch for the start of the ECS task before marking it as failed. The task must enter a RUNNING state to be considered started.",
-                "default": 120,
-                "type": "integer"
-              },
-              "task_watch_poll_interval": {
-                "title": "Task Watch Poll Interval",
-                "description": "The amount of time to wait between AWS API calls while monitoring the state of an ECS task.",
-                "default": 5.0,
-                "type": "number"
-              }
-            },
-            "block_type_slug": "ecs-task",
-            "secret_fields": [
-              "aws_credentials.aws_secret_access_key"
-            ],
-            "block_schema_references": {
-              "aws_credentials": {
-                "block_type_slug": "aws-credentials",
-                "block_schema_checksum": "sha256:17b73297ed60f080fb235b3a5a145a6d9b28a09b3ff2d9d17810b5e2c2075ebe"
-              }
-            },
-            "definitions": {
-              "AwsClientParameters": {
-                "title": "AwsClientParameters",
-                "description": "Model used to manage extra parameters that you can pass when you initialize\nthe Client. If you want to find more information, see\n[boto3 docs](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/core/session.html)\nfor more info about the possible client configurations.\n\nAttributes:\n    api_version: The API version to use. By default, botocore will\n        use the latest API version when creating a client. You only need\n        to specify this parameter if you want to use a previous API version\n        of the client.\n    use_ssl: Whether or not to use SSL. By default, SSL is used.\n        Note that not all services support non-ssl connections.\n    verify: Whether or not to verify SSL certificates. By default\n        SSL certificates are verified. If False, SSL will still be used\n        (unless use_ssl is False), but SSL certificates\n        will not be verified. Passing a file path to this is deprecated.\n    verify_cert_path: A filename of the CA cert bundle to\n        use. You can specify this argument if you want to use a\n        different CA cert bundle than the one used by botocore.\n    endpoint_url: The complete URL to use for the constructed\n        client. Normally, botocore will automatically construct the\n        appropriate URL to use when communicating with a service. You\n        can specify a complete URL (including the \"http/https\" scheme)\n        to override this behavior. If this value is provided,\n        then ``use_ssl`` is ignored.\n    config: Advanced configuration for Botocore clients. See\n        [botocore docs](https://botocore.amazonaws.com/v1/documentation/api/latest/reference/config.html)\n        for more details.",
-                "type": "object",
-                "properties": {
-                  "api_version": {
-                    "title": "API Version",
-                    "description": "The API version to use.",
-                    "type": "string"
-                  },
-                  "use_ssl": {
-                    "title": "Use SSL",
-                    "description": "Whether or not to use SSL.",
-                    "default": true,
-                    "type": "boolean"
-                  },
-                  "verify": {
-                    "title": "Verify",
-                    "description": "Whether or not to verify SSL certificates.",
-                    "default": true,
-                    "anyOf": [
-                      {
-                        "type": "boolean"
-                      },
-                      {
-                        "type": "string",
-                        "format": "file-path"
-                      }
-                    ]
-                  },
-                  "verify_cert_path": {
-                    "title": "Certificate Authority Bundle File Path",
-                    "description": "Path to the CA cert bundle to use.",
-                    "format": "file-path",
-                    "type": "string"
-                  },
-                  "endpoint_url": {
-                    "title": "Endpoint URL",
-                    "description": "The complete URL to use for the constructed client.",
-                    "type": "string"
-                  },
-                  "config": {
-                    "title": "Botocore Config",
-                    "description": "Advanced configuration for Botocore clients.",
-                    "type": "object"
-                  }
-                }
-              },
-              "AwsCredentials": {
-                "title": "AwsCredentials",
-                "description": "Block used to manage authentication with AWS. AWS authentication is\nhandled via the `boto3` module. Refer to the\n[boto3 docs](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html)\nfor more info about the possible credential configurations.",
-                "type": "object",
-                "properties": {
-                  "aws_access_key_id": {
-                    "title": "AWS Access Key ID",
-                    "description": "A specific AWS access key ID.",
-                    "type": "string"
-                  },
-                  "aws_secret_access_key": {
-                    "title": "AWS Access Key Secret",
-                    "description": "A specific AWS secret access key.",
-                    "type": "string",
-                    "writeOnly": true,
-                    "format": "password"
-                  },
-                  "aws_session_token": {
-                    "title": "AWS Session Token",
-                    "description": "The session key for your AWS account. This is only needed when you are using temporary credentials.",
-                    "type": "string"
-                  },
-                  "profile_name": {
-                    "title": "Profile Name",
-                    "description": "The profile to use when creating your session.",
-                    "type": "string"
-                  },
-                  "region_name": {
-                    "title": "Region Name",
-                    "description": "The AWS Region where you want to create new connections.",
-                    "type": "string"
-                  },
-                  "aws_client_parameters": {
-                    "title": "AWS Client Parameters",
-                    "description": "Extra parameters to initialize the Client.",
-                    "allOf": [
-                      {
-                        "$ref": "#/definitions/AwsClientParameters"
-                      }
-                    ]
-                  }
-                },
-                "block_type_slug": "aws-credentials",
-                "secret_fields": [
-                  "aws_secret_access_key"
-                ],
-                "block_schema_references": {}
-              }
-            }
-          },
-          "capabilities": [
-            "run-infrastructure"
-          ],
-          "version": "0.4.14"
+          "version": "0.5.16"
         }
       },
       "lambda-function": {
         "name": "Lambda Function",
         "slug": "lambda-function",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/d74b16fe84ce626345adf235a47008fea2869a60-225x225.png",
-        "documentation_url": "https://prefecthq.github.io/prefect-aws/s3/#prefect_aws.lambda_function.LambdaFunction",
+        "documentation_url": "https://docs.prefect.io/integrations/prefect-aws",
         "description": "Invoke a Lambda function. This block is part of the prefect-aws\ncollection. Install prefect-aws with `pip install prefect-aws` to use this\nblock. This block is part of the prefect-aws collection. Install prefect-aws with `pip install prefect-aws` to use this block.",
         "code_example": "```python\nfrom prefect_aws.lambda_function import LambdaFunction\n\nlambda_function_block = LambdaFunction.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:93fb424309b85c0ef9a8e69cc9d0df1e0afa0f2ed15f1ecc710ec3463513b2e4",
+          "checksum": "sha256:2d9454b88c75f20a9ffccb0505f12729761e21f5c0a8f429535ff6669aebcd0f",
           "fields": {
-            "title": "LambdaFunction",
+            "block_schema_references": {
+              "aws_credentials": {
+                "block_schema_checksum": "sha256:79d2e4d682d389f4823d2e1b2b206b2efe905d0ddd8d05ef2b1b3384b6ae0609",
+                "block_type_slug": "aws-credentials"
+              }
+            },
+            "block_type_slug": "lambda-function",
             "description": "Invoke a Lambda function. This block is part of the prefect-aws\ncollection. Install prefect-aws with `pip install prefect-aws` to use this\nblock.",
-            "type": "object",
             "properties": {
               "function_name": {
-                "title": "Function Name",
                 "description": "The name, ARN, or partial ARN of the Lambda function to run. This must be the name of a function that is already deployed to AWS Lambda.",
+                "title": "Function Name",
                 "type": "string"
               },
               "qualifier": {
-                "title": "Qualifier",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "The version or alias of the Lambda function to use when invoked. If not specified, the latest (unqualified) version of the Lambda function will be used.",
-                "type": "string"
+                "title": "Qualifier"
               },
               "aws_credentials": {
-                "title": "AWS Credentials",
+                "$ref": "#/definitions/AwsCredentials",
                 "description": "The AWS credentials to invoke the Lambda with.",
-                "allOf": [
-                  {
-                    "$ref": "#/definitions/AwsCredentials"
-                  }
-                ]
+                "title": "AWS Credentials"
               }
             },
             "required": [
               "function_name"
             ],
-            "block_type_slug": "lambda-function",
             "secret_fields": [
               "aws_credentials.aws_secret_access_key"
             ],
-            "block_schema_references": {
-              "aws_credentials": {
-                "block_type_slug": "aws-credentials",
-                "block_schema_checksum": "sha256:17b73297ed60f080fb235b3a5a145a6d9b28a09b3ff2d9d17810b5e2c2075ebe"
-              }
-            },
+            "title": "LambdaFunction",
+            "type": "object",
             "definitions": {
               "AwsClientParameters": {
-                "title": "AwsClientParameters",
                 "description": "Model used to manage extra parameters that you can pass when you initialize\nthe Client. If you want to find more information, see\n[boto3 docs](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/core/session.html)\nfor more info about the possible client configurations.\n\nAttributes:\n    api_version: The API version to use. By default, botocore will\n        use the latest API version when creating a client. You only need\n        to specify this parameter if you want to use a previous API version\n        of the client.\n    use_ssl: Whether or not to use SSL. By default, SSL is used.\n        Note that not all services support non-ssl connections.\n    verify: Whether or not to verify SSL certificates. By default\n        SSL certificates are verified. If False, SSL will still be used\n        (unless use_ssl is False), but SSL certificates\n        will not be verified. Passing a file path to this is deprecated.\n    verify_cert_path: A filename of the CA cert bundle to\n        use. You can specify this argument if you want to use a\n        different CA cert bundle than the one used by botocore.\n    endpoint_url: The complete URL to use for the constructed\n        client. Normally, botocore will automatically construct the\n        appropriate URL to use when communicating with a service. You\n        can specify a complete URL (including the \"http/https\" scheme)\n        to override this behavior. If this value is provided,\n        then ``use_ssl`` is ignored.\n    config: Advanced configuration for Botocore clients. See\n        [botocore docs](https://botocore.amazonaws.com/v1/documentation/api/latest/reference/config.html)\n        for more details.",
-                "type": "object",
                 "properties": {
                   "api_version": {
-                    "title": "API Version",
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
                     "description": "The API version to use.",
-                    "type": "string"
+                    "title": "API Version"
                   },
                   "use_ssl": {
-                    "title": "Use SSL",
-                    "description": "Whether or not to use SSL.",
                     "default": true,
+                    "description": "Whether or not to use SSL.",
+                    "title": "Use SSL",
                     "type": "boolean"
                   },
                   "verify": {
-                    "title": "Verify",
-                    "description": "Whether or not to verify SSL certificates.",
-                    "default": true,
                     "anyOf": [
                       {
                         "type": "boolean"
                       },
                       {
-                        "type": "string",
-                        "format": "file-path"
+                        "format": "file-path",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
                       }
-                    ]
+                    ],
+                    "default": null,
+                    "description": "Whether or not to verify SSL certificates.",
+                    "title": "Verify"
                   },
                   "verify_cert_path": {
-                    "title": "Certificate Authority Bundle File Path",
+                    "anyOf": [
+                      {
+                        "format": "file-path",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
                     "description": "Path to the CA cert bundle to use.",
-                    "format": "file-path",
-                    "type": "string"
+                    "title": "Certificate Authority Bundle File Path"
                   },
                   "endpoint_url": {
-                    "title": "Endpoint URL",
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
                     "description": "The complete URL to use for the constructed client.",
-                    "type": "string"
+                    "title": "Endpoint URL"
                   },
                   "config": {
-                    "title": "Botocore Config",
-                    "description": "Advanced configuration for Botocore clients.",
-                    "type": "object"
-                  }
-                }
-              },
-              "AwsCredentials": {
-                "title": "AwsCredentials",
-                "description": "Block used to manage authentication with AWS. AWS authentication is\nhandled via the `boto3` module. Refer to the\n[boto3 docs](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html)\nfor more info about the possible credential configurations.",
-                "type": "object",
-                "properties": {
-                  "aws_access_key_id": {
-                    "title": "AWS Access Key ID",
-                    "description": "A specific AWS access key ID.",
-                    "type": "string"
-                  },
-                  "aws_secret_access_key": {
-                    "title": "AWS Access Key Secret",
-                    "description": "A specific AWS secret access key.",
-                    "type": "string",
-                    "writeOnly": true,
-                    "format": "password"
-                  },
-                  "aws_session_token": {
-                    "title": "AWS Session Token",
-                    "description": "The session key for your AWS account. This is only needed when you are using temporary credentials.",
-                    "type": "string"
-                  },
-                  "profile_name": {
-                    "title": "Profile Name",
-                    "description": "The profile to use when creating your session.",
-                    "type": "string"
-                  },
-                  "region_name": {
-                    "title": "Region Name",
-                    "description": "The AWS Region where you want to create new connections.",
-                    "type": "string"
-                  },
-                  "aws_client_parameters": {
-                    "title": "AWS Client Parameters",
-                    "description": "Extra parameters to initialize the Client.",
-                    "allOf": [
+                    "anyOf": [
                       {
-                        "$ref": "#/definitions/AwsClientParameters"
+                        "additionalProperties": true,
+                        "type": "object"
+                      },
+                      {
+                        "type": "null"
                       }
-                    ]
+                    ],
+                    "default": null,
+                    "description": "Advanced configuration for Botocore clients.",
+                    "title": "Botocore Config"
                   }
                 },
+                "title": "AwsClientParameters",
+                "type": "object"
+              },
+              "AwsCredentials": {
+                "block_schema_references": {},
                 "block_type_slug": "aws-credentials",
+                "description": "Block used to manage authentication with AWS. AWS authentication is\nhandled via the `boto3` module. Refer to the\n[boto3 docs](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html)\nfor more info about the possible credential configurations.",
+                "properties": {
+                  "aws_access_key_id": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "A specific AWS access key ID.",
+                    "title": "AWS Access Key ID"
+                  },
+                  "aws_secret_access_key": {
+                    "anyOf": [
+                      {
+                        "format": "password",
+                        "type": "string",
+                        "writeOnly": true
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "A specific AWS secret access key.",
+                    "title": "AWS Access Key Secret"
+                  },
+                  "aws_session_token": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The session key for your AWS account. This is only needed when you are using temporary credentials.",
+                    "title": "AWS Session Token"
+                  },
+                  "profile_name": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The profile to use when creating your session.",
+                    "title": "Profile Name"
+                  },
+                  "region_name": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The AWS Region where you want to create new connections.",
+                    "title": "Region Name"
+                  },
+                  "aws_client_parameters": {
+                    "$ref": "#/definitions/AwsClientParameters",
+                    "description": "Extra parameters to initialize the Client.",
+                    "title": "AWS Client Parameters"
+                  }
+                },
                 "secret_fields": [
                   "aws_secret_access_key"
                 ],
-                "block_schema_references": {}
+                "title": "AwsCredentials",
+                "type": "object"
               }
             }
           },
           "capabilities": [],
-          "version": "0.4.14"
+          "version": "0.5.16"
         }
       },
       "minio-credentials": {
         "name": "MinIO Credentials",
         "slug": "minio-credentials",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/676cb17bcbdff601f97e0a02ff8bcb480e91ff40-250x250.png",
-        "documentation_url": "https://prefecthq.github.io/prefect-aws/credentials/#prefect_aws.credentials.MinIOCredentials",
+        "documentation_url": "https://docs.prefect.io/integrations/prefect-aws",
         "description": "Block used to manage authentication with MinIO. Refer to the MinIO docs: https://docs.min.io/docs/minio-server-configuration-guide.html for more info about the possible credential configurations. This block is part of the prefect-aws collection. Install prefect-aws with `pip install prefect-aws` to use this block.",
         "code_example": "Load stored MinIO credentials:\n```python\nfrom prefect_aws import MinIOCredentials\n\nminio_credentials_block = MinIOCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:5b4f1e5270f3a3670ff3d06b7e6e8246d54dacba976321dec42abe51c33415fb",
+          "checksum": "sha256:c21bd87a12b6f17e5d40fbdd56f087e1636b3724bb60cb61d0b8c6bb5075609f",
           "fields": {
-            "title": "MinIOCredentials",
+            "block_schema_references": {},
+            "block_type_slug": "minio-credentials",
             "description": "Block used to manage authentication with MinIO. Refer to the MinIO docs: https://docs.min.io/docs/minio-server-configuration-guide.html for more info about the possible credential configurations.",
-            "type": "object",
             "properties": {
               "minio_root_user": {
-                "title": "Minio Root User",
                 "description": "Admin or root user.",
+                "title": "Minio Root User",
                 "type": "string"
               },
               "minio_root_password": {
-                "title": "Minio Root Password",
                 "description": "Admin or root password.",
+                "format": "password",
+                "title": "Minio Root Password",
                 "type": "string",
-                "writeOnly": true,
-                "format": "password"
+                "writeOnly": true
               },
               "region_name": {
-                "title": "Region Name",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "The AWS Region where you want to create new connections.",
-                "type": "string"
+                "title": "Region Name"
               },
               "aws_client_parameters": {
-                "title": "Aws Client Parameters",
-                "description": "Extra parameters to initialize the Client.",
-                "allOf": [
-                  {
-                    "$ref": "#/definitions/AwsClientParameters"
-                  }
-                ]
+                "$ref": "#/definitions/AwsClientParameters",
+                "description": "Extra parameters to initialize the Client."
               }
             },
             "required": [
               "minio_root_user",
               "minio_root_password"
             ],
-            "block_type_slug": "minio-credentials",
             "secret_fields": [
               "minio_root_password"
             ],
-            "block_schema_references": {},
+            "title": "MinIOCredentials",
+            "type": "object",
             "definitions": {
               "AwsClientParameters": {
-                "title": "AwsClientParameters",
                 "description": "Model used to manage extra parameters that you can pass when you initialize\nthe Client. If you want to find more information, see\n[boto3 docs](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/core/session.html)\nfor more info about the possible client configurations.\n\nAttributes:\n    api_version: The API version to use. By default, botocore will\n        use the latest API version when creating a client. You only need\n        to specify this parameter if you want to use a previous API version\n        of the client.\n    use_ssl: Whether or not to use SSL. By default, SSL is used.\n        Note that not all services support non-ssl connections.\n    verify: Whether or not to verify SSL certificates. By default\n        SSL certificates are verified. If False, SSL will still be used\n        (unless use_ssl is False), but SSL certificates\n        will not be verified. Passing a file path to this is deprecated.\n    verify_cert_path: A filename of the CA cert bundle to\n        use. You can specify this argument if you want to use a\n        different CA cert bundle than the one used by botocore.\n    endpoint_url: The complete URL to use for the constructed\n        client. Normally, botocore will automatically construct the\n        appropriate URL to use when communicating with a service. You\n        can specify a complete URL (including the \"http/https\" scheme)\n        to override this behavior. If this value is provided,\n        then ``use_ssl`` is ignored.\n    config: Advanced configuration for Botocore clients. See\n        [botocore docs](https://botocore.amazonaws.com/v1/documentation/api/latest/reference/config.html)\n        for more details.",
-                "type": "object",
                 "properties": {
                   "api_version": {
-                    "title": "API Version",
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
                     "description": "The API version to use.",
-                    "type": "string"
+                    "title": "API Version"
                   },
                   "use_ssl": {
-                    "title": "Use SSL",
-                    "description": "Whether or not to use SSL.",
                     "default": true,
+                    "description": "Whether or not to use SSL.",
+                    "title": "Use SSL",
                     "type": "boolean"
                   },
                   "verify": {
-                    "title": "Verify",
-                    "description": "Whether or not to verify SSL certificates.",
-                    "default": true,
                     "anyOf": [
                       {
                         "type": "boolean"
                       },
                       {
-                        "type": "string",
-                        "format": "file-path"
+                        "format": "file-path",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
                       }
-                    ]
+                    ],
+                    "default": null,
+                    "description": "Whether or not to verify SSL certificates.",
+                    "title": "Verify"
                   },
                   "verify_cert_path": {
-                    "title": "Certificate Authority Bundle File Path",
+                    "anyOf": [
+                      {
+                        "format": "file-path",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
                     "description": "Path to the CA cert bundle to use.",
-                    "format": "file-path",
-                    "type": "string"
+                    "title": "Certificate Authority Bundle File Path"
                   },
                   "endpoint_url": {
-                    "title": "Endpoint URL",
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
                     "description": "The complete URL to use for the constructed client.",
-                    "type": "string"
+                    "title": "Endpoint URL"
                   },
                   "config": {
-                    "title": "Botocore Config",
+                    "anyOf": [
+                      {
+                        "additionalProperties": true,
+                        "type": "object"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
                     "description": "Advanced configuration for Botocore clients.",
-                    "type": "object"
+                    "title": "Botocore Config"
                   }
-                }
+                },
+                "title": "AwsClientParameters",
+                "type": "object"
               }
             }
           },
           "capabilities": [],
-          "version": "0.4.14"
+          "version": "0.5.16"
         }
       },
       "s3-bucket": {
         "name": "S3 Bucket",
         "slug": "s3-bucket",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/d74b16fe84ce626345adf235a47008fea2869a60-225x225.png",
-        "documentation_url": "https://prefecthq.github.io/prefect-aws/s3/#prefect_aws.s3.S3Bucket",
+        "documentation_url": "https://docs.prefect.io/integrations/prefect-aws",
         "description": "Block used to store data using AWS S3 or S3-compatible object storage like MinIO. This block is part of the prefect-aws collection. Install prefect-aws with `pip install prefect-aws` to use this block.",
         "code_example": "```python\nfrom prefect_aws.s3 import S3Bucket\n\ns3_bucket_block = S3Bucket.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:da1e638612365b12ec83b6102986cc5efe54e84b7144bd668629f6972afe748f",
+          "checksum": "sha256:b374eb01ebd176b97b02a6529b60c215d20eb003c1f9d1de8cdc5e4ae641cd14",
           "fields": {
-            "title": "S3Bucket",
+            "block_schema_references": {
+              "credentials": [
+                {
+                  "block_schema_checksum": "sha256:c21bd87a12b6f17e5d40fbdd56f087e1636b3724bb60cb61d0b8c6bb5075609f",
+                  "block_type_slug": "minio-credentials"
+                },
+                {
+                  "block_schema_checksum": "sha256:79d2e4d682d389f4823d2e1b2b206b2efe905d0ddd8d05ef2b1b3384b6ae0609",
+                  "block_type_slug": "aws-credentials"
+                }
+              ]
+            },
+            "block_type_slug": "s3-bucket",
             "description": "Block used to store data using AWS S3 or S3-compatible object storage like MinIO.",
-            "type": "object",
             "properties": {
               "bucket_name": {
-                "title": "Bucket Name",
                 "description": "Name of your bucket.",
+                "title": "Bucket Name",
                 "type": "string"
               },
               "credentials": {
-                "title": "Credentials",
-                "description": "A block containing your credentials to AWS or MinIO.",
                 "anyOf": [
                   {
                     "$ref": "#/definitions/MinIOCredentials"
@@ -2068,173 +2049,239 @@
                   {
                     "$ref": "#/definitions/AwsCredentials"
                   }
-                ]
+                ],
+                "description": "A block containing your credentials to AWS or MinIO.",
+                "title": "Credentials"
               },
               "bucket_folder": {
-                "title": "Bucket Folder",
-                "description": "A default path to a folder within the S3 bucket to use for reading and writing objects.",
                 "default": "",
+                "description": "A default path to a folder within the S3 bucket to use for reading and writing objects.",
+                "title": "Bucket Folder",
                 "type": "string"
               }
             },
             "required": [
               "bucket_name"
             ],
-            "block_type_slug": "s3-bucket",
             "secret_fields": [
               "credentials.minio_root_password",
               "credentials.aws_secret_access_key"
             ],
-            "block_schema_references": {
-              "credentials": [
-                {
-                  "block_type_slug": "minio-credentials",
-                  "block_schema_checksum": "sha256:5b4f1e5270f3a3670ff3d06b7e6e8246d54dacba976321dec42abe51c33415fb"
-                },
-                {
-                  "block_type_slug": "aws-credentials",
-                  "block_schema_checksum": "sha256:17b73297ed60f080fb235b3a5a145a6d9b28a09b3ff2d9d17810b5e2c2075ebe"
-                }
-              ]
-            },
+            "title": "S3Bucket",
+            "type": "object",
             "definitions": {
               "AwsClientParameters": {
-                "title": "AwsClientParameters",
                 "description": "Model used to manage extra parameters that you can pass when you initialize\nthe Client. If you want to find more information, see\n[boto3 docs](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/core/session.html)\nfor more info about the possible client configurations.\n\nAttributes:\n    api_version: The API version to use. By default, botocore will\n        use the latest API version when creating a client. You only need\n        to specify this parameter if you want to use a previous API version\n        of the client.\n    use_ssl: Whether or not to use SSL. By default, SSL is used.\n        Note that not all services support non-ssl connections.\n    verify: Whether or not to verify SSL certificates. By default\n        SSL certificates are verified. If False, SSL will still be used\n        (unless use_ssl is False), but SSL certificates\n        will not be verified. Passing a file path to this is deprecated.\n    verify_cert_path: A filename of the CA cert bundle to\n        use. You can specify this argument if you want to use a\n        different CA cert bundle than the one used by botocore.\n    endpoint_url: The complete URL to use for the constructed\n        client. Normally, botocore will automatically construct the\n        appropriate URL to use when communicating with a service. You\n        can specify a complete URL (including the \"http/https\" scheme)\n        to override this behavior. If this value is provided,\n        then ``use_ssl`` is ignored.\n    config: Advanced configuration for Botocore clients. See\n        [botocore docs](https://botocore.amazonaws.com/v1/documentation/api/latest/reference/config.html)\n        for more details.",
-                "type": "object",
                 "properties": {
                   "api_version": {
-                    "title": "API Version",
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
                     "description": "The API version to use.",
-                    "type": "string"
+                    "title": "API Version"
                   },
                   "use_ssl": {
-                    "title": "Use SSL",
-                    "description": "Whether or not to use SSL.",
                     "default": true,
+                    "description": "Whether or not to use SSL.",
+                    "title": "Use SSL",
                     "type": "boolean"
                   },
                   "verify": {
-                    "title": "Verify",
-                    "description": "Whether or not to verify SSL certificates.",
-                    "default": true,
                     "anyOf": [
                       {
                         "type": "boolean"
                       },
                       {
-                        "type": "string",
-                        "format": "file-path"
+                        "format": "file-path",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
                       }
-                    ]
+                    ],
+                    "default": null,
+                    "description": "Whether or not to verify SSL certificates.",
+                    "title": "Verify"
                   },
                   "verify_cert_path": {
-                    "title": "Certificate Authority Bundle File Path",
+                    "anyOf": [
+                      {
+                        "format": "file-path",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
                     "description": "Path to the CA cert bundle to use.",
-                    "format": "file-path",
-                    "type": "string"
+                    "title": "Certificate Authority Bundle File Path"
                   },
                   "endpoint_url": {
-                    "title": "Endpoint URL",
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
                     "description": "The complete URL to use for the constructed client.",
-                    "type": "string"
+                    "title": "Endpoint URL"
                   },
                   "config": {
-                    "title": "Botocore Config",
+                    "anyOf": [
+                      {
+                        "additionalProperties": true,
+                        "type": "object"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
                     "description": "Advanced configuration for Botocore clients.",
-                    "type": "object"
+                    "title": "Botocore Config"
                   }
-                }
+                },
+                "title": "AwsClientParameters",
+                "type": "object"
+              },
+              "AwsCredentials": {
+                "block_schema_references": {},
+                "block_type_slug": "aws-credentials",
+                "description": "Block used to manage authentication with AWS. AWS authentication is\nhandled via the `boto3` module. Refer to the\n[boto3 docs](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html)\nfor more info about the possible credential configurations.",
+                "properties": {
+                  "aws_access_key_id": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "A specific AWS access key ID.",
+                    "title": "AWS Access Key ID"
+                  },
+                  "aws_secret_access_key": {
+                    "anyOf": [
+                      {
+                        "format": "password",
+                        "type": "string",
+                        "writeOnly": true
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "A specific AWS secret access key.",
+                    "title": "AWS Access Key Secret"
+                  },
+                  "aws_session_token": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The session key for your AWS account. This is only needed when you are using temporary credentials.",
+                    "title": "AWS Session Token"
+                  },
+                  "profile_name": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The profile to use when creating your session.",
+                    "title": "Profile Name"
+                  },
+                  "region_name": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The AWS Region where you want to create new connections.",
+                    "title": "Region Name"
+                  },
+                  "aws_client_parameters": {
+                    "$ref": "#/definitions/AwsClientParameters",
+                    "description": "Extra parameters to initialize the Client.",
+                    "title": "AWS Client Parameters"
+                  }
+                },
+                "secret_fields": [
+                  "aws_secret_access_key"
+                ],
+                "title": "AwsCredentials",
+                "type": "object"
               },
               "MinIOCredentials": {
-                "title": "MinIOCredentials",
+                "block_schema_references": {},
+                "block_type_slug": "minio-credentials",
                 "description": "Block used to manage authentication with MinIO. Refer to the MinIO docs: https://docs.min.io/docs/minio-server-configuration-guide.html for more info about the possible credential configurations.",
-                "type": "object",
                 "properties": {
                   "minio_root_user": {
-                    "title": "Minio Root User",
                     "description": "Admin or root user.",
+                    "title": "Minio Root User",
                     "type": "string"
                   },
                   "minio_root_password": {
-                    "title": "Minio Root Password",
                     "description": "Admin or root password.",
+                    "format": "password",
+                    "title": "Minio Root Password",
                     "type": "string",
-                    "writeOnly": true,
-                    "format": "password"
+                    "writeOnly": true
                   },
                   "region_name": {
-                    "title": "Region Name",
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
                     "description": "The AWS Region where you want to create new connections.",
-                    "type": "string"
+                    "title": "Region Name"
                   },
                   "aws_client_parameters": {
-                    "title": "Aws Client Parameters",
-                    "description": "Extra parameters to initialize the Client.",
-                    "allOf": [
-                      {
-                        "$ref": "#/definitions/AwsClientParameters"
-                      }
-                    ]
+                    "$ref": "#/definitions/AwsClientParameters",
+                    "description": "Extra parameters to initialize the Client."
                   }
                 },
                 "required": [
                   "minio_root_user",
                   "minio_root_password"
                 ],
-                "block_type_slug": "minio-credentials",
                 "secret_fields": [
                   "minio_root_password"
                 ],
-                "block_schema_references": {}
-              },
-              "AwsCredentials": {
-                "title": "AwsCredentials",
-                "description": "Block used to manage authentication with AWS. AWS authentication is\nhandled via the `boto3` module. Refer to the\n[boto3 docs](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html)\nfor more info about the possible credential configurations.",
-                "type": "object",
-                "properties": {
-                  "aws_access_key_id": {
-                    "title": "AWS Access Key ID",
-                    "description": "A specific AWS access key ID.",
-                    "type": "string"
-                  },
-                  "aws_secret_access_key": {
-                    "title": "AWS Access Key Secret",
-                    "description": "A specific AWS secret access key.",
-                    "type": "string",
-                    "writeOnly": true,
-                    "format": "password"
-                  },
-                  "aws_session_token": {
-                    "title": "AWS Session Token",
-                    "description": "The session key for your AWS account. This is only needed when you are using temporary credentials.",
-                    "type": "string"
-                  },
-                  "profile_name": {
-                    "title": "Profile Name",
-                    "description": "The profile to use when creating your session.",
-                    "type": "string"
-                  },
-                  "region_name": {
-                    "title": "Region Name",
-                    "description": "The AWS Region where you want to create new connections.",
-                    "type": "string"
-                  },
-                  "aws_client_parameters": {
-                    "title": "AWS Client Parameters",
-                    "description": "Extra parameters to initialize the Client.",
-                    "allOf": [
-                      {
-                        "$ref": "#/definitions/AwsClientParameters"
-                      }
-                    ]
-                  }
-                },
-                "block_type_slug": "aws-credentials",
-                "secret_fields": [
-                  "aws_secret_access_key"
-                ],
-                "block_schema_references": {}
+                "title": "MinIOCredentials",
+                "type": "object"
               }
             }
           },
@@ -2244,7 +2291,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "0.4.14"
+          "version": "0.5.16"
         }
       }
     }
