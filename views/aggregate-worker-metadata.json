@@ -806,7 +806,7 @@
           "container_create_kwargs": "{{ container_create_kwargs }}"
         },
         "variables": {
-          "$defs": {
+          "definitions": {
             "DockerRegistryCredentials": {
               "additionalProperties": true,
               "block_schema_references": {},
@@ -914,7 +914,7 @@
             "registry_credentials": {
               "anyOf": [
                 {
-                  "$ref": "#/$defs/DockerRegistryCredentials"
+                  "$ref": "#/definitions/DockerRegistryCredentials"
                 },
                 {
                   "type": "null"
