@@ -1644,7 +1644,7 @@
               "namespace": "{{ namespace }}"
             },
             "spec": {
-              "backoffLimit": 0,
+              "backoffLimit": "{{ backoff_limit }}",
               "template": {
                 "spec": {
                   "completions": 1,
@@ -1768,6 +1768,13 @@
               "title": "Image Pull Policy",
               "type": "string"
             },
+            "backoff_limit": {
+              "default": 0,
+              "description": "The number of times Kubernetes will retry a job after pod eviction. If set to 0, Prefect will reschedule the flow run when the pod is evicted.",
+              "minimum": 0,
+              "title": "Backoff Limit",
+              "type": "integer"
+            },
             "finished_job_ttl": {
               "anyOf": [
                 {
@@ -1827,6 +1834,7 @@
               "description": "Stores configuration for interaction with Kubernetes clusters.\n\nSee `from_file` for creation.",
               "properties": {
                 "config": {
+                  "additionalProperties": true,
                   "description": "The entire contents of a kubectl config file.",
                   "title": "Config",
                   "type": "object"
