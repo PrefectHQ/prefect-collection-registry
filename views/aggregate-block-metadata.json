@@ -6531,28 +6531,36 @@
         "description": "Block used to manage GitHub authentication. This block is part of the prefect-github collection. Install prefect-github with `pip install prefect-github` to use this block.",
         "code_example": "Load stored GitHub credentials:\n```python\nfrom prefect_github import GitHubCredentials\ngithub_credentials_block = GitHubCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:74a34b668838ba661d9160ab127053dd44a22dd04e89562839645791e70d046a",
+          "checksum": "sha256:10cc102efa9f3bd4d727d8a9671f85aeec19a65c7c42eb96499c22ae456dfbb4",
           "fields": {
-            "title": "GitHubCredentials",
+            "block_schema_references": {},
+            "block_type_slug": "github-credentials",
             "description": "Block used to manage GitHub authentication.",
-            "type": "object",
             "properties": {
               "token": {
-                "title": "Token",
+                "anyOf": [
+                  {
+                    "format": "password",
+                    "type": "string",
+                    "writeOnly": true
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "A GitHub personal access token (PAT).",
-                "type": "string",
-                "writeOnly": true,
-                "format": "password"
+                "title": "Token"
               }
             },
-            "block_type_slug": "github-credentials",
             "secret_fields": [
               "token"
             ],
-            "block_schema_references": {}
+            "title": "GitHubCredentials",
+            "type": "object"
           },
           "capabilities": [],
-          "version": "0.2.2"
+          "version": "0.3.1"
         }
       },
       "github-repository": {
@@ -6563,71 +6571,90 @@
         "description": "Interact with files stored on GitHub repositories. This block is part of the prefect-github collection. Install prefect-github with `pip install prefect-github` to use this block.",
         "code_example": "```python\nfrom prefect_github.repository import GitHubRepository\n\ngithub_repository_block = GitHubRepository.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:3d2b2de1cd9336264ccc73f7078264d9053dc956941136516e18050c9953abf0",
+          "checksum": "sha256:57ddaeb7b7f23695cd8ae92cb4d7b1afda25bf2699d73f302f4d8adfb88ccd5c",
           "fields": {
-            "title": "GitHubRepository",
+            "block_schema_references": {
+              "credentials": {
+                "block_schema_checksum": "sha256:10cc102efa9f3bd4d727d8a9671f85aeec19a65c7c42eb96499c22ae456dfbb4",
+                "block_type_slug": "github-credentials"
+              }
+            },
+            "block_type_slug": "github-repository",
             "description": "Interact with files stored on GitHub repositories.",
-            "type": "object",
             "properties": {
               "repository_url": {
-                "title": "Repository URL",
                 "description": "The URL of a GitHub repository to read from, in either HTTPS or SSH format. If you are using a private repo, it must be in the HTTPS format.",
+                "title": "Repository URL",
                 "type": "string"
               },
               "reference": {
-                "title": "Reference",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "An optional reference to pin to; can be a branch name or tag.",
-                "type": "string"
+                "title": "Reference"
               },
               "credentials": {
-                "title": "Credentials",
-                "description": "An optional GitHubCredentials block for using private GitHub repos.",
-                "allOf": [
+                "anyOf": [
                   {
                     "$ref": "#/definitions/GitHubCredentials"
+                  },
+                  {
+                    "type": "null"
                   }
-                ]
+                ],
+                "default": null,
+                "description": "An optional GitHubCredentials block for using private GitHub repos."
               }
             },
             "required": [
               "repository_url"
             ],
-            "block_type_slug": "github-repository",
             "secret_fields": [
               "credentials.token"
             ],
-            "block_schema_references": {
-              "credentials": {
-                "block_type_slug": "github-credentials",
-                "block_schema_checksum": "sha256:74a34b668838ba661d9160ab127053dd44a22dd04e89562839645791e70d046a"
-              }
-            },
+            "title": "GitHubRepository",
+            "type": "object",
             "definitions": {
               "GitHubCredentials": {
-                "title": "GitHubCredentials",
+                "block_schema_references": {},
+                "block_type_slug": "github-credentials",
                 "description": "Block used to manage GitHub authentication.",
-                "type": "object",
                 "properties": {
                   "token": {
-                    "title": "Token",
+                    "anyOf": [
+                      {
+                        "format": "password",
+                        "type": "string",
+                        "writeOnly": true
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
                     "description": "A GitHub personal access token (PAT).",
-                    "type": "string",
-                    "writeOnly": true,
-                    "format": "password"
+                    "title": "Token"
                   }
                 },
-                "block_type_slug": "github-credentials",
                 "secret_fields": [
                   "token"
                 ],
-                "block_schema_references": {}
+                "title": "GitHubCredentials",
+                "type": "object"
               }
             }
           },
           "capabilities": [
             "get-directory"
           ],
-          "version": "0.2.2"
+          "version": "0.3.1"
         }
       }
     }
