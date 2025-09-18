@@ -2854,1633 +2854,36 @@
   },
   "prefect-dbt": {
     "block_types": {
-      "dbt-cli-bigquery-target-configs": {
-        "name": "dbt CLI BigQuery Target Configs",
-        "slug": "dbt-cli-bigquery-target-configs",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/1f4742f3473da5a9fc873430a803bb739e5e48a6-400x400.png",
-        "documentation_url": "https://prefecthq.github.io/prefect-dbt/cli/configs/bigquery/#prefect_dbt.cli.configs.bigquery.BigQueryTargetConfigs",
-        "description": "dbt CLI target configs containing credentials and settings, specific to BigQuery. This block is part of the prefect-dbt collection. Install prefect-dbt with `pip install prefect-dbt` to use this block.",
-        "code_example": "Load stored BigQueryTargetConfigs.\n```python\nfrom prefect_dbt.cli.configs import BigQueryTargetConfigs\n\nbigquery_target_configs = BigQueryTargetConfigs.load(\"BLOCK_NAME\")\n```\n\nInstantiate BigQueryTargetConfigs.\n```python\nfrom prefect_dbt.cli.configs import BigQueryTargetConfigs\nfrom prefect_gcp.credentials import GcpCredentials\n\ncredentials = GcpCredentials.load(\"BLOCK-NAME-PLACEHOLDER\")\ntarget_configs = BigQueryTargetConfigs(\n    schema=\"schema\",  # also known as dataset\n    credentials=credentials,\n)\n```",
-        "block_schema": {
-          "checksum": "sha256:842c5dc7d4d1557eedff36982eafeda7b0803915942f72224a7f627efdbe5ff5",
-          "fields": {
-            "title": "BigQueryTargetConfigs",
-            "description": "dbt CLI target configs containing credentials and settings, specific to BigQuery.",
-            "type": "object",
-            "properties": {
-              "extras": {
-                "title": "Extras",
-                "description": "Extra target configs' keywords, not yet exposed in prefect-dbt, but available in dbt.",
-                "type": "object"
-              },
-              "allow_field_overrides": {
-                "title": "Allow Field Overrides",
-                "description": "If enabled, fields from dbt target configs will override fields provided in extras and credentials.",
-                "default": false,
-                "type": "boolean"
-              },
-              "type": {
-                "title": "Type",
-                "description": "The type of target.",
-                "default": "bigquery",
-                "enum": [
-                  "bigquery"
-                ],
-                "type": "string"
-              },
-              "schema": {
-                "title": "Schema",
-                "description": "The schema that dbt will build objects into; in BigQuery, a schema is actually a dataset.",
-                "type": "string"
-              },
-              "threads": {
-                "title": "Threads",
-                "description": "The number of threads representing the max number of paths through the graph dbt may work on at once.",
-                "default": 4,
-                "type": "integer"
-              },
-              "project": {
-                "title": "Project",
-                "description": "The project to use.",
-                "type": "string"
-              },
-              "credentials": {
-                "title": "Credentials",
-                "description": "The credentials to use to authenticate.",
-                "allOf": [
-                  {
-                    "$ref": "#/definitions/GcpCredentials"
-                  }
-                ]
-              }
-            },
-            "required": [
-              "schema"
-            ],
-            "block_type_slug": "dbt-cli-bigquery-target-configs",
-            "secret_fields": [
-              "credentials.service_account_info.*"
-            ],
-            "block_schema_references": {
-              "credentials": {
-                "block_type_slug": "gcp-credentials",
-                "block_schema_checksum": "sha256:f764f9c506a2bed9e5ed7cc9083d06d95f13c01c8c9a9e45bae5d9b4dc522624"
-              }
-            },
-            "definitions": {
-              "GcpCredentials": {
-                "title": "GcpCredentials",
-                "description": "Block used to manage authentication with GCP. Google authentication is\nhandled via the `google.oauth2` module or through the CLI.\nSpecify either one of service `account_file` or `service_account_info`; if both\nare not specified, the client will try to detect the credentials following Google's\n[Application Default Credentials](https://cloud.google.com/docs/authentication/application-default-credentials).\nSee Google's [Authentication documentation](https://cloud.google.com/docs/authentication#service-accounts)\nfor details on inference and recommended authentication patterns.",
-                "type": "object",
-                "properties": {
-                  "service_account_file": {
-                    "title": "Service Account File",
-                    "description": "Path to the service account JSON keyfile.",
-                    "type": "string",
-                    "format": "path"
-                  },
-                  "service_account_info": {
-                    "title": "Service Account Info",
-                    "description": "The contents of the keyfile as a dict.",
-                    "type": "object"
-                  },
-                  "project": {
-                    "title": "Project",
-                    "description": "The GCP project to use for the client.",
-                    "type": "string"
-                  }
-                },
-                "block_type_slug": "gcp-credentials",
-                "secret_fields": [
-                  "service_account_info.*"
-                ],
-                "block_schema_references": {}
-              }
-            }
-          },
-          "capabilities": [],
-          "version": "0.4.1"
-        }
-      },
-      "dbt-cli-global-configs": {
-        "name": "dbt CLI Global Configs",
-        "slug": "dbt-cli-global-configs",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/1f4742f3473da5a9fc873430a803bb739e5e48a6-400x400.png",
-        "documentation_url": "https://prefecthq.github.io/prefect-dbt/cli/configs/base/#prefect_dbt.cli.configs.base.GlobalConfigs",
-        "description": "Global configs control things like the visual output\nof logs, the manner in which dbt parses your project,\nand what to do when dbt finds a version mismatch\nor a failing model. Docs can be found [here](\nhttps://docs.getdbt.com/reference/global-configs). This block is part of the prefect-dbt collection. Install prefect-dbt with `pip install prefect-dbt` to use this block.",
-        "code_example": "Load stored GlobalConfigs:\n```python\nfrom prefect_dbt.cli.configs import GlobalConfigs\n\ndbt_cli_global_configs = GlobalConfigs.load(\"BLOCK_NAME\")\n```",
-        "block_schema": {
-          "checksum": "sha256:63df9d18a1aafde1cc8330cd49f81f6600b4ce6db92955973bbf341cc86e916d",
-          "fields": {
-            "title": "GlobalConfigs",
-            "description": "Global configs control things like the visual output\nof logs, the manner in which dbt parses your project,\nand what to do when dbt finds a version mismatch\nor a failing model. Docs can be found [here](\nhttps://docs.getdbt.com/reference/global-configs).",
-            "type": "object",
-            "properties": {
-              "extras": {
-                "title": "Extras",
-                "description": "Extra target configs' keywords, not yet exposed in prefect-dbt, but available in dbt.",
-                "type": "object"
-              },
-              "allow_field_overrides": {
-                "title": "Allow Field Overrides",
-                "description": "If enabled, fields from dbt target configs will override fields provided in extras and credentials.",
-                "default": false,
-                "type": "boolean"
-              },
-              "send_anonymous_usage_stats": {
-                "title": "Send Anonymous Usage Stats",
-                "description": "Whether usage stats are sent to dbt.",
-                "type": "boolean"
-              },
-              "use_colors": {
-                "title": "Use Colors",
-                "description": "Colorize the output it prints in your terminal.",
-                "type": "boolean"
-              },
-              "partial_parse": {
-                "title": "Partial Parse",
-                "description": "When partial parsing is enabled, dbt will use an stored internal manifest to determine which files have been changed (if any) since it last parsed the project.",
-                "type": "boolean"
-              },
-              "printer_width": {
-                "title": "Printer Width",
-                "description": "Length of characters before starting a new line.",
-                "type": "integer"
-              },
-              "write_json": {
-                "title": "Write Json",
-                "description": "Determines whether dbt writes JSON artifacts to the target/ directory.",
-                "type": "boolean"
-              },
-              "warn_error": {
-                "title": "Warn Error",
-                "description": "Whether to convert dbt warnings into errors.",
-                "type": "boolean"
-              },
-              "log_format": {
-                "title": "Log Format",
-                "description": "The LOG_FORMAT config specifies how dbt's logs should be formatted. If the value of this config is json, dbt will output fully structured logs in JSON format.",
-                "type": "string"
-              },
-              "debug": {
-                "title": "Debug",
-                "description": "Whether to redirect dbt's debug logs to standard out.",
-                "type": "boolean"
-              },
-              "version_check": {
-                "title": "Version Check",
-                "description": "Whether to raise an error if a project's version is used with an incompatible dbt version.",
-                "type": "boolean"
-              },
-              "fail_fast": {
-                "title": "Fail Fast",
-                "description": "Make dbt exit immediately if a single resource fails to build.",
-                "type": "boolean"
-              },
-              "use_experimental_parser": {
-                "title": "Use Experimental Parser",
-                "description": "Opt into the latest experimental version of the static parser.",
-                "type": "boolean"
-              },
-              "static_parser": {
-                "title": "Static Parser",
-                "description": "Whether to use the [static parser](https://docs.getdbt.com/reference/parsing#static-parser).",
-                "type": "boolean"
-              }
-            },
-            "block_type_slug": "dbt-cli-global-configs",
-            "secret_fields": [],
-            "block_schema_references": {}
-          },
-          "capabilities": [],
-          "version": "0.4.1"
-        }
-      },
-      "dbt-cli-postgres-target-configs": {
-        "name": "dbt CLI Postgres Target Configs",
-        "slug": "dbt-cli-postgres-target-configs",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/1f4742f3473da5a9fc873430a803bb739e5e48a6-400x400.png",
-        "documentation_url": "https://prefecthq.github.io/prefect-dbt/cli/configs/postgres/#prefect_dbt.cli.configs.postgres.PostgresTargetConfigs",
-        "description": "dbt CLI target configs containing credentials and settings specific to Postgres. This block is part of the prefect-dbt collection. Install prefect-dbt with `pip install prefect-dbt` to use this block.",
-        "code_example": "Load stored PostgresTargetConfigs:\n```python\nfrom prefect_dbt.cli.configs import PostgresTargetConfigs\n\npostgres_target_configs = PostgresTargetConfigs.load(\"BLOCK_NAME\")\n```\n\nInstantiate PostgresTargetConfigs with DatabaseCredentials.\n```python\nfrom prefect_dbt.cli.configs import PostgresTargetConfigs\nfrom prefect_sqlalchemy import DatabaseCredentials, SyncDriver\n\ncredentials = DatabaseCredentials(\n    driver=SyncDriver.POSTGRESQL_PSYCOPG2,\n    username=\"prefect\",\n    password=\"prefect_password\",\n    database=\"postgres\",\n    host=\"host\",\n    port=8080\n)\ntarget_configs = PostgresTargetConfigs(credentials=credentials, schema=\"schema\")\n```",
-        "block_schema": {
-          "checksum": "sha256:1552a2d5c102961df4082329f39c10b8a51e26ee687148efd6d71ce8be8850c0",
-          "fields": {
-            "title": "PostgresTargetConfigs",
-            "description": "dbt CLI target configs containing credentials and settings specific to Postgres.",
-            "type": "object",
-            "properties": {
-              "extras": {
-                "title": "Extras",
-                "description": "Extra target configs' keywords, not yet exposed in prefect-dbt, but available in dbt.",
-                "type": "object"
-              },
-              "allow_field_overrides": {
-                "title": "Allow Field Overrides",
-                "description": "If enabled, fields from dbt target configs will override fields provided in extras and credentials.",
-                "default": false,
-                "type": "boolean"
-              },
-              "type": {
-                "title": "Type",
-                "description": "The type of the target.",
-                "default": "postgres",
-                "enum": [
-                  "postgres"
-                ],
-                "type": "string"
-              },
-              "schema": {
-                "title": "Schema",
-                "description": "The schema that dbt will build objects into; in BigQuery, a schema is actually a dataset.",
-                "type": "string"
-              },
-              "threads": {
-                "title": "Threads",
-                "description": "The number of threads representing the max number of paths through the graph dbt may work on at once.",
-                "default": 4,
-                "type": "integer"
-              },
-              "credentials": {
-                "title": "Credentials",
-                "description": "The credentials to use to authenticate; if there are duplicate keys between credentials and TargetConfigs, e.g. schema, an error will be raised.",
-                "anyOf": [
-                  {
-                    "$ref": "#/definitions/SqlAlchemyConnector"
-                  },
-                  {
-                    "$ref": "#/definitions/DatabaseCredentials"
-                  }
-                ]
-              }
-            },
-            "required": [
-              "schema",
-              "credentials"
-            ],
-            "block_type_slug": "dbt-cli-postgres-target-configs",
-            "secret_fields": [
-              "credentials.connection_info.password",
-              "credentials.password"
-            ],
-            "block_schema_references": {
-              "credentials": [
-                {
-                  "block_type_slug": "sqlalchemy-connector",
-                  "block_schema_checksum": "sha256:01e6c0bdaac125860811b201f5a5e98ffefd5f8a49f1398b6996aec362643acc"
-                },
-                {
-                  "block_type_slug": "database-credentials",
-                  "block_schema_checksum": "sha256:76d1ccbf0ab2038fea77e9689b91a7c8b6398e080e95d9303f65a93a4c03162e"
-                }
-              ]
-            },
-            "definitions": {
-              "AsyncDriver": {
-                "title": "AsyncDriver",
-                "description": "Known dialects with their corresponding async drivers.\n\nAttributes:\n    POSTGRESQL_ASYNCPG (Enum): [postgresql+asyncpg](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.asyncpg)\n\n    SQLITE_AIOSQLITE (Enum): [sqlite+aiosqlite](https://docs.sqlalchemy.org/en/14/dialects/sqlite.html#module-sqlalchemy.dialects.sqlite.aiosqlite)\n\n    MYSQL_ASYNCMY (Enum): [mysql+asyncmy](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.asyncmy)\n    MYSQL_AIOMYSQL (Enum): [mysql+aiomysql](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.aiomysql)",
-                "enum": [
-                  "postgresql+asyncpg",
-                  "sqlite+aiosqlite",
-                  "mysql+asyncmy",
-                  "mysql+aiomysql"
-                ]
-              },
-              "SyncDriver": {
-                "title": "SyncDriver",
-                "description": "Known dialects with their corresponding sync drivers.\n\nAttributes:\n    POSTGRESQL_PSYCOPG2 (Enum): [postgresql+psycopg2](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.psycopg2)\n    POSTGRESQL_PG8000 (Enum): [postgresql+pg8000](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.pg8000)\n    POSTGRESQL_PSYCOPG2CFFI (Enum): [postgresql+psycopg2cffi](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.psycopg2cffi)\n    POSTGRESQL_PYPOSTGRESQL (Enum): [postgresql+pypostgresql](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.pypostgresql)\n    POSTGRESQL_PYGRESQL (Enum): [postgresql+pygresql](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.pygresql)\n\n    MYSQL_MYSQLDB (Enum): [mysql+mysqldb](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.mysqldb)\n    MYSQL_PYMYSQL (Enum): [mysql+pymysql](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.pymysql)\n    MYSQL_MYSQLCONNECTOR (Enum): [mysql+mysqlconnector](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.mysqlconnector)\n    MYSQL_CYMYSQL (Enum): [mysql+cymysql](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.cymysql)\n    MYSQL_OURSQL (Enum): [mysql+oursql](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.oursql)\n    MYSQL_PYODBC (Enum): [mysql+pyodbc](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.pyodbc)\n\n    SQLITE_PYSQLITE (Enum): [sqlite+pysqlite](https://docs.sqlalchemy.org/en/14/dialects/sqlite.html#module-sqlalchemy.dialects.sqlite.pysqlite)\n    SQLITE_PYSQLCIPHER (Enum): [sqlite+pysqlcipher](https://docs.sqlalchemy.org/en/14/dialects/sqlite.html#module-sqlalchemy.dialects.sqlite.pysqlcipher)\n\n    ORACLE_CX_ORACLE (Enum): [oracle+cx_oracle](https://docs.sqlalchemy.org/en/14/dialects/oracle.html#module-sqlalchemy.dialects.oracle.cx_oracle)\n\n    MSSQL_PYODBC (Enum): [mssql+pyodbc](https://docs.sqlalchemy.org/en/14/dialects/mssql.html#module-sqlalchemy.dialects.mssql.pyodbc)\n    MSSQL_MXODBC (Enum): [mssql+mxodbc](https://docs.sqlalchemy.org/en/14/dialects/mssql.html#module-sqlalchemy.dialects.mssql.mxodbc)\n    MSSQL_PYMSSQL (Enum): [mssql+pymssql](https://docs.sqlalchemy.org/en/14/dialects/mssql.html#module-sqlalchemy.dialects.mssql.pymssql)",
-                "enum": [
-                  "postgresql+psycopg2",
-                  "postgresql+pg8000",
-                  "postgresql+psycopg2cffi",
-                  "postgresql+pypostgresql",
-                  "postgresql+pygresql",
-                  "mysql+mysqldb",
-                  "mysql+pymysql",
-                  "mysql+mysqlconnector",
-                  "mysql+cymysql",
-                  "mysql+oursql",
-                  "mysql+pyodbc",
-                  "sqlite+pysqlite",
-                  "sqlite+pysqlcipher",
-                  "oracle+cx_oracle",
-                  "mssql+pyodbc",
-                  "mssql+mxodbc",
-                  "mssql+pymssql"
-                ]
-              },
-              "ConnectionComponents": {
-                "title": "ConnectionComponents",
-                "description": "Parameters to use to create a SQLAlchemy engine URL.\n\nAttributes:\n    driver: The driver name to use.\n    database: The name of the database to use.\n    username: The user name used to authenticate.\n    password: The password used to authenticate.\n    host: The host address of the database.\n    port: The port to connect to the database.\n    query: A dictionary of string keys to string values to be passed to the dialect\n        and/or the DBAPI upon connect.",
-                "type": "object",
-                "properties": {
-                  "driver": {
-                    "title": "Driver",
-                    "description": "The driver name to use.",
-                    "anyOf": [
-                      {
-                        "$ref": "#/definitions/AsyncDriver"
-                      },
-                      {
-                        "$ref": "#/definitions/SyncDriver"
-                      },
-                      {
-                        "type": "string"
-                      }
-                    ]
-                  },
-                  "database": {
-                    "title": "Database",
-                    "description": "The name of the database to use.",
-                    "type": "string"
-                  },
-                  "username": {
-                    "title": "Username",
-                    "description": "The user name used to authenticate.",
-                    "type": "string"
-                  },
-                  "password": {
-                    "title": "Password",
-                    "description": "The password used to authenticate.",
-                    "type": "string",
-                    "writeOnly": true,
-                    "format": "password"
-                  },
-                  "host": {
-                    "title": "Host",
-                    "description": "The host address of the database.",
-                    "type": "string"
-                  },
-                  "port": {
-                    "title": "Port",
-                    "description": "The port to connect to the database.",
-                    "type": "string"
-                  },
-                  "query": {
-                    "title": "Query",
-                    "description": "A dictionary of string keys to string values to be passed to the dialect and/or the DBAPI upon connect. To specify non-string parameters to a Python DBAPI directly, use connect_args.",
-                    "type": "object",
-                    "additionalProperties": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "required": [
-                  "driver",
-                  "database"
-                ]
-              },
-              "SqlAlchemyConnector": {
-                "title": "SqlAlchemyConnector",
-                "description": "Block used to manage authentication with a database.\n\nUpon instantiating, an engine is created and maintained for the life of\nthe object until the close method is called.\n\nIt is recommended to use this block as a context manager, which will automatically\nclose the engine and its connections when the context is exited.\n\nIt is also recommended that this block is loaded and consumed within a single task\nor flow because if the block is passed across separate tasks and flows,\nthe state of the block's connection and cursor could be lost.",
-                "type": "object",
-                "properties": {
-                  "connection_info": {
-                    "title": "Connection Info",
-                    "description": "SQLAlchemy URL to create the engine; either create from components or create from a string.",
-                    "anyOf": [
-                      {
-                        "$ref": "#/definitions/ConnectionComponents"
-                      },
-                      {
-                        "type": "string",
-                        "minLength": 1,
-                        "maxLength": 65536,
-                        "format": "uri"
-                      }
-                    ]
-                  },
-                  "connect_args": {
-                    "title": "Additional Connection Arguments",
-                    "description": "The options which will be passed directly to the DBAPI's connect() method as additional keyword arguments.",
-                    "type": "object"
-                  },
-                  "fetch_size": {
-                    "title": "Fetch Size",
-                    "description": "The number of rows to fetch at a time.",
-                    "default": 1,
-                    "type": "integer"
-                  }
-                },
-                "required": [
-                  "connection_info"
-                ],
-                "block_type_slug": "sqlalchemy-connector",
-                "secret_fields": [
-                  "connection_info.password"
-                ],
-                "block_schema_references": {}
-              },
-              "DatabaseCredentials": {
-                "title": "DatabaseCredentials",
-                "description": "Block used to manage authentication with a database.",
-                "type": "object",
-                "properties": {
-                  "driver": {
-                    "title": "Driver",
-                    "description": "The driver name to use.",
-                    "anyOf": [
-                      {
-                        "$ref": "#/definitions/AsyncDriver"
-                      },
-                      {
-                        "$ref": "#/definitions/SyncDriver"
-                      },
-                      {
-                        "type": "string"
-                      }
-                    ]
-                  },
-                  "username": {
-                    "title": "Username",
-                    "description": "The user name used to authenticate.",
-                    "type": "string"
-                  },
-                  "password": {
-                    "title": "Password",
-                    "description": "The password used to authenticate.",
-                    "type": "string",
-                    "writeOnly": true,
-                    "format": "password"
-                  },
-                  "database": {
-                    "title": "Database",
-                    "description": "The name of the database to use.",
-                    "type": "string"
-                  },
-                  "host": {
-                    "title": "Host",
-                    "description": "The host address of the database.",
-                    "type": "string"
-                  },
-                  "port": {
-                    "title": "Port",
-                    "description": "The port to connect to the database.",
-                    "type": "string"
-                  },
-                  "query": {
-                    "title": "Query",
-                    "description": "A dictionary of string keys to string values to be passed to the dialect and/or the DBAPI upon connect. To specify non-string parameters to a Python DBAPI directly, use connect_args.",
-                    "type": "object",
-                    "additionalProperties": {
-                      "type": "string"
-                    }
-                  },
-                  "url": {
-                    "title": "Url",
-                    "description": "Manually create and provide a URL to create the engine, this is useful for external dialects, e.g. Snowflake, because some of the params, such as 'warehouse', is not directly supported in the vanilla `sqlalchemy.engine.URL.create` method; do not provide this alongside with other URL params as it will raise a `ValueError`.",
-                    "minLength": 1,
-                    "maxLength": 65536,
-                    "format": "uri",
-                    "type": "string"
-                  },
-                  "connect_args": {
-                    "title": "Connect Args",
-                    "description": "The options which will be passed directly to the DBAPI's connect() method as additional keyword arguments.",
-                    "type": "object"
-                  }
-                },
-                "block_type_slug": "database-credentials",
-                "secret_fields": [
-                  "password"
-                ],
-                "block_schema_references": {}
-              }
-            }
-          },
-          "capabilities": [],
-          "version": "0.4.1"
-        }
-      },
-      "dbt-cli-profile": {
-        "name": "dbt CLI Profile",
-        "slug": "dbt-cli-profile",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/1f4742f3473da5a9fc873430a803bb739e5e48a6-400x400.png",
-        "documentation_url": "https://prefecthq.github.io/prefect-dbt/cli/credentials/#prefect_dbt.cli.credentials.DbtCliProfile",
-        "description": "Profile for use across dbt CLI tasks and flows. This block is part of the prefect-dbt collection. Install prefect-dbt with `pip install prefect-dbt` to use this block.",
-        "code_example": "Load stored dbt CLI profile:\n```python\nfrom prefect_dbt.cli import DbtCliProfile\ndbt_cli_profile = DbtCliProfile.load(\"BLOCK_NAME\").get_profile()\n```\n\nGet a dbt Snowflake profile from DbtCliProfile by using SnowflakeTargetConfigs:\n```python\nfrom prefect_dbt.cli import DbtCliProfile\nfrom prefect_dbt.cli.configs import SnowflakeTargetConfigs\nfrom prefect_snowflake.credentials import SnowflakeCredentials\nfrom prefect_snowflake.database import SnowflakeConnector\n\ncredentials = SnowflakeCredentials(\n    user=\"user\",\n    password=\"password\",\n    account=\"account.region.aws\",\n    role=\"role\",\n)\nconnector = SnowflakeConnector(\n    schema=\"public\",\n    database=\"database\",\n    warehouse=\"warehouse\",\n    credentials=credentials,\n)\ntarget_configs = SnowflakeTargetConfigs(\n    connector=connector\n)\ndbt_cli_profile = DbtCliProfile(\n    name=\"jaffle_shop\",\n    target=\"dev\",\n    target_configs=target_configs,\n)\nprofile = dbt_cli_profile.get_profile()\n```\n\nGet a dbt Redshift profile from DbtCliProfile by using generic TargetConfigs:\n```python\nfrom prefect_dbt.cli import DbtCliProfile\nfrom prefect_dbt.cli.configs import GlobalConfigs, TargetConfigs\n\ntarget_configs_extras = dict(\n    host=\"hostname.region.redshift.amazonaws.com\",\n    user=\"username\",\n    password=\"password1\",\n    port=5439,\n    dbname=\"analytics\",\n)\ntarget_configs = TargetConfigs(\n    type=\"redshift\",\n    schema=\"schema\",\n    threads=4,\n    extras=target_configs_extras\n)\ndbt_cli_profile = DbtCliProfile(\n    name=\"jaffle_shop\",\n    target=\"dev\",\n    target_configs=target_configs,\n)\nprofile = dbt_cli_profile.get_profile()\n```",
-        "block_schema": {
-          "checksum": "sha256:f55b0f96cb9e1cf2f508bb882b25d9246b351be8b0ad18140a73281674a40d6d",
-          "fields": {
-            "title": "DbtCliProfile",
-            "description": "Profile for use across dbt CLI tasks and flows.",
-            "type": "object",
-            "properties": {
-              "name": {
-                "title": "Name",
-                "description": "Profile name used for populating profiles.yml.",
-                "type": "string"
-              },
-              "target": {
-                "title": "Target",
-                "description": "The default target your dbt project will use.",
-                "type": "string"
-              },
-              "target_configs": {
-                "title": "Target Configs",
-                "description": "Target configs contain credentials and settings, specific to the warehouse you're connecting to.",
-                "anyOf": [
-                  {
-                    "$ref": "#/definitions/SnowflakeTargetConfigs"
-                  },
-                  {
-                    "$ref": "#/definitions/BigQueryTargetConfigs"
-                  },
-                  {
-                    "$ref": "#/definitions/PostgresTargetConfigs"
-                  },
-                  {
-                    "$ref": "#/definitions/TargetConfigs"
-                  }
-                ]
-              },
-              "global_configs": {
-                "title": "Global Configs",
-                "description": "Global configs control things like the visual output of logs, the manner in which dbt parses your project, and what to do when dbt finds a version mismatch or a failing model.",
-                "allOf": [
-                  {
-                    "$ref": "#/definitions/GlobalConfigs"
-                  }
-                ]
-              }
-            },
-            "required": [
-              "name",
-              "target",
-              "target_configs"
-            ],
-            "block_type_slug": "dbt-cli-profile",
-            "secret_fields": [
-              "target_configs.connector.credentials.password",
-              "target_configs.connector.credentials.private_key",
-              "target_configs.connector.credentials.private_key_passphrase",
-              "target_configs.connector.credentials.token",
-              "target_configs.credentials.service_account_info.*",
-              "target_configs.credentials.connection_info.password",
-              "target_configs.credentials.password"
-            ],
-            "block_schema_references": {
-              "target_configs": [
-                {
-                  "block_type_slug": "dbt-cli-snowflake-target-configs",
-                  "block_schema_checksum": "sha256:1e5be296bb63d7e2b04f0e9b99543db12521af269399d10e2bc290da4244a575"
-                },
-                {
-                  "block_type_slug": "dbt-cli-bigquery-target-configs",
-                  "block_schema_checksum": "sha256:842c5dc7d4d1557eedff36982eafeda7b0803915942f72224a7f627efdbe5ff5"
-                },
-                {
-                  "block_type_slug": "dbt-cli-postgres-target-configs",
-                  "block_schema_checksum": "sha256:1552a2d5c102961df4082329f39c10b8a51e26ee687148efd6d71ce8be8850c0"
-                },
-                {
-                  "block_type_slug": "dbt-cli-target-configs",
-                  "block_schema_checksum": "sha256:85f7476977e725617af89930889b843147320b2df37df911e24806dd6dacc870"
-                }
-              ],
-              "global_configs": {
-                "block_type_slug": "dbt-cli-global-configs",
-                "block_schema_checksum": "sha256:63df9d18a1aafde1cc8330cd49f81f6600b4ce6db92955973bbf341cc86e916d"
-              }
-            },
-            "definitions": {
-              "SnowflakeCredentials": {
-                "title": "SnowflakeCredentials",
-                "description": "Block used to manage authentication with Snowflake.",
-                "type": "object",
-                "properties": {
-                  "account": {
-                    "title": "Account",
-                    "description": "The snowflake account name.",
-                    "example": "nh12345.us-east-2.aws",
-                    "type": "string"
-                  },
-                  "user": {
-                    "title": "User",
-                    "description": "The user name used to authenticate.",
-                    "type": "string"
-                  },
-                  "password": {
-                    "title": "Password",
-                    "description": "The password used to authenticate.",
-                    "type": "string",
-                    "writeOnly": true,
-                    "format": "password"
-                  },
-                  "private_key": {
-                    "title": "Private Key",
-                    "description": "The PEM used to authenticate.",
-                    "type": "string",
-                    "writeOnly": true,
-                    "format": "password"
-                  },
-                  "private_key_path": {
-                    "title": "Private Key Path",
-                    "description": "The path to the private key.",
-                    "type": "string",
-                    "format": "path"
-                  },
-                  "private_key_passphrase": {
-                    "title": "Private Key Passphrase",
-                    "description": "The password to use for the private key.",
-                    "type": "string",
-                    "writeOnly": true,
-                    "format": "password"
-                  },
-                  "authenticator": {
-                    "title": "Authenticator",
-                    "description": "The type of authenticator to use for initializing connection.",
-                    "default": "snowflake",
-                    "enum": [
-                      "snowflake",
-                      "snowflake_jwt",
-                      "externalbrowser",
-                      "okta_endpoint",
-                      "oauth",
-                      "username_password_mfa"
-                    ],
-                    "type": "string"
-                  },
-                  "token": {
-                    "title": "Token",
-                    "description": "The OAuth or JWT Token to provide when authenticator is set to `oauth`.",
-                    "type": "string",
-                    "writeOnly": true,
-                    "format": "password"
-                  },
-                  "endpoint": {
-                    "title": "Endpoint",
-                    "description": "The Okta endpoint to use when authenticator is set to `okta_endpoint`.",
-                    "type": "string"
-                  },
-                  "role": {
-                    "title": "Role",
-                    "description": "The name of the default role to use.",
-                    "type": "string"
-                  },
-                  "autocommit": {
-                    "title": "Autocommit",
-                    "description": "Whether to automatically commit.",
-                    "type": "boolean"
-                  }
-                },
-                "required": [
-                  "account",
-                  "user"
-                ],
-                "block_type_slug": "snowflake-credentials",
-                "secret_fields": [
-                  "password",
-                  "private_key",
-                  "private_key_passphrase",
-                  "token"
-                ],
-                "block_schema_references": {}
-              },
-              "SnowflakeConnector": {
-                "title": "SnowflakeConnector",
-                "description": "Perform data operations against a Snowflake database.",
-                "type": "object",
-                "properties": {
-                  "credentials": {
-                    "title": "Credentials",
-                    "description": "The credentials to authenticate with Snowflake.",
-                    "allOf": [
-                      {
-                        "$ref": "#/definitions/SnowflakeCredentials"
-                      }
-                    ]
-                  },
-                  "database": {
-                    "title": "Database",
-                    "description": "The name of the default database to use.",
-                    "type": "string"
-                  },
-                  "warehouse": {
-                    "title": "Warehouse",
-                    "description": "The name of the default warehouse to use.",
-                    "type": "string"
-                  },
-                  "schema": {
-                    "title": "Schema",
-                    "description": "The name of the default schema to use.",
-                    "type": "string"
-                  },
-                  "fetch_size": {
-                    "title": "Fetch Size",
-                    "description": "The default number of rows to fetch at a time.",
-                    "default": 1,
-                    "type": "integer"
-                  },
-                  "poll_frequency_s": {
-                    "title": "Poll Frequency [seconds]",
-                    "description": "The number of seconds between checking query status for long running queries.",
-                    "default": 1,
-                    "type": "integer"
-                  }
-                },
-                "required": [
-                  "credentials",
-                  "database",
-                  "warehouse",
-                  "schema"
-                ],
-                "block_type_slug": "snowflake-connector",
-                "secret_fields": [
-                  "credentials.password",
-                  "credentials.private_key",
-                  "credentials.private_key_passphrase",
-                  "credentials.token"
-                ],
-                "block_schema_references": {
-                  "credentials": {
-                    "block_type_slug": "snowflake-credentials",
-                    "block_schema_checksum": "sha256:b24edfb413527c951cb2a8b4b4c16aec096523f871d941889e29ac2e6e92e036"
-                  }
-                }
-              },
-              "SnowflakeTargetConfigs": {
-                "title": "SnowflakeTargetConfigs",
-                "description": "Target configs contain credentials and\nsettings, specific to Snowflake.\nTo find valid keys, head to the [Snowflake Profile](\nhttps://docs.getdbt.com/reference/warehouse-profiles/snowflake-profile)\npage.",
-                "type": "object",
-                "properties": {
-                  "extras": {
-                    "title": "Extras",
-                    "description": "Extra target configs' keywords, not yet exposed in prefect-dbt, but available in dbt.",
-                    "type": "object"
-                  },
-                  "allow_field_overrides": {
-                    "title": "Allow Field Overrides",
-                    "description": "If enabled, fields from dbt target configs will override fields provided in extras and credentials.",
-                    "default": false,
-                    "type": "boolean"
-                  },
-                  "type": {
-                    "title": "Type",
-                    "description": "The type of the target configs.",
-                    "default": "snowflake",
-                    "enum": [
-                      "snowflake"
-                    ],
-                    "type": "string"
-                  },
-                  "schema": {
-                    "title": "Schema",
-                    "description": "The schema to use for the target configs.",
-                    "type": "string"
-                  },
-                  "threads": {
-                    "title": "Threads",
-                    "description": "The number of threads representing the max number of paths through the graph dbt may work on at once.",
-                    "default": 4,
-                    "type": "integer"
-                  },
-                  "connector": {
-                    "title": "Connector",
-                    "description": "The connector to use.",
-                    "allOf": [
-                      {
-                        "$ref": "#/definitions/SnowflakeConnector"
-                      }
-                    ]
-                  }
-                },
-                "required": [
-                  "connector"
-                ],
-                "block_type_slug": "dbt-cli-snowflake-target-configs",
-                "secret_fields": [
-                  "connector.credentials.password",
-                  "connector.credentials.private_key",
-                  "connector.credentials.private_key_passphrase",
-                  "connector.credentials.token"
-                ],
-                "block_schema_references": {
-                  "connector": {
-                    "block_type_slug": "snowflake-connector",
-                    "block_schema_checksum": "sha256:dd0d36d69bbe0d44870fd754f3c00754e37e3f52209590083eaee4c585ce0bd0"
-                  }
-                }
-              },
-              "GcpCredentials": {
-                "title": "GcpCredentials",
-                "description": "Block used to manage authentication with GCP. Google authentication is\nhandled via the `google.oauth2` module or through the CLI.\nSpecify either one of service `account_file` or `service_account_info`; if both\nare not specified, the client will try to detect the credentials following Google's\n[Application Default Credentials](https://cloud.google.com/docs/authentication/application-default-credentials).\nSee Google's [Authentication documentation](https://cloud.google.com/docs/authentication#service-accounts)\nfor details on inference and recommended authentication patterns.",
-                "type": "object",
-                "properties": {
-                  "service_account_file": {
-                    "title": "Service Account File",
-                    "description": "Path to the service account JSON keyfile.",
-                    "type": "string",
-                    "format": "path"
-                  },
-                  "service_account_info": {
-                    "title": "Service Account Info",
-                    "description": "The contents of the keyfile as a dict.",
-                    "type": "object"
-                  },
-                  "project": {
-                    "title": "Project",
-                    "description": "The GCP project to use for the client.",
-                    "type": "string"
-                  }
-                },
-                "block_type_slug": "gcp-credentials",
-                "secret_fields": [
-                  "service_account_info.*"
-                ],
-                "block_schema_references": {}
-              },
-              "BigQueryTargetConfigs": {
-                "title": "BigQueryTargetConfigs",
-                "description": "dbt CLI target configs containing credentials and settings, specific to BigQuery.",
-                "type": "object",
-                "properties": {
-                  "extras": {
-                    "title": "Extras",
-                    "description": "Extra target configs' keywords, not yet exposed in prefect-dbt, but available in dbt.",
-                    "type": "object"
-                  },
-                  "allow_field_overrides": {
-                    "title": "Allow Field Overrides",
-                    "description": "If enabled, fields from dbt target configs will override fields provided in extras and credentials.",
-                    "default": false,
-                    "type": "boolean"
-                  },
-                  "type": {
-                    "title": "Type",
-                    "description": "The type of target.",
-                    "default": "bigquery",
-                    "enum": [
-                      "bigquery"
-                    ],
-                    "type": "string"
-                  },
-                  "schema": {
-                    "title": "Schema",
-                    "description": "The schema that dbt will build objects into; in BigQuery, a schema is actually a dataset.",
-                    "type": "string"
-                  },
-                  "threads": {
-                    "title": "Threads",
-                    "description": "The number of threads representing the max number of paths through the graph dbt may work on at once.",
-                    "default": 4,
-                    "type": "integer"
-                  },
-                  "project": {
-                    "title": "Project",
-                    "description": "The project to use.",
-                    "type": "string"
-                  },
-                  "credentials": {
-                    "title": "Credentials",
-                    "description": "The credentials to use to authenticate.",
-                    "allOf": [
-                      {
-                        "$ref": "#/definitions/GcpCredentials"
-                      }
-                    ]
-                  }
-                },
-                "required": [
-                  "schema"
-                ],
-                "block_type_slug": "dbt-cli-bigquery-target-configs",
-                "secret_fields": [
-                  "credentials.service_account_info.*"
-                ],
-                "block_schema_references": {
-                  "credentials": {
-                    "block_type_slug": "gcp-credentials",
-                    "block_schema_checksum": "sha256:f764f9c506a2bed9e5ed7cc9083d06d95f13c01c8c9a9e45bae5d9b4dc522624"
-                  }
-                }
-              },
-              "AsyncDriver": {
-                "title": "AsyncDriver",
-                "description": "Known dialects with their corresponding async drivers.\n\nAttributes:\n    POSTGRESQL_ASYNCPG (Enum): [postgresql+asyncpg](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.asyncpg)\n\n    SQLITE_AIOSQLITE (Enum): [sqlite+aiosqlite](https://docs.sqlalchemy.org/en/14/dialects/sqlite.html#module-sqlalchemy.dialects.sqlite.aiosqlite)\n\n    MYSQL_ASYNCMY (Enum): [mysql+asyncmy](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.asyncmy)\n    MYSQL_AIOMYSQL (Enum): [mysql+aiomysql](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.aiomysql)",
-                "enum": [
-                  "postgresql+asyncpg",
-                  "sqlite+aiosqlite",
-                  "mysql+asyncmy",
-                  "mysql+aiomysql"
-                ]
-              },
-              "SyncDriver": {
-                "title": "SyncDriver",
-                "description": "Known dialects with their corresponding sync drivers.\n\nAttributes:\n    POSTGRESQL_PSYCOPG2 (Enum): [postgresql+psycopg2](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.psycopg2)\n    POSTGRESQL_PG8000 (Enum): [postgresql+pg8000](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.pg8000)\n    POSTGRESQL_PSYCOPG2CFFI (Enum): [postgresql+psycopg2cffi](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.psycopg2cffi)\n    POSTGRESQL_PYPOSTGRESQL (Enum): [postgresql+pypostgresql](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.pypostgresql)\n    POSTGRESQL_PYGRESQL (Enum): [postgresql+pygresql](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.pygresql)\n\n    MYSQL_MYSQLDB (Enum): [mysql+mysqldb](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.mysqldb)\n    MYSQL_PYMYSQL (Enum): [mysql+pymysql](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.pymysql)\n    MYSQL_MYSQLCONNECTOR (Enum): [mysql+mysqlconnector](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.mysqlconnector)\n    MYSQL_CYMYSQL (Enum): [mysql+cymysql](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.cymysql)\n    MYSQL_OURSQL (Enum): [mysql+oursql](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.oursql)\n    MYSQL_PYODBC (Enum): [mysql+pyodbc](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.pyodbc)\n\n    SQLITE_PYSQLITE (Enum): [sqlite+pysqlite](https://docs.sqlalchemy.org/en/14/dialects/sqlite.html#module-sqlalchemy.dialects.sqlite.pysqlite)\n    SQLITE_PYSQLCIPHER (Enum): [sqlite+pysqlcipher](https://docs.sqlalchemy.org/en/14/dialects/sqlite.html#module-sqlalchemy.dialects.sqlite.pysqlcipher)\n\n    ORACLE_CX_ORACLE (Enum): [oracle+cx_oracle](https://docs.sqlalchemy.org/en/14/dialects/oracle.html#module-sqlalchemy.dialects.oracle.cx_oracle)\n\n    MSSQL_PYODBC (Enum): [mssql+pyodbc](https://docs.sqlalchemy.org/en/14/dialects/mssql.html#module-sqlalchemy.dialects.mssql.pyodbc)\n    MSSQL_MXODBC (Enum): [mssql+mxodbc](https://docs.sqlalchemy.org/en/14/dialects/mssql.html#module-sqlalchemy.dialects.mssql.mxodbc)\n    MSSQL_PYMSSQL (Enum): [mssql+pymssql](https://docs.sqlalchemy.org/en/14/dialects/mssql.html#module-sqlalchemy.dialects.mssql.pymssql)",
-                "enum": [
-                  "postgresql+psycopg2",
-                  "postgresql+pg8000",
-                  "postgresql+psycopg2cffi",
-                  "postgresql+pypostgresql",
-                  "postgresql+pygresql",
-                  "mysql+mysqldb",
-                  "mysql+pymysql",
-                  "mysql+mysqlconnector",
-                  "mysql+cymysql",
-                  "mysql+oursql",
-                  "mysql+pyodbc",
-                  "sqlite+pysqlite",
-                  "sqlite+pysqlcipher",
-                  "oracle+cx_oracle",
-                  "mssql+pyodbc",
-                  "mssql+mxodbc",
-                  "mssql+pymssql"
-                ]
-              },
-              "ConnectionComponents": {
-                "title": "ConnectionComponents",
-                "description": "Parameters to use to create a SQLAlchemy engine URL.\n\nAttributes:\n    driver: The driver name to use.\n    database: The name of the database to use.\n    username: The user name used to authenticate.\n    password: The password used to authenticate.\n    host: The host address of the database.\n    port: The port to connect to the database.\n    query: A dictionary of string keys to string values to be passed to the dialect\n        and/or the DBAPI upon connect.",
-                "type": "object",
-                "properties": {
-                  "driver": {
-                    "title": "Driver",
-                    "description": "The driver name to use.",
-                    "anyOf": [
-                      {
-                        "$ref": "#/definitions/AsyncDriver"
-                      },
-                      {
-                        "$ref": "#/definitions/SyncDriver"
-                      },
-                      {
-                        "type": "string"
-                      }
-                    ]
-                  },
-                  "database": {
-                    "title": "Database",
-                    "description": "The name of the database to use.",
-                    "type": "string"
-                  },
-                  "username": {
-                    "title": "Username",
-                    "description": "The user name used to authenticate.",
-                    "type": "string"
-                  },
-                  "password": {
-                    "title": "Password",
-                    "description": "The password used to authenticate.",
-                    "type": "string",
-                    "writeOnly": true,
-                    "format": "password"
-                  },
-                  "host": {
-                    "title": "Host",
-                    "description": "The host address of the database.",
-                    "type": "string"
-                  },
-                  "port": {
-                    "title": "Port",
-                    "description": "The port to connect to the database.",
-                    "type": "string"
-                  },
-                  "query": {
-                    "title": "Query",
-                    "description": "A dictionary of string keys to string values to be passed to the dialect and/or the DBAPI upon connect. To specify non-string parameters to a Python DBAPI directly, use connect_args.",
-                    "type": "object",
-                    "additionalProperties": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "required": [
-                  "driver",
-                  "database"
-                ]
-              },
-              "SqlAlchemyConnector": {
-                "title": "SqlAlchemyConnector",
-                "description": "Block used to manage authentication with a database.\n\nUpon instantiating, an engine is created and maintained for the life of\nthe object until the close method is called.\n\nIt is recommended to use this block as a context manager, which will automatically\nclose the engine and its connections when the context is exited.\n\nIt is also recommended that this block is loaded and consumed within a single task\nor flow because if the block is passed across separate tasks and flows,\nthe state of the block's connection and cursor could be lost.",
-                "type": "object",
-                "properties": {
-                  "connection_info": {
-                    "title": "Connection Info",
-                    "description": "SQLAlchemy URL to create the engine; either create from components or create from a string.",
-                    "anyOf": [
-                      {
-                        "$ref": "#/definitions/ConnectionComponents"
-                      },
-                      {
-                        "type": "string",
-                        "minLength": 1,
-                        "maxLength": 65536,
-                        "format": "uri"
-                      }
-                    ]
-                  },
-                  "connect_args": {
-                    "title": "Additional Connection Arguments",
-                    "description": "The options which will be passed directly to the DBAPI's connect() method as additional keyword arguments.",
-                    "type": "object"
-                  },
-                  "fetch_size": {
-                    "title": "Fetch Size",
-                    "description": "The number of rows to fetch at a time.",
-                    "default": 1,
-                    "type": "integer"
-                  }
-                },
-                "required": [
-                  "connection_info"
-                ],
-                "block_type_slug": "sqlalchemy-connector",
-                "secret_fields": [
-                  "connection_info.password"
-                ],
-                "block_schema_references": {}
-              },
-              "DatabaseCredentials": {
-                "title": "DatabaseCredentials",
-                "description": "Block used to manage authentication with a database.",
-                "type": "object",
-                "properties": {
-                  "driver": {
-                    "title": "Driver",
-                    "description": "The driver name to use.",
-                    "anyOf": [
-                      {
-                        "$ref": "#/definitions/AsyncDriver"
-                      },
-                      {
-                        "$ref": "#/definitions/SyncDriver"
-                      },
-                      {
-                        "type": "string"
-                      }
-                    ]
-                  },
-                  "username": {
-                    "title": "Username",
-                    "description": "The user name used to authenticate.",
-                    "type": "string"
-                  },
-                  "password": {
-                    "title": "Password",
-                    "description": "The password used to authenticate.",
-                    "type": "string",
-                    "writeOnly": true,
-                    "format": "password"
-                  },
-                  "database": {
-                    "title": "Database",
-                    "description": "The name of the database to use.",
-                    "type": "string"
-                  },
-                  "host": {
-                    "title": "Host",
-                    "description": "The host address of the database.",
-                    "type": "string"
-                  },
-                  "port": {
-                    "title": "Port",
-                    "description": "The port to connect to the database.",
-                    "type": "string"
-                  },
-                  "query": {
-                    "title": "Query",
-                    "description": "A dictionary of string keys to string values to be passed to the dialect and/or the DBAPI upon connect. To specify non-string parameters to a Python DBAPI directly, use connect_args.",
-                    "type": "object",
-                    "additionalProperties": {
-                      "type": "string"
-                    }
-                  },
-                  "url": {
-                    "title": "Url",
-                    "description": "Manually create and provide a URL to create the engine, this is useful for external dialects, e.g. Snowflake, because some of the params, such as 'warehouse', is not directly supported in the vanilla `sqlalchemy.engine.URL.create` method; do not provide this alongside with other URL params as it will raise a `ValueError`.",
-                    "minLength": 1,
-                    "maxLength": 65536,
-                    "format": "uri",
-                    "type": "string"
-                  },
-                  "connect_args": {
-                    "title": "Connect Args",
-                    "description": "The options which will be passed directly to the DBAPI's connect() method as additional keyword arguments.",
-                    "type": "object"
-                  }
-                },
-                "block_type_slug": "database-credentials",
-                "secret_fields": [
-                  "password"
-                ],
-                "block_schema_references": {}
-              },
-              "PostgresTargetConfigs": {
-                "title": "PostgresTargetConfigs",
-                "description": "dbt CLI target configs containing credentials and settings specific to Postgres.",
-                "type": "object",
-                "properties": {
-                  "extras": {
-                    "title": "Extras",
-                    "description": "Extra target configs' keywords, not yet exposed in prefect-dbt, but available in dbt.",
-                    "type": "object"
-                  },
-                  "allow_field_overrides": {
-                    "title": "Allow Field Overrides",
-                    "description": "If enabled, fields from dbt target configs will override fields provided in extras and credentials.",
-                    "default": false,
-                    "type": "boolean"
-                  },
-                  "type": {
-                    "title": "Type",
-                    "description": "The type of the target.",
-                    "default": "postgres",
-                    "enum": [
-                      "postgres"
-                    ],
-                    "type": "string"
-                  },
-                  "schema": {
-                    "title": "Schema",
-                    "description": "The schema that dbt will build objects into; in BigQuery, a schema is actually a dataset.",
-                    "type": "string"
-                  },
-                  "threads": {
-                    "title": "Threads",
-                    "description": "The number of threads representing the max number of paths through the graph dbt may work on at once.",
-                    "default": 4,
-                    "type": "integer"
-                  },
-                  "credentials": {
-                    "title": "Credentials",
-                    "description": "The credentials to use to authenticate; if there are duplicate keys between credentials and TargetConfigs, e.g. schema, an error will be raised.",
-                    "anyOf": [
-                      {
-                        "$ref": "#/definitions/SqlAlchemyConnector"
-                      },
-                      {
-                        "$ref": "#/definitions/DatabaseCredentials"
-                      }
-                    ]
-                  }
-                },
-                "required": [
-                  "schema",
-                  "credentials"
-                ],
-                "block_type_slug": "dbt-cli-postgres-target-configs",
-                "secret_fields": [
-                  "credentials.connection_info.password",
-                  "credentials.password"
-                ],
-                "block_schema_references": {
-                  "credentials": [
-                    {
-                      "block_type_slug": "sqlalchemy-connector",
-                      "block_schema_checksum": "sha256:01e6c0bdaac125860811b201f5a5e98ffefd5f8a49f1398b6996aec362643acc"
-                    },
-                    {
-                      "block_type_slug": "database-credentials",
-                      "block_schema_checksum": "sha256:76d1ccbf0ab2038fea77e9689b91a7c8b6398e080e95d9303f65a93a4c03162e"
-                    }
-                  ]
-                }
-              },
-              "TargetConfigs": {
-                "title": "TargetConfigs",
-                "description": "Target configs contain credentials and\nsettings, specific to the warehouse you're connecting to.\nTo find valid keys, head to the [Available adapters](\nhttps://docs.getdbt.com/docs/available-adapters) page and\nclick the desired adapter's \"Profile Setup\" hyperlink.",
-                "type": "object",
-                "properties": {
-                  "extras": {
-                    "title": "Extras",
-                    "description": "Extra target configs' keywords, not yet exposed in prefect-dbt, but available in dbt.",
-                    "type": "object"
-                  },
-                  "allow_field_overrides": {
-                    "title": "Allow Field Overrides",
-                    "description": "If enabled, fields from dbt target configs will override fields provided in extras and credentials.",
-                    "default": false,
-                    "type": "boolean"
-                  },
-                  "type": {
-                    "title": "Type",
-                    "description": "The name of the database warehouse.",
-                    "type": "string"
-                  },
-                  "schema": {
-                    "title": "Schema",
-                    "description": "The schema that dbt will build objects into; in BigQuery, a schema is actually a dataset.",
-                    "type": "string"
-                  },
-                  "threads": {
-                    "title": "Threads",
-                    "description": "The number of threads representing the max number of paths through the graph dbt may work on at once.",
-                    "default": 4,
-                    "type": "integer"
-                  }
-                },
-                "required": [
-                  "type",
-                  "schema"
-                ],
-                "block_type_slug": "dbt-cli-target-configs",
-                "secret_fields": [],
-                "block_schema_references": {}
-              },
-              "GlobalConfigs": {
-                "title": "GlobalConfigs",
-                "description": "Global configs control things like the visual output\nof logs, the manner in which dbt parses your project,\nand what to do when dbt finds a version mismatch\nor a failing model. Docs can be found [here](\nhttps://docs.getdbt.com/reference/global-configs).",
-                "type": "object",
-                "properties": {
-                  "extras": {
-                    "title": "Extras",
-                    "description": "Extra target configs' keywords, not yet exposed in prefect-dbt, but available in dbt.",
-                    "type": "object"
-                  },
-                  "allow_field_overrides": {
-                    "title": "Allow Field Overrides",
-                    "description": "If enabled, fields from dbt target configs will override fields provided in extras and credentials.",
-                    "default": false,
-                    "type": "boolean"
-                  },
-                  "send_anonymous_usage_stats": {
-                    "title": "Send Anonymous Usage Stats",
-                    "description": "Whether usage stats are sent to dbt.",
-                    "type": "boolean"
-                  },
-                  "use_colors": {
-                    "title": "Use Colors",
-                    "description": "Colorize the output it prints in your terminal.",
-                    "type": "boolean"
-                  },
-                  "partial_parse": {
-                    "title": "Partial Parse",
-                    "description": "When partial parsing is enabled, dbt will use an stored internal manifest to determine which files have been changed (if any) since it last parsed the project.",
-                    "type": "boolean"
-                  },
-                  "printer_width": {
-                    "title": "Printer Width",
-                    "description": "Length of characters before starting a new line.",
-                    "type": "integer"
-                  },
-                  "write_json": {
-                    "title": "Write Json",
-                    "description": "Determines whether dbt writes JSON artifacts to the target/ directory.",
-                    "type": "boolean"
-                  },
-                  "warn_error": {
-                    "title": "Warn Error",
-                    "description": "Whether to convert dbt warnings into errors.",
-                    "type": "boolean"
-                  },
-                  "log_format": {
-                    "title": "Log Format",
-                    "description": "The LOG_FORMAT config specifies how dbt's logs should be formatted. If the value of this config is json, dbt will output fully structured logs in JSON format.",
-                    "type": "string"
-                  },
-                  "debug": {
-                    "title": "Debug",
-                    "description": "Whether to redirect dbt's debug logs to standard out.",
-                    "type": "boolean"
-                  },
-                  "version_check": {
-                    "title": "Version Check",
-                    "description": "Whether to raise an error if a project's version is used with an incompatible dbt version.",
-                    "type": "boolean"
-                  },
-                  "fail_fast": {
-                    "title": "Fail Fast",
-                    "description": "Make dbt exit immediately if a single resource fails to build.",
-                    "type": "boolean"
-                  },
-                  "use_experimental_parser": {
-                    "title": "Use Experimental Parser",
-                    "description": "Opt into the latest experimental version of the static parser.",
-                    "type": "boolean"
-                  },
-                  "static_parser": {
-                    "title": "Static Parser",
-                    "description": "Whether to use the [static parser](https://docs.getdbt.com/reference/parsing#static-parser).",
-                    "type": "boolean"
-                  }
-                },
-                "block_type_slug": "dbt-cli-global-configs",
-                "secret_fields": [],
-                "block_schema_references": {}
-              }
-            }
-          },
-          "capabilities": [],
-          "version": "0.4.1"
-        }
-      },
-      "dbt-cli-snowflake-target-configs": {
-        "name": "dbt CLI Snowflake Target Configs",
-        "slug": "dbt-cli-snowflake-target-configs",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/1f4742f3473da5a9fc873430a803bb739e5e48a6-400x400.png",
-        "documentation_url": "https://prefecthq.github.io/prefect-dbt/cli/configs/snowflake/#prefect_dbt.cli.configs.snowflake.SnowflakeTargetConfigs",
-        "description": "Target configs contain credentials and\nsettings, specific to Snowflake.\nTo find valid keys, head to the [Snowflake Profile](\nhttps://docs.getdbt.com/reference/warehouse-profiles/snowflake-profile)\npage. This block is part of the prefect-dbt collection. Install prefect-dbt with `pip install prefect-dbt` to use this block.",
-        "code_example": "Load stored SnowflakeTargetConfigs:\n```python\nfrom prefect_dbt.cli.configs import SnowflakeTargetConfigs\n\nsnowflake_target_configs = SnowflakeTargetConfigs.load(\"BLOCK_NAME\")\n```\n\nInstantiate SnowflakeTargetConfigs.\n```python\nfrom prefect_dbt.cli.configs import SnowflakeTargetConfigs\nfrom prefect_snowflake.credentials import SnowflakeCredentials\nfrom prefect_snowflake.database import SnowflakeConnector\n\ncredentials = SnowflakeCredentials(\n    user=\"user\",\n    password=\"password\",\n    account=\"account.region.aws\",\n    role=\"role\",\n)\nconnector = SnowflakeConnector(\n    schema=\"public\",\n    database=\"database\",\n    warehouse=\"warehouse\",\n    credentials=credentials,\n)\ntarget_configs = SnowflakeTargetConfigs(\n    connector=connector,\n    extras={\"retry_on_database_errors\": True},\n)\n```",
-        "block_schema": {
-          "checksum": "sha256:1e5be296bb63d7e2b04f0e9b99543db12521af269399d10e2bc290da4244a575",
-          "fields": {
-            "title": "SnowflakeTargetConfigs",
-            "description": "Target configs contain credentials and\nsettings, specific to Snowflake.\nTo find valid keys, head to the [Snowflake Profile](\nhttps://docs.getdbt.com/reference/warehouse-profiles/snowflake-profile)\npage.",
-            "type": "object",
-            "properties": {
-              "extras": {
-                "title": "Extras",
-                "description": "Extra target configs' keywords, not yet exposed in prefect-dbt, but available in dbt.",
-                "type": "object"
-              },
-              "allow_field_overrides": {
-                "title": "Allow Field Overrides",
-                "description": "If enabled, fields from dbt target configs will override fields provided in extras and credentials.",
-                "default": false,
-                "type": "boolean"
-              },
-              "type": {
-                "title": "Type",
-                "description": "The type of the target configs.",
-                "default": "snowflake",
-                "enum": [
-                  "snowflake"
-                ],
-                "type": "string"
-              },
-              "schema": {
-                "title": "Schema",
-                "description": "The schema to use for the target configs.",
-                "type": "string"
-              },
-              "threads": {
-                "title": "Threads",
-                "description": "The number of threads representing the max number of paths through the graph dbt may work on at once.",
-                "default": 4,
-                "type": "integer"
-              },
-              "connector": {
-                "title": "Connector",
-                "description": "The connector to use.",
-                "allOf": [
-                  {
-                    "$ref": "#/definitions/SnowflakeConnector"
-                  }
-                ]
-              }
-            },
-            "required": [
-              "connector"
-            ],
-            "block_type_slug": "dbt-cli-snowflake-target-configs",
-            "secret_fields": [
-              "connector.credentials.password",
-              "connector.credentials.private_key",
-              "connector.credentials.private_key_passphrase",
-              "connector.credentials.token"
-            ],
-            "block_schema_references": {
-              "connector": {
-                "block_type_slug": "snowflake-connector",
-                "block_schema_checksum": "sha256:dd0d36d69bbe0d44870fd754f3c00754e37e3f52209590083eaee4c585ce0bd0"
-              }
-            },
-            "definitions": {
-              "SnowflakeCredentials": {
-                "title": "SnowflakeCredentials",
-                "description": "Block used to manage authentication with Snowflake.",
-                "type": "object",
-                "properties": {
-                  "account": {
-                    "title": "Account",
-                    "description": "The snowflake account name.",
-                    "example": "nh12345.us-east-2.aws",
-                    "type": "string"
-                  },
-                  "user": {
-                    "title": "User",
-                    "description": "The user name used to authenticate.",
-                    "type": "string"
-                  },
-                  "password": {
-                    "title": "Password",
-                    "description": "The password used to authenticate.",
-                    "type": "string",
-                    "writeOnly": true,
-                    "format": "password"
-                  },
-                  "private_key": {
-                    "title": "Private Key",
-                    "description": "The PEM used to authenticate.",
-                    "type": "string",
-                    "writeOnly": true,
-                    "format": "password"
-                  },
-                  "private_key_path": {
-                    "title": "Private Key Path",
-                    "description": "The path to the private key.",
-                    "type": "string",
-                    "format": "path"
-                  },
-                  "private_key_passphrase": {
-                    "title": "Private Key Passphrase",
-                    "description": "The password to use for the private key.",
-                    "type": "string",
-                    "writeOnly": true,
-                    "format": "password"
-                  },
-                  "authenticator": {
-                    "title": "Authenticator",
-                    "description": "The type of authenticator to use for initializing connection.",
-                    "default": "snowflake",
-                    "enum": [
-                      "snowflake",
-                      "snowflake_jwt",
-                      "externalbrowser",
-                      "okta_endpoint",
-                      "oauth",
-                      "username_password_mfa"
-                    ],
-                    "type": "string"
-                  },
-                  "token": {
-                    "title": "Token",
-                    "description": "The OAuth or JWT Token to provide when authenticator is set to `oauth`.",
-                    "type": "string",
-                    "writeOnly": true,
-                    "format": "password"
-                  },
-                  "endpoint": {
-                    "title": "Endpoint",
-                    "description": "The Okta endpoint to use when authenticator is set to `okta_endpoint`.",
-                    "type": "string"
-                  },
-                  "role": {
-                    "title": "Role",
-                    "description": "The name of the default role to use.",
-                    "type": "string"
-                  },
-                  "autocommit": {
-                    "title": "Autocommit",
-                    "description": "Whether to automatically commit.",
-                    "type": "boolean"
-                  }
-                },
-                "required": [
-                  "account",
-                  "user"
-                ],
-                "block_type_slug": "snowflake-credentials",
-                "secret_fields": [
-                  "password",
-                  "private_key",
-                  "private_key_passphrase",
-                  "token"
-                ],
-                "block_schema_references": {}
-              },
-              "SnowflakeConnector": {
-                "title": "SnowflakeConnector",
-                "description": "Perform data operations against a Snowflake database.",
-                "type": "object",
-                "properties": {
-                  "credentials": {
-                    "title": "Credentials",
-                    "description": "The credentials to authenticate with Snowflake.",
-                    "allOf": [
-                      {
-                        "$ref": "#/definitions/SnowflakeCredentials"
-                      }
-                    ]
-                  },
-                  "database": {
-                    "title": "Database",
-                    "description": "The name of the default database to use.",
-                    "type": "string"
-                  },
-                  "warehouse": {
-                    "title": "Warehouse",
-                    "description": "The name of the default warehouse to use.",
-                    "type": "string"
-                  },
-                  "schema": {
-                    "title": "Schema",
-                    "description": "The name of the default schema to use.",
-                    "type": "string"
-                  },
-                  "fetch_size": {
-                    "title": "Fetch Size",
-                    "description": "The default number of rows to fetch at a time.",
-                    "default": 1,
-                    "type": "integer"
-                  },
-                  "poll_frequency_s": {
-                    "title": "Poll Frequency [seconds]",
-                    "description": "The number of seconds between checking query status for long running queries.",
-                    "default": 1,
-                    "type": "integer"
-                  }
-                },
-                "required": [
-                  "credentials",
-                  "database",
-                  "warehouse",
-                  "schema"
-                ],
-                "block_type_slug": "snowflake-connector",
-                "secret_fields": [
-                  "credentials.password",
-                  "credentials.private_key",
-                  "credentials.private_key_passphrase",
-                  "credentials.token"
-                ],
-                "block_schema_references": {
-                  "credentials": {
-                    "block_type_slug": "snowflake-credentials",
-                    "block_schema_checksum": "sha256:b24edfb413527c951cb2a8b4b4c16aec096523f871d941889e29ac2e6e92e036"
-                  }
-                }
-              }
-            }
-          },
-          "capabilities": [],
-          "version": "0.4.1"
-        }
-      },
-      "dbt-cli-target-configs": {
-        "name": "dbt CLI Target Configs",
-        "slug": "dbt-cli-target-configs",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/1f4742f3473da5a9fc873430a803bb739e5e48a6-400x400.png",
-        "documentation_url": "https://prefecthq.github.io/prefect-dbt/cli/configs/base/#prefect_dbt.cli.configs.base.TargetConfigs",
-        "description": "Target configs contain credentials and\nsettings, specific to the warehouse you're connecting to.\nTo find valid keys, head to the [Available adapters](\nhttps://docs.getdbt.com/docs/available-adapters) page and\nclick the desired adapter's \"Profile Setup\" hyperlink. This block is part of the prefect-dbt collection. Install prefect-dbt with `pip install prefect-dbt` to use this block.",
-        "code_example": "Load stored TargetConfigs:\n```python\nfrom prefect_dbt.cli.configs import TargetConfigs\n\ndbt_cli_target_configs = TargetConfigs.load(\"BLOCK_NAME\")\n```",
-        "block_schema": {
-          "checksum": "sha256:85f7476977e725617af89930889b843147320b2df37df911e24806dd6dacc870",
-          "fields": {
-            "title": "TargetConfigs",
-            "description": "Target configs contain credentials and\nsettings, specific to the warehouse you're connecting to.\nTo find valid keys, head to the [Available adapters](\nhttps://docs.getdbt.com/docs/available-adapters) page and\nclick the desired adapter's \"Profile Setup\" hyperlink.",
-            "type": "object",
-            "properties": {
-              "extras": {
-                "title": "Extras",
-                "description": "Extra target configs' keywords, not yet exposed in prefect-dbt, but available in dbt.",
-                "type": "object"
-              },
-              "allow_field_overrides": {
-                "title": "Allow Field Overrides",
-                "description": "If enabled, fields from dbt target configs will override fields provided in extras and credentials.",
-                "default": false,
-                "type": "boolean"
-              },
-              "type": {
-                "title": "Type",
-                "description": "The name of the database warehouse.",
-                "type": "string"
-              },
-              "schema": {
-                "title": "Schema",
-                "description": "The schema that dbt will build objects into; in BigQuery, a schema is actually a dataset.",
-                "type": "string"
-              },
-              "threads": {
-                "title": "Threads",
-                "description": "The number of threads representing the max number of paths through the graph dbt may work on at once.",
-                "default": 4,
-                "type": "integer"
-              }
-            },
-            "required": [
-              "type",
-              "schema"
-            ],
-            "block_type_slug": "dbt-cli-target-configs",
-            "secret_fields": [],
-            "block_schema_references": {}
-          },
-          "capabilities": [],
-          "version": "0.4.1"
-        }
-      },
       "dbt-cloud-credentials": {
         "name": "dbt Cloud Credentials",
         "slug": "dbt-cloud-credentials",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/1f4742f3473da5a9fc873430a803bb739e5e48a6-400x400.png",
-        "documentation_url": "https://prefecthq.github.io/prefect-dbt/cloud/credentials/#prefect_dbt.cloud.credentials.DbtCloudCredentials",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5zE9lxfzBHjw3tnEup4wWL/9a001902ed43a84c6c96d23b24622e19/dbt-bit_tm.png?h=250",
+        "documentation_url": "https://docs.prefect.io/integrations/prefect-dbt",
         "description": "Credentials block for credential use across dbt Cloud tasks and flows. This block is part of the prefect-dbt collection. Install prefect-dbt with `pip install prefect-dbt` to use this block.",
         "code_example": "Load stored dbt Cloud credentials:\n```python\nfrom prefect_dbt.cloud import DbtCloudCredentials\n\ndbt_cloud_credentials = DbtCloudCredentials.load(\"BLOCK_NAME\")\n```\n\nUse DbtCloudCredentials instance to trigger a job run:\n```python\nfrom prefect_dbt.cloud import DbtCloudCredentials\n\ncredentials = DbtCloudCredentials(api_key=\"my_api_key\", account_id=123456789)\n\nasync with dbt_cloud_credentials.get_administrative_client() as client:\n    client.trigger_job_run(job_id=1)\n```\n\nLoad saved dbt Cloud credentials within a flow:\n```python\nfrom prefect import flow\n\nfrom prefect_dbt.cloud import DbtCloudCredentials\nfrom prefect_dbt.cloud.jobs import trigger_dbt_cloud_job_run\n\n\n@flow\ndef trigger_dbt_cloud_job_run_flow():\n    credentials = DbtCloudCredentials.load(\"my-dbt-credentials\")\n    trigger_dbt_cloud_job_run(dbt_cloud_credentials=credentials, job_id=1)\n\ntrigger_dbt_cloud_job_run_flow()\n```",
         "block_schema": {
           "checksum": "sha256:0e1b2e94e09041e7d732822354503e87b99ddb31422d9d2c83c671be249aa231",
           "fields": {
-            "title": "DbtCloudCredentials",
+            "block_schema_references": {},
+            "block_type_slug": "dbt-cloud-credentials",
             "description": "Credentials block for credential use across dbt Cloud tasks and flows.",
-            "type": "object",
             "properties": {
               "api_key": {
-                "title": "API Key",
                 "description": "A dbt Cloud API key to use for authentication.",
+                "format": "password",
+                "title": "API Key",
                 "type": "string",
-                "writeOnly": true,
-                "format": "password"
+                "writeOnly": true
               },
               "account_id": {
-                "title": "Account ID",
                 "description": "The ID of your dbt Cloud account.",
+                "title": "Account ID",
                 "type": "integer"
               },
               "domain": {
-                "title": "Domain",
-                "description": "The base domain of your dbt Cloud instance.",
                 "default": "cloud.getdbt.com",
+                "description": "The base domain of your dbt Cloud instance.",
+                "title": "Domain",
                 "type": "string"
               }
             },
@@ -4488,917 +2891,241 @@
               "api_key",
               "account_id"
             ],
-            "block_type_slug": "dbt-cloud-credentials",
             "secret_fields": [
               "api_key"
             ],
-            "block_schema_references": {}
+            "title": "DbtCloudCredentials",
+            "type": "object"
           },
           "capabilities": [],
-          "version": "0.4.1"
+          "version": "0.7.7"
         }
       },
-      "dbt-core-operation": {
-        "name": "dbt Core Operation",
-        "slug": "dbt-core-operation",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/1f4742f3473da5a9fc873430a803bb739e5e48a6-400x400.png",
-        "documentation_url": "https://prefecthq.github.io/prefect-dbt/cli/commands/#prefect_dbt.cli.commands.DbtCoreOperation",
-        "description": "A block representing a dbt operation, containing multiple dbt and shell commands.\n\nFor long-lasting operations, use the trigger method and utilize the block as a\ncontext manager for automatic closure of processes when context is exited.\nIf not, manually call the close method to close processes.\n\nFor short-lasting operations, use the run method. Context is automatically managed\nwith this method. This block is part of the prefect-dbt collection. Install prefect-dbt with `pip install prefect-dbt` to use this block.",
-        "code_example": "Load a configured block.\n```python\nfrom prefect_dbt import DbtCoreOperation\n\ndbt_op = DbtCoreOperation.load(\"BLOCK_NAME\")\n```\n\nExecute short-lasting dbt debug and list with a custom DbtCliProfile.\n```python\nfrom prefect_dbt import DbtCoreOperation, DbtCliProfile\nfrom prefect_dbt.cli.configs import SnowflakeTargetConfigs\nfrom prefect_snowflake import SnowflakeConnector\n\nsnowflake_connector = await SnowflakeConnector.load(\"snowflake-connector\")\ntarget_configs = SnowflakeTargetConfigs(connector=snowflake_connector)\ndbt_cli_profile = DbtCliProfile(\n    name=\"jaffle_shop\",\n    target=\"dev\",\n    target_configs=target_configs,\n)\ndbt_init = DbtCoreOperation(\n    commands=[\"dbt debug\", \"dbt list\"],\n    dbt_cli_profile=dbt_cli_profile,\n    overwrite_profiles=True\n)\ndbt_init.run()\n```\n\nExecute a longer-lasting dbt run as a context manager.\n```python\nwith DbtCoreOperation(commands=[\"dbt run\"]) as dbt_run:\n    dbt_process = dbt_run.trigger()\n    # do other things\n    dbt_process.wait_for_completion()\n    dbt_output = dbt_process.fetch_result()\n```",
+      "dbt-cloud-job": {
+        "name": "dbt Cloud Job",
+        "slug": "dbt-cloud-job",
+        "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5zE9lxfzBHjw3tnEup4wWL/9a001902ed43a84c6c96d23b24622e19/dbt-bit_tm.png?h=250",
+        "documentation_url": "https://docs.prefect.io/integrations/prefect-dbt",
+        "description": "Block that holds the information and methods to interact with a dbt Cloud job. This block is part of the prefect-dbt collection. Install prefect-dbt with `pip install prefect-dbt` to use this block.",
+        "code_example": "Load a configured dbt Cloud job block.\n```python\nfrom prefect_dbt.cloud import DbtCloudJob\n\ndbt_cloud_job = DbtCloudJob.load(\"BLOCK_NAME\")\n```\n\nTriggers a dbt Cloud job, waits for completion, and fetches the results.\n```python\nfrom prefect import flow\nfrom prefect_dbt.cloud import DbtCloudCredentials, DbtCloudJob\n\n@flow\ndef dbt_cloud_job_flow():\n    dbt_cloud_credentials = DbtCloudCredentials.load(\"dbt-token\")\n    dbt_cloud_job = DbtCloudJob.load(\n        dbt_cloud_credentials=dbt_cloud_credentials,\n        job_id=154217\n    )\n    dbt_cloud_job_run = dbt_cloud_job.trigger()\n    dbt_cloud_job_run.wait_for_completion()\n    dbt_cloud_job_run.fetch_result()\n    return dbt_cloud_job_run\n\ndbt_cloud_job_flow()\n```",
         "block_schema": {
-          "checksum": "sha256:0f685bc693353f66d1fc83687c8af67511feba052b5343506033141c9a2441c7",
+          "checksum": "sha256:3aac5884b6efe2d85628c67c47518a329bdd1e4b3b84ca95fd7ee93a326a11d2",
           "fields": {
-            "title": "DbtCoreOperation",
-            "description": "A block representing a dbt operation, containing multiple dbt and shell commands.\n\nFor long-lasting operations, use the trigger method and utilize the block as a\ncontext manager for automatic closure of processes when context is exited.\nIf not, manually call the close method to close processes.\n\nFor short-lasting operations, use the run method. Context is automatically managed\nwith this method.",
-            "type": "object",
+            "block_schema_references": {
+              "dbt_cloud_credentials": {
+                "block_schema_checksum": "sha256:0e1b2e94e09041e7d732822354503e87b99ddb31422d9d2c83c671be249aa231",
+                "block_type_slug": "dbt-cloud-credentials"
+              }
+            },
+            "block_type_slug": "dbt-cloud-job",
+            "description": "Block that holds the information and methods to interact with a dbt Cloud job.",
             "properties": {
-              "commands": {
-                "title": "Commands",
-                "description": "A list of commands to execute sequentially.",
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
+              "dbt_cloud_credentials": {
+                "$ref": "#/definitions/DbtCloudCredentials",
+                "description": "The dbt Cloud credentials to use to authenticate with dbt Cloud."
               },
-              "stream_output": {
-                "title": "Stream Output",
-                "description": "Whether to stream output.",
-                "default": true,
-                "type": "boolean"
+              "job_id": {
+                "description": "The id of the dbt Cloud job.",
+                "title": "Job ID",
+                "type": "integer"
               },
-              "env": {
-                "title": "Environment Variables",
-                "description": "Environment variables to use for the subprocess.",
-                "type": "object",
-                "additionalProperties": {
-                  "type": "string"
-                }
+              "timeout_seconds": {
+                "default": 900,
+                "description": "The number of seconds to wait for the job to complete.",
+                "title": "Timeout Seconds",
+                "type": "integer"
               },
-              "working_dir": {
-                "title": "Working Directory",
-                "description": "The absolute path to the working directory the command will be executed within.",
-                "format": "directory-path",
-                "type": "string"
+              "interval_seconds": {
+                "default": 10,
+                "description": "The number of seconds to wait between polling for job completion.",
+                "title": "Interval Seconds",
+                "type": "integer"
               },
-              "shell": {
-                "title": "Shell",
-                "description": "The shell to run the command with; if unset, defaults to `powershell` on Windows and `bash` on other platforms.",
-                "type": "string"
-              },
-              "extension": {
-                "title": "Extension",
-                "description": "The extension to use for the temporary file; if unset, defaults to `.ps1` on Windows and `.sh` on other platforms.",
-                "type": "string"
-              },
-              "profiles_dir": {
-                "title": "Profiles Dir",
-                "description": "The directory to search for the profiles.yml file. Setting this appends the `--profiles-dir` option to the dbt commands provided. If this is not set, will try using the DBT_PROFILES_DIR environment variable, but if that's also not set, will use the default directory `$HOME/.dbt/`.",
-                "type": "string",
-                "format": "path"
-              },
-              "project_dir": {
-                "title": "Project Dir",
-                "description": "The directory to search for the dbt_project.yml file. Default is the current working directory and its parents.",
-                "type": "string",
-                "format": "path"
-              },
-              "overwrite_profiles": {
-                "title": "Overwrite Profiles",
-                "description": "Whether the existing profiles.yml file under profiles_dir should be overwritten with a new profile.",
-                "default": false,
-                "type": "boolean"
-              },
-              "dbt_cli_profile": {
-                "title": "Dbt Cli Profile",
-                "description": "Profiles class containing the profile written to profiles.yml. Note! This is optional and will raise an error if profiles.yml already exists under profile_dir and overwrite_profiles is set to False.",
-                "allOf": [
-                  {
-                    "$ref": "#/definitions/DbtCliProfile"
-                  }
-                ]
+              "trigger_job_run_options": {
+                "$ref": "#/definitions/TriggerJobRunOptions",
+                "description": "The options to use when triggering a job run."
               }
             },
             "required": [
-              "commands"
+              "dbt_cloud_credentials",
+              "job_id"
             ],
-            "block_type_slug": "dbt-core-operation",
             "secret_fields": [
-              "dbt_cli_profile.target_configs.connector.credentials.password",
-              "dbt_cli_profile.target_configs.connector.credentials.private_key",
-              "dbt_cli_profile.target_configs.connector.credentials.private_key_passphrase",
-              "dbt_cli_profile.target_configs.connector.credentials.token",
-              "dbt_cli_profile.target_configs.credentials.service_account_info.*",
-              "dbt_cli_profile.target_configs.credentials.connection_info.password",
-              "dbt_cli_profile.target_configs.credentials.password"
+              "dbt_cloud_credentials.api_key"
             ],
-            "block_schema_references": {
-              "dbt_cli_profile": {
-                "block_type_slug": "dbt-cli-profile",
-                "block_schema_checksum": "sha256:f55b0f96cb9e1cf2f508bb882b25d9246b351be8b0ad18140a73281674a40d6d"
-              }
-            },
+            "title": "DbtCloudJob",
+            "type": "object",
             "definitions": {
-              "SnowflakeCredentials": {
-                "title": "SnowflakeCredentials",
-                "description": "Block used to manage authentication with Snowflake.",
-                "type": "object",
+              "DbtCloudCredentials": {
+                "block_schema_references": {},
+                "block_type_slug": "dbt-cloud-credentials",
+                "description": "Credentials block for credential use across dbt Cloud tasks and flows.",
                 "properties": {
-                  "account": {
-                    "title": "Account",
-                    "description": "The snowflake account name.",
-                    "example": "nh12345.us-east-2.aws",
-                    "type": "string"
-                  },
-                  "user": {
-                    "title": "User",
-                    "description": "The user name used to authenticate.",
-                    "type": "string"
-                  },
-                  "password": {
-                    "title": "Password",
-                    "description": "The password used to authenticate.",
+                  "api_key": {
+                    "description": "A dbt Cloud API key to use for authentication.",
+                    "format": "password",
+                    "title": "API Key",
                     "type": "string",
-                    "writeOnly": true,
-                    "format": "password"
+                    "writeOnly": true
                   },
-                  "private_key": {
-                    "title": "Private Key",
-                    "description": "The PEM used to authenticate.",
-                    "type": "string",
-                    "writeOnly": true,
-                    "format": "password"
+                  "account_id": {
+                    "description": "The ID of your dbt Cloud account.",
+                    "title": "Account ID",
+                    "type": "integer"
                   },
-                  "private_key_path": {
-                    "title": "Private Key Path",
-                    "description": "The path to the private key.",
-                    "type": "string",
-                    "format": "path"
-                  },
-                  "private_key_passphrase": {
-                    "title": "Private Key Passphrase",
-                    "description": "The password to use for the private key.",
-                    "type": "string",
-                    "writeOnly": true,
-                    "format": "password"
-                  },
-                  "authenticator": {
-                    "title": "Authenticator",
-                    "description": "The type of authenticator to use for initializing connection.",
-                    "default": "snowflake",
-                    "enum": [
-                      "snowflake",
-                      "snowflake_jwt",
-                      "externalbrowser",
-                      "okta_endpoint",
-                      "oauth",
-                      "username_password_mfa"
-                    ],
+                  "domain": {
+                    "default": "cloud.getdbt.com",
+                    "description": "The base domain of your dbt Cloud instance.",
+                    "title": "Domain",
                     "type": "string"
-                  },
-                  "token": {
-                    "title": "Token",
-                    "description": "The OAuth or JWT Token to provide when authenticator is set to `oauth`.",
-                    "type": "string",
-                    "writeOnly": true,
-                    "format": "password"
-                  },
-                  "endpoint": {
-                    "title": "Endpoint",
-                    "description": "The Okta endpoint to use when authenticator is set to `okta_endpoint`.",
-                    "type": "string"
-                  },
-                  "role": {
-                    "title": "Role",
-                    "description": "The name of the default role to use.",
-                    "type": "string"
-                  },
-                  "autocommit": {
-                    "title": "Autocommit",
-                    "description": "Whether to automatically commit.",
-                    "type": "boolean"
                   }
                 },
                 "required": [
-                  "account",
-                  "user"
+                  "api_key",
+                  "account_id"
                 ],
-                "block_type_slug": "snowflake-credentials",
                 "secret_fields": [
-                  "password",
-                  "private_key",
-                  "private_key_passphrase",
-                  "token"
+                  "api_key"
                 ],
-                "block_schema_references": {}
+                "title": "DbtCloudCredentials",
+                "type": "object"
               },
-              "SnowflakeConnector": {
-                "title": "SnowflakeConnector",
-                "description": "Perform data operations against a Snowflake database.",
-                "type": "object",
+              "TriggerJobRunOptions": {
+                "description": "Defines options that can be defined when triggering a dbt Cloud job run.",
                 "properties": {
-                  "credentials": {
-                    "title": "Credentials",
-                    "description": "The credentials to authenticate with Snowflake.",
-                    "allOf": [
-                      {
-                        "$ref": "#/definitions/SnowflakeCredentials"
-                      }
-                    ]
-                  },
-                  "database": {
-                    "title": "Database",
-                    "description": "The name of the default database to use.",
+                  "cause": {
+                    "description": "A text description of the reason for running this job.",
+                    "title": "Cause",
                     "type": "string"
                   },
-                  "warehouse": {
-                    "title": "Warehouse",
-                    "description": "The name of the default warehouse to use.",
-                    "type": "string"
-                  },
-                  "schema": {
-                    "title": "Schema",
-                    "description": "The name of the default schema to use.",
-                    "type": "string"
-                  },
-                  "fetch_size": {
-                    "title": "Fetch Size",
-                    "description": "The default number of rows to fetch at a time.",
-                    "default": 1,
-                    "type": "integer"
-                  },
-                  "poll_frequency_s": {
-                    "title": "Poll Frequency [seconds]",
-                    "description": "The number of seconds between checking query status for long running queries.",
-                    "default": 1,
-                    "type": "integer"
-                  }
-                },
-                "required": [
-                  "credentials",
-                  "database",
-                  "warehouse",
-                  "schema"
-                ],
-                "block_type_slug": "snowflake-connector",
-                "secret_fields": [
-                  "credentials.password",
-                  "credentials.private_key",
-                  "credentials.private_key_passphrase",
-                  "credentials.token"
-                ],
-                "block_schema_references": {
-                  "credentials": {
-                    "block_type_slug": "snowflake-credentials",
-                    "block_schema_checksum": "sha256:b24edfb413527c951cb2a8b4b4c16aec096523f871d941889e29ac2e6e92e036"
-                  }
-                }
-              },
-              "SnowflakeTargetConfigs": {
-                "title": "SnowflakeTargetConfigs",
-                "description": "Target configs contain credentials and\nsettings, specific to Snowflake.\nTo find valid keys, head to the [Snowflake Profile](\nhttps://docs.getdbt.com/reference/warehouse-profiles/snowflake-profile)\npage.",
-                "type": "object",
-                "properties": {
-                  "extras": {
-                    "title": "Extras",
-                    "description": "Extra target configs' keywords, not yet exposed in prefect-dbt, but available in dbt.",
-                    "type": "object"
-                  },
-                  "allow_field_overrides": {
-                    "title": "Allow Field Overrides",
-                    "description": "If enabled, fields from dbt target configs will override fields provided in extras and credentials.",
-                    "default": false,
-                    "type": "boolean"
-                  },
-                  "type": {
-                    "title": "Type",
-                    "description": "The type of the target configs.",
-                    "default": "snowflake",
-                    "enum": [
-                      "snowflake"
-                    ],
-                    "type": "string"
-                  },
-                  "schema": {
-                    "title": "Schema",
-                    "description": "The schema to use for the target configs.",
-                    "type": "string"
-                  },
-                  "threads": {
-                    "title": "Threads",
-                    "description": "The number of threads representing the max number of paths through the graph dbt may work on at once.",
-                    "default": 4,
-                    "type": "integer"
-                  },
-                  "connector": {
-                    "title": "Connector",
-                    "description": "The connector to use.",
-                    "allOf": [
-                      {
-                        "$ref": "#/definitions/SnowflakeConnector"
-                      }
-                    ]
-                  }
-                },
-                "required": [
-                  "connector"
-                ],
-                "block_type_slug": "dbt-cli-snowflake-target-configs",
-                "secret_fields": [
-                  "connector.credentials.password",
-                  "connector.credentials.private_key",
-                  "connector.credentials.private_key_passphrase",
-                  "connector.credentials.token"
-                ],
-                "block_schema_references": {
-                  "connector": {
-                    "block_type_slug": "snowflake-connector",
-                    "block_schema_checksum": "sha256:dd0d36d69bbe0d44870fd754f3c00754e37e3f52209590083eaee4c585ce0bd0"
-                  }
-                }
-              },
-              "GcpCredentials": {
-                "title": "GcpCredentials",
-                "description": "Block used to manage authentication with GCP. Google authentication is\nhandled via the `google.oauth2` module or through the CLI.\nSpecify either one of service `account_file` or `service_account_info`; if both\nare not specified, the client will try to detect the credentials following Google's\n[Application Default Credentials](https://cloud.google.com/docs/authentication/application-default-credentials).\nSee Google's [Authentication documentation](https://cloud.google.com/docs/authentication#service-accounts)\nfor details on inference and recommended authentication patterns.",
-                "type": "object",
-                "properties": {
-                  "service_account_file": {
-                    "title": "Service Account File",
-                    "description": "Path to the service account JSON keyfile.",
-                    "type": "string",
-                    "format": "path"
-                  },
-                  "service_account_info": {
-                    "title": "Service Account Info",
-                    "description": "The contents of the keyfile as a dict.",
-                    "type": "object"
-                  },
-                  "project": {
-                    "title": "Project",
-                    "description": "The GCP project to use for the client.",
-                    "type": "string"
-                  }
-                },
-                "block_type_slug": "gcp-credentials",
-                "secret_fields": [
-                  "service_account_info.*"
-                ],
-                "block_schema_references": {}
-              },
-              "BigQueryTargetConfigs": {
-                "title": "BigQueryTargetConfigs",
-                "description": "dbt CLI target configs containing credentials and settings, specific to BigQuery.",
-                "type": "object",
-                "properties": {
-                  "extras": {
-                    "title": "Extras",
-                    "description": "Extra target configs' keywords, not yet exposed in prefect-dbt, but available in dbt.",
-                    "type": "object"
-                  },
-                  "allow_field_overrides": {
-                    "title": "Allow Field Overrides",
-                    "description": "If enabled, fields from dbt target configs will override fields provided in extras and credentials.",
-                    "default": false,
-                    "type": "boolean"
-                  },
-                  "type": {
-                    "title": "Type",
-                    "description": "The type of target.",
-                    "default": "bigquery",
-                    "enum": [
-                      "bigquery"
-                    ],
-                    "type": "string"
-                  },
-                  "schema": {
-                    "title": "Schema",
-                    "description": "The schema that dbt will build objects into; in BigQuery, a schema is actually a dataset.",
-                    "type": "string"
-                  },
-                  "threads": {
-                    "title": "Threads",
-                    "description": "The number of threads representing the max number of paths through the graph dbt may work on at once.",
-                    "default": 4,
-                    "type": "integer"
-                  },
-                  "project": {
-                    "title": "Project",
-                    "description": "The project to use.",
-                    "type": "string"
-                  },
-                  "credentials": {
-                    "title": "Credentials",
-                    "description": "The credentials to use to authenticate.",
-                    "allOf": [
-                      {
-                        "$ref": "#/definitions/GcpCredentials"
-                      }
-                    ]
-                  }
-                },
-                "required": [
-                  "schema"
-                ],
-                "block_type_slug": "dbt-cli-bigquery-target-configs",
-                "secret_fields": [
-                  "credentials.service_account_info.*"
-                ],
-                "block_schema_references": {
-                  "credentials": {
-                    "block_type_slug": "gcp-credentials",
-                    "block_schema_checksum": "sha256:f764f9c506a2bed9e5ed7cc9083d06d95f13c01c8c9a9e45bae5d9b4dc522624"
-                  }
-                }
-              },
-              "AsyncDriver": {
-                "title": "AsyncDriver",
-                "description": "Known dialects with their corresponding async drivers.\n\nAttributes:\n    POSTGRESQL_ASYNCPG (Enum): [postgresql+asyncpg](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.asyncpg)\n\n    SQLITE_AIOSQLITE (Enum): [sqlite+aiosqlite](https://docs.sqlalchemy.org/en/14/dialects/sqlite.html#module-sqlalchemy.dialects.sqlite.aiosqlite)\n\n    MYSQL_ASYNCMY (Enum): [mysql+asyncmy](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.asyncmy)\n    MYSQL_AIOMYSQL (Enum): [mysql+aiomysql](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.aiomysql)",
-                "enum": [
-                  "postgresql+asyncpg",
-                  "sqlite+aiosqlite",
-                  "mysql+asyncmy",
-                  "mysql+aiomysql"
-                ]
-              },
-              "SyncDriver": {
-                "title": "SyncDriver",
-                "description": "Known dialects with their corresponding sync drivers.\n\nAttributes:\n    POSTGRESQL_PSYCOPG2 (Enum): [postgresql+psycopg2](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.psycopg2)\n    POSTGRESQL_PG8000 (Enum): [postgresql+pg8000](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.pg8000)\n    POSTGRESQL_PSYCOPG2CFFI (Enum): [postgresql+psycopg2cffi](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.psycopg2cffi)\n    POSTGRESQL_PYPOSTGRESQL (Enum): [postgresql+pypostgresql](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.pypostgresql)\n    POSTGRESQL_PYGRESQL (Enum): [postgresql+pygresql](https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.pygresql)\n\n    MYSQL_MYSQLDB (Enum): [mysql+mysqldb](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.mysqldb)\n    MYSQL_PYMYSQL (Enum): [mysql+pymysql](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.pymysql)\n    MYSQL_MYSQLCONNECTOR (Enum): [mysql+mysqlconnector](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.mysqlconnector)\n    MYSQL_CYMYSQL (Enum): [mysql+cymysql](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.cymysql)\n    MYSQL_OURSQL (Enum): [mysql+oursql](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.oursql)\n    MYSQL_PYODBC (Enum): [mysql+pyodbc](https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.pyodbc)\n\n    SQLITE_PYSQLITE (Enum): [sqlite+pysqlite](https://docs.sqlalchemy.org/en/14/dialects/sqlite.html#module-sqlalchemy.dialects.sqlite.pysqlite)\n    SQLITE_PYSQLCIPHER (Enum): [sqlite+pysqlcipher](https://docs.sqlalchemy.org/en/14/dialects/sqlite.html#module-sqlalchemy.dialects.sqlite.pysqlcipher)\n\n    ORACLE_CX_ORACLE (Enum): [oracle+cx_oracle](https://docs.sqlalchemy.org/en/14/dialects/oracle.html#module-sqlalchemy.dialects.oracle.cx_oracle)\n\n    MSSQL_PYODBC (Enum): [mssql+pyodbc](https://docs.sqlalchemy.org/en/14/dialects/mssql.html#module-sqlalchemy.dialects.mssql.pyodbc)\n    MSSQL_MXODBC (Enum): [mssql+mxodbc](https://docs.sqlalchemy.org/en/14/dialects/mssql.html#module-sqlalchemy.dialects.mssql.mxodbc)\n    MSSQL_PYMSSQL (Enum): [mssql+pymssql](https://docs.sqlalchemy.org/en/14/dialects/mssql.html#module-sqlalchemy.dialects.mssql.pymssql)",
-                "enum": [
-                  "postgresql+psycopg2",
-                  "postgresql+pg8000",
-                  "postgresql+psycopg2cffi",
-                  "postgresql+pypostgresql",
-                  "postgresql+pygresql",
-                  "mysql+mysqldb",
-                  "mysql+pymysql",
-                  "mysql+mysqlconnector",
-                  "mysql+cymysql",
-                  "mysql+oursql",
-                  "mysql+pyodbc",
-                  "sqlite+pysqlite",
-                  "sqlite+pysqlcipher",
-                  "oracle+cx_oracle",
-                  "mssql+pyodbc",
-                  "mssql+mxodbc",
-                  "mssql+pymssql"
-                ]
-              },
-              "ConnectionComponents": {
-                "title": "ConnectionComponents",
-                "description": "Parameters to use to create a SQLAlchemy engine URL.\n\nAttributes:\n    driver: The driver name to use.\n    database: The name of the database to use.\n    username: The user name used to authenticate.\n    password: The password used to authenticate.\n    host: The host address of the database.\n    port: The port to connect to the database.\n    query: A dictionary of string keys to string values to be passed to the dialect\n        and/or the DBAPI upon connect.",
-                "type": "object",
-                "properties": {
-                  "driver": {
-                    "title": "Driver",
-                    "description": "The driver name to use.",
+                  "git_sha": {
                     "anyOf": [
-                      {
-                        "$ref": "#/definitions/AsyncDriver"
-                      },
-                      {
-                        "$ref": "#/definitions/SyncDriver"
-                      },
                       {
                         "type": "string"
+                      },
+                      {
+                        "type": "null"
                       }
-                    ]
+                    ],
+                    "default": null,
+                    "description": "The git sha to check out before running this job.",
+                    "title": "Git Sha"
                   },
-                  "database": {
-                    "title": "Database",
-                    "description": "The name of the database to use.",
-                    "type": "string"
-                  },
-                  "username": {
-                    "title": "Username",
-                    "description": "The user name used to authenticate.",
-                    "type": "string"
-                  },
-                  "password": {
-                    "title": "Password",
-                    "description": "The password used to authenticate.",
-                    "type": "string",
-                    "writeOnly": true,
-                    "format": "password"
-                  },
-                  "host": {
-                    "title": "Host",
-                    "description": "The host address of the database.",
-                    "type": "string"
-                  },
-                  "port": {
-                    "title": "Port",
-                    "description": "The port to connect to the database.",
-                    "type": "string"
-                  },
-                  "query": {
-                    "title": "Query",
-                    "description": "A dictionary of string keys to string values to be passed to the dialect and/or the DBAPI upon connect. To specify non-string parameters to a Python DBAPI directly, use connect_args.",
-                    "type": "object",
-                    "additionalProperties": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "required": [
-                  "driver",
-                  "database"
-                ]
-              },
-              "SqlAlchemyConnector": {
-                "title": "SqlAlchemyConnector",
-                "description": "Block used to manage authentication with a database.\n\nUpon instantiating, an engine is created and maintained for the life of\nthe object until the close method is called.\n\nIt is recommended to use this block as a context manager, which will automatically\nclose the engine and its connections when the context is exited.\n\nIt is also recommended that this block is loaded and consumed within a single task\nor flow because if the block is passed across separate tasks and flows,\nthe state of the block's connection and cursor could be lost.",
-                "type": "object",
-                "properties": {
-                  "connection_info": {
-                    "title": "Connection Info",
-                    "description": "SQLAlchemy URL to create the engine; either create from components or create from a string.",
+                  "git_branch": {
                     "anyOf": [
-                      {
-                        "$ref": "#/definitions/ConnectionComponents"
-                      },
-                      {
-                        "type": "string",
-                        "minLength": 1,
-                        "maxLength": 65536,
-                        "format": "uri"
-                      }
-                    ]
-                  },
-                  "connect_args": {
-                    "title": "Additional Connection Arguments",
-                    "description": "The options which will be passed directly to the DBAPI's connect() method as additional keyword arguments.",
-                    "type": "object"
-                  },
-                  "fetch_size": {
-                    "title": "Fetch Size",
-                    "description": "The number of rows to fetch at a time.",
-                    "default": 1,
-                    "type": "integer"
-                  }
-                },
-                "required": [
-                  "connection_info"
-                ],
-                "block_type_slug": "sqlalchemy-connector",
-                "secret_fields": [
-                  "connection_info.password"
-                ],
-                "block_schema_references": {}
-              },
-              "DatabaseCredentials": {
-                "title": "DatabaseCredentials",
-                "description": "Block used to manage authentication with a database.",
-                "type": "object",
-                "properties": {
-                  "driver": {
-                    "title": "Driver",
-                    "description": "The driver name to use.",
-                    "anyOf": [
-                      {
-                        "$ref": "#/definitions/AsyncDriver"
-                      },
-                      {
-                        "$ref": "#/definitions/SyncDriver"
-                      },
                       {
                         "type": "string"
+                      },
+                      {
+                        "type": "null"
                       }
-                    ]
-                  },
-                  "username": {
-                    "title": "Username",
-                    "description": "The user name used to authenticate.",
-                    "type": "string"
-                  },
-                  "password": {
-                    "title": "Password",
-                    "description": "The password used to authenticate.",
-                    "type": "string",
-                    "writeOnly": true,
-                    "format": "password"
-                  },
-                  "database": {
-                    "title": "Database",
-                    "description": "The name of the database to use.",
-                    "type": "string"
-                  },
-                  "host": {
-                    "title": "Host",
-                    "description": "The host address of the database.",
-                    "type": "string"
-                  },
-                  "port": {
-                    "title": "Port",
-                    "description": "The port to connect to the database.",
-                    "type": "string"
-                  },
-                  "query": {
-                    "title": "Query",
-                    "description": "A dictionary of string keys to string values to be passed to the dialect and/or the DBAPI upon connect. To specify non-string parameters to a Python DBAPI directly, use connect_args.",
-                    "type": "object",
-                    "additionalProperties": {
-                      "type": "string"
-                    }
-                  },
-                  "url": {
-                    "title": "Url",
-                    "description": "Manually create and provide a URL to create the engine, this is useful for external dialects, e.g. Snowflake, because some of the params, such as 'warehouse', is not directly supported in the vanilla `sqlalchemy.engine.URL.create` method; do not provide this alongside with other URL params as it will raise a `ValueError`.",
-                    "minLength": 1,
-                    "maxLength": 65536,
-                    "format": "uri",
-                    "type": "string"
-                  },
-                  "connect_args": {
-                    "title": "Connect Args",
-                    "description": "The options which will be passed directly to the DBAPI's connect() method as additional keyword arguments.",
-                    "type": "object"
-                  }
-                },
-                "block_type_slug": "database-credentials",
-                "secret_fields": [
-                  "password"
-                ],
-                "block_schema_references": {}
-              },
-              "PostgresTargetConfigs": {
-                "title": "PostgresTargetConfigs",
-                "description": "dbt CLI target configs containing credentials and settings specific to Postgres.",
-                "type": "object",
-                "properties": {
-                  "extras": {
-                    "title": "Extras",
-                    "description": "Extra target configs' keywords, not yet exposed in prefect-dbt, but available in dbt.",
-                    "type": "object"
-                  },
-                  "allow_field_overrides": {
-                    "title": "Allow Field Overrides",
-                    "description": "If enabled, fields from dbt target configs will override fields provided in extras and credentials.",
-                    "default": false,
-                    "type": "boolean"
-                  },
-                  "type": {
-                    "title": "Type",
-                    "description": "The type of the target.",
-                    "default": "postgres",
-                    "enum": [
-                      "postgres"
                     ],
-                    "type": "string"
+                    "default": null,
+                    "description": "The git branch to check out before running this job.",
+                    "title": "Git Branch"
                   },
-                  "schema": {
-                    "title": "Schema",
-                    "description": "The schema that dbt will build objects into; in BigQuery, a schema is actually a dataset.",
-                    "type": "string"
-                  },
-                  "threads": {
-                    "title": "Threads",
-                    "description": "The number of threads representing the max number of paths through the graph dbt may work on at once.",
-                    "default": 4,
-                    "type": "integer"
-                  },
-                  "credentials": {
-                    "title": "Credentials",
-                    "description": "The credentials to use to authenticate; if there are duplicate keys between credentials and TargetConfigs, e.g. schema, an error will be raised.",
+                  "schema_override": {
                     "anyOf": [
                       {
-                        "$ref": "#/definitions/SqlAlchemyConnector"
+                        "type": "string"
                       },
                       {
-                        "$ref": "#/definitions/DatabaseCredentials"
+                        "type": "null"
                       }
-                    ]
-                  }
-                },
-                "required": [
-                  "schema",
-                  "credentials"
-                ],
-                "block_type_slug": "dbt-cli-postgres-target-configs",
-                "secret_fields": [
-                  "credentials.connection_info.password",
-                  "credentials.password"
-                ],
-                "block_schema_references": {
-                  "credentials": [
-                    {
-                      "block_type_slug": "sqlalchemy-connector",
-                      "block_schema_checksum": "sha256:01e6c0bdaac125860811b201f5a5e98ffefd5f8a49f1398b6996aec362643acc"
-                    },
-                    {
-                      "block_type_slug": "database-credentials",
-                      "block_schema_checksum": "sha256:76d1ccbf0ab2038fea77e9689b91a7c8b6398e080e95d9303f65a93a4c03162e"
-                    }
-                  ]
-                }
-              },
-              "TargetConfigs": {
-                "title": "TargetConfigs",
-                "description": "Target configs contain credentials and\nsettings, specific to the warehouse you're connecting to.\nTo find valid keys, head to the [Available adapters](\nhttps://docs.getdbt.com/docs/available-adapters) page and\nclick the desired adapter's \"Profile Setup\" hyperlink.",
-                "type": "object",
-                "properties": {
-                  "extras": {
-                    "title": "Extras",
-                    "description": "Extra target configs' keywords, not yet exposed in prefect-dbt, but available in dbt.",
-                    "type": "object"
+                    ],
+                    "default": null,
+                    "description": "Override the destination schema in the configured target for this job.",
+                    "title": "Schema Override"
                   },
-                  "allow_field_overrides": {
-                    "title": "Allow Field Overrides",
-                    "description": "If enabled, fields from dbt target configs will override fields provided in extras and credentials.",
-                    "default": false,
-                    "type": "boolean"
-                  },
-                  "type": {
-                    "title": "Type",
-                    "description": "The name of the database warehouse.",
-                    "type": "string"
-                  },
-                  "schema": {
-                    "title": "Schema",
-                    "description": "The schema that dbt will build objects into; in BigQuery, a schema is actually a dataset.",
-                    "type": "string"
-                  },
-                  "threads": {
-                    "title": "Threads",
-                    "description": "The number of threads representing the max number of paths through the graph dbt may work on at once.",
-                    "default": 4,
-                    "type": "integer"
-                  }
-                },
-                "required": [
-                  "type",
-                  "schema"
-                ],
-                "block_type_slug": "dbt-cli-target-configs",
-                "secret_fields": [],
-                "block_schema_references": {}
-              },
-              "GlobalConfigs": {
-                "title": "GlobalConfigs",
-                "description": "Global configs control things like the visual output\nof logs, the manner in which dbt parses your project,\nand what to do when dbt finds a version mismatch\nor a failing model. Docs can be found [here](\nhttps://docs.getdbt.com/reference/global-configs).",
-                "type": "object",
-                "properties": {
-                  "extras": {
-                    "title": "Extras",
-                    "description": "Extra target configs' keywords, not yet exposed in prefect-dbt, but available in dbt.",
-                    "type": "object"
-                  },
-                  "allow_field_overrides": {
-                    "title": "Allow Field Overrides",
-                    "description": "If enabled, fields from dbt target configs will override fields provided in extras and credentials.",
-                    "default": false,
-                    "type": "boolean"
-                  },
-                  "send_anonymous_usage_stats": {
-                    "title": "Send Anonymous Usage Stats",
-                    "description": "Whether usage stats are sent to dbt.",
-                    "type": "boolean"
-                  },
-                  "use_colors": {
-                    "title": "Use Colors",
-                    "description": "Colorize the output it prints in your terminal.",
-                    "type": "boolean"
-                  },
-                  "partial_parse": {
-                    "title": "Partial Parse",
-                    "description": "When partial parsing is enabled, dbt will use an stored internal manifest to determine which files have been changed (if any) since it last parsed the project.",
-                    "type": "boolean"
-                  },
-                  "printer_width": {
-                    "title": "Printer Width",
-                    "description": "Length of characters before starting a new line.",
-                    "type": "integer"
-                  },
-                  "write_json": {
-                    "title": "Write Json",
-                    "description": "Determines whether dbt writes JSON artifacts to the target/ directory.",
-                    "type": "boolean"
-                  },
-                  "warn_error": {
-                    "title": "Warn Error",
-                    "description": "Whether to convert dbt warnings into errors.",
-                    "type": "boolean"
-                  },
-                  "log_format": {
-                    "title": "Log Format",
-                    "description": "The LOG_FORMAT config specifies how dbt's logs should be formatted. If the value of this config is json, dbt will output fully structured logs in JSON format.",
-                    "type": "string"
-                  },
-                  "debug": {
-                    "title": "Debug",
-                    "description": "Whether to redirect dbt's debug logs to standard out.",
-                    "type": "boolean"
-                  },
-                  "version_check": {
-                    "title": "Version Check",
-                    "description": "Whether to raise an error if a project's version is used with an incompatible dbt version.",
-                    "type": "boolean"
-                  },
-                  "fail_fast": {
-                    "title": "Fail Fast",
-                    "description": "Make dbt exit immediately if a single resource fails to build.",
-                    "type": "boolean"
-                  },
-                  "use_experimental_parser": {
-                    "title": "Use Experimental Parser",
-                    "description": "Opt into the latest experimental version of the static parser.",
-                    "type": "boolean"
-                  },
-                  "static_parser": {
-                    "title": "Static Parser",
-                    "description": "Whether to use the [static parser](https://docs.getdbt.com/reference/parsing#static-parser).",
-                    "type": "boolean"
-                  }
-                },
-                "block_type_slug": "dbt-cli-global-configs",
-                "secret_fields": [],
-                "block_schema_references": {}
-              },
-              "DbtCliProfile": {
-                "title": "DbtCliProfile",
-                "description": "Profile for use across dbt CLI tasks and flows.",
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "title": "Name",
-                    "description": "Profile name used for populating profiles.yml.",
-                    "type": "string"
-                  },
-                  "target": {
-                    "title": "Target",
-                    "description": "The default target your dbt project will use.",
-                    "type": "string"
-                  },
-                  "target_configs": {
-                    "title": "Target Configs",
-                    "description": "Target configs contain credentials and settings, specific to the warehouse you're connecting to.",
+                  "dbt_version_override": {
                     "anyOf": [
                       {
-                        "$ref": "#/definitions/SnowflakeTargetConfigs"
+                        "type": "string"
                       },
                       {
-                        "$ref": "#/definitions/BigQueryTargetConfigs"
-                      },
-                      {
-                        "$ref": "#/definitions/PostgresTargetConfigs"
-                      },
-                      {
-                        "$ref": "#/definitions/TargetConfigs"
+                        "type": "null"
                       }
-                    ]
+                    ],
+                    "default": null,
+                    "description": "Override the version of dbt used to run this job.",
+                    "title": "Dbt Version Override"
                   },
-                  "global_configs": {
-                    "title": "Global Configs",
-                    "description": "Global configs control things like the visual output of logs, the manner in which dbt parses your project, and what to do when dbt finds a version mismatch or a failing model.",
-                    "allOf": [
+                  "threads_override": {
+                    "anyOf": [
                       {
-                        "$ref": "#/definitions/GlobalConfigs"
+                        "type": "integer"
+                      },
+                      {
+                        "type": "null"
                       }
-                    ]
+                    ],
+                    "default": null,
+                    "description": "Override the number of threads used to run this job.",
+                    "title": "Threads Override"
+                  },
+                  "target_name_override": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Override the target.name context variable used when running this job",
+                    "title": "Target Name Override"
+                  },
+                  "generate_docs_override": {
+                    "anyOf": [
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Override whether or not this job generates docs (true=yes, false=no).",
+                    "title": "Generate Docs Override"
+                  },
+                  "timeout_seconds_override": {
+                    "anyOf": [
+                      {
+                        "type": "integer"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Override the timeout in seconds for this job.",
+                    "title": "Timeout Seconds Override"
+                  },
+                  "steps_override": {
+                    "anyOf": [
+                      {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Override the list of steps for this job.",
+                    "title": "Steps Override"
                   }
                 },
-                "required": [
-                  "name",
-                  "target",
-                  "target_configs"
-                ],
-                "block_type_slug": "dbt-cli-profile",
-                "secret_fields": [
-                  "target_configs.connector.credentials.password",
-                  "target_configs.connector.credentials.private_key",
-                  "target_configs.connector.credentials.private_key_passphrase",
-                  "target_configs.connector.credentials.token",
-                  "target_configs.credentials.service_account_info.*",
-                  "target_configs.credentials.connection_info.password",
-                  "target_configs.credentials.password"
-                ],
-                "block_schema_references": {
-                  "target_configs": [
-                    {
-                      "block_type_slug": "dbt-cli-snowflake-target-configs",
-                      "block_schema_checksum": "sha256:1e5be296bb63d7e2b04f0e9b99543db12521af269399d10e2bc290da4244a575"
-                    },
-                    {
-                      "block_type_slug": "dbt-cli-bigquery-target-configs",
-                      "block_schema_checksum": "sha256:842c5dc7d4d1557eedff36982eafeda7b0803915942f72224a7f627efdbe5ff5"
-                    },
-                    {
-                      "block_type_slug": "dbt-cli-postgres-target-configs",
-                      "block_schema_checksum": "sha256:1552a2d5c102961df4082329f39c10b8a51e26ee687148efd6d71ce8be8850c0"
-                    },
-                    {
-                      "block_type_slug": "dbt-cli-target-configs",
-                      "block_schema_checksum": "sha256:85f7476977e725617af89930889b843147320b2df37df911e24806dd6dacc870"
-                    }
-                  ],
-                  "global_configs": {
-                    "block_type_slug": "dbt-cli-global-configs",
-                    "block_schema_checksum": "sha256:63df9d18a1aafde1cc8330cd49f81f6600b4ce6db92955973bbf341cc86e916d"
-                  }
-                }
+                "title": "TriggerJobRunOptions",
+                "type": "object"
               }
             }
           },
           "capabilities": [],
-          "version": "0.4.1"
+          "version": "0.7.7"
         }
       }
     }
