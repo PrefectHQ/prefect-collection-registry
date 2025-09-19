@@ -1,0 +1,332 @@
+{
+  "prefect-azure": {
+    "block_types": {
+      "azure-blob-storage-container": {
+        "name": "Azure Blob Storage Container",
+        "slug": "azure-blob-storage-container",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/54e3fa7e00197a4fbd1d82ed62494cb58d08c96a-250x250.png",
+        "documentation_url": "https://docs.prefect.io/integrations/prefect-azure",
+        "description": "Represents a container in Azure Blob Storage.\n\nThis class provides methods for downloading and uploading files and folders\nto and from the Azure Blob Storage container. This block is part of the prefect-azure collection. Install prefect-azure with `pip install prefect-azure` to use this block.",
+        "code_example": "```python\nfrom prefect_azure.blob_storage import AzureBlobStorageContainer\n\nazure_blob_storage_container_block = AzureBlobStorageContainer.load(\"BLOCK_NAME\")\n```",
+        "block_schema": {
+          "checksum": "sha256:1a7c5d6026bc6cfa8fe291192d6b1d411f28cedbfa4418d40aa126e7bbd946ec",
+          "fields": {
+            "block_schema_references": {
+              "credentials": {
+                "block_schema_checksum": "sha256:aa4724874002a0fc5f2164a41c7aa78bc26fc9e63fa8519ae25cc6b3887334e2",
+                "block_type_slug": "azure-blob-storage-credentials"
+              }
+            },
+            "block_type_slug": "azure-blob-storage-container",
+            "description": "Represents a container in Azure Blob Storage.\n\nThis class provides methods for downloading and uploading files and folders\nto and from the Azure Blob Storage container.",
+            "properties": {
+              "container_name": {
+                "description": "The name of a Azure Blob Storage container.",
+                "title": "Container Name",
+                "type": "string"
+              },
+              "credentials": {
+                "$ref": "#/definitions/AzureBlobStorageCredentials",
+                "description": "The credentials to use for authentication with Azure."
+              },
+              "base_folder": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "A base path to a folder within the container to use for reading and writing objects.",
+                "title": "Base Folder"
+              }
+            },
+            "required": [
+              "container_name"
+            ],
+            "secret_fields": [
+              "credentials.connection_string"
+            ],
+            "title": "AzureBlobStorageContainer",
+            "type": "object",
+            "definitions": {
+              "AzureBlobStorageCredentials": {
+                "block_schema_references": {},
+                "block_type_slug": "azure-blob-storage-credentials",
+                "description": "Stores credentials for authenticating with Azure Blob Storage.",
+                "properties": {
+                  "connection_string": {
+                    "anyOf": [
+                      {
+                        "format": "password",
+                        "type": "string",
+                        "writeOnly": true
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The connection string to your Azure storage account. If provided, the connection string will take precedence over the account URL.",
+                    "title": "Connection String"
+                  },
+                  "account_url": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The URL for your Azure storage account. If provided, the account URL will be used to authenticate with the discovered default Azure credentials.",
+                    "title": "Account URL"
+                  }
+                },
+                "secret_fields": [
+                  "connection_string"
+                ],
+                "title": "AzureBlobStorageCredentials",
+                "type": "object"
+              }
+            }
+          },
+          "capabilities": [
+            "get-directory",
+            "put-directory",
+            "read-path",
+            "write-path"
+          ],
+          "version": "0.4.5"
+        }
+      },
+      "azure-blob-storage-credentials": {
+        "name": "Azure Blob Storage Credentials",
+        "slug": "azure-blob-storage-credentials",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/54e3fa7e00197a4fbd1d82ed62494cb58d08c96a-250x250.png",
+        "documentation_url": "https://docs.prefect.io/integrations/prefect-azure",
+        "description": "Stores credentials for authenticating with Azure Blob Storage. This block is part of the prefect-azure collection. Install prefect-azure with `pip install prefect-azure` to use this block.",
+        "code_example": "Load stored Azure Blob Storage credentials and retrieve a blob service client:\n```python\nfrom prefect_azure import AzureBlobStorageCredentials\n\nazure_credentials_block = AzureBlobStorageCredentials.load(\"BLOCK_NAME\")\n\nblob_service_client = azure_credentials_block.get_blob_client()\n```",
+        "block_schema": {
+          "checksum": "sha256:aa4724874002a0fc5f2164a41c7aa78bc26fc9e63fa8519ae25cc6b3887334e2",
+          "fields": {
+            "block_schema_references": {},
+            "block_type_slug": "azure-blob-storage-credentials",
+            "description": "Stores credentials for authenticating with Azure Blob Storage.",
+            "properties": {
+              "connection_string": {
+                "anyOf": [
+                  {
+                    "format": "password",
+                    "type": "string",
+                    "writeOnly": true
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "The connection string to your Azure storage account. If provided, the connection string will take precedence over the account URL.",
+                "title": "Connection String"
+              },
+              "account_url": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "The URL for your Azure storage account. If provided, the account URL will be used to authenticate with the discovered default Azure credentials.",
+                "title": "Account URL"
+              }
+            },
+            "secret_fields": [
+              "connection_string"
+            ],
+            "title": "AzureBlobStorageCredentials",
+            "type": "object"
+          },
+          "capabilities": [],
+          "version": "0.4.5"
+        }
+      },
+      "azure-container-instance-credentials": {
+        "name": "Azure Container Instance Credentials",
+        "slug": "azure-container-instance-credentials",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/54e3fa7e00197a4fbd1d82ed62494cb58d08c96a-250x250.png",
+        "documentation_url": "https://docs.prefect.io/integrations/prefect-azure",
+        "description": "Block used to manage Azure Container Instances authentication. Stores Azure Service\nPrincipal authentication data. This block is part of the prefect-azure collection. Install prefect-azure with `pip install prefect-azure` to use this block.",
+        "code_example": "```python\nfrom prefect_azure.credentials import AzureContainerInstanceCredentials\n\nazure_container_instance_credentials_block = AzureContainerInstanceCredentials.load(\"BLOCK_NAME\")\n```",
+        "block_schema": {
+          "checksum": "sha256:8eb5694e6a5d049ec70ae109499a66bdcbe36489d9e83d5245baaf61e8da7cb1",
+          "fields": {
+            "block_schema_references": {},
+            "block_type_slug": "azure-container-instance-credentials",
+            "description": "Block used to manage Azure Container Instances authentication. Stores Azure Service\nPrincipal authentication data.",
+            "properties": {
+              "client_id": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "The service principal client ID. If none of client_id, tenant_id, and client_secret are provided, will use DefaultAzureCredential; else will need to provide all three to use ClientSecretCredential.",
+                "title": "Client ID"
+              },
+              "tenant_id": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "The service principal tenant ID.If none of client_id, tenant_id, and client_secret are provided, will use DefaultAzureCredential; else will need to provide all three to use ClientSecretCredential.",
+                "title": "Tenant ID"
+              },
+              "client_secret": {
+                "anyOf": [
+                  {
+                    "format": "password",
+                    "type": "string",
+                    "writeOnly": true
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "The service principal client secret.If none of client_id, tenant_id, and client_secret are provided, will use DefaultAzureCredential; else will need to provide all three to use ClientSecretCredential.",
+                "title": "Client Secret"
+              },
+              "credential_kwargs": {
+                "description": "Additional keyword arguments to pass to `ClientSecretCredential` or `DefaultAzureCredential`.",
+                "title": "Additional Credential Keyword Arguments",
+                "type": "object"
+              }
+            },
+            "secret_fields": [
+              "client_secret"
+            ],
+            "title": "AzureContainerInstanceCredentials",
+            "type": "object"
+          },
+          "capabilities": [],
+          "version": "0.4.5"
+        }
+      },
+      "azure-cosmos-db-credentials": {
+        "name": "Azure Cosmos DB Credentials",
+        "slug": "azure-cosmos-db-credentials",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/54e3fa7e00197a4fbd1d82ed62494cb58d08c96a-250x250.png",
+        "documentation_url": "https://docs.prefect.io/integrations/prefect-azure",
+        "description": "Block used to manage Cosmos DB authentication with Azure.\nAzure authentication is handled via the `azure` module through\na connection string. This block is part of the prefect-azure collection. Install prefect-azure with `pip install prefect-azure` to use this block.",
+        "code_example": "Load stored Azure Cosmos DB credentials:\n```python\nfrom prefect_azure import AzureCosmosDbCredentials\nazure_credentials_block = AzureCosmosDbCredentials.load(\"BLOCK_NAME\")\n```",
+        "block_schema": {
+          "checksum": "sha256:2f9f6e6f6c2eb570a05113638e6237fe74f7684993a351018657211d4705a83a",
+          "fields": {
+            "block_schema_references": {},
+            "block_type_slug": "azure-cosmos-db-credentials",
+            "description": "Block used to manage Cosmos DB authentication with Azure.\nAzure authentication is handled via the `azure` module through\na connection string.",
+            "properties": {
+              "connection_string": {
+                "description": "Includes the authorization information required.",
+                "format": "password",
+                "title": "Connection String",
+                "type": "string",
+                "writeOnly": true
+              }
+            },
+            "required": [
+              "connection_string"
+            ],
+            "secret_fields": [
+              "connection_string"
+            ],
+            "title": "AzureCosmosDbCredentials",
+            "type": "object"
+          },
+          "capabilities": [],
+          "version": "0.4.5"
+        }
+      },
+      "azureml-credentials": {
+        "name": "AzureML Credentials",
+        "slug": "azureml-credentials",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/54e3fa7e00197a4fbd1d82ed62494cb58d08c96a-250x250.png",
+        "documentation_url": "https://docs.prefect.io/integrations/prefect-azure",
+        "description": "Block used to manage authentication with AzureML. Azure authentication is\nhandled via the `azure` module. This block is part of the prefect-azure collection. Install prefect-azure with `pip install prefect-azure` to use this block.",
+        "code_example": "Load stored AzureML credentials:\n```python\nfrom prefect_azure import AzureMlCredentials\nazure_ml_credentials_block = AzureMlCredentials.load(\"BLOCK_NAME\")\n```",
+        "block_schema": {
+          "checksum": "sha256:11338ccb5cd90992ac378f9b7a73cbf1942fae58343ac2026b3718ed688b52e6",
+          "fields": {
+            "block_schema_references": {},
+            "block_type_slug": "azureml-credentials",
+            "description": "Block used to manage authentication with AzureML. Azure authentication is\nhandled via the `azure` module.",
+            "properties": {
+              "tenant_id": {
+                "description": "The active directory tenant that the service identity belongs to.",
+                "title": "Tenant Id",
+                "type": "string"
+              },
+              "service_principal_id": {
+                "description": "The service principal ID.",
+                "title": "Service Principal Id",
+                "type": "string"
+              },
+              "service_principal_password": {
+                "description": "The service principal password/key.",
+                "format": "password",
+                "title": "Service Principal Password",
+                "type": "string",
+                "writeOnly": true
+              },
+              "subscription_id": {
+                "description": "The Azure subscription ID containing the workspace, in format: '00000000-0000-0000-0000-000000000000'.",
+                "title": "Subscription Id",
+                "type": "string"
+              },
+              "resource_group": {
+                "description": "The resource group containing the workspace.",
+                "title": "Resource Group",
+                "type": "string"
+              },
+              "workspace_name": {
+                "description": "The existing workspace name.",
+                "title": "Workspace Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "tenant_id",
+              "service_principal_id",
+              "service_principal_password",
+              "subscription_id",
+              "resource_group",
+              "workspace_name"
+            ],
+            "secret_fields": [
+              "service_principal_password"
+            ],
+            "title": "AzureMlCredentials",
+            "type": "object"
+          },
+          "capabilities": [],
+          "version": "0.4.5"
+        }
+      }
+    }
+  }
+}

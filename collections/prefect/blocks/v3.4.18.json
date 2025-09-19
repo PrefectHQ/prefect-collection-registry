@@ -1,0 +1,1257 @@
+{
+  "prefect": {
+    "block_types": {
+      "date-time": {
+        "name": "Date Time",
+        "slug": "date-time",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/8b3da9a6621e92108b8e6a75b82e15374e170ff7-48x48.png",
+        "documentation_url": "https://docs.prefect.io/latest/develop/blocks",
+        "description": "A block that represents a datetime. Deprecated, please use Variables to store datetime data instead.",
+        "code_example": "Load a stored JSON value:\n```python\nfrom prefect.blocks.system import DateTime\n\ndata_time_block = DateTime.load(\"BLOCK_NAME\")\n```",
+        "block_schema": {
+          "checksum": "sha256:94cacaae861dc63b4fcfef96972d9269bb7cb8897a0591a6fd2ac6d0ee64571f",
+          "fields": {
+            "block_schema_references": {},
+            "block_type_slug": "date-time",
+            "description": "A block that represents a datetime. Deprecated, please use Variables to store datetime data instead.",
+            "properties": {
+              "value": {
+                "description": "An ISO 8601-compatible datetime value.",
+                "format": "date-time",
+                "title": "Value",
+                "type": "string"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "secret_fields": [],
+            "title": "DateTime",
+            "type": "object"
+          },
+          "capabilities": [],
+          "version": "3.4.18"
+        }
+      },
+      "discord-webhook": {
+        "name": "Discord Webhook",
+        "slug": "discord-webhook",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/9e94976c80ef925b66d24e5d14f0d47baa6b8f88-250x250.png",
+        "documentation_url": "https://docs.prefect.io/latest/automate/events/automations-triggers#sending-notifications-with-automations",
+        "description": "Enables sending notifications via a provided Discord webhook.",
+        "code_example": "Load a saved Discord webhook and send a message:\n```python\nfrom prefect.blocks.notifications import DiscordWebhook\n\ndiscord_webhook_block = DiscordWebhook.load(\"BLOCK_NAME\")\n\ndiscord_webhook_block.notify(\"Hello from Prefect!\")\n```",
+        "block_schema": {
+          "checksum": "sha256:300616b3c36b57f6f2c83874213eec897d55bb4049eedbb76ce9afc4e9f5f8d9",
+          "fields": {
+            "block_schema_references": {},
+            "block_type_slug": "discord-webhook",
+            "description": "Enables sending notifications via a provided Discord webhook.",
+            "properties": {
+              "notify_type": {
+                "default": "info",
+                "description": "The type of notification being performed.",
+                "enum": [
+                  "info",
+                  "success",
+                  "warning",
+                  "failure"
+                ],
+                "title": "Notify Type",
+                "type": "string"
+              },
+              "webhook_id": {
+                "description": "The first part of 2 tokens provided to you after creating a incoming-webhook.",
+                "format": "password",
+                "title": "Webhook Id",
+                "type": "string",
+                "writeOnly": true
+              },
+              "webhook_token": {
+                "description": "The second part of 2 tokens provided to you after creating a incoming-webhook.",
+                "format": "password",
+                "title": "Webhook Token",
+                "type": "string",
+                "writeOnly": true
+              },
+              "botname": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Identify the name of the bot that should issue the message. If one isn't specified then the default is to just use your account (associated with the incoming-webhook).",
+                "title": "Bot name"
+              },
+              "tts": {
+                "default": false,
+                "description": "Whether to enable Text-To-Speech.",
+                "title": "Tts",
+                "type": "boolean"
+              },
+              "include_image": {
+                "default": false,
+                "description": "Whether to include an image in-line with the message describing the notification type.",
+                "title": "Include Image",
+                "type": "boolean"
+              },
+              "avatar": {
+                "default": false,
+                "description": "Whether to override the default discord avatar icon.",
+                "title": "Avatar",
+                "type": "boolean"
+              },
+              "avatar_url": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Over-ride the default discord avatar icon URL. By default this is not set and Apprise chooses the URL dynamically based on the type of message (info, success, warning, or error).",
+                "title": "Avatar URL"
+              }
+            },
+            "required": [
+              "webhook_id",
+              "webhook_token"
+            ],
+            "secret_fields": [
+              "webhook_id",
+              "webhook_token"
+            ],
+            "title": "DiscordWebhook",
+            "type": "object"
+          },
+          "capabilities": [
+            "notify"
+          ],
+          "version": "3.4.18"
+        }
+      },
+      "json": {
+        "name": "JSON",
+        "slug": "json",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/4fcef2294b6eeb423b1332d1ece5156bf296ff96-48x48.png",
+        "documentation_url": "https://docs.prefect.io/latest/develop/blocks",
+        "description": "A block that represents JSON. Deprecated, please use Variables to store JSON data instead.",
+        "code_example": "Load a stored JSON value:\n```python\nfrom prefect.blocks.system import JSON\n\njson_block = JSON.load(\"BLOCK_NAME\")\n```",
+        "block_schema": {
+          "checksum": "sha256:0f01d400eb1ebd964d491132cda72e6a6d843f8ce940397b3dba7be219852106",
+          "fields": {
+            "block_schema_references": {},
+            "block_type_slug": "json",
+            "description": "A block that represents JSON. Deprecated, please use Variables to store JSON data instead.",
+            "properties": {
+              "value": {
+                "description": "A JSON-compatible value.",
+                "title": "Value"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "secret_fields": [],
+            "title": "JSON",
+            "type": "object"
+          },
+          "capabilities": [],
+          "version": "3.4.18"
+        }
+      },
+      "local-file-system": {
+        "name": "Local File System",
+        "slug": "local-file-system",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/ad39089fa66d273b943394a68f003f7a19aa850e-48x48.png",
+        "documentation_url": "https://docs.prefect.io/latest/develop/results#specifying-a-default-filesystem",
+        "description": "Store data as a file on a local file system.",
+        "code_example": "Load stored local file system config:\n```python\nfrom prefect.filesystems import LocalFileSystem\n\nlocal_file_system_block = LocalFileSystem.load(\"BLOCK_NAME\")\n```",
+        "block_schema": {
+          "checksum": "sha256:80dd31d7cc72fba9f3005c9692797050a118b5b24f3354df05ec1b7de9f0abbd",
+          "fields": {
+            "block_schema_references": {},
+            "block_type_slug": "local-file-system",
+            "description": "Store data as a file on a local file system.",
+            "properties": {
+              "basepath": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Default local path for this block to write to.",
+                "title": "Basepath"
+              }
+            },
+            "secret_fields": [],
+            "title": "LocalFileSystem",
+            "type": "object"
+          },
+          "capabilities": [
+            "get-directory",
+            "put-directory",
+            "read-path",
+            "write-path"
+          ],
+          "version": "3.4.18"
+        }
+      },
+      "mattermost-webhook": {
+        "name": "Mattermost Webhook",
+        "slug": "mattermost-webhook",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/1350a147130bf82cbc799a5f868d2c0116207736-250x250.png",
+        "documentation_url": "https://docs.prefect.io/latest/automate/events/automations-triggers#sending-notifications-with-automations",
+        "description": "Enables sending notifications via a provided Mattermost webhook.",
+        "code_example": "Load a saved Mattermost webhook and send a message:\n```python\nfrom prefect.blocks.notifications import MattermostWebhook\n\nmattermost_webhook_block = MattermostWebhook.load(\"BLOCK_NAME\")\n\nmattermost_webhook_block.notify(\"Hello from Prefect!\")\n```",
+        "block_schema": {
+          "checksum": "sha256:4c3388c861c0d76b7989ee652c6e0894c229afd448fd78b9d8219890681b3be9",
+          "fields": {
+            "block_schema_references": {},
+            "block_type_slug": "mattermost-webhook",
+            "description": "Enables sending notifications via a provided Mattermost webhook.",
+            "properties": {
+              "notify_type": {
+                "default": "info",
+                "description": "The type of notification being performed.",
+                "enum": [
+                  "info",
+                  "success",
+                  "warning",
+                  "failure"
+                ],
+                "title": "Notify Type",
+                "type": "string"
+              },
+              "hostname": {
+                "description": "The hostname of your Mattermost server.",
+                "examples": [
+                  "Mattermost.example.com"
+                ],
+                "title": "Hostname",
+                "type": "string"
+              },
+              "secure": {
+                "default": false,
+                "description": "Whether to use secure https connection.",
+                "title": "Secure",
+                "type": "boolean"
+              },
+              "token": {
+                "description": "The token associated with your Mattermost webhook.",
+                "format": "password",
+                "title": "Token",
+                "type": "string",
+                "writeOnly": true
+              },
+              "botname": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "The name of the bot that will send the message.",
+                "title": "Bot name"
+              },
+              "channels": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "The channel(s) you wish to notify.",
+                "title": "Channels"
+              },
+              "include_image": {
+                "default": false,
+                "description": "Whether to include the Apprise status image in the message.",
+                "title": "Include Image",
+                "type": "boolean"
+              },
+              "path": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "An optional sub-path specification to append to the hostname.",
+                "title": "Path"
+              },
+              "port": {
+                "default": 8065,
+                "description": "The port of your Mattermost server.",
+                "title": "Port",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "hostname",
+              "token"
+            ],
+            "secret_fields": [
+              "token"
+            ],
+            "title": "MattermostWebhook",
+            "type": "object"
+          },
+          "capabilities": [
+            "notify"
+          ],
+          "version": "3.4.18"
+        }
+      },
+      "ms-teams-webhook": {
+        "name": "Microsoft Teams Webhook",
+        "slug": "ms-teams-webhook",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/817efe008a57f0a24f3587414714b563e5e23658-250x250.png",
+        "documentation_url": "https://docs.prefect.io/latest/automate/events/automations-triggers#sending-notifications-with-automations",
+        "description": "Enables sending notifications via a provided Microsoft Teams webhook.",
+        "code_example": "Load a saved Teams webhook and send a message:\n```python\nfrom prefect.blocks.notifications import MicrosoftTeamsWebhook\nteams_webhook_block = MicrosoftTeamsWebhook.load(\"BLOCK_NAME\")\nteams_webhook_block.notify(\"Hello from Prefect!\")\n```",
+        "block_schema": {
+          "checksum": "sha256:c442ad7eaddcd734e926eead9bca2251fd3cbdcb69c666cea3696b9a60766028",
+          "fields": {
+            "block_schema_references": {},
+            "block_type_slug": "ms-teams-webhook",
+            "description": "Enables sending notifications via a provided Microsoft Teams webhook.",
+            "properties": {
+              "notify_type": {
+                "default": "info",
+                "description": "The type of notification being performed.",
+                "enum": [
+                  "info",
+                  "success",
+                  "warning",
+                  "failure"
+                ],
+                "title": "Notify Type",
+                "type": "string"
+              },
+              "url": {
+                "description": "The Microsoft Power Automate (Workflows) URL used to send notifications to Teams.",
+                "examples": [
+                  "https://prod-NO.LOCATION.logic.azure.com:443/workflows/WFID/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=SIGNATURE"
+                ],
+                "format": "password",
+                "title": "Webhook URL",
+                "type": "string",
+                "writeOnly": true
+              },
+              "allow_private_urls": {
+                "default": true,
+                "description": "Whether to allow notifications to private URLs. Defaults to True.",
+                "title": "Allow Private Urls",
+                "type": "boolean"
+              },
+              "include_image": {
+                "default": true,
+                "description": "Include an image with the notification.",
+                "title": "Include Image",
+                "type": "boolean"
+              },
+              "wrap": {
+                "default": true,
+                "description": "Wrap the notification text.",
+                "title": "Wrap",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "url"
+            ],
+            "secret_fields": [
+              "url"
+            ],
+            "title": "MicrosoftTeamsWebhook",
+            "type": "object"
+          },
+          "capabilities": [
+            "notify"
+          ],
+          "version": "3.4.18"
+        }
+      },
+      "opsgenie-webhook": {
+        "name": "Opsgenie Webhook",
+        "slug": "opsgenie-webhook",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/d8b5bc6244ae6cd83b62ec42f10d96e14d6e9113-280x280.png",
+        "documentation_url": "https://docs.prefect.io/latest/automate/events/automations-triggers#sending-notifications-with-automations",
+        "description": "Enables sending notifications via a provided Opsgenie webhook.",
+        "code_example": "Load a saved Opsgenie webhook and send a message:\n```python\nfrom prefect.blocks.notifications import OpsgenieWebhook\nopsgenie_webhook_block = OpsgenieWebhook.load(\"BLOCK_NAME\")\nopsgenie_webhook_block.notify(\"Hello from Prefect!\")\n```",
+        "block_schema": {
+          "checksum": "sha256:d81bd1efed107d9dab8ffac871c1d5d243da72fc96aa1eb86c79fb406b47f407",
+          "fields": {
+            "block_schema_references": {},
+            "block_type_slug": "opsgenie-webhook",
+            "description": "Enables sending notifications via a provided Opsgenie webhook.",
+            "properties": {
+              "notify_type": {
+                "default": "info",
+                "description": "The type of notification being performed.",
+                "enum": [
+                  "info",
+                  "success",
+                  "warning",
+                  "failure"
+                ],
+                "title": "Notify Type",
+                "type": "string"
+              },
+              "apikey": {
+                "description": "The API Key associated with your Opsgenie account.",
+                "format": "password",
+                "title": "API Key",
+                "type": "string",
+                "writeOnly": true
+              },
+              "target_user": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "The user(s) you wish to notify.",
+                "title": "Target User"
+              },
+              "target_team": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "The team(s) you wish to notify.",
+                "title": "Target Team"
+              },
+              "target_schedule": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "The schedule(s) you wish to notify.",
+                "title": "Target Schedule"
+              },
+              "target_escalation": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "The escalation(s) you wish to notify.",
+                "title": "Target Escalation"
+              },
+              "region_name": {
+                "default": "us",
+                "description": "The 2-character region code.",
+                "enum": [
+                  "us",
+                  "eu"
+                ],
+                "title": "Region Name",
+                "type": "string"
+              },
+              "batch": {
+                "default": false,
+                "description": "Notify all targets in batches (instead of individually).",
+                "title": "Batch",
+                "type": "boolean"
+              },
+              "tags": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "A comma-separated list of tags you can associate with your Opsgenie message.",
+                "examples": [
+                  "[\"tag1\", \"tag2\"]"
+                ],
+                "title": "Tags"
+              },
+              "priority": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 3,
+                "description": "The priority to associate with the message. It is on a scale between 1 (LOW) and 5 (EMERGENCY).",
+                "title": "Priority"
+              },
+              "alias": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "The alias to associate with the message.",
+                "title": "Alias"
+              },
+              "entity": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "The entity to associate with the message.",
+                "title": "Entity"
+              },
+              "details": {
+                "anyOf": [
+                  {
+                    "additionalProperties": {
+                      "type": "string"
+                    },
+                    "type": "object"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Additional details composed of key/values pairs.",
+                "examples": [
+                  "{\"key1\": \"value1\", \"key2\": \"value2\"}"
+                ],
+                "title": "Details"
+              }
+            },
+            "required": [
+              "apikey"
+            ],
+            "secret_fields": [
+              "apikey"
+            ],
+            "title": "OpsgenieWebhook",
+            "type": "object"
+          },
+          "capabilities": [
+            "notify"
+          ],
+          "version": "3.4.18"
+        }
+      },
+      "pager-duty-webhook": {
+        "name": "Pager Duty Webhook",
+        "slug": "pager-duty-webhook",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/8dbf37d17089c1ce531708eac2e510801f7b3aee-250x250.png",
+        "documentation_url": "https://docs.prefect.io/latest/automate/events/automations-triggers#sending-notifications-with-automations",
+        "description": "Enables sending notifications via a provided PagerDuty webhook.",
+        "code_example": "Load a saved PagerDuty webhook and send a message:\n```python\nfrom prefect.blocks.notifications import PagerDutyWebHook\npagerduty_webhook_block = PagerDutyWebHook.load(\"BLOCK_NAME\")\npagerduty_webhook_block.notify(\"Hello from Prefect!\")\n```",
+        "block_schema": {
+          "checksum": "sha256:133ccf80404b874c09cc28c5fca18afb8e6e5409fff1b2615775f5f9b73c878e",
+          "fields": {
+            "block_schema_references": {},
+            "block_type_slug": "pager-duty-webhook",
+            "description": "Enables sending notifications via a provided PagerDuty webhook.",
+            "properties": {
+              "notify_type": {
+                "default": "info",
+                "description": "The severity of the notification.",
+                "enum": [
+                  "info",
+                  "success",
+                  "warning",
+                  "failure"
+                ],
+                "title": "Notify Type",
+                "type": "string"
+              },
+              "integration_key": {
+                "description": "This can be found on the Events API V2 integration's detail page, and is also referred to as a Routing Key. This must be provided alongside `api_key`, but will error if provided alongside `url`.",
+                "format": "password",
+                "title": "Integration Key",
+                "type": "string",
+                "writeOnly": true
+              },
+              "api_key": {
+                "description": "This can be found under Integrations. This must be provided alongside `integration_key`, but will error if provided alongside `url`.",
+                "format": "password",
+                "title": "API Key",
+                "type": "string",
+                "writeOnly": true
+              },
+              "source": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": "Prefect",
+                "description": "The source string as part of the payload.",
+                "title": "Source"
+              },
+              "component": {
+                "default": "Notification",
+                "description": "The component string as part of the payload.",
+                "title": "Component",
+                "type": "string"
+              },
+              "group": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "The group string as part of the payload.",
+                "title": "Group"
+              },
+              "class_id": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "The class string as part of the payload.",
+                "title": "Class ID"
+              },
+              "region_name": {
+                "default": "us",
+                "description": "The region name.",
+                "enum": [
+                  "us",
+                  "eu"
+                ],
+                "title": "Region Name",
+                "type": "string"
+              },
+              "clickable_url": {
+                "anyOf": [
+                  {
+                    "format": "uri",
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "A clickable URL to associate with the notice.",
+                "title": "Clickable URL"
+              },
+              "include_image": {
+                "default": true,
+                "description": "Associate the notification status via a represented icon.",
+                "title": "Include Image",
+                "type": "boolean"
+              },
+              "custom_details": {
+                "anyOf": [
+                  {
+                    "additionalProperties": {
+                      "type": "string"
+                    },
+                    "type": "object"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Additional details to include as part of the payload.",
+                "examples": [
+                  "{\"disk_space_left\": \"145GB\"}"
+                ],
+                "title": "Custom Details"
+              }
+            },
+            "required": [
+              "integration_key",
+              "api_key"
+            ],
+            "secret_fields": [
+              "integration_key",
+              "api_key"
+            ],
+            "title": "PagerDutyWebHook",
+            "type": "object"
+          },
+          "capabilities": [
+            "notify"
+          ],
+          "version": "3.4.18"
+        }
+      },
+      "remote-file-system": {
+        "name": "Remote File System",
+        "slug": "remote-file-system",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/e86b41bc0f9c99ba9489abeee83433b43d5c9365-48x48.png",
+        "documentation_url": "https://docs.prefect.io/latest/develop/results#specifying-a-default-filesystem",
+        "description": "Store data as a file on a remote file system.\n\nSupports any remote file system supported by `fsspec`. The file system is specified\nusing a protocol. For example, \"s3://my-bucket/my-folder/\" will use S3.",
+        "code_example": "Load stored remote file system config:\n```python\nfrom prefect.filesystems import RemoteFileSystem\n\nremote_file_system_block = RemoteFileSystem.load(\"BLOCK_NAME\")\n```",
+        "block_schema": {
+          "checksum": "sha256:efb6b7304d9cadaf09a18abc60be7ae86aec60dbd7dba345faa7ba1e960b211f",
+          "fields": {
+            "block_schema_references": {},
+            "block_type_slug": "remote-file-system",
+            "description": "Store data as a file on a remote file system.\n\nSupports any remote file system supported by `fsspec`. The file system is specified\nusing a protocol. For example, \"s3://my-bucket/my-folder/\" will use S3.",
+            "properties": {
+              "basepath": {
+                "description": "Default path for this block to write to.",
+                "examples": [
+                  "s3://my-bucket/my-folder/"
+                ],
+                "title": "Basepath",
+                "type": "string"
+              },
+              "settings": {
+                "description": "Additional settings to pass through to fsspec.",
+                "title": "Settings",
+                "type": "object"
+              }
+            },
+            "required": [
+              "basepath"
+            ],
+            "secret_fields": [],
+            "title": "RemoteFileSystem",
+            "type": "object"
+          },
+          "capabilities": [
+            "get-directory",
+            "put-directory",
+            "read-path",
+            "write-path"
+          ],
+          "version": "3.4.18"
+        }
+      },
+      "secret": {
+        "name": "Secret",
+        "slug": "secret",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/c6f20e556dd16effda9df16551feecfb5822092b-48x48.png",
+        "documentation_url": "https://docs.prefect.io/latest/develop/blocks",
+        "description": "A block that represents a secret value. The value stored in this block will be obfuscated when this block is viewed or edited in the UI.",
+        "code_example": "```python\nfrom prefect.blocks.system import Secret\n\nSecret(value=\"sk-1234567890\").save(\"BLOCK_NAME\", overwrite=True)\n\nsecret_block = Secret.load(\"BLOCK_NAME\")\n\n# Access the stored secret\nsecret_block.get()\n```",
+        "block_schema": {
+          "checksum": "sha256:f290d6bec2665ff8179b4b88a1ba1942bc93b228504da8b65ce66e8aa70d6159",
+          "fields": {
+            "block_schema_references": {},
+            "block_type_slug": "secret",
+            "description": "A block that represents a secret value. The value stored in this block will be obfuscated when this block is viewed or edited in the UI.",
+            "properties": {
+              "value": {
+                "anyOf": [
+                  {
+                    "format": "password",
+                    "type": "string",
+                    "writeOnly": true
+                  },
+                  {
+                    "title": "string",
+                    "type": "string"
+                  },
+                  {
+                    "$ref": "#/definitions/JsonValue",
+                    "title": "JSON"
+                  }
+                ],
+                "description": "A value that should be kept secret.",
+                "examples": [
+                  "sk-1234567890",
+                  {
+                    "password": "s3cr3t",
+                    "username": "johndoe"
+                  }
+                ],
+                "format": "password",
+                "title": "Value",
+                "writeOnly": true
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "secret_fields": [
+              "value",
+              "value"
+            ],
+            "title": "Secret",
+            "type": "object",
+            "definitions": {
+              "JsonValue": {}
+            }
+          },
+          "capabilities": [],
+          "version": "3.4.18"
+        }
+      },
+      "sendgrid-email": {
+        "name": "Sendgrid Email",
+        "slug": "sendgrid-email",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/82bc6ed16ca42a2252a5512c72233a253b8a58eb-250x250.png",
+        "documentation_url": "https://docs.prefect.io/latest/automate/events/automations-triggers#sending-notifications-with-automations",
+        "description": "Enables sending notifications via Sendgrid email service.",
+        "code_example": "Load a saved Sendgrid and send a email message:\n```python\nfrom prefect.blocks.notifications import SendgridEmail\n\nsendgrid_block = SendgridEmail.load(\"BLOCK_NAME\")\n\nsendgrid_block.notify(\"Hello from Prefect!\")\n```",
+        "block_schema": {
+          "checksum": "sha256:9a6daced0eb910f83be027aaa8b67025ffd63650ec98ce7e8519e322af925b3b",
+          "fields": {
+            "block_schema_references": {},
+            "block_type_slug": "sendgrid-email",
+            "description": "Enables sending notifications via Sendgrid email service.",
+            "properties": {
+              "notify_type": {
+                "default": "info",
+                "description": "The type of notification being performed.",
+                "enum": [
+                  "info",
+                  "success",
+                  "warning",
+                  "failure"
+                ],
+                "title": "Notify Type",
+                "type": "string"
+              },
+              "api_key": {
+                "description": "The API Key associated with your sendgrid account.",
+                "format": "password",
+                "title": "API Key",
+                "type": "string",
+                "writeOnly": true
+              },
+              "sender_email": {
+                "description": "The sender email id.",
+                "examples": [
+                  "test-support@gmail.com"
+                ],
+                "title": "Sender email id",
+                "type": "string"
+              },
+              "to_emails": {
+                "description": "Email ids of all recipients.",
+                "examples": [
+                  "\"recipient1@gmail.com\""
+                ],
+                "items": {
+                  "type": "string"
+                },
+                "title": "Recipient emails",
+                "type": "array"
+              }
+            },
+            "required": [
+              "api_key",
+              "sender_email",
+              "to_emails"
+            ],
+            "secret_fields": [
+              "api_key"
+            ],
+            "title": "SendgridEmail",
+            "type": "object"
+          },
+          "capabilities": [
+            "notify"
+          ],
+          "version": "3.4.18"
+        }
+      },
+      "slack-webhook": {
+        "name": "Slack Webhook",
+        "slug": "slack-webhook",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/c1965ecbf8704ee1ea20d77786de9a41ce1087d1-500x500.png",
+        "documentation_url": "https://docs.prefect.io/latest/automate/events/automations-triggers#sending-notifications-with-automations",
+        "description": "Enables sending notifications via a provided Slack webhook.",
+        "code_example": "Load a saved Slack webhook and send a message:\n```python\nfrom prefect.blocks.notifications import SlackWebhook\n\nslack_webhook_block = SlackWebhook.load(\"BLOCK_NAME\")\nslack_webhook_block.notify(\"Hello from Prefect!\")\n```",
+        "block_schema": {
+          "checksum": "sha256:4c5f58a0a665af3bec3831b2e8deee874789a390231d0b7290b381b2260e67dc",
+          "fields": {
+            "block_schema_references": {},
+            "block_type_slug": "slack-webhook",
+            "description": "Enables sending notifications via a provided Slack webhook.",
+            "properties": {
+              "notify_type": {
+                "default": "info",
+                "description": "The type of notification being performed.",
+                "enum": [
+                  "info",
+                  "success",
+                  "warning",
+                  "failure"
+                ],
+                "title": "Notify Type",
+                "type": "string"
+              },
+              "url": {
+                "description": "Slack incoming webhook URL used to send notifications.",
+                "examples": [
+                  "https://hooks.slack.com/XXX"
+                ],
+                "format": "password",
+                "title": "Webhook URL",
+                "type": "string",
+                "writeOnly": true
+              },
+              "allow_private_urls": {
+                "default": true,
+                "description": "Whether to allow notifications to private URLs. Defaults to True.",
+                "title": "Allow Private Urls",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "url"
+            ],
+            "secret_fields": [
+              "url"
+            ],
+            "title": "SlackWebhook",
+            "type": "object"
+          },
+          "capabilities": [
+            "notify"
+          ],
+          "version": "3.4.18"
+        }
+      },
+      "smb": {
+        "name": "SMB",
+        "slug": "smb",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/3f624663f7beb97d011d011bffd51ecf6c499efc-195x195.png",
+        "documentation_url": "https://docs.prefect.io/latest/develop/results#specifying-a-default-filesystem",
+        "description": "Store data as a file on a SMB share.",
+        "code_example": "Load stored SMB config:\n\n```python\nfrom prefect.filesystems import SMB\nsmb_block = SMB.load(\"BLOCK_NAME\")\n```",
+        "block_schema": {
+          "checksum": "sha256:43bb8145a5f701e6453ca0f91ccd5640f291960b02d916055ff1523bab896f33",
+          "fields": {
+            "block_schema_references": {},
+            "block_type_slug": "smb",
+            "description": "Store data as a file on a SMB share.",
+            "properties": {
+              "share_path": {
+                "description": "SMB target (requires <SHARE>, followed by <PATH>).",
+                "examples": [
+                  "/SHARE/dir/subdir"
+                ],
+                "title": "Share Path",
+                "type": "string"
+              },
+              "smb_username": {
+                "anyOf": [
+                  {
+                    "format": "password",
+                    "type": "string",
+                    "writeOnly": true
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Username with access to the target SMB SHARE.",
+                "title": "SMB Username"
+              },
+              "smb_password": {
+                "anyOf": [
+                  {
+                    "format": "password",
+                    "type": "string",
+                    "writeOnly": true
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Password for SMB access.",
+                "title": "SMB Password"
+              },
+              "smb_host": {
+                "description": "SMB server/hostname.",
+                "title": "SMB server/hostname",
+                "type": "string"
+              },
+              "smb_port": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "SMB port (default: 445).",
+                "title": "SMB port"
+              }
+            },
+            "required": [
+              "share_path",
+              "smb_host"
+            ],
+            "secret_fields": [
+              "smb_username",
+              "smb_password"
+            ],
+            "title": "SMB",
+            "type": "object"
+          },
+          "capabilities": [
+            "get-directory",
+            "put-directory",
+            "read-path",
+            "write-path"
+          ],
+          "version": "3.4.18"
+        }
+      },
+      "string": {
+        "name": "String",
+        "slug": "string",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/c262ea2c80a2c043564e8763f3370c3db5a6b3e6-48x48.png",
+        "documentation_url": "https://docs.prefect.io/latest/develop/blocks",
+        "description": "A block that represents a string. Deprecated, please use Variables to store string data instead.",
+        "code_example": "Load a stored string value:\n```python\nfrom prefect.blocks.system import String\n\nstring_block = String.load(\"BLOCK_NAME\")\n```",
+        "block_schema": {
+          "checksum": "sha256:d1323de7a11a0fcd1854515cf86358ad819f51e8d43f5ba176578965f54b2f9f",
+          "fields": {
+            "block_schema_references": {},
+            "block_type_slug": "string",
+            "description": "A block that represents a string. Deprecated, please use Variables to store string data instead.",
+            "properties": {
+              "value": {
+                "description": "A string value.",
+                "title": "Value",
+                "type": "string"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "secret_fields": [],
+            "title": "String",
+            "type": "object"
+          },
+          "capabilities": [],
+          "version": "3.4.18"
+        }
+      },
+      "twilio-sms": {
+        "name": "Twilio SMS",
+        "slug": "twilio-sms",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/8bd8777999f82112c09b9c8d57083ac75a4a0d65-250x250.png",
+        "documentation_url": "https://docs.prefect.io/latest/automate/events/automations-triggers#sending-notifications-with-automations",
+        "description": "Enables sending notifications via Twilio SMS.",
+        "code_example": "Load a saved `TwilioSMS` block and send a message:\n```python\nfrom prefect.blocks.notifications import TwilioSMS\ntwilio_webhook_block = TwilioSMS.load(\"BLOCK_NAME\")\ntwilio_webhook_block.notify(\"Hello from Prefect!\")\n```",
+        "block_schema": {
+          "checksum": "sha256:cd0041b2c8386c1794c554da53eacc644f0ec9ee7de59f7a0a4bcd8e161c350a",
+          "fields": {
+            "block_schema_references": {},
+            "block_type_slug": "twilio-sms",
+            "description": "Enables sending notifications via Twilio SMS.",
+            "properties": {
+              "notify_type": {
+                "default": "info",
+                "description": "The type of notification being performed.",
+                "enum": [
+                  "info",
+                  "success",
+                  "warning",
+                  "failure"
+                ],
+                "title": "Notify Type",
+                "type": "string"
+              },
+              "account_sid": {
+                "description": "The Twilio Account SID - it can be found on the homepage of the Twilio console.",
+                "title": "Account Sid",
+                "type": "string"
+              },
+              "auth_token": {
+                "description": "The Twilio Authentication Token - it can be found on the homepage of the Twilio console.",
+                "format": "password",
+                "title": "Auth Token",
+                "type": "string",
+                "writeOnly": true
+              },
+              "from_phone_number": {
+                "description": "The valid Twilio phone number to send the message from.",
+                "examples": [
+                  "18001234567"
+                ],
+                "title": "From Phone Number",
+                "type": "string"
+              },
+              "to_phone_numbers": {
+                "description": "A list of valid Twilio phone number(s) to send the message to.",
+                "examples": [
+                  "18004242424"
+                ],
+                "items": {
+                  "type": "string"
+                },
+                "title": "To Phone Numbers",
+                "type": "array"
+              }
+            },
+            "required": [
+              "account_sid",
+              "auth_token",
+              "from_phone_number",
+              "to_phone_numbers"
+            ],
+            "secret_fields": [
+              "auth_token"
+            ],
+            "title": "TwilioSMS",
+            "type": "object"
+          },
+          "capabilities": [
+            "notify"
+          ],
+          "version": "3.4.18"
+        }
+      },
+      "webhook": {
+        "name": "Webhook",
+        "slug": "webhook",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/c7247cb359eb6cf276734d4b1fbf00fb8930e89e-250x250.png",
+        "documentation_url": "https://docs.prefect.io/latest/automate/events/webhook-triggers",
+        "description": "Block that enables calling webhooks.",
+        "code_example": "```python\nfrom prefect.blocks.webhook import Webhook\n\nwebhook_block = Webhook.load(\"BLOCK_NAME\")\n```",
+        "block_schema": {
+          "checksum": "sha256:61e9dbea14935ccb2cfac7eb38f01c4e878a81073806f2aec993820fa0d91eb3",
+          "fields": {
+            "block_schema_references": {},
+            "block_type_slug": "webhook",
+            "description": "Block that enables calling webhooks.",
+            "properties": {
+              "method": {
+                "default": "POST",
+                "description": "The webhook request method. Defaults to `POST`.",
+                "enum": [
+                  "GET",
+                  "POST",
+                  "PUT",
+                  "PATCH",
+                  "DELETE"
+                ],
+                "title": "Method",
+                "type": "string"
+              },
+              "url": {
+                "description": "The webhook URL.",
+                "examples": [
+                  "https://hooks.slack.com/XXX"
+                ],
+                "format": "password",
+                "title": "Webhook URL",
+                "type": "string",
+                "writeOnly": true
+              },
+              "headers": {
+                "description": "A dictionary of headers to send with the webhook request.",
+                "title": "Webhook Headers",
+                "type": "object"
+              },
+              "allow_private_urls": {
+                "default": true,
+                "description": "Whether to allow notifications to private URLs. Defaults to True.",
+                "title": "Allow Private Urls",
+                "type": "boolean"
+              },
+              "verify": {
+                "default": true,
+                "description": "Whether or not to enforce a secure connection to the webhook.",
+                "title": "Verify",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "url"
+            ],
+            "secret_fields": [
+              "url",
+              "headers.*"
+            ],
+            "title": "Webhook",
+            "type": "object"
+          },
+          "capabilities": [],
+          "version": "3.4.18"
+        }
+      }
+    }
+  }
+}
