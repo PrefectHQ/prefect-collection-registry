@@ -6747,60 +6747,81 @@
         "description": "A block representing a shell operation, containing multiple commands.\n\nFor long-lasting operations, use the trigger method and utilize the block as a\ncontext manager for automatic closure of processes when context is exited.\nIf not, manually call the close method to close processes.\n\nFor short-lasting operations, use the run method. Context is automatically managed\nwith this method. This block is part of the prefect-shell collection. Install prefect-shell with `pip install prefect-shell` to use this block.",
         "code_example": "Load a configured block:\n```python\nfrom prefect_shell import ShellOperation\n\nshell_operation = ShellOperation.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:9525e2fd40af302916ff7a4c33ec9c0e20d8970b09243ca010d729fac144811d",
+          "checksum": "sha256:56c42125a85e8506e96dc84a3427e6bafb9971f6be749dce88f0b689849bab56",
           "fields": {
-            "title": "ShellOperation",
+            "block_schema_references": {},
+            "block_type_slug": "shell-operation",
             "description": "A block representing a shell operation, containing multiple commands.\n\nFor long-lasting operations, use the trigger method and utilize the block as a\ncontext manager for automatic closure of processes when context is exited.\nIf not, manually call the close method to close processes.\n\nFor short-lasting operations, use the run method. Context is automatically managed\nwith this method.",
-            "type": "object",
             "properties": {
               "commands": {
-                "title": "Commands",
                 "description": "A list of commands to execute sequentially.",
-                "type": "array",
                 "items": {
                   "type": "string"
-                }
+                },
+                "title": "Commands",
+                "type": "array"
               },
               "stream_output": {
-                "title": "Stream Output",
-                "description": "Whether to stream output.",
                 "default": true,
+                "description": "Whether to stream output.",
+                "title": "Stream Output",
                 "type": "boolean"
               },
               "env": {
-                "title": "Environment Variables",
                 "description": "Environment variables to use for the subprocess.",
-                "type": "object",
-                "additionalProperties": {
-                  "type": "string"
-                }
+                "title": "Environment Variables",
+                "type": "object"
               },
               "working_dir": {
-                "title": "Working Directory",
+                "anyOf": [
+                  {
+                    "format": "directory-path",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "The absolute path to the working directory the command will be executed within.",
-                "format": "directory-path",
-                "type": "string"
+                "title": "Working Directory"
               },
               "shell": {
-                "title": "Shell",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "The shell to run the command with; if unset, defaults to `powershell` on Windows and `bash` on other platforms.",
-                "type": "string"
+                "title": "Shell"
               },
               "extension": {
-                "title": "Extension",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "The extension to use for the temporary file; if unset, defaults to `.ps1` on Windows and `.sh` on other platforms.",
-                "type": "string"
+                "title": "Extension"
               }
             },
             "required": [
               "commands"
             ],
-            "block_type_slug": "shell-operation",
             "secret_fields": [],
-            "block_schema_references": {}
+            "title": "ShellOperation",
+            "type": "object"
           },
           "capabilities": [],
-          "version": "0.2.2"
+          "version": "0.3.1"
         }
       }
     }
