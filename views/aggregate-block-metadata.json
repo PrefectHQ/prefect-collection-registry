@@ -6838,29 +6838,29 @@
         "block_schema": {
           "checksum": "sha256:f79058d8fcf22ed575f824b27daa68a52fedaa0e40f7a8a542d4ac9cf3ee8317",
           "fields": {
-            "title": "SlackCredentials",
+            "block_schema_references": {},
+            "block_type_slug": "slack-credentials",
             "description": "Block holding Slack credentials for use in tasks and flows.",
-            "type": "object",
             "properties": {
               "token": {
-                "title": "Token",
                 "description": "Bot user OAuth token for the Slack app used to perform actions.",
+                "format": "password",
+                "title": "Token",
                 "type": "string",
-                "writeOnly": true,
-                "format": "password"
+                "writeOnly": true
               }
             },
             "required": [
               "token"
             ],
-            "block_type_slug": "slack-credentials",
             "secret_fields": [
               "token"
             ],
-            "block_schema_references": {}
+            "title": "SlackCredentials",
+            "type": "object"
           },
           "capabilities": [],
-          "version": "0.2.2"
+          "version": "0.3.1"
         }
       }
     }
