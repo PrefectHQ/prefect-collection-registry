@@ -2265,73 +2265,92 @@
         "name": "Azure Blob Storage Container",
         "slug": "azure-blob-storage-container",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/54e3fa7e00197a4fbd1d82ed62494cb58d08c96a-250x250.png",
-        "documentation_url": "https://prefecthq.github.io/prefect-azure/blob_storage/#prefect_azure.blob_storabe.AzureBlobStorageContainer",
+        "documentation_url": "https://docs.prefect.io/integrations/prefect-azure",
         "description": "Represents a container in Azure Blob Storage.\n\nThis class provides methods for downloading and uploading files and folders\nto and from the Azure Blob Storage container. This block is part of the prefect-azure collection. Install prefect-azure with `pip install prefect-azure` to use this block.",
         "code_example": "```python\nfrom prefect_azure.blob_storage import AzureBlobStorageContainer\n\nazure_blob_storage_container_block = AzureBlobStorageContainer.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:dcb604fba31292177868c0998110c7b4c0ba0b5601ee39679b2936adfd836f19",
+          "checksum": "sha256:1a7c5d6026bc6cfa8fe291192d6b1d411f28cedbfa4418d40aa126e7bbd946ec",
           "fields": {
-            "title": "AzureBlobStorageContainer",
+            "block_schema_references": {
+              "credentials": {
+                "block_schema_checksum": "sha256:aa4724874002a0fc5f2164a41c7aa78bc26fc9e63fa8519ae25cc6b3887334e2",
+                "block_type_slug": "azure-blob-storage-credentials"
+              }
+            },
+            "block_type_slug": "azure-blob-storage-container",
             "description": "Represents a container in Azure Blob Storage.\n\nThis class provides methods for downloading and uploading files and folders\nto and from the Azure Blob Storage container.",
-            "type": "object",
             "properties": {
               "container_name": {
-                "title": "Container Name",
                 "description": "The name of a Azure Blob Storage container.",
+                "title": "Container Name",
                 "type": "string"
               },
               "credentials": {
-                "title": "Credentials",
-                "description": "The credentials to use for authentication with Azure.",
-                "allOf": [
-                  {
-                    "$ref": "#/definitions/AzureBlobStorageCredentials"
-                  }
-                ]
+                "$ref": "#/definitions/AzureBlobStorageCredentials",
+                "description": "The credentials to use for authentication with Azure."
               },
               "base_folder": {
-                "title": "Base Folder",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "A base path to a folder within the container to use for reading and writing objects.",
-                "type": "string"
+                "title": "Base Folder"
               }
             },
             "required": [
               "container_name"
             ],
-            "block_type_slug": "azure-blob-storage-container",
             "secret_fields": [
               "credentials.connection_string"
             ],
-            "block_schema_references": {
-              "credentials": {
-                "block_type_slug": "azure-blob-storage-credentials",
-                "block_schema_checksum": "sha256:73e835b6cb9a1902fd869037fb7f8a90f974508dda7a168e748a1206e7c325eb"
-              }
-            },
+            "title": "AzureBlobStorageContainer",
+            "type": "object",
             "definitions": {
               "AzureBlobStorageCredentials": {
-                "title": "AzureBlobStorageCredentials",
+                "block_schema_references": {},
+                "block_type_slug": "azure-blob-storage-credentials",
                 "description": "Stores credentials for authenticating with Azure Blob Storage.",
-                "type": "object",
                 "properties": {
                   "connection_string": {
-                    "title": "Connection String",
+                    "anyOf": [
+                      {
+                        "format": "password",
+                        "type": "string",
+                        "writeOnly": true
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
                     "description": "The connection string to your Azure storage account. If provided, the connection string will take precedence over the account URL.",
-                    "type": "string",
-                    "writeOnly": true,
-                    "format": "password"
+                    "title": "Connection String"
                   },
                   "account_url": {
-                    "title": "Account URL",
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
                     "description": "The URL for your Azure storage account. If provided, the account URL will be used to authenticate with the discovered default Azure credentials.",
-                    "type": "string"
+                    "title": "Account URL"
                   }
                 },
-                "block_type_slug": "azure-blob-storage-credentials",
                 "secret_fields": [
                   "connection_string"
                 ],
-                "block_schema_references": {}
+                "title": "AzureBlobStorageCredentials",
+                "type": "object"
               }
             }
           },
@@ -2341,456 +2360,212 @@
             "read-path",
             "write-path"
           ],
-          "version": "0.3.7"
+          "version": "0.4.5"
         }
       },
       "azure-blob-storage-credentials": {
         "name": "Azure Blob Storage Credentials",
         "slug": "azure-blob-storage-credentials",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/54e3fa7e00197a4fbd1d82ed62494cb58d08c96a-250x250.png",
-        "documentation_url": "https://prefecthq.github.io/prefect-azure/credentials/#prefect_azure.credentials.AzureBlobStorageCredentials",
+        "documentation_url": "https://docs.prefect.io/integrations/prefect-azure",
         "description": "Stores credentials for authenticating with Azure Blob Storage. This block is part of the prefect-azure collection. Install prefect-azure with `pip install prefect-azure` to use this block.",
         "code_example": "Load stored Azure Blob Storage credentials and retrieve a blob service client:\n```python\nfrom prefect_azure import AzureBlobStorageCredentials\n\nazure_credentials_block = AzureBlobStorageCredentials.load(\"BLOCK_NAME\")\n\nblob_service_client = azure_credentials_block.get_blob_client()\n```",
         "block_schema": {
-          "checksum": "sha256:73e835b6cb9a1902fd869037fb7f8a90f974508dda7a168e748a1206e7c325eb",
+          "checksum": "sha256:aa4724874002a0fc5f2164a41c7aa78bc26fc9e63fa8519ae25cc6b3887334e2",
           "fields": {
-            "title": "AzureBlobStorageCredentials",
+            "block_schema_references": {},
+            "block_type_slug": "azure-blob-storage-credentials",
             "description": "Stores credentials for authenticating with Azure Blob Storage.",
-            "type": "object",
             "properties": {
               "connection_string": {
-                "title": "Connection String",
+                "anyOf": [
+                  {
+                    "format": "password",
+                    "type": "string",
+                    "writeOnly": true
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "The connection string to your Azure storage account. If provided, the connection string will take precedence over the account URL.",
-                "type": "string",
-                "writeOnly": true,
-                "format": "password"
+                "title": "Connection String"
               },
               "account_url": {
-                "title": "Account URL",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "The URL for your Azure storage account. If provided, the account URL will be used to authenticate with the discovered default Azure credentials.",
-                "type": "string"
+                "title": "Account URL"
               }
             },
-            "block_type_slug": "azure-blob-storage-credentials",
             "secret_fields": [
               "connection_string"
             ],
-            "block_schema_references": {}
+            "title": "AzureBlobStorageCredentials",
+            "type": "object"
           },
           "capabilities": [],
-          "version": "0.3.7"
+          "version": "0.4.5"
         }
       },
       "azure-container-instance-credentials": {
         "name": "Azure Container Instance Credentials",
         "slug": "azure-container-instance-credentials",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/54e3fa7e00197a4fbd1d82ed62494cb58d08c96a-250x250.png",
-        "documentation_url": "https://prefecthq.github.io/prefect-azure/credentials/#prefect_azure.credentials.AzureContainerInstanceCredentials",
+        "documentation_url": "https://docs.prefect.io/integrations/prefect-azure",
         "description": "Block used to manage Azure Container Instances authentication. Stores Azure Service\nPrincipal authentication data. This block is part of the prefect-azure collection. Install prefect-azure with `pip install prefect-azure` to use this block.",
         "code_example": "```python\nfrom prefect_azure.credentials import AzureContainerInstanceCredentials\n\nazure_container_instance_credentials_block = AzureContainerInstanceCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:17a9122f9f345a4547128cc05f7ff7146da9a72c4bac2850004fcc6c8d9be2d1",
+          "checksum": "sha256:8eb5694e6a5d049ec70ae109499a66bdcbe36489d9e83d5245baaf61e8da7cb1",
           "fields": {
-            "title": "AzureContainerInstanceCredentials",
+            "block_schema_references": {},
+            "block_type_slug": "azure-container-instance-credentials",
             "description": "Block used to manage Azure Container Instances authentication. Stores Azure Service\nPrincipal authentication data.",
-            "type": "object",
             "properties": {
               "client_id": {
-                "title": "Client ID",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "The service principal client ID. If none of client_id, tenant_id, and client_secret are provided, will use DefaultAzureCredential; else will need to provide all three to use ClientSecretCredential.",
-                "type": "string"
+                "title": "Client ID"
               },
               "tenant_id": {
-                "title": "Tenant ID",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "The service principal tenant ID.If none of client_id, tenant_id, and client_secret are provided, will use DefaultAzureCredential; else will need to provide all three to use ClientSecretCredential.",
-                "type": "string"
+                "title": "Tenant ID"
               },
               "client_secret": {
-                "title": "Client Secret",
+                "anyOf": [
+                  {
+                    "format": "password",
+                    "type": "string",
+                    "writeOnly": true
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "The service principal client secret.If none of client_id, tenant_id, and client_secret are provided, will use DefaultAzureCredential; else will need to provide all three to use ClientSecretCredential.",
-                "type": "string",
-                "writeOnly": true,
-                "format": "password"
+                "title": "Client Secret"
               },
               "credential_kwargs": {
-                "title": "Additional Credential Keyword Arguments",
                 "description": "Additional keyword arguments to pass to `ClientSecretCredential` or `DefaultAzureCredential`.",
+                "title": "Additional Credential Keyword Arguments",
                 "type": "object"
               }
             },
-            "block_type_slug": "azure-container-instance-credentials",
             "secret_fields": [
               "client_secret"
             ],
-            "block_schema_references": {}
+            "title": "AzureContainerInstanceCredentials",
+            "type": "object"
           },
           "capabilities": [],
-          "version": "0.3.7"
-        }
-      },
-      "azure-container-instance-job": {
-        "name": "Azure Container Instance Job",
-        "slug": "azure-container-instance-job",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/54e3fa7e00197a4fbd1d82ed62494cb58d08c96a-250x250.png",
-        "documentation_url": "https://prefecthq.github.io/prefect-azure/container_instance/#prefect_azure.container_instance.AzureContainerInstanceJob",
-        "description": "DEPRECATION WARNING: This block is deprecated along with Agents and all other Infrastructure blocks. It will be removed in `prefect>=3.0.0`. Run tasks using Azure Container Instances. Note this block is experimental. The interface may change without notice. This block is part of the prefect-azure collection. Install prefect-azure with `pip install prefect-azure` to use this block.",
-        "code_example": "```python\nfrom prefect_azure.container_instance import AzureContainerInstanceJob\n\nazure_container_instance_job_block = AzureContainerInstanceJob.load(\"BLOCK_NAME\")\n```",
-        "block_schema": {
-          "checksum": "sha256:367f8171cce7f4937a49fe19febd1752cb95a2eed83e91ec40dd6120d90eff2f",
-          "fields": {
-            "title": "AzureContainerInstanceJob",
-            "description": "Run tasks using Azure Container Instances. Note this block is experimental. The interface may change without notice.",
-            "type": "object",
-            "properties": {
-              "type": {
-                "title": "Type",
-                "description": "The slug for this task type.",
-                "default": "container-instance-job",
-                "enum": [
-                  "container-instance-job"
-                ],
-                "type": "string"
-              },
-              "env": {
-                "title": "Environment Variables",
-                "description": "Environment variables to provide to the task run. These variables are set on the Prefect container at task runtime. These will not be set on the task definition.",
-                "type": "object",
-                "additionalProperties": {
-                  "type": "string"
-                }
-              },
-              "labels": {
-                "title": "Labels",
-                "description": "Labels applied to the infrastructure for metadata purposes.",
-                "type": "object",
-                "additionalProperties": {
-                  "type": "string"
-                }
-              },
-              "name": {
-                "title": "Name",
-                "description": "Name applied to the infrastructure for identification.",
-                "type": "string"
-              },
-              "command": {
-                "title": "Command",
-                "description": "The command to run in the infrastructure.",
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "aci_credentials": {
-                "title": "Aci Credentials",
-                "description": "Credentials for Azure Container Instances; if not provided will attempt to use DefaultAzureCredentials.",
-                "allOf": [
-                  {
-                    "$ref": "#/definitions/AzureContainerInstanceCredentials"
-                  }
-                ]
-              },
-              "resource_group_name": {
-                "title": "Azure Resource Group Name",
-                "description": "The name of the Azure Resource Group in which to run Prefect ACI tasks.",
-                "type": "string"
-              },
-              "subscription_id": {
-                "title": "Azure Subscription ID",
-                "description": "The ID of the Azure subscription to create containers under.",
-                "type": "string",
-                "writeOnly": true,
-                "format": "password"
-              },
-              "identities": {
-                "title": "Identities",
-                "description": "A list of user-assigned identities to associate with the container group. The identities should be an ARM resource IDs in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.",
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "image": {
-                "title": "Image",
-                "description": "The image to use for the Prefect container in the task. This value defaults to a Prefect base image matching your local versions.",
-                "type": "string"
-              },
-              "entrypoint": {
-                "title": "Entrypoint",
-                "description": "The entrypoint of the container you wish you run. This value defaults to the entrypoint used by Prefect images and should only be changed when using a custom image that is not based on an official Prefect image. Any commands set on deployments will be passed to the entrypoint as parameters.",
-                "default": "/opt/prefect/entrypoint.sh",
-                "type": "string"
-              },
-              "image_registry": {
-                "title": "Image Registry (Optional)",
-                "description": "To use any private container registry with a username and password, choose DockerRegistry. To use a private Azure Container Registry with a managed identity, choose ACRManagedIdentity.",
-                "anyOf": [
-                  {
-                    "$ref": "#/definitions/DockerRegistry"
-                  },
-                  {
-                    "$ref": "#/definitions/ACRManagedIdentity"
-                  }
-                ]
-              },
-              "cpu": {
-                "title": "CPU",
-                "description": "The number of virtual CPUs to assign to the task container. If not provided, a default value of 1.0 will be used.",
-                "default": 1.0,
-                "type": "number"
-              },
-              "gpu_count": {
-                "title": "GPU Count",
-                "description": "The number of GPUs to assign to the task container. If not provided, no GPU will be used.",
-                "type": "integer"
-              },
-              "gpu_sku": {
-                "title": "GPU SKU",
-                "description": "The Azure GPU SKU to use. See the ACI documentation for a list of GPU SKUs available in each Azure region.",
-                "type": "string"
-              },
-              "memory": {
-                "title": "Memory",
-                "description": "The amount of memory in gigabytes to provide to the ACI task. Valid amounts are specified in the Azure documentation. If not provided, a default value of  1.0 will be used unless present on the task definition.",
-                "default": 1.0,
-                "type": "number"
-              },
-              "subnet_ids": {
-                "title": "Subnet IDs",
-                "description": "A list of Azure subnet IDs the container should be connected to.",
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "dns_servers": {
-                "title": "DNS Servers",
-                "description": "A list of custom DNS Servers the container should use.",
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "stream_output": {
-                "title": "Stream Output",
-                "description": "If `True`, logs will be streamed from the Prefect container to the local console.",
-                "type": "boolean"
-              },
-              "task_start_timeout_seconds": {
-                "title": "Task Start Timeout Seconds",
-                "description": "The amount of time to watch for the start of the ACI container. before marking it as failed.",
-                "default": 240,
-                "type": "integer"
-              },
-              "task_watch_poll_interval": {
-                "title": "Task Watch Poll Interval",
-                "description": "The number of seconds to wait between Azure API calls while monitoring the state of an Azure Container Instances task.",
-                "default": 5.0,
-                "type": "number"
-              }
-            },
-            "required": [
-              "resource_group_name",
-              "subscription_id"
-            ],
-            "block_type_slug": "azure-container-instance-job",
-            "secret_fields": [
-              "aci_credentials.client_secret",
-              "subscription_id",
-              "image_registry.password"
-            ],
-            "block_schema_references": {
-              "aci_credentials": {
-                "block_type_slug": "azure-container-instance-credentials",
-                "block_schema_checksum": "sha256:17a9122f9f345a4547128cc05f7ff7146da9a72c4bac2850004fcc6c8d9be2d1"
-              },
-              "image_registry": {
-                "block_type_slug": "docker-registry",
-                "block_schema_checksum": "sha256:6db1457676eee0b54ca2834b06f80a80f7c90112e64f1bdd26afb2e62fcceed9"
-              }
-            },
-            "definitions": {
-              "AzureContainerInstanceCredentials": {
-                "title": "AzureContainerInstanceCredentials",
-                "description": "Block used to manage Azure Container Instances authentication. Stores Azure Service\nPrincipal authentication data.",
-                "type": "object",
-                "properties": {
-                  "client_id": {
-                    "title": "Client ID",
-                    "description": "The service principal client ID. If none of client_id, tenant_id, and client_secret are provided, will use DefaultAzureCredential; else will need to provide all three to use ClientSecretCredential.",
-                    "type": "string"
-                  },
-                  "tenant_id": {
-                    "title": "Tenant ID",
-                    "description": "The service principal tenant ID.If none of client_id, tenant_id, and client_secret are provided, will use DefaultAzureCredential; else will need to provide all three to use ClientSecretCredential.",
-                    "type": "string"
-                  },
-                  "client_secret": {
-                    "title": "Client Secret",
-                    "description": "The service principal client secret.If none of client_id, tenant_id, and client_secret are provided, will use DefaultAzureCredential; else will need to provide all three to use ClientSecretCredential.",
-                    "type": "string",
-                    "writeOnly": true,
-                    "format": "password"
-                  },
-                  "credential_kwargs": {
-                    "title": "Additional Credential Keyword Arguments",
-                    "description": "Additional keyword arguments to pass to `ClientSecretCredential` or `DefaultAzureCredential`.",
-                    "type": "object"
-                  }
-                },
-                "block_type_slug": "azure-container-instance-credentials",
-                "secret_fields": [
-                  "client_secret"
-                ],
-                "block_schema_references": {}
-              },
-              "DockerRegistry": {
-                "title": "DockerRegistry",
-                "description": "Connects to a Docker registry.\n\nRequires a Docker Engine to be connectable.",
-                "type": "object",
-                "properties": {
-                  "username": {
-                    "title": "Username",
-                    "description": "The username to log into the registry with.",
-                    "type": "string"
-                  },
-                  "password": {
-                    "title": "Password",
-                    "description": "The password to log into the registry with.",
-                    "type": "string",
-                    "writeOnly": true,
-                    "format": "password"
-                  },
-                  "registry_url": {
-                    "title": "Registry Url",
-                    "description": "The URL to the registry. Generally, \"http\" or \"https\" can be omitted.",
-                    "type": "string"
-                  },
-                  "reauth": {
-                    "title": "Reauth",
-                    "description": "Whether or not to reauthenticate on each interaction.",
-                    "default": true,
-                    "type": "boolean"
-                  }
-                },
-                "required": [
-                  "username",
-                  "password",
-                  "registry_url"
-                ],
-                "block_type_slug": "docker-registry",
-                "secret_fields": [
-                  "password"
-                ],
-                "block_schema_references": {}
-              },
-              "ACRManagedIdentity": {
-                "title": "ACRManagedIdentity",
-                "description": "Use a Managed Identity to access Azure Container registry. Requires the\nuser-assigned managed identity be available to the ACI container group.",
-                "type": "object",
-                "properties": {
-                  "registry_url": {
-                    "title": "Registry URL",
-                    "description": "The URL to the registry, such as myregistry.azurecr.io. Generally, 'http' or 'https' can be omitted.",
-                    "type": "string"
-                  },
-                  "identity": {
-                    "title": "Identity",
-                    "description": "The user-assigned Azure managed identity for the private registry.",
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "registry_url",
-                  "identity"
-                ]
-              }
-            }
-          },
-          "capabilities": [
-            "run-infrastructure"
-          ],
-          "version": "0.3.7"
+          "version": "0.4.5"
         }
       },
       "azure-cosmos-db-credentials": {
         "name": "Azure Cosmos DB Credentials",
         "slug": "azure-cosmos-db-credentials",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/54e3fa7e00197a4fbd1d82ed62494cb58d08c96a-250x250.png",
-        "documentation_url": "https://prefecthq.github.io/prefect-azure/credentials/#prefect_azure.credentials.AzureCosmosDbCredentials",
+        "documentation_url": "https://docs.prefect.io/integrations/prefect-azure",
         "description": "Block used to manage Cosmos DB authentication with Azure.\nAzure authentication is handled via the `azure` module through\na connection string. This block is part of the prefect-azure collection. Install prefect-azure with `pip install prefect-azure` to use this block.",
         "code_example": "Load stored Azure Cosmos DB credentials:\n```python\nfrom prefect_azure import AzureCosmosDbCredentials\nazure_credentials_block = AzureCosmosDbCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
           "checksum": "sha256:2f9f6e6f6c2eb570a05113638e6237fe74f7684993a351018657211d4705a83a",
           "fields": {
-            "title": "AzureCosmosDbCredentials",
+            "block_schema_references": {},
+            "block_type_slug": "azure-cosmos-db-credentials",
             "description": "Block used to manage Cosmos DB authentication with Azure.\nAzure authentication is handled via the `azure` module through\na connection string.",
-            "type": "object",
             "properties": {
               "connection_string": {
-                "title": "Connection String",
                 "description": "Includes the authorization information required.",
+                "format": "password",
+                "title": "Connection String",
                 "type": "string",
-                "writeOnly": true,
-                "format": "password"
+                "writeOnly": true
               }
             },
             "required": [
               "connection_string"
             ],
-            "block_type_slug": "azure-cosmos-db-credentials",
             "secret_fields": [
               "connection_string"
             ],
-            "block_schema_references": {}
+            "title": "AzureCosmosDbCredentials",
+            "type": "object"
           },
           "capabilities": [],
-          "version": "0.3.7"
+          "version": "0.4.5"
         }
       },
       "azureml-credentials": {
         "name": "AzureML Credentials",
         "slug": "azureml-credentials",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/54e3fa7e00197a4fbd1d82ed62494cb58d08c96a-250x250.png",
-        "documentation_url": "https://prefecthq.github.io/prefect-azure/credentials/#prefect_azure.credentials.AzureMlCredentials",
+        "documentation_url": "https://docs.prefect.io/integrations/prefect-azure",
         "description": "Block used to manage authentication with AzureML. Azure authentication is\nhandled via the `azure` module. This block is part of the prefect-azure collection. Install prefect-azure with `pip install prefect-azure` to use this block.",
         "code_example": "Load stored AzureML credentials:\n```python\nfrom prefect_azure import AzureMlCredentials\nazure_ml_credentials_block = AzureMlCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
           "checksum": "sha256:11338ccb5cd90992ac378f9b7a73cbf1942fae58343ac2026b3718ed688b52e6",
           "fields": {
-            "title": "AzureMlCredentials",
+            "block_schema_references": {},
+            "block_type_slug": "azureml-credentials",
             "description": "Block used to manage authentication with AzureML. Azure authentication is\nhandled via the `azure` module.",
-            "type": "object",
             "properties": {
               "tenant_id": {
-                "title": "Tenant Id",
                 "description": "The active directory tenant that the service identity belongs to.",
+                "title": "Tenant Id",
                 "type": "string"
               },
               "service_principal_id": {
-                "title": "Service Principal Id",
                 "description": "The service principal ID.",
+                "title": "Service Principal Id",
                 "type": "string"
               },
               "service_principal_password": {
-                "title": "Service Principal Password",
                 "description": "The service principal password/key.",
+                "format": "password",
+                "title": "Service Principal Password",
                 "type": "string",
-                "writeOnly": true,
-                "format": "password"
+                "writeOnly": true
               },
               "subscription_id": {
-                "title": "Subscription Id",
                 "description": "The Azure subscription ID containing the workspace, in format: '00000000-0000-0000-0000-000000000000'.",
+                "title": "Subscription Id",
                 "type": "string"
               },
               "resource_group": {
-                "title": "Resource Group",
                 "description": "The resource group containing the workspace.",
+                "title": "Resource Group",
                 "type": "string"
               },
               "workspace_name": {
-                "title": "Workspace Name",
                 "description": "The existing workspace name.",
+                "title": "Workspace Name",
                 "type": "string"
               }
             },
@@ -2802,14 +2577,14 @@
               "resource_group",
               "workspace_name"
             ],
-            "block_type_slug": "azureml-credentials",
             "secret_fields": [
               "service_principal_password"
             ],
-            "block_schema_references": {}
+            "title": "AzureMlCredentials",
+            "type": "object"
           },
           "capabilities": [],
-          "version": "0.3.7"
+          "version": "0.4.5"
         }
       }
     }
