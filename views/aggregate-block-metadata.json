@@ -100,7 +100,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.6.3"
+          "version": "3.6.4"
         }
       },
       "local-file-system": {
@@ -141,7 +141,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "3.6.3"
+          "version": "3.6.4"
         }
       },
       "mattermost-webhook": {
@@ -259,7 +259,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.6.3"
+          "version": "3.6.4"
         }
       },
       "ms-teams-webhook": {
@@ -329,7 +329,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.6.3"
+          "version": "3.6.4"
         }
       },
       "opsgenie-webhook": {
@@ -535,7 +535,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.6.3"
+          "version": "3.6.4"
         }
       },
       "pager-duty-webhook": {
@@ -688,7 +688,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.6.3"
+          "version": "3.6.4"
         }
       },
       "remote-file-system": {
@@ -732,7 +732,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "3.6.3"
+          "version": "3.6.4"
         }
       },
       "secret": {
@@ -792,7 +792,7 @@
             }
           },
           "capabilities": [],
-          "version": "3.6.3"
+          "version": "3.6.4"
         }
       },
       "sendgrid-email": {
@@ -862,7 +862,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.6.3"
+          "version": "3.6.4"
         }
       },
       "slack-webhook": {
@@ -920,7 +920,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.6.3"
+          "version": "3.6.4"
         }
       },
       "smb": {
@@ -1011,7 +1011,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "3.6.3"
+          "version": "3.6.4"
         }
       },
       "twilio-sms": {
@@ -1087,7 +1087,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.6.3"
+          "version": "3.6.4"
         }
       },
       "webhook": {
@@ -1156,7 +1156,7 @@
             "type": "object"
           },
           "capabilities": [],
-          "version": "3.6.3"
+          "version": "3.6.4"
         }
       }
     }
