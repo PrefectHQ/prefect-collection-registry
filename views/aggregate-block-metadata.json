@@ -2223,11 +2223,11 @@
         "description": "Represents a container in Azure Blob Storage.\n\nThis class provides methods for downloading and uploading files and folders\nto and from the Azure Blob Storage container. This block is part of the prefect-azure collection. Install prefect-azure with `pip install prefect-azure` to use this block.",
         "code_example": "```python\nfrom prefect_azure.blob_storage import AzureBlobStorageContainer\n\nazure_blob_storage_container_block = AzureBlobStorageContainer.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:1a7c5d6026bc6cfa8fe291192d6b1d411f28cedbfa4418d40aa126e7bbd946ec",
+          "checksum": "sha256:bbe70e9cb5f7afa50ef244f21afa5d543ace701a9eb44441a1a2d848c0bd825c",
           "fields": {
             "block_schema_references": {
               "credentials": {
-                "block_schema_checksum": "sha256:aa4724874002a0fc5f2164a41c7aa78bc26fc9e63fa8519ae25cc6b3887334e2",
+                "block_schema_checksum": "sha256:51144246a929f608220e3fd491a23e1d1fd5eaef48ce54d8f5d53e2eb2a45c19",
                 "block_type_slug": "azure-blob-storage-credentials"
               }
             },
@@ -2261,7 +2261,8 @@
               "container_name"
             ],
             "secret_fields": [
-              "credentials.connection_string"
+              "credentials.connection_string",
+              "credentials.client_secret"
             ],
             "title": "AzureBlobStorageContainer",
             "type": "object",
@@ -2269,7 +2270,7 @@
               "AzureBlobStorageCredentials": {
                 "block_schema_references": {},
                 "block_type_slug": "azure-blob-storage-credentials",
-                "description": "Stores credentials for authenticating with Azure Blob Storage.",
+                "description": "Stores credentials for authenticating with Azure Blob Storage.\n\nAuthentication can be done using one of the following methods:\n1. Connection string: Provide a connection string for your Azure storage account.\n2. Account URL with DefaultAzureCredential: Provide an account URL and credentials\n   will be discovered automatically using DefaultAzureCredential.\n3. Account URL with Service Principal: Provide an account URL along with client_id,\n   tenant_id, and client_secret for service principal authentication.",
                 "properties": {
                   "connection_string": {
                     "anyOf": [
@@ -2296,12 +2297,54 @@
                       }
                     ],
                     "default": null,
-                    "description": "The URL for your Azure storage account. If provided, the account URL will be used to authenticate with the discovered default Azure credentials.",
+                    "description": "The URL for your Azure storage account. Required for DefaultAzureCredential or service principal authentication.",
                     "title": "Account URL"
+                  },
+                  "client_id": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The service principal client ID. If provided, tenant_id and client_secret must also be provided for service principal authentication.",
+                    "title": "Client ID"
+                  },
+                  "tenant_id": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The service principal tenant ID. If provided, client_id and client_secret must also be provided for service principal authentication.",
+                    "title": "Tenant ID"
+                  },
+                  "client_secret": {
+                    "anyOf": [
+                      {
+                        "format": "password",
+                        "type": "string",
+                        "writeOnly": true
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The service principal client secret. If provided, client_id and tenant_id must also be provided for service principal authentication.",
+                    "title": "Client Secret"
                   }
                 },
                 "secret_fields": [
-                  "connection_string"
+                  "connection_string",
+                  "client_secret"
                 ],
                 "title": "AzureBlobStorageCredentials",
                 "type": "object"
@@ -2314,7 +2357,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "0.4.6"
+          "version": "0.4.7"
         }
       },
       "azure-blob-storage-credentials": {
@@ -2322,14 +2365,14 @@
         "slug": "azure-blob-storage-credentials",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/54e3fa7e00197a4fbd1d82ed62494cb58d08c96a-250x250.png",
         "documentation_url": "https://docs.prefect.io/integrations/prefect-azure",
-        "description": "Stores credentials for authenticating with Azure Blob Storage. This block is part of the prefect-azure collection. Install prefect-azure with `pip install prefect-azure` to use this block.",
-        "code_example": "Load stored Azure Blob Storage credentials and retrieve a blob service client:\n```python\nfrom prefect_azure import AzureBlobStorageCredentials\n\nazure_credentials_block = AzureBlobStorageCredentials.load(\"BLOCK_NAME\")\n\nblob_service_client = azure_credentials_block.get_blob_client()\n```",
+        "description": "Stores credentials for authenticating with Azure Blob Storage.\n\nAuthentication can be done using one of the following methods:\n1. Connection string: Provide a connection string for your Azure storage account.\n2. Account URL with DefaultAzureCredential: Provide an account URL and credentials\n   will be discovered automatically using DefaultAzureCredential.\n3. Account URL with Service Principal: Provide an account URL along with client_id,\n   tenant_id, and client_secret for service principal authentication. This block is part of the prefect-azure collection. Install prefect-azure with `pip install prefect-azure` to use this block.",
+        "code_example": "Load stored Azure Blob Storage credentials and retrieve a blob service client:\n```python\nfrom prefect_azure import AzureBlobStorageCredentials\n\nazure_credentials_block = AzureBlobStorageCredentials.load(\"BLOCK_NAME\")\n\nblob_service_client = azure_credentials_block.get_client()\n```\n\nUsing service principal authentication:\n```python\nfrom prefect_azure import AzureBlobStorageCredentials\n\ncredentials = AzureBlobStorageCredentials(\n    account_url=\"https://mystorageaccount.blob.core.windows.net\",\n    client_id=\"my-client-id\",\n    tenant_id=\"my-tenant-id\",\n    client_secret=\"my-client-secret\",\n)\nblob_service_client = credentials.get_client()\n```",
         "block_schema": {
-          "checksum": "sha256:aa4724874002a0fc5f2164a41c7aa78bc26fc9e63fa8519ae25cc6b3887334e2",
+          "checksum": "sha256:51144246a929f608220e3fd491a23e1d1fd5eaef48ce54d8f5d53e2eb2a45c19",
           "fields": {
             "block_schema_references": {},
             "block_type_slug": "azure-blob-storage-credentials",
-            "description": "Stores credentials for authenticating with Azure Blob Storage.",
+            "description": "Stores credentials for authenticating with Azure Blob Storage.\n\nAuthentication can be done using one of the following methods:\n1. Connection string: Provide a connection string for your Azure storage account.\n2. Account URL with DefaultAzureCredential: Provide an account URL and credentials\n   will be discovered automatically using DefaultAzureCredential.\n3. Account URL with Service Principal: Provide an account URL along with client_id,\n   tenant_id, and client_secret for service principal authentication.",
             "properties": {
               "connection_string": {
                 "anyOf": [
@@ -2356,18 +2399,60 @@
                   }
                 ],
                 "default": null,
-                "description": "The URL for your Azure storage account. If provided, the account URL will be used to authenticate with the discovered default Azure credentials.",
+                "description": "The URL for your Azure storage account. Required for DefaultAzureCredential or service principal authentication.",
                 "title": "Account URL"
+              },
+              "client_id": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "The service principal client ID. If provided, tenant_id and client_secret must also be provided for service principal authentication.",
+                "title": "Client ID"
+              },
+              "tenant_id": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "The service principal tenant ID. If provided, client_id and client_secret must also be provided for service principal authentication.",
+                "title": "Tenant ID"
+              },
+              "client_secret": {
+                "anyOf": [
+                  {
+                    "format": "password",
+                    "type": "string",
+                    "writeOnly": true
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "The service principal client secret. If provided, client_id and tenant_id must also be provided for service principal authentication.",
+                "title": "Client Secret"
               }
             },
             "secret_fields": [
-              "connection_string"
+              "connection_string",
+              "client_secret"
             ],
             "title": "AzureBlobStorageCredentials",
             "type": "object"
           },
           "capabilities": [],
-          "version": "0.4.6"
+          "version": "0.4.7"
         }
       },
       "azure-container-instance-credentials": {
@@ -2438,7 +2523,7 @@
             "type": "object"
           },
           "capabilities": [],
-          "version": "0.4.6"
+          "version": "0.4.7"
         }
       },
       "azure-cosmos-db-credentials": {
@@ -2473,7 +2558,7 @@
             "type": "object"
           },
           "capabilities": [],
-          "version": "0.4.6"
+          "version": "0.4.7"
         }
       },
       "azure-devops-repository": {
@@ -2582,7 +2667,7 @@
           "capabilities": [
             "get-directory"
           ],
-          "version": "0.4.6"
+          "version": "0.4.7"
         }
       },
       "azuredevops-credentials": {
@@ -2622,7 +2707,7 @@
             "type": "object"
           },
           "capabilities": [],
-          "version": "0.4.6"
+          "version": "0.4.7"
         }
       },
       "azureml-credentials": {
@@ -2687,7 +2772,7 @@
             "type": "object"
           },
           "capabilities": [],
-          "version": "0.4.6"
+          "version": "0.4.7"
         }
       }
     }
