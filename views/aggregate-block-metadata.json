@@ -2937,14 +2937,14 @@
         "slug": "databricks-credentials",
         "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5GTHI1PH2dTiantfps6Fnc/1c750fab7f4c14ea1b93a62b9fea6a94/databricks_logo_icon_170295.png?h=250",
         "documentation_url": null,
-        "description": "Block used to manage Databricks authentication. This block is part of the prefect-databricks collection. Install prefect-databricks with `pip install prefect-databricks` to use this block.",
-        "code_example": "Load stored Databricks credentials:\n```python\nfrom prefect_databricks import DatabricksCredentials\ndatabricks_credentials_block = DatabricksCredentials.load(\"BLOCK_NAME\")\n```",
+        "description": "Block used to manage Databricks authentication.\n\nSupports two authentication methods:\n1. Personal Access Token (PAT): Provide a `token` field.\n2. Service Principal (OAuth 2.0): Provide `client_id`, `client_secret`,\n   and optionally `tenant_id` for Azure Databricks. This block is part of the prefect-databricks collection. Install prefect-databricks with `pip install prefect-databricks` to use this block.",
+        "code_example": "Load stored Databricks credentials using PAT:\n```python\nfrom prefect_databricks import DatabricksCredentials\n\ndatabricks_credentials_block = DatabricksCredentials.load(\"BLOCK_NAME\")\n```\n\nUsing service principal authentication:\n```python\nfrom prefect_databricks import DatabricksCredentials\n\ncredentials = DatabricksCredentials(\n    databricks_instance=\"dbc-abc123-def4.cloud.databricks.com\",\n    client_id=\"my-client-id\",\n    client_secret=\"my-client-secret\",\n)\nclient = credentials.get_client()\n```",
         "block_schema": {
-          "checksum": "sha256:249270ea944c28ccb5737053cd0dcac316916185935b19785f7a12785b22d3eb",
+          "checksum": "sha256:9dd0b6386937ee2f31fbe42b92a98ab13a7fab69076e409a9f8d3375dfff0fad",
           "fields": {
             "block_schema_references": {},
             "block_type_slug": "databricks-credentials",
-            "description": "Block used to manage Databricks authentication.",
+            "description": "Block used to manage Databricks authentication.\n\nSupports two authentication methods:\n1. Personal Access Token (PAT): Provide a `token` field.\n2. Service Principal (OAuth 2.0): Provide `client_id`, `client_secret`,\n   and optionally `tenant_id` for Azure Databricks.",
             "properties": {
               "databricks_instance": {
                 "description": "Databricks instance used in formatting the endpoint URL.",
@@ -2952,11 +2952,60 @@
                 "type": "string"
               },
               "token": {
-                "description": "The token to authenticate with Databricks.",
-                "format": "password",
-                "title": "Token",
-                "type": "string",
-                "writeOnly": true
+                "anyOf": [
+                  {
+                    "format": "password",
+                    "type": "string",
+                    "writeOnly": true
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "The token to authenticate with Databricks (for PAT authentication).",
+                "title": "Token"
+              },
+              "client_id": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "The service principal client ID for OAuth authentication. If provided, `client_secret` must also be provided.",
+                "title": "Client ID"
+              },
+              "client_secret": {
+                "anyOf": [
+                  {
+                    "format": "password",
+                    "type": "string",
+                    "writeOnly": true
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "The service principal client secret for OAuth authentication. If provided, `client_id` must also be provided.",
+                "title": "Client Secret"
+              },
+              "tenant_id": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "The tenant ID for Azure Databricks. Optional, only needed for Azure Databricks service principal authentication.",
+                "title": "Tenant ID"
               },
               "client_kwargs": {
                 "anyOf": [
@@ -2974,17 +3023,17 @@
               }
             },
             "required": [
-              "databricks_instance",
-              "token"
+              "databricks_instance"
             ],
             "secret_fields": [
-              "token"
+              "token",
+              "client_secret"
             ],
             "title": "DatabricksCredentials",
             "type": "object"
           },
           "capabilities": [],
-          "version": "0.3.2"
+          "version": "0.4.0"
         }
       }
     }
