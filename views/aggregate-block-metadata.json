@@ -3084,7 +3084,7 @@
             "type": "object"
           },
           "capabilities": [],
-          "version": "0.7.9"
+          "version": "0.7.12"
         }
       },
       "dbt-cloud-job": {
@@ -3311,7 +3311,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.7.9"
+          "version": "0.7.12"
         }
       }
     }
