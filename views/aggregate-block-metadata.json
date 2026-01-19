@@ -100,7 +100,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.6.3"
+          "version": "3.6.11"
         }
       },
       "local-file-system": {
@@ -141,7 +141,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "3.6.3"
+          "version": "3.6.11"
         }
       },
       "mattermost-webhook": {
@@ -259,7 +259,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.6.3"
+          "version": "3.6.11"
         }
       },
       "ms-teams-webhook": {
@@ -329,7 +329,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.6.3"
+          "version": "3.6.11"
         }
       },
       "opsgenie-webhook": {
@@ -535,7 +535,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.6.3"
+          "version": "3.6.11"
         }
       },
       "pager-duty-webhook": {
@@ -688,7 +688,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.6.3"
+          "version": "3.6.11"
         }
       },
       "remote-file-system": {
@@ -732,7 +732,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "3.6.3"
+          "version": "3.6.11"
         }
       },
       "secret": {
@@ -792,7 +792,7 @@
             }
           },
           "capabilities": [],
-          "version": "3.6.3"
+          "version": "3.6.11"
         }
       },
       "sendgrid-email": {
@@ -862,7 +862,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.6.3"
+          "version": "3.6.11"
         }
       },
       "slack-webhook": {
@@ -870,14 +870,14 @@
         "slug": "slack-webhook",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/c1965ecbf8704ee1ea20d77786de9a41ce1087d1-500x500.png",
         "documentation_url": "https://docs.prefect.io/latest/automate/events/automations-triggers#sending-notifications-with-automations",
-        "description": "Enables sending notifications via a provided Slack webhook.",
+        "description": "Enables sending notifications via a provided Slack webhook.\n\nSupports both standard Slack webhooks (hooks.slack.com) and Slack GovCloud\nwebhooks (hooks.slack-gov.com).",
         "code_example": "Load a saved Slack webhook and send a message:\n```python\nfrom prefect.blocks.notifications import SlackWebhook\n\nslack_webhook_block = SlackWebhook.load(\"BLOCK_NAME\")\nslack_webhook_block.notify(\"Hello from Prefect!\")\n```",
         "block_schema": {
-          "checksum": "sha256:4c5f58a0a665af3bec3831b2e8deee874789a390231d0b7290b381b2260e67dc",
+          "checksum": "sha256:5c9910b7461b1e4e6304f5b60f271c7c4851c608641f488e2f8812b2feb283b2",
           "fields": {
             "block_schema_references": {},
             "block_type_slug": "slack-webhook",
-            "description": "Enables sending notifications via a provided Slack webhook.",
+            "description": "Enables sending notifications via a provided Slack webhook.\n\nSupports both standard Slack webhooks (hooks.slack.com) and Slack GovCloud\nwebhooks (hooks.slack-gov.com).",
             "properties": {
               "notify_type": {
                 "default": "info",
@@ -920,7 +920,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.6.3"
+          "version": "3.6.11"
         }
       },
       "smb": {
@@ -1011,7 +1011,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "3.6.3"
+          "version": "3.6.11"
         }
       },
       "twilio-sms": {
@@ -1087,7 +1087,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.6.3"
+          "version": "3.6.11"
         }
       },
       "webhook": {
@@ -1156,7 +1156,7 @@
             "type": "object"
           },
           "capabilities": [],
-          "version": "3.6.3"
+          "version": "3.6.11"
         }
       }
     }
