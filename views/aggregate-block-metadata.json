@@ -4152,7 +4152,7 @@
             "type": "object"
           },
           "capabilities": [],
-          "version": "0.7.1"
+          "version": "0.7.3"
         }
       },
       "kubernetes-credentials": {
@@ -4217,7 +4217,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.7.1"
+          "version": "0.7.3"
         }
       }
     }
