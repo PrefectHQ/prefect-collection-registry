@@ -1,4 +1,3 @@
-import asyncio
 import base64
 import inspect
 import json
@@ -12,7 +11,6 @@ from typing import Any, Literal
 
 import fastjsonschema
 import httpx
-import yaml
 from gh_util.client import GHClient
 from gh_util.types import GitHubRepo
 from prefect import Flow, task
@@ -227,30 +225,28 @@ async def submit_updates(
 
 async def get_collection_names(
     repo_owner: str = "PrefectHQ",
-    repo_name: str = "Prefect",
-    path: str = "docs/integrations/catalog",
+    repo_name: str = "prefect",
+    path: str = "src/integrations",
 ) -> list[str]:
-    """Get the names of all collections."""
+    """Get the names of all collections.
+
+    Collections live as subdirectories under `src/integrations/` in the
+    prefect monorepo (the standalone `prefect-*` repos are archived).
+    Every directory there is a Prefect-authored integration.
+    """
     async with httpx.AsyncClient() as client:
         response = await client.get(
             url=f"https://api.github.com/repos/{repo_owner}/{repo_name}/contents/{path}",
             headers={"Accept": "application/vnd.github+json"},
         )
         response.raise_for_status()
-        files = response.json()
+        entries = response.json()
 
-    collections: list[str] = []
-
-    async def process_file(file: dict[str, Any]):
-        if file["type"] == "file" and file["name"].endswith(".yaml"):
-            content, _ = await get_file_contents(
-                repo_owner, repo_name, f"{path}/{file['name']}", "main"
-            )
-            yaml_data = yaml.safe_load(content)  # type: ignore
-            if yaml_data.get("author") == "Prefect":  # type: ignore
-                collections.append(file["name"].replace(".yaml", ""))
-
-    await asyncio.gather(*[process_file(file) for file in files])
+    collections = [
+        entry["name"]
+        for entry in entries
+        if entry["type"] == "dir" and entry["name"].startswith("prefect-")
+    ]
     collections.append("prefect")
     return collections
 
