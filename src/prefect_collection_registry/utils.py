@@ -503,8 +503,15 @@ async def close_old_metadata_prs(
                 pr["head"]["ref"].startswith("update-metadata-")
                 and pr["head"]["ref"] != latest_branch
             ):
-                await pulls_client.patch(
-                    f"/repos/{repo_owner}/{repo_name}/pulls/{pr['number']}",
-                    json={"state": "closed"},
-                )
-                print(f"Closed PR #{pr['number']}: {pr['title']}")
+                try:
+                    await pulls_client.patch(
+                        f"/repos/{repo_owner}/{repo_name}/pulls/{pr['number']}",
+                        json={"state": "closed"},
+                    )
+                    print(f"Closed PR #{pr['number']}: {pr['title']}")
+                except httpx.HTTPStatusError as e:
+                    # PR may have been closed between the list and the patch.
+                    if e.response.status_code == 422:
+                        print(f"PR #{pr['number']} already closed")
+                    else:
+                        raise
