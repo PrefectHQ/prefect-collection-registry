@@ -154,7 +154,12 @@ def write_block_metadata(collection_metadata: dict[str, Any], collection_name: s
 
 
 @task(name="update-block-metadata-for-collection")
-async def update_block_metadata_for_collection(collection_name: str, branch_name: str):
+async def update_block_metadata_for_collection(
+    collection_name: str,
+    branch_name: str,
+    registry_contents_token: str,
+    prefect_contents_token: str,
+):
     """Generates and submits block metadata for a given collection."""
     block_metadata = generate_block_metadata_for_collection(collection_name)
     await utils.submit_updates(
@@ -162,4 +167,6 @@ async def update_block_metadata_for_collection(collection_name: str, branch_name
         collection_name=collection_name,
         branch_name=branch_name,
         variety="block",
+        registry_contents_token=registry_contents_token,
+        prefect_contents_token=prefect_contents_token,
     )

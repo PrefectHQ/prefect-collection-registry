@@ -112,7 +112,12 @@ def generate_flow_metadata(collection_name: str) -> dict[str, Any]:
 
 
 @task(name="update-flow-metadata-for-collection")
-async def update_flow_metadata_for_collection(collection_name: str, branch_name: str):
+async def update_flow_metadata_for_collection(
+    collection_name: str,
+    branch_name: str,
+    registry_contents_token: str,
+    prefect_contents_token: str,
+):
     """Generates and submits flow metadata for a given collection."""
     if collection_name == "prefect":
         return Completed(message="No flow metadata to update for Prefect core.")
@@ -123,4 +128,6 @@ async def update_flow_metadata_for_collection(collection_name: str, branch_name:
         collection_name=collection_name,
         branch_name=branch_name,
         variety="flow",
+        registry_contents_token=registry_contents_token,
+        prefect_contents_token=prefect_contents_token,
     )
