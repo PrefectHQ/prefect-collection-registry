@@ -28,7 +28,7 @@ from prefect_collection_registry.utils import (
 
 # Secret block names. Each token is scoped to a single (repo, permission).
 REGISTRY_CONTENTS_SECRET = "prefect-collection-registry-contents-rw"
-REGISTRY_ACTIONS_SECRET = "prefect-collection-registry-actions-rw"
+REGISTRY_PRS_SECRET = "prefect-collection-registry-prs-rw"
 REGISTRY_ISSUES_SECRET = "prefect-collection-registry-issues-rw"
 PREFECT_CONTENTS_SECRET = "prefect-contents-rw"
 
@@ -238,7 +238,7 @@ async def update_all_collections(
 ):
     """Updates all collections for releases and updates the metadata if needed."""
     registry_contents_token = await _load_secret(REGISTRY_CONTENTS_SECRET)
-    registry_actions_token = await _load_secret(REGISTRY_ACTIONS_SECRET)
+    registry_prs_token = await _load_secret(REGISTRY_PRS_SECRET)
     registry_issues_token = await _load_secret(REGISTRY_ISSUES_SECRET)
     prefect_contents_token = await _load_secret(PREFECT_CONTENTS_SECRET)
 
@@ -248,7 +248,7 @@ async def update_all_collections(
     # First close any old PRs before creating our new one
     await close_old_metadata_prs(
         contents_token=registry_contents_token,
-        pulls_token=registry_actions_token,
+        pulls_token=registry_prs_token,
     )
 
     # Create branch
@@ -310,7 +310,7 @@ async def update_all_collections(
         "Update metadata for collection releases",
         pr_description,
         branch_name,
-        pulls_token=registry_actions_token,
+        pulls_token=registry_prs_token,
         labels=["automated-pr", "collection-metadata"],
         labels_token=registry_issues_token,
     )
