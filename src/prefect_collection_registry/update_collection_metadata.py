@@ -29,7 +29,6 @@ from prefect_collection_registry.utils import (
 # Secret block names. Each token is scoped to a single (repo, permission).
 REGISTRY_CONTENTS_SECRET = "prefect-collection-registry-contents-rw"
 REGISTRY_PRS_SECRET = "prefect-collection-registry-prs-rw"
-REGISTRY_ISSUES_SECRET = "prefect-collection-registry-issues-rw"
 PREFECT_CONTENTS_SECRET = "prefect-contents-rw"
 
 
@@ -239,7 +238,6 @@ async def update_all_collections(
     """Updates all collections for releases and updates the metadata if needed."""
     registry_contents_token = await _load_secret(REGISTRY_CONTENTS_SECRET)
     registry_prs_token = await _load_secret(REGISTRY_PRS_SECRET)
-    registry_issues_token = await _load_secret(REGISTRY_ISSUES_SECRET)
     prefect_contents_token = await _load_secret(PREFECT_CONTENTS_SECRET)
 
     if branch_name == "update-metadata":  # avoid overwriting existing branches
@@ -304,6 +302,9 @@ async def update_all_collections(
             f"\n\nNote: Updates failed for: {listrepr(failed_collections)}"
         )
 
+    # Labelling a PR via /issues/{n}/labels needs Pull requests: R&W on a
+    # fine-grained PAT (the URL says "issues" but the resource is a PR), so
+    # we reuse the PRs token here rather than the issues-only one.
     await create_pull_request(
         "PrefectHQ",
         "prefect-collection-registry",
@@ -312,7 +313,7 @@ async def update_all_collections(
         branch_name,
         pulls_token=registry_prs_token,
         labels=["automated-pr", "collection-metadata"],
-        labels_token=registry_issues_token,
+        labels_token=registry_prs_token,
     )
     print(f"Created PR for branch {branch_name}")
 
