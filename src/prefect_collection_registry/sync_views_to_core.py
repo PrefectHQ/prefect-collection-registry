@@ -20,7 +20,7 @@ PREFECT_ACTIONS_SECRET = "prefect-actions-rw"
 
 
 async def _load_secret(name: str) -> str:
-    block = await Secret[str].aload(name)  # type: ignore[misc]
+    block = await Secret.aload(name)  # type: ignore[misc]
     return block.get()
 
 
