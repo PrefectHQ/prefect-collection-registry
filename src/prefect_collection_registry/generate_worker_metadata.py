@@ -154,7 +154,12 @@ def generate_worker_metadata_for_package(package_name: str) -> dict[str, Any]:
 
 
 @task
-async def update_worker_metadata_for_package(package_name: str, branch_name: str):
+async def update_worker_metadata_for_package(
+    package_name: str,
+    branch_name: str,
+    registry_contents_token: str,
+    prefect_contents_token: str,
+):
     """Generates and submits worker metadata for a given package."""
     worker_metadata = generate_worker_metadata_for_package(package_name=package_name)
     await submit_updates(
@@ -162,6 +167,8 @@ async def update_worker_metadata_for_package(package_name: str, branch_name: str
         collection_name=package_name,
         branch_name=branch_name,
         variety="worker",
+        registry_contents_token=registry_contents_token,
+        prefect_contents_token=prefect_contents_token,
     )
 
 

@@ -1,5 +1,4 @@
 import asyncio
-import os
 from typing import Any
 
 import prefect.runtime.flow_run
@@ -27,6 +26,17 @@ from prefect_collection_registry.utils import (
     get_repo_contents,
 )
 
+# Secret block names. Each token is scoped to a single (repo, permission).
+REGISTRY_CONTENTS_SECRET = "prefect-collection-registry-contents-rw"
+REGISTRY_PRS_SECRET = "prefect-collection-registry-prs-rw"
+PREFECT_CONTENTS_SECRET = "prefect-contents-rw"
+
+
+async def _load_secret(name: str) -> str:
+    block = await Secret.aload(name)  # type: ignore[misc]
+    return block.get()
+
+
 TODO_COLLECTIONS = {
     "prefect-sqlalchemy",
 }
@@ -41,13 +51,18 @@ and will trigger a run of `update_collection_metadata` for each such package.
 """
 
 
-async def collection_needs_update(collection_name: str) -> tuple[str, bool]:
+async def collection_needs_update(
+    collection_name: str,
+    registry_contents_token: str,
+    prefect_contents_token: str,
+) -> tuple[str, bool]:
     """Checks if the collection needs to be updated."""
     try:
         registry_contents = await get_repo_contents(
             "PrefectHQ",
             "prefect-collection-registry",
             f"collections/{collection_name}/blocks",
+            token=registry_contents_token,
             ref="main",
         )
         if not registry_contents:
@@ -57,7 +72,9 @@ async def collection_needs_update(collection_name: str) -> tuple[str, bool]:
             [content["name"] for content in registry_contents]
         )[-1].replace(".json", "")
 
-        latest_release = await get_latest_pypi_release(collection_name)
+        latest_release = await get_latest_pypi_release(
+            collection_name, prefect_contents_token=prefect_contents_token
+        )
 
         if latest_release == latest_recorded_release:
             print(
@@ -75,20 +92,29 @@ async def collection_needs_update(collection_name: str) -> tuple[str, bool]:
 
 
 @task(name="Create Branch / PR if possible")
-async def create_ref_if_not_exists(new_branch_name: str) -> str:
+async def create_ref_if_not_exists(
+    new_branch_name: str, registry_contents_token: str
+) -> str:
     """Creates a branch if it doesn't already exist."""
     # Check if branch exists first
     if not await branch_exists(
-        "PrefectHQ", "prefect-collection-registry", new_branch_name
+        "PrefectHQ",
+        "prefect-collection-registry",
+        new_branch_name,
+        token=registry_contents_token,
     ):
         main_sha = await get_commit_sha(
-            "PrefectHQ", "prefect-collection-registry", "main"
+            "PrefectHQ",
+            "prefect-collection-registry",
+            "main",
+            token=registry_contents_token,
         )
         await create_repo_ref(
             "PrefectHQ",
             "prefect-collection-registry",
             f"refs/heads/{new_branch_name}",
             main_sha,
+            token=registry_contents_token,
         )
         print(f"Created ref {new_branch_name!r}!")
     else:
@@ -101,10 +127,28 @@ async def update_collection_metadata(
     collection_name: str,
     branch_name: str,
 ) -> State:
-    """Updates each variety of metadata for a given package."""
+    """Updates each variety of metadata for a given package.
+
+    Tokens are loaded inside this entrypoint because it is invoked as a
+    subprocess by `run_collection_update`, so the parent flow's already-loaded
+    secrets do not survive the process boundary.
+    """
+    registry_contents_token = await _load_secret(REGISTRY_CONTENTS_SECRET)
+    prefect_contents_token = await _load_secret(PREFECT_CONTENTS_SECRET)
+
     # Run updates sequentially to avoid conflicts in aggregate files
-    await update_block_metadata_for_collection(collection_name, branch_name)
-    await update_worker_metadata_for_package(collection_name, branch_name)
+    await update_block_metadata_for_collection(
+        collection_name,
+        branch_name,
+        registry_contents_token=registry_contents_token,
+        prefect_contents_token=prefect_contents_token,
+    )
+    await update_worker_metadata_for_package(
+        collection_name,
+        branch_name,
+        registry_contents_token=registry_contents_token,
+        prefect_contents_token=prefect_contents_token,
+    )
 
     return Completed(message=f"Successfully updated {collection_name}")
 
@@ -192,23 +236,36 @@ async def update_all_collections(
     include_collections: list[str] | None = None,
 ):
     """Updates all collections for releases and updates the metadata if needed."""
-    os.environ["GITHUB_TOKEN"] = (await Secret.aload("gh-util-token")).get()  # type: ignore
+    registry_contents_token = await _load_secret(REGISTRY_CONTENTS_SECRET)
+    registry_prs_token = await _load_secret(REGISTRY_PRS_SECRET)
+    prefect_contents_token = await _load_secret(PREFECT_CONTENTS_SECRET)
 
     if branch_name == "update-metadata":  # avoid overwriting existing branches
         branch_name = f"update-metadata-{DateTime.now().format('MM-DD-YYYY-HH-MM-SS')}"
 
     # First close any old PRs before creating our new one
-    await close_old_metadata_prs()
+    await close_old_metadata_prs(
+        contents_token=registry_contents_token,
+        pulls_token=registry_prs_token,
+    )
 
     # Create branch
-    branch_name = await create_ref_if_not_exists(branch_name)
+    branch_name = await create_ref_if_not_exists(
+        branch_name, registry_contents_token=registry_contents_token
+    )
 
     collections_to_update = set(
         collection_name
         for collection_name, needs_update in await asyncio.gather(
             *[
-                collection_needs_update(collection_name)
-                for collection_name in await get_collection_names()
+                collection_needs_update(
+                    collection_name,
+                    registry_contents_token=registry_contents_token,
+                    prefect_contents_token=prefect_contents_token,
+                )
+                for collection_name in await get_collection_names(
+                    token=prefect_contents_token
+                )
             ]
         )
         if needs_update
@@ -245,13 +302,18 @@ async def update_all_collections(
             f"\n\nNote: Updates failed for: {listrepr(failed_collections)}"
         )
 
+    # Labelling a PR via /issues/{n}/labels needs Pull requests: R&W on a
+    # fine-grained PAT (the URL says "issues" but the resource is a PR), so
+    # we reuse the PRs token here rather than the issues-only one.
     await create_pull_request(
         "PrefectHQ",
         "prefect-collection-registry",
         "Update metadata for collection releases",
         pr_description,
         branch_name,
+        pulls_token=registry_prs_token,
         labels=["automated-pr", "collection-metadata"],
+        labels_token=registry_prs_token,
     )
     print(f"Created PR for branch {branch_name}")
 

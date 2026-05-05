@@ -12,9 +12,7 @@ from typing import Any, Literal
 import fastjsonschema
 import httpx
 from gh_util.client import GHClient
-from gh_util.types import GitHubRepo
 from prefect import Flow, task
-from prefect.blocks.system import Secret
 from prefect.utilities.importtools import load_module, to_qualified_name
 from pydantic_core import from_json
 
@@ -23,6 +21,18 @@ CollectionViewVariety = Literal["block", "flow", "worker"]
 # Create a lock file in a location accessible to all processes
 LOCK_FILE = os.path.join(tempfile.gettempdir(), "prefect_collection_registry.lock")
 _file_lock = Lock()
+
+
+def _gh_client(token: str) -> GHClient:
+    """Build a GHClient that authenticates with the given token.
+
+    Bypasses gh_util's GITHUB_TOKEN env-var lookup so each call site can
+    pick a token scoped to the specific repo + permission it needs.
+    """
+    client = GHClient()
+    client.headers["Authorization"] = f"token {token}"
+    client.headers.setdefault("Accept", "application/vnd.github.v3+json")
+    return client
 
 
 def skip_parsing(
@@ -65,10 +75,10 @@ def find_flows_in_module(
 
 
 async def get_file_contents(
-    repo_owner: str, repo_name: str, path: str, ref: str
+    repo_owner: str, repo_name: str, path: str, ref: str, token: str
 ) -> tuple[str, str]:
     """Get a file's contents and its SHA."""
-    async with GHClient() as client:
+    async with _gh_client(token) as client:
         response = await client.get(
             f"/repos/{repo_owner}/{repo_name}/contents/{path}", params={"ref": ref}
         )
@@ -84,10 +94,11 @@ async def create_or_update_file(
     message: str,
     content: str,
     branch: str,
+    token: str,
     sha: str | None = None,
 ) -> dict[str, Any]:
     """Create or update a file in a repository."""
-    async with GHClient() as client:
+    async with _gh_client(token) as client:
         data = {
             "message": message,
             "content": base64.b64encode(content.encode("utf-8")).decode("utf-8"),
@@ -102,11 +113,19 @@ async def create_or_update_file(
         return response.json()
 
 
-async def get_latest_pypi_release(package_name: str) -> str:
-    """Get the latest release version from PyPI for a package."""
-    # For prefect, we need to use the GitHub release
+async def get_latest_pypi_release(
+    package_name: str, prefect_contents_token: str
+) -> str:
+    """Get the latest release version from PyPI for a package.
+
+    For `prefect`, the version comes from the latest GitHub release on
+    `PrefectHQ/prefect` (so a contents-read token for that repo is required).
+    For other packages, the lookup is unauthenticated against PyPI.
+    """
     if package_name == "prefect":
-        latest_release = await get_latest_release("PrefectHQ", package_name)
+        latest_release = await get_latest_release(
+            "PrefectHQ", package_name, token=prefect_contents_token
+        )
         return (
             "v" + latest_release
             if not latest_release.startswith("v")
@@ -127,6 +146,8 @@ async def submit_updates(
     collection_name: str,
     branch_name: str,
     variety: CollectionViewVariety,
+    registry_contents_token: str,
+    prefect_contents_token: str,
     repo_name: str = "prefect-collection-registry",
 ) -> None:
     """Submits updates to the collection registry.
@@ -138,7 +159,9 @@ async def submit_updates(
     metadata_file = f"views/aggregate-{variety}-metadata.json"
 
     # Get latest release from PyPI instead of GitHub
-    latest_release = await get_latest_pypi_release(collection_name)
+    latest_release = await get_latest_pypi_release(
+        collection_name, prefect_contents_token=prefect_contents_token
+    )
 
     # First handle the version-specific file which can't have conflicts
     collection_version_path = (
@@ -149,7 +172,11 @@ async def submit_updates(
         # Get version file SHA
         try:
             _, version_sha = await get_file_contents(
-                "PrefectHQ", repo_name, collection_version_path, branch_name
+                "PrefectHQ",
+                repo_name,
+                collection_version_path,
+                branch_name,
+                token=registry_contents_token,
             )
         except Exception as e:
             if "Not Found" in str(e):
@@ -166,6 +193,7 @@ async def submit_updates(
                 f"Add `{collection_name}` `{latest_release}` to {variety} records",
                 json.dumps({collection_name: collection_metadata}, indent=2),
                 branch_name,
+                token=registry_contents_token,
                 sha=version_sha,
             )
             print(f"Added {collection_name} {latest_release} to {variety} records!")
@@ -184,7 +212,11 @@ async def submit_updates(
                 try:
                     # Get latest content and SHA
                     content, aggregate_sha = await get_file_contents(
-                        "PrefectHQ", repo_name, metadata_file, branch_name
+                        "PrefectHQ",
+                        repo_name,
+                        metadata_file,
+                        branch_name,
+                        token=registry_contents_token,
                     )
                     existing_metadata_dict: dict[str, Any] = from_json(content)
                 except Exception as e:
@@ -207,6 +239,7 @@ async def submit_updates(
                         f"Update aggregate {variety} metadata with `{collection_name}` `{latest_release}`",
                         json.dumps(updated_metadata_dict, indent=2),
                         branch_name,
+                        token=registry_contents_token,
                         sha=aggregate_sha,
                     )
                     print(
@@ -224,6 +257,7 @@ async def submit_updates(
 
 
 async def get_collection_names(
+    token: str,
     repo_owner: str = "PrefectHQ",
     repo_name: str = "prefect",
     path: str = "src/integrations",
@@ -234,12 +268,8 @@ async def get_collection_names(
     prefect monorepo (the standalone `prefect-*` repos are archived).
     Every directory there is a Prefect-authored integration.
     """
-    async with httpx.AsyncClient() as client:
-        response = await client.get(
-            url=f"https://api.github.com/repos/{repo_owner}/{repo_name}/contents/{path}",
-            headers={"Accept": "application/vnd.github+json"},
-        )
-        response.raise_for_status()
+    async with _gh_client(token) as client:
+        response = await client.get(f"/repos/{repo_owner}/{repo_name}/contents/{path}")
         entries = response.json()
 
     collections = [
@@ -275,35 +305,39 @@ def read_view_content(view: CollectionViewVariety) -> dict[str, Any]:
 
 
 async def get_repo_contents(
-    repo_owner: str, repo_name: str, path: str, ref: str = "main"
+    repo_owner: str,
+    repo_name: str,
+    path: str,
+    token: str,
+    ref: str = "main",
 ) -> list[dict[str, Any]]:
     """Get contents of a repository path."""
-    async with GHClient() as client:
+    async with _gh_client(token) as client:
         response = await client.get(
             f"/repos/{repo_owner}/{repo_name}/contents/{path}", params={"ref": ref}
         )
         return response.json()
 
 
-async def get_latest_release(repo_owner: str, repo_name: str) -> str:
+async def get_latest_release(repo_owner: str, repo_name: str, token: str) -> str:
     """Get the latest release tag for a repository."""
-    async with GHClient() as client:
+    async with _gh_client(token) as client:
         response = await client.get(f"/repos/{repo_owner}/{repo_name}/releases/latest")
         return response.json()["tag_name"]
 
 
-async def get_commit_sha(repo_owner: str, repo_name: str, ref: str) -> str:
+async def get_commit_sha(repo_owner: str, repo_name: str, ref: str, token: str) -> str:
     """Get the SHA for a given ref."""
-    async with GHClient() as client:
+    async with _gh_client(token) as client:
         response = await client.get(f"/repos/{repo_owner}/{repo_name}/commits/{ref}")
         return response.json()["sha"]
 
 
 async def create_repo_ref(
-    repo_owner: str, repo_name: str, ref: str, sha: str
+    repo_owner: str, repo_name: str, ref: str, sha: str, token: str
 ) -> dict[str, Any]:
     """Create a new git reference in a repository."""
-    async with GHClient() as client:
+    async with _gh_client(token) as client:
         response = await client.post(
             f"/repos/{repo_owner}/{repo_name}/git/refs", json={"ref": ref, "sha": sha}
         )
@@ -316,13 +350,26 @@ async def create_pull_request(
     title: str,
     body: str,
     head: str,
+    pulls_token: str,
     base: str = "main",
     labels: list[str] | None = None,
+    labels_token: str | None = None,
 ) -> dict[str, Any]:
-    """Create a pull request."""
+    """Create a pull request.
+
+    `pulls_token` needs Pull Requests: Read & Write on the target repo. If
+    `labels` is non-empty, `labels_token` must be provided and needs Issues:
+    Read & Write — labelling a PR goes through the issues endpoint.
+    """
     labels = labels or []
+    if labels and labels_token is None:
+        raise ValueError(
+            "labels_token is required when labels are provided; the issues "
+            "endpoint needs an Issues: Read & Write token."
+        )
+
     # First check if branches are different
-    async with GHClient() as client:
+    async with _gh_client(pulls_token) as client:
         # Compare branches
         response = await client.get(
             f"/repos/{repo_owner}/{repo_name}/compare/{base}...{head}"
@@ -346,25 +393,19 @@ async def create_pull_request(
                 },
             )
             data = response.json()
-            await client.post(
-                f"/repos/{repo_owner}/{repo_name}/issues/{data['number']}/labels",
-                json={"labels": labels},
-            )
-            return data
         except httpx.HTTPStatusError as e:
             if "A pull request already exists" in str(e):
                 print(f"PR from {head} to {base} already exists")
                 return {}
             raise
 
-
-async def get_repo(name: str) -> GitHubRepo:
-    """Returns a GitHub repository object for a given collection name."""
-    github_token = await Secret[str].aload("collection-registry-contents-prs-rw-pat")
-
-    async with GHClient(token=github_token.get()) as client:
-        response = await client.get(f"/repos/PrefectHQ/{name}")
-        return GitHubRepo.model_validate(response.json())
+    if labels:
+        async with _gh_client(labels_token) as labels_client:  # type: ignore[arg-type]
+            await labels_client.post(
+                f"/repos/{repo_owner}/{repo_name}/issues/{data['number']}/labels",
+                json={"labels": labels},
+            )
+    return data
 
 
 def validate_view_content(
@@ -387,9 +428,11 @@ def validate_view_content(
         print(f"  Validated {collection_name} summary in {variety} view!")
 
 
-async def branch_exists(repo_owner: str, repo_name: str, branch_name: str) -> bool:
+async def branch_exists(
+    repo_owner: str, repo_name: str, branch_name: str, token: str
+) -> bool:
     """Check if a branch exists."""
-    async with GHClient() as client:
+    async with _gh_client(token) as client:
         try:
             await client.get(f"/repos/{repo_owner}/{repo_name}/branches/{branch_name}")
             return True
@@ -400,15 +443,20 @@ async def branch_exists(repo_owner: str, repo_name: str, branch_name: str) -> bo
 
 
 async def close_old_metadata_prs(
+    contents_token: str,
+    pulls_token: str,
     repo_owner: str = "PrefectHQ",
     repo_name: str = "prefect-collection-registry",
 ) -> None:
     """Closes all metadata PRs except for the one associated with the latest branch.
     Also deletes all old metadata branches except the latest one.
+
+    Branch listing/deletion uses `contents_token` (Contents: R&W). PR listing
+    and patching uses `pulls_token` (Pull Requests: R&W).
     """
-    async with GHClient() as client:
-        # Get all branches to find the latest
-        branches_response = await client.get(
+    # Branch operations use the contents token.
+    async with _gh_client(contents_token) as contents_client:
+        branches_response = await contents_client.get(
             f"/repos/{repo_owner}/{repo_name}/branches"
         )
         metadata_branches = [
@@ -432,7 +480,7 @@ async def close_old_metadata_prs(
         for branch in metadata_branches:
             if branch != latest_branch:
                 try:
-                    await client.delete(
+                    await contents_client.delete(
                         f"/repos/{repo_owner}/{repo_name}/git/refs/heads/{branch}"
                     )
                     print(f"Deleted branch {branch}")
@@ -442,8 +490,9 @@ async def close_old_metadata_prs(
                     else:
                         raise
 
-        # Get all open PRs and close them if they're for metadata branches
-        response = await client.get(
+    # PR operations use the pulls token.
+    async with _gh_client(pulls_token) as pulls_client:
+        response = await pulls_client.get(
             f"/repos/{repo_owner}/{repo_name}/pulls",
             params={"state": "open"},
         )
@@ -454,8 +503,15 @@ async def close_old_metadata_prs(
                 pr["head"]["ref"].startswith("update-metadata-")
                 and pr["head"]["ref"] != latest_branch
             ):
-                await client.patch(
-                    f"/repos/{repo_owner}/{repo_name}/pulls/{pr['number']}",
-                    json={"state": "closed"},
-                )
-                print(f"Closed PR #{pr['number']}: {pr['title']}")
+                try:
+                    await pulls_client.patch(
+                        f"/repos/{repo_owner}/{repo_name}/pulls/{pr['number']}",
+                        json={"state": "closed"},
+                    )
+                    print(f"Closed PR #{pr['number']}: {pr['title']}")
+                except httpx.HTTPStatusError as e:
+                    # PR may have been closed between the list and the patch.
+                    if e.response.status_code == 422:
+                        print(f"PR #{pr['number']} already closed")
+                    else:
+                        raise
