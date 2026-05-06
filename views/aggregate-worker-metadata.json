@@ -1110,7 +1110,7 @@
           "container_create_kwargs": "{{ container_create_kwargs }}"
         },
         "variables": {
-          "definitions": {
+          "$defs": {
             "DockerRegistryCredentials": {
               "additionalProperties": true,
               "block_schema_references": {},
@@ -1204,7 +1204,7 @@
                 }
               ],
               "default": null,
-              "description": "Name given to infrastructure created by the worker using this job configuration.",
+              "description": "Name given to infrastructure created by the worker using this job configuration. Supports templates using {{ ctx.flow.* }} and {{ ctx.flow_run.* }} when prepared for a flow run.",
               "title": "Name"
             },
             "image": {
@@ -1218,7 +1218,7 @@
             "registry_credentials": {
               "anyOf": [
                 {
-                  "$ref": "#/definitions/DockerRegistryCredentials"
+                  "$ref": "#/$defs/DockerRegistryCredentials"
                 },
                 {
                   "type": "null"
