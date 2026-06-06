@@ -1,0 +1,60 @@
+{
+  "prefect-xquik": {
+    "block_types": {
+      "xquik-credentials": {
+        "name": "Xquik Credentials",
+        "slug": "xquik-credentials",
+        "logo_url": "https://xquik.com/icon.svg",
+        "documentation_url": "https://docs.xquik.com/guides/prefect",
+        "description": "Block used to authenticate Xquik API requests. This block is part of the prefect-xquik collection. Install prefect-xquik with `pip install prefect-xquik` to use this block.",
+        "code_example": "```python\nfrom prefect_xquik.credentials import XquikCredentials\n\nxquik_credentials_block = XquikCredentials.load(\"BLOCK_NAME\")\n```",
+        "block_schema": {
+          "checksum": "sha256:63409461fbf453727fc46d370decbae8688a71a95fa89d7fcc04dbc9ac8cf7b8",
+          "fields": {
+            "block_schema_references": {},
+            "block_type_slug": "xquik-credentials",
+            "description": "Block used to authenticate Xquik API requests.",
+            "properties": {
+              "api_key": {
+                "description": "Xquik API key.",
+                "format": "password",
+                "title": "Api Key",
+                "type": "string",
+                "writeOnly": true
+              },
+              "base_url": {
+                "default": "https://api.xquik.com",
+                "description": "Base URL for the Xquik API.",
+                "title": "Base Url",
+                "type": "string"
+              },
+              "api_contract": {
+                "default": "2026-04-29",
+                "description": "Xquik API contract date sent with requests.",
+                "title": "Api Contract",
+                "type": "string"
+              },
+              "timeout_seconds": {
+                "default": 30.0,
+                "description": "Request timeout in seconds.",
+                "exclusiveMinimum": 0.0,
+                "title": "Timeout Seconds",
+                "type": "number"
+              }
+            },
+            "required": [
+              "api_key"
+            ],
+            "secret_fields": [
+              "api_key"
+            ],
+            "title": "XquikCredentials",
+            "type": "object"
+          },
+          "capabilities": [],
+          "version": "0.1.6"
+        }
+      }
+    }
+  }
+}
