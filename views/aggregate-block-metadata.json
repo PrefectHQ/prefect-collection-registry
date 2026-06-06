@@ -5293,5 +5293,67 @@
         }
       }
     }
+  },
+  "prefect-xquik": {
+    "block_types": {
+      "xquik-credentials": {
+        "name": "Xquik Credentials",
+        "slug": "xquik-credentials",
+        "logo_url": "https://xquik.com/icon.svg",
+        "documentation_url": "https://docs.xquik.com/guides/prefect",
+        "description": "Block used to authenticate Xquik API requests. This block is part of the prefect-xquik collection. Install prefect-xquik with `pip install prefect-xquik` to use this block.",
+        "code_example": "```python\nfrom prefect_xquik.credentials import XquikCredentials\n\nxquik_credentials_block = XquikCredentials.load(\"BLOCK_NAME\")\n```",
+        "block_schema": {
+          "checksum": "sha256:b98225d0f98db1939af99b0c2f88099d423135a2b1fdf3ebe5b4cd6578c0aaf2",
+          "fields": {
+            "block_schema_references": {},
+            "block_type_slug": "xquik-credentials",
+            "description": "Block used to authenticate Xquik API requests.",
+            "properties": {
+              "api_key": {
+                "description": "Xquik API key.",
+                "format": "password",
+                "title": "Api Key",
+                "type": "string",
+                "writeOnly": true,
+                "position": 0
+              },
+              "base_url": {
+                "default": "https://api.xquik.com",
+                "description": "Base URL for the Xquik API.",
+                "title": "Base Url",
+                "type": "string",
+                "position": 1
+              },
+              "api_contract": {
+                "default": "2026-04-29",
+                "description": "Xquik API contract date sent with requests.",
+                "title": "Api Contract",
+                "type": "string",
+                "position": 2
+              },
+              "timeout_seconds": {
+                "default": 30.0,
+                "description": "Request timeout in seconds.",
+                "exclusiveMinimum": 0,
+                "title": "Timeout Seconds",
+                "type": "number",
+                "position": 3
+              }
+            },
+            "required": [
+              "api_key"
+            ],
+            "secret_fields": [
+              "api_key"
+            ],
+            "title": "XquikCredentials",
+            "type": "object"
+          },
+          "capabilities": [],
+          "version": "0.1.6"
+        }
+      }
+    }
   }
 }
