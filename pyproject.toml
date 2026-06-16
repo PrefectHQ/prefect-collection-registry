@@ -4,7 +4,10 @@ version = "0.1.0"
 description = "Maintaining the Prefect Collection Registry"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = ["prefect", "prefect-github", "fastjsonschema==2.16.2", "gh-util"]
+# prefect-github 0.4.1 imports `prefect._internal.urls`, which is not present
+# in our pinned prefect 3.2.7. Pin until prefect is bumped to a version that
+# ships that module.
+dependencies = ["prefect", "prefect-github<0.4.1", "fastjsonschema==2.16.2", "gh-util"]
 
 [dependency-groups]
 dev = ["pytest", "hatchling", "prefect[kubernetes]", "pre-commit"]

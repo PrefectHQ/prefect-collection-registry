@@ -1183,7 +1183,7 @@ requires-dist = [
     { name = "fastjsonschema", specifier = "==2.16.2" },
     { name = "gh-util" },
     { name = "prefect" },
-    { name = "prefect-github" },
+    { name = "prefect-github", specifier = "<0.4.1" },
 ]
 
 [package.metadata.requires-dev]
@@ -1196,15 +1196,15 @@ dev = [
 
 [[package]]
 name = "prefect-github"
-version = "0.4.1"
+version = "0.4.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "prefect" },
     { name = "sgqlc" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/fb/60/52ad7e19284b8e78f68149add46661d7b6c5c31a271343e1e0a190c2d612/prefect_github-0.4.1.tar.gz", hash = "sha256:ab1a3e4013588011291fe4f276be9a3597727995dc756921b1d500f51829da0f", size = 337467, upload-time = "2026-02-03T19:49:53.189Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/13/63/c2b63be9773f44ea9cf3f0d5a44295e2a8a06887398c9b140bb2b27b55be/prefect_github-0.4.0.tar.gz", hash = "sha256:c37a6d87be95645a7a354de45a67d5e8122833bc4230899aa2f0229daf500953", size = 336058, upload-time = "2026-01-15T22:53:30.993Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/51/1b/bd481ddbeea6abf563e6276d470dc3ebe2aa6a878aa9e688ffce9fe14100/prefect_github-0.4.1-py3-none-any.whl", hash = "sha256:8a18fcca5d593204e6003dd2b866a5badf906d506672436171fb9d32794a0e92", size = 366398, upload-time = "2026-02-03T19:49:51.957Z" },
+    { url = "https://files.pythonhosted.org/packages/a2/1a/3f6c931db0f5dc06fdd36ad7f828110be865366d080c37abd7b22724c027/prefect_github-0.4.0-py3-none-any.whl", hash = "sha256:7dcc0acdf1ba1a11ac9628b35151f3f8a4832cac1256cc10c54591575266aa50", size = 366051, upload-time = "2026-01-15T22:53:29.474Z" },
 ]
 
 [[package]]
