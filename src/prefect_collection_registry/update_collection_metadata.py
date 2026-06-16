@@ -1,6 +1,8 @@
 import asyncio
+import os
 from typing import Any
 
+import httpx
 import prefect.runtime.flow_run
 from prefect import flow, task, unmapped
 from prefect.artifacts import create_markdown_artifact
@@ -29,12 +31,32 @@ from prefect_collection_registry.utils import (
 # Secret block names. Each token is scoped to a single (repo, permission).
 REGISTRY_CONTENTS_SECRET = "prefect-collection-registry-contents-rw"
 REGISTRY_PRS_SECRET = "prefect-collection-registry-prs-rw"
-PREFECT_CONTENTS_SECRET = "prefect-contents-rw"
 
 
 async def _load_secret(name: str) -> str:
     block = await Secret.aload(name)  # type: ignore[misc]
     return block.get()
+
+
+async def mint_prefect_contents_token() -> str:
+    """Mint a short-lived (1-hour) installation token for PrefectHQ/prefect via
+    the Prefect Cloud GitHub App. Authenticates with the worker's
+    PREFECT_API_KEY — no long-lived GitHub credential is stored at rest.
+
+    Replaces the prefect-contents-rw Secret block. PLA-2700.
+    """
+    api_url = os.environ["PREFECT_API_URL"]
+    # PREFECT_API_URL is workspace-scoped; the integrations endpoint is
+    # account-scoped (one level up from /workspaces/<id>).
+    account_url = api_url.split("/workspaces/")[0].rstrip("/")
+    async with httpx.AsyncClient(timeout=30) as client:
+        response = await client.post(
+            f"{account_url}/integrations/github/token",
+            headers={"Authorization": f"Bearer {os.environ['PREFECT_API_KEY']}"},
+            json={"owner": "PrefectHQ", "repository": "prefect"},
+        )
+        response.raise_for_status()
+        return response.json()["token"]
 
 
 TODO_COLLECTIONS = {
@@ -134,7 +156,7 @@ async def update_collection_metadata(
     secrets do not survive the process boundary.
     """
     registry_contents_token = await _load_secret(REGISTRY_CONTENTS_SECRET)
-    prefect_contents_token = await _load_secret(PREFECT_CONTENTS_SECRET)
+    prefect_contents_token = await mint_prefect_contents_token()
 
     # Run updates sequentially to avoid conflicts in aggregate files
     await update_block_metadata_for_collection(
@@ -238,7 +260,7 @@ async def update_all_collections(
     """Updates all collections for releases and updates the metadata if needed."""
     registry_contents_token = await _load_secret(REGISTRY_CONTENTS_SECRET)
     registry_prs_token = await _load_secret(REGISTRY_PRS_SECRET)
-    prefect_contents_token = await _load_secret(PREFECT_CONTENTS_SECRET)
+    prefect_contents_token = await mint_prefect_contents_token()
 
     if branch_name == "update-metadata":  # avoid overwriting existing branches
         branch_name = f"update-metadata-{DateTime.now().format('MM-DD-YYYY-HH-MM-SS')}"
