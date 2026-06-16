@@ -9,7 +9,6 @@ from prefect.artifacts import create_markdown_artifact
 from prefect.states import Completed, State
 from prefect.types import DateTime
 from prefect.utilities.collections import listrepr
-from prefect_github import GitHubCredentials
 
 from prefect_collection_registry.generate_block_metadata import (
     update_block_metadata_for_collection,
@@ -32,6 +31,8 @@ REGISTRY_WRITER_BLOCK = "prefect-cloud-writer"
 
 
 async def _load_registry_writer_token() -> str:
+    from prefect_github import GitHubCredentials
+
     block = await GitHubCredentials.aload(REGISTRY_WRITER_BLOCK)  # type: ignore[misc]
     return block.token.get_secret_value()
 
