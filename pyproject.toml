@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Maintaining the Prefect Collection Registry"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = ["prefect", "fastjsonschema==2.16.2", "gh-util"]
+dependencies = ["prefect", "prefect-github", "fastjsonschema==2.16.2", "gh-util"]
 
 [dependency-groups]
 dev = ["pytest", "hatchling", "prefect[kubernetes]", "pre-commit"]

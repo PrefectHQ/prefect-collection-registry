@@ -6,10 +6,10 @@ import httpx
 import prefect.runtime.flow_run
 from prefect import flow, task, unmapped
 from prefect.artifacts import create_markdown_artifact
-from prefect.blocks.system import Secret
 from prefect.states import Completed, State
 from prefect.types import DateTime
 from prefect.utilities.collections import listrepr
+from prefect_github import GitHubCredentials
 
 from prefect_collection_registry.generate_block_metadata import (
     update_block_metadata_for_collection,
@@ -28,14 +28,17 @@ from prefect_collection_registry.utils import (
     get_repo_contents,
 )
 
-# Secret block names. Each token is scoped to a single (repo, permission).
-REGISTRY_CONTENTS_SECRET = "prefect-collection-registry-contents-rw"
-REGISTRY_PRS_SECRET = "prefect-collection-registry-prs-rw"
+# Consolidated writer PAT covering both prefect-collection-registry contents
+# and pull-requests scopes. Replaces the two previous per-scope Secret blocks
+# (prefect-collection-registry-contents-rw, prefect-collection-registry-prs-rw)
+# as part of PLA-2840.
+REGISTRY_WRITER_BLOCK = "prefect-cloud-writer"
 
 
-async def _load_secret(name: str) -> str:
-    block = await Secret.aload(name)  # type: ignore[misc]
-    return block.get()
+async def _load_registry_writer_token() -> str:
+    block = await GitHubCredentials.aload(REGISTRY_WRITER_BLOCK)  # type: ignore[misc]
+    assert block.token
+    return block.token.get_secret_value()
 
 
 async def mint_prefect_contents_token() -> str:
@@ -155,7 +158,7 @@ async def update_collection_metadata(
     subprocess by `run_collection_update`, so the parent flow's already-loaded
     secrets do not survive the process boundary.
     """
-    registry_contents_token = await _load_secret(REGISTRY_CONTENTS_SECRET)
+    registry_contents_token = await _load_registry_writer_token()
     prefect_contents_token = await mint_prefect_contents_token()
 
     # Run updates sequentially to avoid conflicts in aggregate files
@@ -258,8 +261,9 @@ async def update_all_collections(
     include_collections: list[str] | None = None,
 ):
     """Updates all collections for releases and updates the metadata if needed."""
-    registry_contents_token = await _load_secret(REGISTRY_CONTENTS_SECRET)
-    registry_prs_token = await _load_secret(REGISTRY_PRS_SECRET)
+    registry_writer_token = await _load_registry_writer_token()
+    registry_contents_token = registry_writer_token
+    registry_prs_token = registry_writer_token
     prefect_contents_token = await mint_prefect_contents_token()
 
     if branch_name == "update-metadata":  # avoid overwriting existing branches
