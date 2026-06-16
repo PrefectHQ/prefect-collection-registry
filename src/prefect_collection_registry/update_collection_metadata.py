@@ -28,16 +28,11 @@ from prefect_collection_registry.utils import (
     get_repo_contents,
 )
 
-# Consolidated writer PAT covering both prefect-collection-registry contents
-# and pull-requests scopes. Replaces the two previous per-scope Secret blocks
-# (prefect-collection-registry-contents-rw, prefect-collection-registry-prs-rw)
-# as part of PLA-2840.
 REGISTRY_WRITER_BLOCK = "prefect-cloud-writer"
 
 
 async def _load_registry_writer_token() -> str:
     block = await GitHubCredentials.aload(REGISTRY_WRITER_BLOCK)  # type: ignore[misc]
-    assert block.token
     return block.token.get_secret_value()
 
 
@@ -45,8 +40,6 @@ async def mint_prefect_contents_token() -> str:
     """Mint a short-lived (1-hour) installation token for PrefectHQ/prefect via
     the Prefect Cloud GitHub App. Authenticates with the worker's
     PREFECT_API_KEY — no long-lived GitHub credential is stored at rest.
-
-    Replaces the prefect-contents-rw Secret block. PLA-2700.
     """
     api_url = os.environ["PREFECT_API_URL"]
     # PREFECT_API_URL is workspace-scoped; the integrations endpoint is
@@ -261,10 +254,6 @@ async def update_all_collections(
     include_collections: list[str] | None = None,
 ):
     """Updates all collections for releases and updates the metadata if needed."""
-    # Single consolidated PAT for all writes against prefect-collection-registry
-    # (contents, pull_requests, and issues — labelling a PR uses the issues
-    # endpoint). util fns still split parameters by scope so they remain
-    # testable, but every value passed in here is the same token.
     registry_writer_token = await _load_registry_writer_token()
     prefect_contents_token = await mint_prefect_contents_token()
 
