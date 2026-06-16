@@ -158,20 +158,20 @@ async def update_collection_metadata(
     subprocess by `run_collection_update`, so the parent flow's already-loaded
     secrets do not survive the process boundary.
     """
-    registry_contents_token = await _load_registry_writer_token()
+    registry_writer_token = await _load_registry_writer_token()
     prefect_contents_token = await mint_prefect_contents_token()
 
     # Run updates sequentially to avoid conflicts in aggregate files
     await update_block_metadata_for_collection(
         collection_name,
         branch_name,
-        registry_contents_token=registry_contents_token,
+        registry_contents_token=registry_writer_token,
         prefect_contents_token=prefect_contents_token,
     )
     await update_worker_metadata_for_package(
         collection_name,
         branch_name,
-        registry_contents_token=registry_contents_token,
+        registry_contents_token=registry_writer_token,
         prefect_contents_token=prefect_contents_token,
     )
 
@@ -261,9 +261,11 @@ async def update_all_collections(
     include_collections: list[str] | None = None,
 ):
     """Updates all collections for releases and updates the metadata if needed."""
+    # Single consolidated PAT for all writes against prefect-collection-registry
+    # (contents, pull_requests, and issues — labelling a PR uses the issues
+    # endpoint). util fns still split parameters by scope so they remain
+    # testable, but every value passed in here is the same token.
     registry_writer_token = await _load_registry_writer_token()
-    registry_contents_token = registry_writer_token
-    registry_prs_token = registry_writer_token
     prefect_contents_token = await mint_prefect_contents_token()
 
     if branch_name == "update-metadata":  # avoid overwriting existing branches
@@ -271,13 +273,13 @@ async def update_all_collections(
 
     # First close any old PRs before creating our new one
     await close_old_metadata_prs(
-        contents_token=registry_contents_token,
-        pulls_token=registry_prs_token,
+        contents_token=registry_writer_token,
+        pulls_token=registry_writer_token,
     )
 
     # Create branch
     branch_name = await create_ref_if_not_exists(
-        branch_name, registry_contents_token=registry_contents_token
+        branch_name, registry_contents_token=registry_writer_token
     )
 
     collections_to_update = set(
@@ -286,7 +288,7 @@ async def update_all_collections(
             *[
                 collection_needs_update(
                     collection_name,
-                    registry_contents_token=registry_contents_token,
+                    registry_contents_token=registry_writer_token,
                     prefect_contents_token=prefect_contents_token,
                 )
                 for collection_name in await get_collection_names(
@@ -328,18 +330,15 @@ async def update_all_collections(
             f"\n\nNote: Updates failed for: {listrepr(failed_collections)}"
         )
 
-    # Labelling a PR via /issues/{n}/labels needs Pull requests: R&W on a
-    # fine-grained PAT (the URL says "issues" but the resource is a PR), so
-    # we reuse the PRs token here rather than the issues-only one.
     await create_pull_request(
         "PrefectHQ",
         "prefect-collection-registry",
         "Update metadata for collection releases",
         pr_description,
         branch_name,
-        pulls_token=registry_prs_token,
+        pulls_token=registry_writer_token,
         labels=["automated-pr", "collection-metadata"],
-        labels_token=registry_prs_token,
+        labels_token=registry_writer_token,
     )
     print(f"Created PR for branch {branch_name}")
 
