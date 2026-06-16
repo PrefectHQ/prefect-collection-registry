@@ -1,10 +1,11 @@
 import asyncio
+import os
 from typing import Any
 
+import httpx
 import prefect.runtime.flow_run
 from prefect import flow, task, unmapped
 from prefect.artifacts import create_markdown_artifact
-from prefect.blocks.system import Secret
 from prefect.states import Completed, State
 from prefect.types import DateTime
 from prefect.utilities.collections import listrepr
@@ -26,15 +27,33 @@ from prefect_collection_registry.utils import (
     get_repo_contents,
 )
 
-# Secret block names. Each token is scoped to a single (repo, permission).
-REGISTRY_CONTENTS_SECRET = "prefect-collection-registry-contents-rw"
-REGISTRY_PRS_SECRET = "prefect-collection-registry-prs-rw"
-PREFECT_CONTENTS_SECRET = "prefect-contents-rw"
+REGISTRY_WRITER_BLOCK = "prefect-cloud-writer"
 
 
-async def _load_secret(name: str) -> str:
-    block = await Secret.aload(name)  # type: ignore[misc]
-    return block.get()
+async def _load_registry_writer_token() -> str:
+    from prefect_github import GitHubCredentials
+
+    block = await GitHubCredentials.aload(REGISTRY_WRITER_BLOCK)  # type: ignore[misc]
+    return block.token.get_secret_value()
+
+
+async def mint_prefect_contents_token() -> str:
+    """Mint a short-lived (1-hour) installation token for PrefectHQ/prefect via
+    the Prefect Cloud GitHub App. Authenticates with the worker's
+    PREFECT_API_KEY — no long-lived GitHub credential is stored at rest.
+    """
+    api_url = os.environ["PREFECT_API_URL"]
+    # PREFECT_API_URL is workspace-scoped; the integrations endpoint is
+    # account-scoped (one level up from /workspaces/<id>).
+    account_url = api_url.split("/workspaces/")[0].rstrip("/")
+    async with httpx.AsyncClient(timeout=30) as client:
+        response = await client.post(
+            f"{account_url}/integrations/github/token",
+            headers={"Authorization": f"Bearer {os.environ['PREFECT_API_KEY']}"},
+            json={"owner": "PrefectHQ", "repository": "prefect"},
+        )
+        response.raise_for_status()
+        return response.json()["token"]
 
 
 TODO_COLLECTIONS = {
@@ -133,20 +152,20 @@ async def update_collection_metadata(
     subprocess by `run_collection_update`, so the parent flow's already-loaded
     secrets do not survive the process boundary.
     """
-    registry_contents_token = await _load_secret(REGISTRY_CONTENTS_SECRET)
-    prefect_contents_token = await _load_secret(PREFECT_CONTENTS_SECRET)
+    registry_writer_token = await _load_registry_writer_token()
+    prefect_contents_token = await mint_prefect_contents_token()
 
     # Run updates sequentially to avoid conflicts in aggregate files
     await update_block_metadata_for_collection(
         collection_name,
         branch_name,
-        registry_contents_token=registry_contents_token,
+        registry_contents_token=registry_writer_token,
         prefect_contents_token=prefect_contents_token,
     )
     await update_worker_metadata_for_package(
         collection_name,
         branch_name,
-        registry_contents_token=registry_contents_token,
+        registry_contents_token=registry_writer_token,
         prefect_contents_token=prefect_contents_token,
     )
 
@@ -236,22 +255,21 @@ async def update_all_collections(
     include_collections: list[str] | None = None,
 ):
     """Updates all collections for releases and updates the metadata if needed."""
-    registry_contents_token = await _load_secret(REGISTRY_CONTENTS_SECRET)
-    registry_prs_token = await _load_secret(REGISTRY_PRS_SECRET)
-    prefect_contents_token = await _load_secret(PREFECT_CONTENTS_SECRET)
+    registry_writer_token = await _load_registry_writer_token()
+    prefect_contents_token = await mint_prefect_contents_token()
 
     if branch_name == "update-metadata":  # avoid overwriting existing branches
         branch_name = f"update-metadata-{DateTime.now().format('MM-DD-YYYY-HH-MM-SS')}"
 
     # First close any old PRs before creating our new one
     await close_old_metadata_prs(
-        contents_token=registry_contents_token,
-        pulls_token=registry_prs_token,
+        contents_token=registry_writer_token,
+        pulls_token=registry_writer_token,
     )
 
     # Create branch
     branch_name = await create_ref_if_not_exists(
-        branch_name, registry_contents_token=registry_contents_token
+        branch_name, registry_contents_token=registry_writer_token
     )
 
     collections_to_update = set(
@@ -260,7 +278,7 @@ async def update_all_collections(
             *[
                 collection_needs_update(
                     collection_name,
-                    registry_contents_token=registry_contents_token,
+                    registry_contents_token=registry_writer_token,
                     prefect_contents_token=prefect_contents_token,
                 )
                 for collection_name in await get_collection_names(
@@ -302,18 +320,15 @@ async def update_all_collections(
             f"\n\nNote: Updates failed for: {listrepr(failed_collections)}"
         )
 
-    # Labelling a PR via /issues/{n}/labels needs Pull requests: R&W on a
-    # fine-grained PAT (the URL says "issues" but the resource is a PR), so
-    # we reuse the PRs token here rather than the issues-only one.
     await create_pull_request(
         "PrefectHQ",
         "prefect-collection-registry",
         "Update metadata for collection releases",
         pr_description,
         branch_name,
-        pulls_token=registry_prs_token,
+        pulls_token=registry_writer_token,
         labels=["automated-pr", "collection-metadata"],
-        labels_token=registry_prs_token,
+        labels_token=registry_writer_token,
     )
     print(f"Created PR for branch {branch_name}")
 
