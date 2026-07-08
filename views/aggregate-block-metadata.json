@@ -108,7 +108,146 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.7.0"
+          "version": "3.7.7"
+        }
+      },
+      "github-credentials": {
+        "name": "GitHub Credentials",
+        "slug": "github-credentials",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/41971cfecfea5f79ff334164f06ecb34d1038dd4-250x250.png",
+        "documentation_url": "https://docs.prefect.io/integrations/prefect-github",
+        "description": "Block used to manage GitHub authentication.",
+        "code_example": "Load stored GitHub credentials:\n```python\nfrom prefect_github import GitHubCredentials\ngithub_credentials_block = GitHubCredentials.load(\"BLOCK_NAME\")\n```",
+        "block_schema": {
+          "checksum": "sha256:7e65d38f509290e143be94b9bdbc56d6591ed6962afee4c1abac25c7bddc2bf1",
+          "fields": {
+            "block_schema_references": {},
+            "block_type_slug": "github-credentials",
+            "description": "Block used to manage GitHub authentication.",
+            "properties": {
+              "token": {
+                "anyOf": [
+                  {
+                    "format": "password",
+                    "type": "string",
+                    "writeOnly": true
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "A GitHub personal access token (PAT).",
+                "title": "Token",
+                "position": 0
+              }
+            },
+            "secret_fields": [
+              "token"
+            ],
+            "title": "GitHubCredentials",
+            "type": "object"
+          },
+          "capabilities": [],
+          "version": "0.4.0"
+        }
+      },
+      "github-repository": {
+        "name": "GitHub Repository",
+        "slug": "github-repository",
+        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/41971cfecfea5f79ff334164f06ecb34d1038dd4-250x250.png",
+        "documentation_url": "https://docs.prefect.io/integrations/prefect-github",
+        "description": "Interact with files stored on GitHub repositories.",
+        "code_example": "```python\nfrom prefect_github.repository import GitHubRepository\n\ngithub_repository_block = GitHubRepository.load(\"BLOCK_NAME\")\n```",
+        "block_schema": {
+          "checksum": "sha256:4b0bed1d8b2991230d2870cfc2108f1f752d655dc0e4024ad90b78f2d7653747",
+          "fields": {
+            "block_schema_references": {
+              "credentials": {
+                "block_schema_checksum": "sha256:7e65d38f509290e143be94b9bdbc56d6591ed6962afee4c1abac25c7bddc2bf1",
+                "block_type_slug": "github-credentials"
+              }
+            },
+            "block_type_slug": "github-repository",
+            "description": "Interact with files stored on GitHub repositories.",
+            "properties": {
+              "repository_url": {
+                "description": "The URL of a GitHub repository to read from, in either HTTPS or SSH format. If you are using a private repo, it must be in the HTTPS format.",
+                "title": "Repository URL",
+                "type": "string",
+                "position": 0
+              },
+              "reference": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "An optional reference to pin to; can be a branch name or tag.",
+                "title": "Reference",
+                "position": 1
+              },
+              "credentials": {
+                "anyOf": [
+                  {
+                    "$ref": "#/definitions/GitHubCredentials"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "An optional GitHubCredentials block for using private GitHub repos.",
+                "position": 2
+              }
+            },
+            "required": [
+              "repository_url"
+            ],
+            "secret_fields": [
+              "credentials.token"
+            ],
+            "title": "GitHubRepository",
+            "type": "object",
+            "definitions": {
+              "GitHubCredentials": {
+                "block_schema_references": {},
+                "block_type_slug": "github-credentials",
+                "description": "Block used to manage GitHub authentication.",
+                "properties": {
+                  "token": {
+                    "anyOf": [
+                      {
+                        "format": "password",
+                        "type": "string",
+                        "writeOnly": true
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "A GitHub personal access token (PAT).",
+                    "title": "Token",
+                    "position": 0
+                  }
+                },
+                "secret_fields": [
+                  "token"
+                ],
+                "title": "GitHubCredentials",
+                "type": "object"
+              }
+            }
+          },
+          "capabilities": [
+            "get-directory"
+          ],
+          "version": "0.4.0"
         }
       },
       "local-file-system": {
@@ -150,7 +289,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "3.7.0"
+          "version": "3.7.7"
         }
       },
       "mattermost-webhook": {
@@ -277,7 +416,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.7.0"
+          "version": "3.7.7"
         }
       },
       "ms-teams-webhook": {
@@ -352,7 +491,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.7.0"
+          "version": "3.7.7"
         }
       },
       "opsgenie-webhook": {
@@ -571,7 +710,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.7.0"
+          "version": "3.7.7"
         }
       },
       "pager-duty-webhook": {
@@ -735,7 +874,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.7.0"
+          "version": "3.7.7"
         }
       },
       "remote-file-system": {
@@ -781,7 +920,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "3.7.0"
+          "version": "3.7.7"
         }
       },
       "secret": {
@@ -842,7 +981,7 @@
             }
           },
           "capabilities": [],
-          "version": "3.7.0"
+          "version": "3.7.7"
         }
       },
       "sendgrid-email": {
@@ -916,7 +1055,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.7.0"
+          "version": "3.7.7"
         }
       },
       "slack-webhook": {
@@ -977,7 +1116,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.7.0"
+          "version": "3.7.7"
         }
       },
       "smb": {
@@ -1073,7 +1212,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "3.7.0"
+          "version": "3.7.7"
         }
       },
       "twilio-sms": {
@@ -1154,7 +1293,7 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.7.0"
+          "version": "3.7.7"
         }
       },
       "webhook": {
@@ -1228,7 +1367,7 @@
             "type": "object"
           },
           "capabilities": [],
-          "version": "3.7.0"
+          "version": "3.7.7"
         }
       }
     }
