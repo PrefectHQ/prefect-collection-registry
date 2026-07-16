@@ -5304,7 +5304,7 @@
         "description": "Block used to authenticate Xquik API requests. This block is part of the prefect-xquik collection. Install prefect-xquik with `pip install prefect-xquik` to use this block.",
         "code_example": "```python\nfrom prefect_xquik.credentials import XquikCredentials\n\nxquik_credentials_block = XquikCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:63409461fbf453727fc46d370decbae8688a71a95fa89d7fcc04dbc9ac8cf7b8",
+          "checksum": "sha256:6ff9f1be8e0eef4f9871e68c41f2c274ddd17da33111e3a1499878fd5f39d2cb",
           "fields": {
             "block_schema_references": {},
             "block_type_slug": "xquik-credentials",
@@ -5315,26 +5315,30 @@
                 "format": "password",
                 "title": "Api Key",
                 "type": "string",
-                "writeOnly": true
+                "writeOnly": true,
+                "position": 0
               },
               "base_url": {
-                "default": "https://api.xquik.com",
+                "default": "https://xquik.com/api/v1",
                 "description": "Base URL for the Xquik API.",
                 "title": "Base Url",
-                "type": "string"
+                "type": "string",
+                "position": 1
               },
               "api_contract": {
                 "default": "2026-04-29",
                 "description": "Xquik API contract date sent with requests.",
                 "title": "Api Contract",
-                "type": "string"
+                "type": "string",
+                "position": 2
               },
               "timeout_seconds": {
                 "default": 30.0,
                 "description": "Request timeout in seconds.",
-                "exclusiveMinimum": 0.0,
+                "exclusiveMinimum": 0,
                 "title": "Timeout Seconds",
-                "type": "number"
+                "type": "number",
+                "position": 3
               }
             },
             "required": [
@@ -5347,7 +5351,7 @@
             "type": "object"
           },
           "capabilities": [],
-          "version": "0.1.6"
+          "version": "0.1.7"
         }
       }
     }
