@@ -2564,7 +2564,7 @@
             },
             "backoff_limit": {
               "default": 0,
-              "description": "The number of times Kubernetes will retry a job after pod eviction. If set to 0, Prefect will reschedule the flow run when the pod is evicted unless PREFECT_FLOW_RUN_EXECUTE_SIGTERM_BEHAVIOR is set to value different from 'reschedule'.",
+              "description": "The number of times Kubernetes will retry a job after pod eviction. If set to 0, Prefect will reschedule the flow run when the pod is evicted unless PREFECT_FLOW_RUN_EXECUTE_SIGTERM_BEHAVIOR is already set. Otherwise Kubernetes retries the Job and Prefect relinquishes the run.",
               "minimum": 0,
               "title": "Backoff Limit",
               "type": "integer"
