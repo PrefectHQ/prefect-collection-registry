@@ -4364,7 +4364,7 @@
       "kubernetes-cluster-config": {
         "name": "Kubernetes Cluster Config",
         "slug": "kubernetes-cluster-config",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/2d0b896006ad463b49c28aaac14f31e00e32cfab-250x250.png",
+        "logo_url": "https://raw.githubusercontent.com/PrefectHQ/prefect/420d0d6a78bb6df1fc18bcf188fdad43c1d22ea9/assets/block-logos/kubernetes.png",
         "documentation_url": "https://docs.prefect.io/integrations/prefect-kubernetes",
         "description": "Stores configuration for interaction with Kubernetes clusters.\n\nSee `from_file` for creation. This block is part of the prefect-kubernetes collection. Install prefect-kubernetes with `pip install prefect-kubernetes` to use this block.",
         "code_example": "Load a saved Kubernetes cluster config:\n```python\nfrom prefect_kubernetes.credentials import import KubernetesClusterConfig\n\ncluster_config_block = KubernetesClusterConfig.load(\"BLOCK_NAME\")\n```",
@@ -4397,13 +4397,13 @@
             "type": "object"
           },
           "capabilities": [],
-          "version": "0.7.9"
+          "version": "0.8.0"
         }
       },
       "kubernetes-credentials": {
         "name": "Kubernetes Credentials",
         "slug": "kubernetes-credentials",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/2d0b896006ad463b49c28aaac14f31e00e32cfab-250x250.png",
+        "logo_url": "https://raw.githubusercontent.com/PrefectHQ/prefect/420d0d6a78bb6df1fc18bcf188fdad43c1d22ea9/assets/block-logos/kubernetes.png",
         "documentation_url": "https://docs.prefect.io/integrations/prefect-kubernetes",
         "description": "Credentials block for generating configured Kubernetes API clients. This block is part of the prefect-kubernetes collection. Install prefect-kubernetes with `pip install prefect-kubernetes` to use this block.",
         "code_example": "Load stored Kubernetes credentials:\n```python\nfrom prefect_kubernetes.credentials import KubernetesCredentials\n\nkubernetes_credentials = KubernetesCredentials.load(\"BLOCK_NAME\")\n```",
@@ -4465,7 +4465,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.7.9"
+          "version": "0.8.0"
         }
       }
     }
