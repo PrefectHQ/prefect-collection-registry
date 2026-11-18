@@ -1,0 +1,44 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "github>PrefectHQ/renovate-config",
+    "github>PrefectHQ/renovate-config:python",
+    "helpers:pinGitHubActionDigests"
+  ],
+  "lockFileMaintenance": {
+    "description": "pyproject.toml gives only lower bounds or no version for its dependencies, so Renovate has nothing to bump there and updates uv.lock only through lock file maintenance. The default schedule, before 4am on Monday, never matches the org runner's Monday 15:00 UTC run.",
+    "enabled": true,
+    "schedule": [
+      "at any time"
+    ]
+  },
+  "pre-commit": {
+    "enabled": true
+  },
+  "packageRules": [
+    {
+      "description": "Update the Python version in workflows and .python-version only within 3.12, the Python version of the work pool image in prefect.yaml. Move them to a newer minor version together, by hand.",
+      "matchManagers": [
+        "github-actions",
+        "pyenv"
+      ],
+      "matchDepNames": [
+        "python"
+      ],
+      "allowedVersions": "/^3\\.12(\\.|$)/"
+    }
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Update the Prefect image, tag and digest, in the work pool job variables in prefect.yaml",
+      "managerFilePatterns": [
+        "/^prefect\\.yaml$/"
+      ],
+      "matchStrings": [
+        "image: (?<depName>prefecthq/prefect):(?<currentValue>[^@\\s]+)@(?<currentDigest>sha256:[a-f0-9]{64})"
+      ],
+      "datasourceTemplate": "docker"
+    }
+  ]
+}
