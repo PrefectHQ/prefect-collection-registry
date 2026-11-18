@@ -22,4 +22,4 @@ jobs:
 
       - name: Run JSON schema validation
         run: |
-          uv run src/prefect_collection_registry/view_schema_validation.py
+          uv run --frozen src/prefect_collection_registry/view_schema_validation.py

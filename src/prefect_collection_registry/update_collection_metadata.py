@@ -184,7 +184,7 @@ async def run_collection_update(collection_name: str, branch_name: str) -> str:
         "--with",
         f"{collection_name}",
         "--with",
-        "prefect-github<0.4.1",
+        "prefect-github",
         "src/prefect_collection_registry/cli.py",
         collection_name,
         branch_name,
