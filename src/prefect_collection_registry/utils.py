@@ -1,7 +1,9 @@
 import base64
 import inspect
 import json
+import logging
 import os
+import re
 import tempfile
 from collections.abc import Callable, Generator
 from multiprocessing import Lock
@@ -21,6 +23,23 @@ CollectionViewVariety = Literal["block", "flow", "worker"]
 # Create a lock file in a location accessible to all processes
 LOCK_FILE = os.path.join(tempfile.gettempdir(), "prefect_collection_registry.lock")
 _file_lock = Lock()
+
+COLLECTION_NAME_PATTERN = re.compile(r"prefect(-[a-z0-9]+)*")
+
+
+def validate_collection_name(name: str) -> str:
+    """Returns `name` if it is a valid collection name.
+
+    Collection names become path segments in the registry repository and
+    package arguments to `uv`, so a valid name is `prefect`, or `prefect`
+    followed by dash-separated groups of lowercase letters and digits.
+
+    Raises:
+        ValueError: If `name` is not a valid collection name.
+    """
+    if not COLLECTION_NAME_PATTERN.fullmatch(name):
+        raise ValueError(f"Invalid collection name: {name!r}")
+    return name
 
 
 def _gh_client(token: str) -> GHClient:
@@ -272,11 +291,16 @@ async def get_collection_names(
         response = await client.get(f"/repos/{repo_owner}/{repo_name}/contents/{path}")
         entries = response.json()
 
-    collections = [
-        entry["name"]
-        for entry in entries
-        if entry["type"] == "dir" and entry["name"].startswith("prefect-")
-    ]
+    collections: list[str] = []
+    for entry in entries:
+        if entry["type"] != "dir" or not entry["name"].startswith("prefect-"):
+            continue
+        try:
+            collections.append(validate_collection_name(entry["name"]))
+        except ValueError:
+            logging.warning(
+                f"Skipping {path}/{entry['name']}: {entry['name']!r} is not a valid collection name"
+            )
     collections.append("prefect")
     return collections
 

@@ -1,3 +1,4 @@
+import asyncio
 from pathlib import Path
 from typing import Any
 
@@ -43,3 +44,60 @@ class TestJsonSchemaValidation:
 
         with pytest.raises(fastjsonschema.JsonSchemaException):
             validate({**individual_flow_summary, **incorrect_kwargs})  # type: ignore
+
+
+class TestValidateCollectionName:
+    @pytest.mark.parametrize(
+        "name", ["prefect", "prefect-aws", "prefect-great-expectations", "prefect-k8s"]
+    )
+    def test_accepts_collection_names(self, name: str):
+        assert utils.validate_collection_name(name) == name
+
+    @pytest.mark.parametrize(
+        "name",
+        [
+            "",
+            "prefect-",
+            "prefect_aws",
+            "prefect-AWS",
+            "prefect-../../etc",
+            "prefect-aws/blocks",
+            "--index-url=https://example.com",
+            "prefect-aws\n",
+        ],
+    )
+    def test_rejects_other_names(self, name: str):
+        with pytest.raises(ValueError, match="Invalid collection name"):
+            utils.validate_collection_name(name)
+
+
+class TestGetCollectionNames:
+    def test_skips_directories_with_invalid_names(
+        self, monkeypatch: pytest.MonkeyPatch
+    ):
+        entries = [
+            {"type": "dir", "name": "prefect-aws"},
+            {"type": "dir", "name": "prefect-Bad_Name"},
+            {"type": "dir", "name": "not-a-collection"},
+            {"type": "file", "name": "prefect-readme"},
+        ]
+
+        class FakeResponse:
+            def json(self) -> list[dict[str, str]]:
+                return entries
+
+        class FakeClient:
+            async def __aenter__(self) -> "FakeClient":
+                return self
+
+            async def __aexit__(self, *exc_info: object) -> None:
+                return None
+
+            async def get(self, url: str) -> FakeResponse:
+                return FakeResponse()
+
+        monkeypatch.setattr(utils, "_gh_client", lambda token: FakeClient())
+
+        names = asyncio.run(utils.get_collection_names(token="unused"))
+
+        assert names == ["prefect-aws", "prefect"]
