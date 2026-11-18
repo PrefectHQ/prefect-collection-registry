@@ -1918,7 +1918,7 @@ dev = [
 requires-dist = [
     { name = "fastjsonschema", specifier = ">=2.22.2" },
     { name = "gh-util" },
-    { name = "prefect" },
+    { name = "prefect", specifier = ">=3.9.2" },
     { name = "prefect-github" },
 ]
 
