@@ -11,10 +11,15 @@ on:
       - 'uv.lock'
       - '.github/workflows/tests.yml'
 
+# Do not grant jobs any permissions by default
+permissions: {}
+
 jobs:
   run-tests:
     name: Run Tests
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     strategy:
       matrix:
         python-version:
@@ -26,9 +31,10 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Install the latest version of uv
+      - name: Install uv
         uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
         with:
+          version: "0.13.7"
           python-version: ${{ matrix.python-version }}
 
       - name: Run tests
