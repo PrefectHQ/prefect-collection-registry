@@ -12,6 +12,7 @@ from prefect_collection_registry.update_collection_metadata import (
     update_all_collections,
     update_collection_metadata,
 )
+from prefect_collection_registry.utils import validate_collection_name
 
 
 async def run_single_collection(collection_name: str, branch_name: str) -> None:
@@ -32,7 +33,7 @@ def main() -> NoReturn:
         sys.exit(0)
     elif len(sys.argv) in [3, 4]:
         # Two or three args - run single collection
-        collection_name = sys.argv[1]
+        collection_name = validate_collection_name(sys.argv[1])
         branch_name = sys.argv[2]
 
         if len(sys.argv) == 4:

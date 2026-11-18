@@ -1,10 +1,6 @@
-import importlib
 import inspect
-import json
 import logging
 from importlib.metadata import entry_points
-from pathlib import Path
-from sys import argv
 from types import ModuleType
 from typing import Any
 
@@ -127,23 +123,6 @@ def discover_base_worker_subclasses(module: ModuleType) -> list[type[BaseWorker]
     ]
 
 
-def write_worker_metadata(worker_metadata: dict[str, Any], package_name: str):
-    """Writes worker metadata to a file."""
-    if "_" in package_name:
-        raise ValueError(
-            f"Names can only contain dashes, not underscores, got: {package_name!r}"
-        )
-
-    package_slug = package_name.replace("-", "_")
-    package_version = importlib.import_module(package_slug).__version__
-    collection_metadata_path = (
-        Path("collections") / package_name / "workers" / f"v{package_version}.json"
-    )
-    collection_metadata_path.parent.mkdir(parents=True, exist_ok=True)
-    with open(collection_metadata_path, "w") as f:
-        json.dump(worker_metadata, f, indent=2)
-
-
 @task
 def generate_worker_metadata_for_package(package_name: str) -> dict[str, Any]:
     """Generates worker metadata for workers in a given package."""
@@ -170,9 +149,3 @@ async def update_worker_metadata_for_package(
         registry_contents_token=registry_contents_token,
         prefect_contents_token=prefect_contents_token,
     )
-
-
-if __name__ == "__main__":
-    package_name = argv[1]
-    worker_metadata = generate_worker_metadata_for_package(package_name=argv[1])
-    write_worker_metadata(worker_metadata=worker_metadata, package_name=argv[1])
