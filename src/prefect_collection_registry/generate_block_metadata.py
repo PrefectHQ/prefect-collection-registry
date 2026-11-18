@@ -56,8 +56,17 @@ def generate_block_metadata(block_subcls: type[Block]) -> dict[str, Any]:
     return block_type_dict
 
 
+def _is_prefect_module(module_name: str) -> bool:
+    return module_name == "prefect" or module_name.startswith("prefect.")
+
+
 def generate_prefect_block_metadata() -> dict[str, Any]:
-    """Generates block metadata from the prefect package."""
+    """Generates block metadata from the prefect package.
+
+    The block registry also holds blocks from every collection imported in
+    this process, so only classes defined in prefect's own modules are
+    included.
+    """
     from prefect.utilities.dispatch import get_registry_for_type
 
     block_registry = get_registry_for_type(Block) or {}
@@ -69,6 +78,7 @@ def generate_prefect_block_metadata() -> dict[str, Any]:
                     slug: generate_block_metadata(subcls)
                     for slug, subcls in block_registry.items()
                     if slug not in BLOCKS_BLOCKLIST
+                    and _is_prefect_module(subcls.__module__)
                 }.items()
             )
         )
