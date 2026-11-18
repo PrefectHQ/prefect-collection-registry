@@ -1,10 +1,7 @@
-import importlib
 import inspect
-import json
 import logging
 from abc import ABC
 from importlib.metadata import entry_points
-from pathlib import Path
 from types import ModuleType
 from typing import Any
 from uuid import uuid4
@@ -144,23 +141,6 @@ def generate_block_metadata_for_collection(collection_name: str) -> dict[str, An
             output_dict["block_types"][block_type]["description"] += added_description
 
     return output_dict
-
-
-def write_block_metadata(collection_metadata: dict[str, Any], collection_name: str):
-    """Writes block metadata to a file."""
-    if "_" in collection_name:
-        raise ValueError(
-            f"Names can only contain dashes, not underscores, got: {collection_name!r}"
-        )
-
-    collection_slug = collection_name.replace("-", "_")
-    collection_version = importlib.import_module(collection_slug).__version__
-    collection_metadata_path = (
-        Path("collections") / collection_name / "blocks" / f"{collection_version}.json"
-    )
-    collection_metadata_path.parent.mkdir(parents=True, exist_ok=True)
-    with open(collection_metadata_path, "w") as f:
-        json.dump(collection_metadata, f, indent=2)
 
 
 @task(name="update-block-metadata-for-collection")
