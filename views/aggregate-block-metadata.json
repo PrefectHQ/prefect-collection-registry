@@ -4302,6 +4302,131 @@
   "prefect-ray": {
     "block_types": {}
   },
+  "prefect-redis": {
+    "block_types": {
+      "redis-database": {
+        "name": "Redis Database",
+        "slug": "redis-database",
+        "logo_url": "https://raw.githubusercontent.com/PrefectHQ/prefect/420d0d6a78bb6df1fc18bcf188fdad43c1d22ea9/assets/block-logos/redis.png",
+        "documentation_url": null,
+        "description": "Block used to manage authentication with a Redis database This block is part of the prefect-redis collection. Install prefect-redis with `pip install prefect-redis` to use this block.",
+        "code_example": "Create a new block from hostname, username and password:\n    ```python\n    from prefect_redis import RedisDatabase\n\n    block = RedisDatabase(\n        host=\"myredishost.com\", username=\"redis\", password=\"SuperSecret\")\n    block.save(\"BLOCK_NAME\")\n    ```\n\nCreate a new block from a connection string\n    ```python\n    from prefect_redis import RedisBlock\n    block = RedisBlock.from_url(\"\"redis://redis:SuperSecret@myredishost.com:6379\")\n    block.save(\"BLOCK_NAME\")\n    ```\n\nGet Redis client in order to interact directly with Redis\n    ```python\n    from prefect_redis import RedisBlock\n    block = RedisBlock.load(\"BLOCK_NAME\")\n    redis_client = block.get_client()\n    ```",
+        "block_schema": {
+          "checksum": "sha256:510d4c0c1785313e85afc04caa2259402cd639742649eb0a830f7bfc53d45df8",
+          "fields": {
+            "block_schema_references": {},
+            "block_type_slug": "redis-database",
+            "description": "Block used to manage authentication with a Redis database",
+            "properties": {
+              "host": {
+                "default": "localhost",
+                "description": "Redis hostname",
+                "title": "Host",
+                "type": "string",
+                "position": 0
+              },
+              "port": {
+                "default": 6379,
+                "description": "Redis port",
+                "title": "Port",
+                "type": "integer",
+                "position": 1
+              },
+              "db": {
+                "default": 0,
+                "description": "Redis DB index",
+                "title": "Db",
+                "type": "integer",
+                "position": 2
+              },
+              "username": {
+                "anyOf": [
+                  {
+                    "format": "password",
+                    "type": "string",
+                    "writeOnly": true
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Redis username",
+                "title": "Username",
+                "position": 3
+              },
+              "password": {
+                "anyOf": [
+                  {
+                    "format": "password",
+                    "type": "string",
+                    "writeOnly": true
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Redis password",
+                "title": "Password",
+                "position": 4
+              },
+              "ssl": {
+                "default": false,
+                "description": "Whether to use SSL",
+                "title": "Ssl",
+                "type": "boolean",
+                "position": 5
+              },
+              "key_ttl": {
+                "anyOf": [
+                  {
+                    "exclusiveMinimum": 0,
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Optional per-key time-to-live in seconds, applied to every written key (Redis `SET ... EX`). Must be positive; when `None` (the default) keys never expire. Useful when using the block as `result_storage`/cache on a Redis with a `maxmemory` + `volatile-lru` eviction policy.",
+                "title": "Key Ttl",
+                "position": 6
+              },
+              "connection_url": {
+                "anyOf": [
+                  {
+                    "format": "password",
+                    "type": "string",
+                    "writeOnly": true
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Full Redis connection URL, authoritative over the scalar connection fields when set. Supports the redis://, rediss://, redis+sentinel:// and rediss+sentinel:// schemes; the Sentinel schemes resolve the current master through the listed Sentinel daemons and follow failover automatically, e.g. redis+sentinel://sentinel-a:26379,sentinel-b:26379/mymaster.",
+                "title": "Connection Url",
+                "position": 7
+              }
+            },
+            "secret_fields": [
+              "username",
+              "password",
+              "connection_url"
+            ],
+            "title": "RedisDatabase",
+            "type": "object"
+          },
+          "capabilities": [
+            "read-path",
+            "write-path"
+          ],
+          "version": "0.3.1"
+        }
+      }
+    }
+  },
   "prefect-shell": {
     "block_types": {
       "shell-operation": {
