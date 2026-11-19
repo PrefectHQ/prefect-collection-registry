@@ -4150,7 +4150,7 @@
         "description": "Store a GitLab personal access token to interact with private GitLab\nrepositories. This block is part of the prefect-gitlab collection. Install prefect-gitlab with `pip install prefect-gitlab` to use this block.",
         "code_example": "Load stored GitLab credentials:\n```python\nfrom prefect_gitlab import GitLabCredentials\ngitlab_credentials_block = GitLabCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:95ec4ee25e796c17a02bf8938b7a6fea1266b4a8e06596a695a318638d53ccf2",
+          "checksum": "sha256:0d2670df2523869c2b22443a37fd038bc991e3b19826b270103e68881726801b",
           "fields": {
             "block_schema_references": {},
             "block_type_slug": "gitlab-credentials",
@@ -4169,7 +4169,8 @@
                 ],
                 "default": null,
                 "description": "A GitLab Personal Access Token with read_repository scope.",
-                "title": "Personal Access Token"
+                "title": "Personal Access Token",
+                "position": 0
               },
               "url": {
                 "anyOf": [
@@ -4182,7 +4183,8 @@
                 ],
                 "default": null,
                 "description": "URL to self-hosted GitLab instances.",
-                "title": "URL"
+                "title": "URL",
+                "position": 1
               }
             },
             "secret_fields": [
@@ -4192,7 +4194,7 @@
             "type": "object"
           },
           "capabilities": [],
-          "version": "0.3.2"
+          "version": "0.3.5"
         }
       },
       "gitlab-repository": {
@@ -4203,11 +4205,11 @@
         "description": "Interact with files stored in GitLab repositories. This block is part of the prefect-gitlab collection. Install prefect-gitlab with `pip install prefect-gitlab` to use this block.",
         "code_example": "```python\nfrom prefect_gitlab.repositories import GitLabRepository\n\ngitlab_repository_block = GitLabRepository.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:09346e2c824226dee42de0d2f054cf8b0a4fed779c98d1afb27cddf196f5b9e5",
+          "checksum": "sha256:7d84a6f22312faf94ad4c429928040d0525fabf3ec975aa8740103bc5335257f",
           "fields": {
             "block_schema_references": {
               "credentials": {
-                "block_schema_checksum": "sha256:95ec4ee25e796c17a02bf8938b7a6fea1266b4a8e06596a695a318638d53ccf2",
+                "block_schema_checksum": "sha256:0d2670df2523869c2b22443a37fd038bc991e3b19826b270103e68881726801b",
                 "block_type_slug": "gitlab-credentials"
               }
             },
@@ -4217,7 +4219,8 @@
               "repository": {
                 "description": "The URL of a GitLab repository to read from, in either HTTP/HTTPS or SSH format.",
                 "title": "Repository",
-                "type": "string"
+                "type": "string",
+                "position": 0
               },
               "reference": {
                 "anyOf": [
@@ -4230,7 +4233,8 @@
                 ],
                 "default": null,
                 "description": "An optional reference to pin to; can be a branch name or tag.",
-                "title": "Reference"
+                "title": "Reference",
+                "position": 1
               },
               "git_depth": {
                 "anyOf": [
@@ -4244,7 +4248,8 @@
                 "default": 1,
                 "description": "The number of commits that Git history is truncated to during cloning. Set to None to fetch the entire history.",
                 "gte": 1,
-                "title": "Git Depth"
+                "title": "Git Depth",
+                "position": 2
               },
               "credentials": {
                 "anyOf": [
@@ -4256,7 +4261,8 @@
                   }
                 ],
                 "default": null,
-                "description": "An optional GitLab Credentials block for authenticating with private GitLab repos."
+                "description": "An optional GitLab Credentials block for authenticating with private GitLab repos.",
+                "position": 3
               }
             },
             "required": [
@@ -4286,7 +4292,8 @@
                     ],
                     "default": null,
                     "description": "A GitLab Personal Access Token with read_repository scope.",
-                    "title": "Personal Access Token"
+                    "title": "Personal Access Token",
+                    "position": 0
                   },
                   "url": {
                     "anyOf": [
@@ -4299,7 +4306,8 @@
                     ],
                     "default": null,
                     "description": "URL to self-hosted GitLab instances.",
-                    "title": "URL"
+                    "title": "URL",
+                    "position": 1
                   }
                 },
                 "secret_fields": [
@@ -4313,7 +4321,7 @@
           "capabilities": [
             "get-directory"
           ],
-          "version": "0.3.2"
+          "version": "0.3.5"
         }
       }
     }
