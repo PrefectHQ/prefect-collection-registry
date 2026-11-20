@@ -1104,13 +1104,14 @@
           "auto_remove": "{{ auto_remove }}",
           "volumes": "{{ volumes }}",
           "stream_output": "{{ stream_output }}",
+          "container_wait_timeout": "{{ container_wait_timeout }}",
           "mem_limit": "{{ mem_limit }}",
           "memswap_limit": "{{ memswap_limit }}",
           "privileged": "{{ privileged }}",
           "container_create_kwargs": "{{ container_create_kwargs }}"
         },
         "variables": {
-          "definitions": {
+          "$defs": {
             "DockerRegistryCredentials": {
               "additionalProperties": true,
               "block_schema_references": {},
@@ -1156,7 +1157,7 @@
               "type": "object"
             }
           },
-          "description": "Configuration class used by the Docker worker.\n\nAn instance of this class is passed to the Docker worker's `run` method\nfor each flow run. It contains all the information necessary to execute the\nflow run as a Docker container.\n\nAttributes:\n    name: The name to give to created Docker containers.\n    command: The command executed in created Docker containers to kick off\n        flow run execution.\n    env: The environment variables to set in created Docker containers.\n    labels: The labels to set on created Docker containers.\n    image: The image reference of a container image to use for created jobs.\n        If not set, the latest Prefect image will be used.\n    image_pull_policy: The image pull policy to use when pulling images.\n    networks: Docker networks that created containers should be connected to.\n    network_mode: The network mode for the created containers (e.g. host, bridge).\n        If 'networks' is set, this cannot be set.\n    auto_remove: If set, containers will be deleted on completion.\n    volumes: Docker volumes that should be mounted in created containers.\n    stream_output: If set, the output from created containers will be streamed\n        to local standard output.\n    mem_limit: Memory limit of created containers. Accepts a value\n        with a unit identifier (e.g. 100000b, 1000k, 128m, 1g.) If a value is\n        given without a unit, bytes are assumed.\n    memswap_limit: Total memory (memory + swap), -1 to disable swap. Should only be\n        set if `mem_limit` is also set. If `mem_limit` is set, this defaults to\n        allowing the container to use as much swap as memory. For example, if\n        `mem_limit` is 300m and `memswap_limit` is not set, containers can use\n        600m in total of memory and swap.\n    privileged: Give extended privileges to created containers.\n    container_create_kwargs: Extra args for docker py when creating container.",
+          "description": "Configuration class used by the Docker worker.\n\nAn instance of this class is passed to the Docker worker's `run` method\nfor each flow run. It contains all the information necessary to execute the\nflow run as a Docker container.\n\nAttributes:\n    name: The name to give to created Docker containers.\n    command: The command executed in created Docker containers to kick off\n        flow run execution.\n    env: The environment variables to set in created Docker containers.\n    labels: The labels to set on created Docker containers.\n    image: The image reference of a container image to use for created jobs.\n        If not set, the latest Prefect image will be used.\n    image_pull_policy: The image pull policy to use when pulling images.\n    networks: Docker networks that created containers should be connected to.\n    network_mode: The network mode for the created containers (e.g. host, bridge).\n        If 'networks' is set, this cannot be set.\n    auto_remove: If set, containers will be deleted on completion.\n    volumes: Docker volumes that should be mounted in created containers.\n        Relative bind-mount sources (e.g. `.` or `./data`) are resolved\n        against the worker's current working directory.\n    stream_output: If set, the output from created containers will be streamed\n        to local standard output.\n    container_wait_timeout: Maximum number of seconds to wait for a created\n        container to exit. If not set, the worker waits indefinitely.\n    mem_limit: Memory limit of created containers. Accepts a value\n        with a unit identifier (e.g. 100000b, 1000k, 128m, 1g.) If a value is\n        given without a unit, bytes are assumed.\n    memswap_limit: Total memory (memory + swap), -1 to disable swap. Should only be\n        set if `mem_limit` is also set. If `mem_limit` is set, this defaults to\n        allowing the container to use as much swap as memory. For example, if\n        `mem_limit` is 300m and `memswap_limit` is not set, containers can use\n        600m in total of memory and swap.\n    privileged: Give extended privileges to created containers.\n    container_create_kwargs: Extra args for docker py when creating container.",
           "properties": {
             "command": {
               "anyOf": [
@@ -1204,7 +1205,7 @@
                 }
               ],
               "default": null,
-              "description": "Name given to infrastructure created by the worker using this job configuration.",
+              "description": "Name given to infrastructure created by the worker using this job configuration. Supports templates using {{ ctx.flow.* }} and {{ ctx.flow_run.* }} when prepared for a flow run.",
               "title": "Name"
             },
             "image": {
@@ -1218,7 +1219,7 @@
             "registry_credentials": {
               "anyOf": [
                 {
-                  "$ref": "#/definitions/DockerRegistryCredentials"
+                  "$ref": "#/$defs/DockerRegistryCredentials"
                 },
                 {
                   "type": "null"
@@ -1233,6 +1234,7 @@
                   "enum": [
                     "IfNotPresent",
                     "Always",
+                    "IfPossible",
                     "Never"
                   ],
                   "type": "string"
@@ -1273,9 +1275,10 @@
               "type": "boolean"
             },
             "volumes": {
-              "description": "A list of volume to mount into created containers.",
+              "description": "A list of volumes to mount into created containers. Relative bind-mount sources (e.g. '.' or './data') are resolved against the worker's current working directory.",
               "examples": [
-                "/my/local/path:/path/in/container"
+                "/my/local/path:/path/in/container",
+                "./data:/path/in/container"
               ],
               "items": {
                 "type": "string"
@@ -1288,6 +1291,20 @@
               "description": "If set, the output from created containers will be streamed to local standard output.",
               "title": "Stream Output",
               "type": "boolean"
+            },
+            "container_wait_timeout": {
+              "anyOf": [
+                {
+                  "exclusiveMinimum": 0,
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "description": "Maximum number of seconds the worker waits for a created container to exit. If the container has not exited within this time, the worker stops watching it; the container itself is not stopped. If not set, the worker waits indefinitely.",
+              "title": "Container Wait Timeout"
             },
             "mem_limit": {
               "anyOf": [
@@ -1341,7 +1358,7 @@
       },
       "description": "Execute flow runs within Docker containers. Works well for managing flow execution environments via Docker images. Requires access to a running Docker daemon.",
       "display_name": "Docker",
-      "documentation_url": "https://docs.prefect.io/integrations/prefect-docker",
+      "documentation_url": "https://www.prefect.io/docs/integrations/prefect-docker",
       "install_command": "pip install prefect-docker",
       "is_beta": false,
       "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/2IfXXfMq66mrzJBDFFCHTp/6d8f320d9e4fc4393f045673d61ab612/Moby-logo.png?h=250",
