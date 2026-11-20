@@ -4,8 +4,8 @@
       "discord-webhook": {
         "name": "Discord Webhook",
         "slug": "discord-webhook",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/9e94976c80ef925b66d24e5d14f0d47baa6b8f88-250x250.png",
-        "documentation_url": "https://docs.prefect.io/latest/automate/events/automations-triggers#sending-notifications-with-automations",
+        "logo_url": "https://raw.githubusercontent.com/PrefectHQ/prefect/420d0d6a78bb6df1fc18bcf188fdad43c1d22ea9/assets/block-logos/discord.png",
+        "documentation_url": "https://www.prefect.io/docs/latest/automate/events/automations-triggers#sending-notifications-with-automations",
         "description": "Enables sending notifications via a provided Discord webhook.",
         "code_example": "Load a saved Discord webhook and send a message:\n```python\nfrom prefect.blocks.notifications import DiscordWebhook\n\ndiscord_webhook_block = DiscordWebhook.load(\"BLOCK_NAME\")\n\ndiscord_webhook_block.notify(\"Hello from Prefect!\")\n```",
         "block_schema": {
@@ -108,14 +108,14 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.7.0"
+          "version": "3.9.4"
         }
       },
       "local-file-system": {
         "name": "Local File System",
         "slug": "local-file-system",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/ad39089fa66d273b943394a68f003f7a19aa850e-48x48.png",
-        "documentation_url": "https://docs.prefect.io/latest/develop/results#specifying-a-default-filesystem",
+        "logo_url": "https://raw.githubusercontent.com/PrefectHQ/prefect/420d0d6a78bb6df1fc18bcf188fdad43c1d22ea9/assets/block-logos/filesystem.png",
+        "documentation_url": "https://www.prefect.io/docs/latest/develop/results#specifying-a-default-filesystem",
         "description": "Store data as a file on a local file system.",
         "code_example": "Load stored local file system config:\n```python\nfrom prefect.filesystems import LocalFileSystem\n\nlocal_file_system_block = LocalFileSystem.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
@@ -150,14 +150,14 @@
             "read-path",
             "write-path"
           ],
-          "version": "3.7.0"
+          "version": "3.9.4"
         }
       },
       "mattermost-webhook": {
         "name": "Mattermost Webhook",
         "slug": "mattermost-webhook",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/1350a147130bf82cbc799a5f868d2c0116207736-250x250.png",
-        "documentation_url": "https://docs.prefect.io/latest/automate/events/automations-triggers#sending-notifications-with-automations",
+        "logo_url": "https://raw.githubusercontent.com/PrefectHQ/prefect/420d0d6a78bb6df1fc18bcf188fdad43c1d22ea9/assets/block-logos/mattermost.png",
+        "documentation_url": "https://www.prefect.io/docs/latest/automate/events/automations-triggers#sending-notifications-with-automations",
         "description": "Enables sending notifications via a provided Mattermost webhook.",
         "code_example": "Load a saved Mattermost webhook and send a message:\n```python\nfrom prefect.blocks.notifications import MattermostWebhook\n\nmattermost_webhook_block = MattermostWebhook.load(\"BLOCK_NAME\")\n\nmattermost_webhook_block.notify(\"Hello from Prefect!\")\n```",
         "block_schema": {
@@ -277,14 +277,14 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.7.0"
+          "version": "3.9.4"
         }
       },
       "ms-teams-webhook": {
         "name": "Microsoft Teams Webhook",
         "slug": "ms-teams-webhook",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/817efe008a57f0a24f3587414714b563e5e23658-250x250.png",
-        "documentation_url": "https://docs.prefect.io/latest/automate/events/automations-triggers#sending-notifications-with-automations",
+        "logo_url": "https://raw.githubusercontent.com/PrefectHQ/prefect/420d0d6a78bb6df1fc18bcf188fdad43c1d22ea9/assets/block-logos/microsoft-teams.png",
+        "documentation_url": "https://www.prefect.io/docs/latest/automate/events/automations-triggers#sending-notifications-with-automations",
         "description": "Enables sending notifications via a provided Microsoft Teams webhook.",
         "code_example": "Load a saved Teams webhook and send a message:\n```python\nfrom prefect.blocks.notifications import MicrosoftTeamsWebhook\nteams_webhook_block = MicrosoftTeamsWebhook.load(\"BLOCK_NAME\")\nteams_webhook_block.notify(\"Hello from Prefect!\")\n```",
         "block_schema": {
@@ -352,14 +352,14 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.7.0"
+          "version": "3.9.4"
         }
       },
       "opsgenie-webhook": {
         "name": "Opsgenie Webhook",
         "slug": "opsgenie-webhook",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/d8b5bc6244ae6cd83b62ec42f10d96e14d6e9113-280x280.png",
-        "documentation_url": "https://docs.prefect.io/latest/automate/events/automations-triggers#sending-notifications-with-automations",
+        "logo_url": "https://raw.githubusercontent.com/PrefectHQ/prefect/420d0d6a78bb6df1fc18bcf188fdad43c1d22ea9/assets/block-logos/opsgenie.png",
+        "documentation_url": "https://www.prefect.io/docs/latest/automate/events/automations-triggers#sending-notifications-with-automations",
         "description": "Enables sending notifications via a provided Opsgenie webhook.",
         "code_example": "Load a saved Opsgenie webhook and send a message:\n```python\nfrom prefect.blocks.notifications import OpsgenieWebhook\nopsgenie_webhook_block = OpsgenieWebhook.load(\"BLOCK_NAME\")\nopsgenie_webhook_block.notify(\"Hello from Prefect!\")\n```",
         "block_schema": {
@@ -571,14 +571,14 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.7.0"
+          "version": "3.9.4"
         }
       },
       "pager-duty-webhook": {
         "name": "Pager Duty Webhook",
         "slug": "pager-duty-webhook",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/8dbf37d17089c1ce531708eac2e510801f7b3aee-250x250.png",
-        "documentation_url": "https://docs.prefect.io/latest/automate/events/automations-triggers#sending-notifications-with-automations",
+        "logo_url": "https://raw.githubusercontent.com/PrefectHQ/prefect/420d0d6a78bb6df1fc18bcf188fdad43c1d22ea9/assets/block-logos/pagerduty.png",
+        "documentation_url": "https://www.prefect.io/docs/latest/automate/events/automations-triggers#sending-notifications-with-automations",
         "description": "Enables sending notifications via a provided PagerDuty webhook.",
         "code_example": "Load a saved PagerDuty webhook and send a message:\n```python\nfrom prefect.blocks.notifications import PagerDutyWebHook\npagerduty_webhook_block = PagerDutyWebHook.load(\"BLOCK_NAME\")\npagerduty_webhook_block.notify(\"Hello from Prefect!\")\n```",
         "block_schema": {
@@ -735,22 +735,22 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.7.0"
+          "version": "3.9.4"
         }
       },
       "remote-file-system": {
         "name": "Remote File System",
         "slug": "remote-file-system",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/e86b41bc0f9c99ba9489abeee83433b43d5c9365-48x48.png",
-        "documentation_url": "https://docs.prefect.io/latest/develop/results#specifying-a-default-filesystem",
-        "description": "Store data as a file on a remote file system.\n\nSupports any remote file system supported by `fsspec`. The file system is specified\nusing a protocol. For example, \"s3://my-bucket/my-folder/\" will use S3.",
-        "code_example": "Load stored remote file system config:\n```python\nfrom prefect.filesystems import RemoteFileSystem\n\nremote_file_system_block = RemoteFileSystem.load(\"BLOCK_NAME\")\n```",
+        "logo_url": "https://raw.githubusercontent.com/PrefectHQ/prefect/420d0d6a78bb6df1fc18bcf188fdad43c1d22ea9/assets/block-logos/filesystem.png",
+        "documentation_url": "https://www.prefect.io/docs/latest/develop/results#specifying-a-default-filesystem",
+        "description": "Store data as a file on a remote file system.\n\nSupports any remote file system supported by `fsspec`. The file system is specified\nusing a protocol. For example, \"s3://my-bucket/my-folder/\" will use S3.\n\nConnection options for the file system are passed through `settings` as keyword\narguments to the `fsspec` implementation for the protocol. The accepted keys\ndepend on the implementation; see the\n[fsspec implementations](https://filesystem-spec.readthedocs.io/en/latest/api.html#built-in-implementations)\nand [other known implementations](https://filesystem-spec.readthedocs.io/en/latest/api.html#other-known-implementations)\nfor details. Protocols that use an external implementation require that package\nto be installed, for example `s3fs` for `s3://` paths.\n\nValues in `settings` are stored as plain text and are not obfuscated when the\nblock is displayed. Prefer to provide credentials through the environment where\nthe implementation supports it, or use a dedicated block, such as the `SMB` block\nor the `S3Bucket` block from `prefect-aws`.",
+        "code_example": "Load stored remote file system config:\n```python\nfrom prefect.filesystems import RemoteFileSystem\n\nremote_file_system_block = RemoteFileSystem.load(\"BLOCK_NAME\")\n```\n\nConnect to an S3-compatible service, such as MinIO, by passing `s3fs` options\nthrough `settings`. Credentials are read from the standard AWS environment\nvariables, such as `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`:\n```python\nfrom prefect.filesystems import RemoteFileSystem\n\nremote_file_system_block = RemoteFileSystem(\n    basepath=\"s3://my-bucket/my-folder/\",\n    settings={\"client_kwargs\": {\"endpoint_url\": \"http://localhost:9000\"}},\n)\n```",
         "block_schema": {
-          "checksum": "sha256:3bca63009aa57af6c7053fc17a2a336a1e1801bbb19ca2c5939b59afe435c531",
+          "checksum": "sha256:dda7a0ed8a21db3ff4b2b568c92afd7e81b2fae6d4c1b4d53c487634d62648ec",
           "fields": {
             "block_schema_references": {},
             "block_type_slug": "remote-file-system",
-            "description": "Store data as a file on a remote file system.\n\nSupports any remote file system supported by `fsspec`. The file system is specified\nusing a protocol. For example, \"s3://my-bucket/my-folder/\" will use S3.",
+            "description": "Store data as a file on a remote file system.\n\nSupports any remote file system supported by `fsspec`. The file system is specified\nusing a protocol. For example, \"s3://my-bucket/my-folder/\" will use S3.\n\nConnection options for the file system are passed through `settings` as keyword\narguments to the `fsspec` implementation for the protocol. The accepted keys\ndepend on the implementation; see the\n[fsspec implementations](https://filesystem-spec.readthedocs.io/en/latest/api.html#built-in-implementations)\nand [other known implementations](https://filesystem-spec.readthedocs.io/en/latest/api.html#other-known-implementations)\nfor details. Protocols that use an external implementation require that package\nto be installed, for example `s3fs` for `s3://` paths.\n\nValues in `settings` are stored as plain text and are not obfuscated when the\nblock is displayed. Prefer to provide credentials through the environment where\nthe implementation supports it, or use a dedicated block, such as the `SMB` block\nor the `S3Bucket` block from `prefect-aws`.",
             "properties": {
               "basepath": {
                 "description": "Default path for this block to write to.",
@@ -762,7 +762,14 @@
                 "position": 0
               },
               "settings": {
-                "description": "Additional settings to pass through to fsspec.",
+                "description": "Additional connection options passed as keyword arguments to the fsspec implementation for the base path's protocol. The accepted keys depend on the implementation; see https://filesystem-spec.readthedocs.io/en/latest/api.html#built-in-implementations and https://filesystem-spec.readthedocs.io/en/latest/api.html#other-known-implementations. Values are stored as plain text and are not obfuscated, so avoid storing credentials here.",
+                "examples": [
+                  {
+                    "client_kwargs": {
+                      "endpoint_url": "http://localhost:9000"
+                    }
+                  }
+                ],
                 "title": "Settings",
                 "type": "object",
                 "position": 1
@@ -781,14 +788,14 @@
             "read-path",
             "write-path"
           ],
-          "version": "3.7.0"
+          "version": "3.9.4"
         }
       },
       "secret": {
         "name": "Secret",
         "slug": "secret",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/c6f20e556dd16effda9df16551feecfb5822092b-48x48.png",
-        "documentation_url": "https://docs.prefect.io/latest/develop/blocks",
+        "logo_url": "https://raw.githubusercontent.com/PrefectHQ/prefect/420d0d6a78bb6df1fc18bcf188fdad43c1d22ea9/assets/block-logos/secret.png",
+        "documentation_url": "https://www.prefect.io/docs/latest/develop/blocks",
         "description": "A block that represents a secret value. The value stored in this block will be obfuscated when this block is viewed or edited in the UI.",
         "code_example": "```python\nfrom prefect.blocks.system import Secret\n\nSecret(value=\"sk-1234567890\").save(\"BLOCK_NAME\", overwrite=True)\n\nsecret_block = Secret.load(\"BLOCK_NAME\")\n\n# Access the stored secret\nsecret_block.get()\n```",
         "block_schema": {
@@ -842,14 +849,14 @@
             }
           },
           "capabilities": [],
-          "version": "3.7.0"
+          "version": "3.9.4"
         }
       },
       "sendgrid-email": {
         "name": "Sendgrid Email",
         "slug": "sendgrid-email",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/82bc6ed16ca42a2252a5512c72233a253b8a58eb-250x250.png",
-        "documentation_url": "https://docs.prefect.io/latest/automate/events/automations-triggers#sending-notifications-with-automations",
+        "logo_url": "https://raw.githubusercontent.com/PrefectHQ/prefect/420d0d6a78bb6df1fc18bcf188fdad43c1d22ea9/assets/block-logos/email.png",
+        "documentation_url": "https://www.prefect.io/docs/latest/automate/events/automations-triggers#sending-notifications-with-automations",
         "description": "Enables sending notifications via Sendgrid email service.",
         "code_example": "Load a saved Sendgrid and send a email message:\n```python\nfrom prefect.blocks.notifications import SendgridEmail\n\nsendgrid_block = SendgridEmail.load(\"BLOCK_NAME\")\n\nsendgrid_block.notify(\"Hello from Prefect!\")\n```",
         "block_schema": {
@@ -916,14 +923,14 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.7.0"
+          "version": "3.9.4"
         }
       },
       "slack-webhook": {
         "name": "Slack Webhook",
         "slug": "slack-webhook",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/c1965ecbf8704ee1ea20d77786de9a41ce1087d1-500x500.png",
-        "documentation_url": "https://docs.prefect.io/latest/automate/events/automations-triggers#sending-notifications-with-automations",
+        "logo_url": "https://raw.githubusercontent.com/PrefectHQ/prefect/420d0d6a78bb6df1fc18bcf188fdad43c1d22ea9/assets/block-logos/slack.png",
+        "documentation_url": "https://www.prefect.io/docs/latest/automate/events/automations-triggers#sending-notifications-with-automations",
         "description": "Enables sending notifications via a provided Slack webhook.\n\nSupports both standard Slack webhooks (hooks.slack.com) and Slack GovCloud\nwebhooks (hooks.slack-gov.com).",
         "code_example": "Load a saved Slack webhook and send a message:\n```python\nfrom prefect.blocks.notifications import SlackWebhook\n\nslack_webhook_block = SlackWebhook.load(\"BLOCK_NAME\")\nslack_webhook_block.notify(\"Hello from Prefect!\")\n```",
         "block_schema": {
@@ -977,14 +984,14 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.7.0"
+          "version": "3.9.4"
         }
       },
       "smb": {
         "name": "SMB",
         "slug": "smb",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/3f624663f7beb97d011d011bffd51ecf6c499efc-195x195.png",
-        "documentation_url": "https://docs.prefect.io/latest/develop/results#specifying-a-default-filesystem",
+        "logo_url": "https://raw.githubusercontent.com/PrefectHQ/prefect/420d0d6a78bb6df1fc18bcf188fdad43c1d22ea9/assets/block-logos/smb.png",
+        "documentation_url": "https://www.prefect.io/docs/latest/develop/results#specifying-a-default-filesystem",
         "description": "Store data as a file on a SMB share.",
         "code_example": "Load stored SMB config:\n\n```python\nfrom prefect.filesystems import SMB\nsmb_block = SMB.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
@@ -1073,14 +1080,14 @@
             "read-path",
             "write-path"
           ],
-          "version": "3.7.0"
+          "version": "3.9.4"
         }
       },
       "twilio-sms": {
         "name": "Twilio SMS",
         "slug": "twilio-sms",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/8bd8777999f82112c09b9c8d57083ac75a4a0d65-250x250.png",
-        "documentation_url": "https://docs.prefect.io/latest/automate/events/automations-triggers#sending-notifications-with-automations",
+        "logo_url": "https://raw.githubusercontent.com/PrefectHQ/prefect/420d0d6a78bb6df1fc18bcf188fdad43c1d22ea9/assets/block-logos/twilio.png",
+        "documentation_url": "https://www.prefect.io/docs/latest/automate/events/automations-triggers#sending-notifications-with-automations",
         "description": "Enables sending notifications via Twilio SMS.",
         "code_example": "Load a saved `TwilioSMS` block and send a message:\n```python\nfrom prefect.blocks.notifications import TwilioSMS\ntwilio_webhook_block = TwilioSMS.load(\"BLOCK_NAME\")\ntwilio_webhook_block.notify(\"Hello from Prefect!\")\n```",
         "block_schema": {
@@ -1154,14 +1161,14 @@
           "capabilities": [
             "notify"
           ],
-          "version": "3.7.0"
+          "version": "3.9.4"
         }
       },
       "webhook": {
         "name": "Webhook",
         "slug": "webhook",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/c7247cb359eb6cf276734d4b1fbf00fb8930e89e-250x250.png",
-        "documentation_url": "https://docs.prefect.io/latest/automate/events/webhook-triggers",
+        "logo_url": "https://raw.githubusercontent.com/PrefectHQ/prefect/420d0d6a78bb6df1fc18bcf188fdad43c1d22ea9/assets/block-logos/webhook.png",
+        "documentation_url": "https://www.prefect.io/docs/latest/automate/events/webhook-triggers",
         "description": "Block that enables calling webhooks.",
         "code_example": "```python\nfrom prefect.blocks.webhook import Webhook\n\nwebhook_block = Webhook.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
@@ -1228,7 +1235,7 @@
             "type": "object"
           },
           "capabilities": [],
-          "version": "3.7.0"
+          "version": "3.9.4"
         }
       }
     }
@@ -3263,12 +3270,12 @@
       "docker-host": {
         "name": "Docker Host",
         "slug": "docker-host",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/14a315b79990200db7341e42553e23650b34bb96-250x250.png",
+        "logo_url": "https://raw.githubusercontent.com/PrefectHQ/prefect/420d0d6a78bb6df1fc18bcf188fdad43c1d22ea9/assets/block-logos/docker.png",
         "documentation_url": null,
         "description": "Store settings for interacting with a Docker host. This block is part of the prefect-docker collection. Install prefect-docker with `pip install prefect-docker` to use this block.",
         "code_example": "Get a Docker Host client.\n```python\nfrom prefect_docker import DockerHost\n\ndocker_host = DockerHost(\nbase_url=\"tcp://127.0.0.1:1234\",\n    max_pool_size=4\n)\nwith docker_host.get_client() as client:\n    ... # Use the client for Docker operations\n```",
         "block_schema": {
-          "checksum": "sha256:f0c510448c337e115f0ca70147400f350d959df4ba21edea4caec3d57085175b",
+          "checksum": "sha256:134866e70f88bf1c13e12c511bd0070aa6cf817d755e02bda0e150644c75a624",
           "fields": {
             "block_schema_references": {},
             "block_type_slug": "docker-host",
@@ -3288,13 +3295,15 @@
                 "examples": [
                   "unix:///var/run/docker.sock"
                 ],
-                "title": "Base URL"
+                "title": "Base URL",
+                "position": 0
               },
               "version": {
                 "default": "auto",
                 "description": "The version of the API to use",
                 "title": "Version",
-                "type": "string"
+                "type": "string",
+                "position": 1
               },
               "timeout": {
                 "anyOf": [
@@ -3307,7 +3316,8 @@
                 ],
                 "default": null,
                 "description": "Default timeout for API calls, in seconds.",
-                "title": "Timeout"
+                "title": "Timeout",
+                "position": 2
               },
               "max_pool_size": {
                 "anyOf": [
@@ -3320,12 +3330,14 @@
                 ],
                 "default": null,
                 "description": "The maximum number of connections to save in the pool.",
-                "title": "Max Pool Size"
+                "title": "Max Pool Size",
+                "position": 3
               },
               "client_kwargs": {
                 "description": "Additional keyword arguments to pass to `docker.from_env()` or `DockerClient`.",
                 "title": "Additional Configuration",
-                "type": "object"
+                "type": "object",
+                "position": 4
               }
             },
             "secret_fields": [],
@@ -3333,18 +3345,18 @@
             "type": "object"
           },
           "capabilities": [],
-          "version": "0.6.6"
+          "version": "0.8.0"
         }
       },
       "docker-registry-credentials": {
         "name": "Docker Registry Credentials",
         "slug": "docker-registry-credentials",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/14a315b79990200db7341e42553e23650b34bb96-250x250.png",
+        "logo_url": "https://raw.githubusercontent.com/PrefectHQ/prefect/420d0d6a78bb6df1fc18bcf188fdad43c1d22ea9/assets/block-logos/docker.png",
         "documentation_url": null,
         "description": "Store credentials for interacting with a Docker Registry. This block is part of the prefect-docker collection. Install prefect-docker with `pip install prefect-docker` to use this block.",
-        "code_example": "Log into Docker Registry.\n```python\nfrom prefect_docker import DockerHost, DockerRegistryCredentials\n\ndocker_host = DockerHost()\ndocker_registry_credentials = DockerRegistryCredentials(\n    username=\"my_username\",\n    password=\"my_password\",\n    registry_url=\"registry.hub.docker.com\",\n)\nwith docker_host.get_client() as client:\n    docker_registry_credentials.login(client)\n```",
+        "code_example": "Log into Docker Registry.\n```python\nfrom prefect_docker import DockerHost, DockerRegistryCredentials\n\ndocker_host = DockerHost()\ndocker_registry_credentials = DockerRegistryCredentials.load(\"BLOCK_NAME\")\nwith docker_host.get_client() as client:\n    docker_registry_credentials.login(client)\n```",
         "block_schema": {
-          "checksum": "sha256:e9ccd3b2e2650e710931d41ee8adf81d2028dbf19cbb50f4847e2f18885ecd7a",
+          "checksum": "sha256:3a9e2b9868e8e5db4ec917f1e2d77d891b0c570b99c2fad9b2a59aad6926d60a",
           "fields": {
             "block_schema_references": {},
             "block_type_slug": "docker-registry-credentials",
@@ -3353,14 +3365,16 @@
               "username": {
                 "description": "The username to log into the registry with.",
                 "title": "Username",
-                "type": "string"
+                "type": "string",
+                "position": 0
               },
               "password": {
                 "description": "The password to log into the registry with.",
                 "format": "password",
                 "title": "Password",
                 "type": "string",
-                "writeOnly": true
+                "writeOnly": true,
+                "position": 1
               },
               "registry_url": {
                 "description": "The URL to the registry. Generally, \"http\" or \"https\" can be omitted.",
@@ -3368,13 +3382,15 @@
                   "index.docker.io"
                 ],
                 "title": "Registry Url",
-                "type": "string"
+                "type": "string",
+                "position": 2
               },
               "reauth": {
                 "default": true,
                 "description": "Whether or not to reauthenticate on each interaction.",
                 "title": "Reauth",
-                "type": "boolean"
+                "type": "boolean",
+                "position": 3
               }
             },
             "required": [
@@ -3389,7 +3405,7 @@
             "type": "object"
           },
           "capabilities": [],
-          "version": "0.6.6"
+          "version": "0.8.0"
         }
       }
     }
@@ -3399,12 +3415,12 @@
       "email-server-credentials": {
         "name": "Email Server Credentials",
         "slug": "email-server-credentials",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/82bc6ed16ca42a2252a5512c72233a253b8a58eb-250x250.png",
-        "documentation_url": "https://docs.prefect.io/integrations/prefect-email",
+        "logo_url": "https://raw.githubusercontent.com/PrefectHQ/prefect/420d0d6a78bb6df1fc18bcf188fdad43c1d22ea9/assets/block-logos/email.png",
+        "documentation_url": "https://www.prefect.io/docs/integrations/prefect-email",
         "description": "Block used to manage generic email server authentication.\nIt is recommended you use a\n[Google App Password](https://support.google.com/accounts/answer/185833)\nif you use Gmail. This block is part of the prefect-email collection. Install prefect-email with `pip install prefect-email` to use this block.",
         "code_example": "Load stored email server credentials:\n```python\nfrom prefect_email import EmailServerCredentials\nemail_credentials_block = EmailServerCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:d1c42d3fe8f599348bc0e46078ebebc13777a245256449db0cb8fec571210563",
+          "checksum": "sha256:fee54a0d1d68ba0278f2eb64a2944db0511984641a650de3da05081b91857b68",
           "fields": {
             "block_schema_references": {},
             "block_type_slug": "email-server-credentials",
@@ -3421,14 +3437,16 @@
                 ],
                 "default": null,
                 "description": "The username to use for authentication to the server. Unnecessary if SMTP login is not required.",
-                "title": "Username"
+                "title": "Username",
+                "position": 0
               },
               "password": {
                 "description": "The password to use for authentication to the server. Unnecessary if SMTP login is not required.",
                 "format": "password",
                 "title": "Password",
                 "type": "string",
-                "writeOnly": true
+                "writeOnly": true,
+                "position": 1
               },
               "smtp_server": {
                 "anyOf": [
@@ -3441,7 +3459,8 @@
                 ],
                 "default": "smtp.gmail.com",
                 "description": "Either the hostname of the SMTP server, or one of the keys from the built-in SMTPServer Enum members, like 'gmail'.",
-                "title": "SMTP Server"
+                "title": "SMTP Server",
+                "position": 2
               },
               "smtp_type": {
                 "anyOf": [
@@ -3454,7 +3473,8 @@
                 ],
                 "default": 465,
                 "description": "Either 'SSL', 'STARTTLS', or 'INSECURE'.",
-                "title": "SMTP Type"
+                "title": "SMTP Type",
+                "position": 3
               },
               "smtp_port": {
                 "anyOf": [
@@ -3467,7 +3487,8 @@
                 ],
                 "default": null,
                 "description": "If provided, overrides the smtp_type's default port number.",
-                "title": "SMTP Port"
+                "title": "SMTP Port",
+                "position": 4
               },
               "verify": {
                 "anyOf": [
@@ -3480,7 +3501,8 @@
                 ],
                 "default": true,
                 "description": "If `False`, SSL certificates will not be verified. Default to `True`.",
-                "title": "Verify"
+                "title": "Verify",
+                "position": 5
               }
             },
             "secret_fields": [
@@ -3516,7 +3538,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.4.2"
+          "version": "0.5.0"
         }
       }
     }
@@ -3531,11 +3553,11 @@
         "description": "A block for querying a database with BigQuery.\n\nUpon instantiating, a connection to BigQuery is established\nand maintained for the life of the object until the close method is called.\n\nIt is recommended to use this block as a context manager, which will automatically\nclose the connection and its cursors when the context is exited.\n\nIt is also recommended that this block is loaded and consumed within a single task\nor flow because if the block is passed across separate tasks and flows,\nthe state of the block's connection and cursor could be lost. This block is part of the prefect-gcp collection. Install prefect-gcp with `pip install prefect-gcp` to use this block.",
         "code_example": "```python\nfrom prefect_gcp.bigquery import BigQueryWarehouse\n\nbigquery_warehouse_block = BigQueryWarehouse.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:ffbbd565d1027e3fc525170ce00fbba69441e7cac03e0c30fcdd25f4095f0230",
+          "checksum": "sha256:352dc854bb81de379e1df11d5dcad89cd080a231761a64a6658c19155b767b6d",
           "fields": {
             "block_schema_references": {
               "gcp_credentials": {
-                "block_schema_checksum": "sha256:83df44a8efc90e1a5d9e2c7a98b7e15b14ad4eede9f0459b0258a732f5070dc4",
+                "block_schema_checksum": "sha256:5e8a10b87d7e7bbd4acc1d83b498e8577bb01dfd2b6b518e1400bdb41da97886",
                 "block_type_slug": "gcp-credentials"
               }
             },
@@ -3543,13 +3565,15 @@
             "description": "A block for querying a database with BigQuery.\n\nUpon instantiating, a connection to BigQuery is established\nand maintained for the life of the object until the close method is called.\n\nIt is recommended to use this block as a context manager, which will automatically\nclose the connection and its cursors when the context is exited.\n\nIt is also recommended that this block is loaded and consumed within a single task\nor flow because if the block is passed across separate tasks and flows,\nthe state of the block's connection and cursor could be lost.",
             "properties": {
               "gcp_credentials": {
-                "$ref": "#/definitions/GcpCredentials"
+                "$ref": "#/definitions/GcpCredentials",
+                "position": 0
               },
               "fetch_size": {
                 "default": 1,
                 "description": "The number of rows to fetch at a time.",
                 "title": "Fetch Size",
-                "type": "integer"
+                "type": "integer",
+                "position": 1
               }
             },
             "required": [
@@ -3578,7 +3602,8 @@
                     ],
                     "default": null,
                     "description": "Path to the service account JSON keyfile.",
-                    "title": "Service Account File"
+                    "title": "Service Account File",
+                    "position": 0
                   },
                   "service_account_info": {
                     "anyOf": [
@@ -3592,7 +3617,8 @@
                     ],
                     "default": null,
                     "description": "The contents of the keyfile as a dict.",
-                    "title": "Service Account Info"
+                    "title": "Service Account Info",
+                    "position": 1
                   },
                   "project": {
                     "anyOf": [
@@ -3605,7 +3631,8 @@
                     ],
                     "default": null,
                     "description": "The GCP project to use for the client.",
-                    "title": "Project"
+                    "title": "Project",
+                    "position": 2
                   }
                 },
                 "secret_fields": [
@@ -3617,7 +3644,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.6.12"
+          "version": "0.6.22"
         }
       },
       "gcp-credentials": {
@@ -3628,7 +3655,7 @@
         "description": "Block used to manage authentication with GCP. Google authentication is\nhandled via the `google.oauth2` module or through the CLI.\nSpecify either one of service `account_file` or `service_account_info`; if both\nare not specified, the client will try to detect the credentials following Google's\n[Application Default Credentials](https://cloud.google.com/docs/authentication/application-default-credentials).\nSee Google's [Authentication documentation](https://cloud.google.com/docs/authentication#service-accounts)\nfor details on inference and recommended authentication patterns. This block is part of the prefect-gcp collection. Install prefect-gcp with `pip install prefect-gcp` to use this block.",
         "code_example": "Load GCP credentials stored in a `GCP Credentials` Block:\n```python\nfrom prefect_gcp import GcpCredentials\ngcp_credentials_block = GcpCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:83df44a8efc90e1a5d9e2c7a98b7e15b14ad4eede9f0459b0258a732f5070dc4",
+          "checksum": "sha256:5e8a10b87d7e7bbd4acc1d83b498e8577bb01dfd2b6b518e1400bdb41da97886",
           "fields": {
             "block_schema_references": {},
             "block_type_slug": "gcp-credentials",
@@ -3646,7 +3673,8 @@
                 ],
                 "default": null,
                 "description": "Path to the service account JSON keyfile.",
-                "title": "Service Account File"
+                "title": "Service Account File",
+                "position": 0
               },
               "service_account_info": {
                 "anyOf": [
@@ -3660,7 +3688,8 @@
                 ],
                 "default": null,
                 "description": "The contents of the keyfile as a dict.",
-                "title": "Service Account Info"
+                "title": "Service Account Info",
+                "position": 1
               },
               "project": {
                 "anyOf": [
@@ -3673,7 +3702,8 @@
                 ],
                 "default": null,
                 "description": "The GCP project to use for the client.",
-                "title": "Project"
+                "title": "Project",
+                "position": 2
               }
             },
             "secret_fields": [
@@ -3683,7 +3713,7 @@
             "type": "object"
           },
           "capabilities": [],
-          "version": "0.6.12"
+          "version": "0.6.22"
         }
       },
       "gcpsecret": {
@@ -3694,11 +3724,11 @@
         "description": "Manages a secret in Google Cloud Platform's Secret Manager. This block is part of the prefect-gcp collection. Install prefect-gcp with `pip install prefect-gcp` to use this block.",
         "code_example": "```python\nfrom prefect_gcp.secret_manager import GcpSecret\n\ngcpsecret_block = GcpSecret.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:4f53b0779d06fd4985d57e246ed773b54b92f629dacd1c7cd9191dff9cdc11a2",
+          "checksum": "sha256:de134b8bf5a931ecdf30453221e6c01b1f10cfb564b1f0f69349c9204d775b00",
           "fields": {
             "block_schema_references": {
               "gcp_credentials": {
-                "block_schema_checksum": "sha256:83df44a8efc90e1a5d9e2c7a98b7e15b14ad4eede9f0459b0258a732f5070dc4",
+                "block_schema_checksum": "sha256:5e8a10b87d7e7bbd4acc1d83b498e8577bb01dfd2b6b518e1400bdb41da97886",
                 "block_type_slug": "gcp-credentials"
               }
             },
@@ -3706,18 +3736,21 @@
             "description": "Manages a secret in Google Cloud Platform's Secret Manager.",
             "properties": {
               "gcp_credentials": {
-                "$ref": "#/definitions/GcpCredentials"
+                "$ref": "#/definitions/GcpCredentials",
+                "position": 0
               },
               "secret_name": {
                 "description": "Name of the secret to manage.",
                 "title": "Secret Name",
-                "type": "string"
+                "type": "string",
+                "position": 1
               },
               "secret_version": {
                 "default": "latest",
                 "description": "Version number of the secret to use.",
                 "title": "Secret Version",
-                "type": "string"
+                "type": "string",
+                "position": 2
               }
             },
             "required": [
@@ -3747,7 +3780,8 @@
                     ],
                     "default": null,
                     "description": "Path to the service account JSON keyfile.",
-                    "title": "Service Account File"
+                    "title": "Service Account File",
+                    "position": 0
                   },
                   "service_account_info": {
                     "anyOf": [
@@ -3761,7 +3795,8 @@
                     ],
                     "default": null,
                     "description": "The contents of the keyfile as a dict.",
-                    "title": "Service Account Info"
+                    "title": "Service Account Info",
+                    "position": 1
                   },
                   "project": {
                     "anyOf": [
@@ -3774,7 +3809,8 @@
                     ],
                     "default": null,
                     "description": "The GCP project to use for the client.",
-                    "title": "Project"
+                    "title": "Project",
+                    "position": 2
                   }
                 },
                 "secret_fields": [
@@ -3786,7 +3822,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.6.12"
+          "version": "0.6.22"
         }
       },
       "gcs-bucket": {
@@ -3797,11 +3833,11 @@
         "description": "Block used to store data using GCP Cloud Storage Buckets.\n\nNote! `GcsBucket` in `prefect-gcp` is a unique block, separate from `GCS`\nin core Prefect. `GcsBucket` does not use `gcsfs` under the hood,\ninstead using the `google-cloud-storage` package, and offers more configuration\nand functionality. This block is part of the prefect-gcp collection. Install prefect-gcp with `pip install prefect-gcp` to use this block.",
         "code_example": "Load stored GCP Cloud Storage Bucket:\n```python\nfrom prefect_gcp.cloud_storage import GcsBucket\ngcp_cloud_storage_bucket_block = GcsBucket.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:5e0b7d06f3cc9a2757f1284a1e7be7f3efc00cfaf9af8e1cbbeda0c699a49d61",
+          "checksum": "sha256:d85725d2d729e079228cea21a25f61f073681a6c590a074c99985d3a9274a225",
           "fields": {
             "block_schema_references": {
               "gcp_credentials": {
-                "block_schema_checksum": "sha256:83df44a8efc90e1a5d9e2c7a98b7e15b14ad4eede9f0459b0258a732f5070dc4",
+                "block_schema_checksum": "sha256:5e8a10b87d7e7bbd4acc1d83b498e8577bb01dfd2b6b518e1400bdb41da97886",
                 "block_type_slug": "gcp-credentials"
               }
             },
@@ -3811,17 +3847,20 @@
               "bucket": {
                 "description": "Name of the bucket.",
                 "title": "Bucket",
-                "type": "string"
+                "type": "string",
+                "position": 0
               },
               "gcp_credentials": {
                 "$ref": "#/definitions/GcpCredentials",
-                "description": "The credentials to authenticate with GCP."
+                "description": "The credentials to authenticate with GCP.",
+                "position": 1
               },
               "bucket_folder": {
                 "default": "",
                 "description": "A default path to a folder within the GCS bucket to use for reading and writing objects.",
                 "title": "Bucket Folder",
-                "type": "string"
+                "type": "string",
+                "position": 2
               }
             },
             "required": [
@@ -3850,7 +3889,8 @@
                     ],
                     "default": null,
                     "description": "Path to the service account JSON keyfile.",
-                    "title": "Service Account File"
+                    "title": "Service Account File",
+                    "position": 0
                   },
                   "service_account_info": {
                     "anyOf": [
@@ -3864,7 +3904,8 @@
                     ],
                     "default": null,
                     "description": "The contents of the keyfile as a dict.",
-                    "title": "Service Account Info"
+                    "title": "Service Account Info",
+                    "position": 1
                   },
                   "project": {
                     "anyOf": [
@@ -3877,7 +3918,8 @@
                     ],
                     "default": null,
                     "description": "The GCP project to use for the client.",
-                    "title": "Project"
+                    "title": "Project",
+                    "position": 2
                   }
                 },
                 "secret_fields": [
@@ -3894,7 +3936,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "0.6.12"
+          "version": "0.6.22"
         }
       }
     }
@@ -4020,7 +4062,7 @@
         "description": "Store a GitLab personal access token to interact with private GitLab\nrepositories. This block is part of the prefect-gitlab collection. Install prefect-gitlab with `pip install prefect-gitlab` to use this block.",
         "code_example": "Load stored GitLab credentials:\n```python\nfrom prefect_gitlab import GitLabCredentials\ngitlab_credentials_block = GitLabCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:95ec4ee25e796c17a02bf8938b7a6fea1266b4a8e06596a695a318638d53ccf2",
+          "checksum": "sha256:0d2670df2523869c2b22443a37fd038bc991e3b19826b270103e68881726801b",
           "fields": {
             "block_schema_references": {},
             "block_type_slug": "gitlab-credentials",
@@ -4039,7 +4081,8 @@
                 ],
                 "default": null,
                 "description": "A GitLab Personal Access Token with read_repository scope.",
-                "title": "Personal Access Token"
+                "title": "Personal Access Token",
+                "position": 0
               },
               "url": {
                 "anyOf": [
@@ -4052,7 +4095,8 @@
                 ],
                 "default": null,
                 "description": "URL to self-hosted GitLab instances.",
-                "title": "URL"
+                "title": "URL",
+                "position": 1
               }
             },
             "secret_fields": [
@@ -4062,7 +4106,7 @@
             "type": "object"
           },
           "capabilities": [],
-          "version": "0.3.2"
+          "version": "0.3.5"
         }
       },
       "gitlab-repository": {
@@ -4073,11 +4117,11 @@
         "description": "Interact with files stored in GitLab repositories. This block is part of the prefect-gitlab collection. Install prefect-gitlab with `pip install prefect-gitlab` to use this block.",
         "code_example": "```python\nfrom prefect_gitlab.repositories import GitLabRepository\n\ngitlab_repository_block = GitLabRepository.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:09346e2c824226dee42de0d2f054cf8b0a4fed779c98d1afb27cddf196f5b9e5",
+          "checksum": "sha256:7d84a6f22312faf94ad4c429928040d0525fabf3ec975aa8740103bc5335257f",
           "fields": {
             "block_schema_references": {
               "credentials": {
-                "block_schema_checksum": "sha256:95ec4ee25e796c17a02bf8938b7a6fea1266b4a8e06596a695a318638d53ccf2",
+                "block_schema_checksum": "sha256:0d2670df2523869c2b22443a37fd038bc991e3b19826b270103e68881726801b",
                 "block_type_slug": "gitlab-credentials"
               }
             },
@@ -4087,7 +4131,8 @@
               "repository": {
                 "description": "The URL of a GitLab repository to read from, in either HTTP/HTTPS or SSH format.",
                 "title": "Repository",
-                "type": "string"
+                "type": "string",
+                "position": 0
               },
               "reference": {
                 "anyOf": [
@@ -4100,7 +4145,8 @@
                 ],
                 "default": null,
                 "description": "An optional reference to pin to; can be a branch name or tag.",
-                "title": "Reference"
+                "title": "Reference",
+                "position": 1
               },
               "git_depth": {
                 "anyOf": [
@@ -4114,7 +4160,8 @@
                 "default": 1,
                 "description": "The number of commits that Git history is truncated to during cloning. Set to None to fetch the entire history.",
                 "gte": 1,
-                "title": "Git Depth"
+                "title": "Git Depth",
+                "position": 2
               },
               "credentials": {
                 "anyOf": [
@@ -4126,7 +4173,8 @@
                   }
                 ],
                 "default": null,
-                "description": "An optional GitLab Credentials block for authenticating with private GitLab repos."
+                "description": "An optional GitLab Credentials block for authenticating with private GitLab repos.",
+                "position": 3
               }
             },
             "required": [
@@ -4156,7 +4204,8 @@
                     ],
                     "default": null,
                     "description": "A GitLab Personal Access Token with read_repository scope.",
-                    "title": "Personal Access Token"
+                    "title": "Personal Access Token",
+                    "position": 0
                   },
                   "url": {
                     "anyOf": [
@@ -4169,7 +4218,8 @@
                     ],
                     "default": null,
                     "description": "URL to self-hosted GitLab instances.",
-                    "title": "URL"
+                    "title": "URL",
+                    "position": 1
                   }
                 },
                 "secret_fields": [
@@ -4183,7 +4233,7 @@
           "capabilities": [
             "get-directory"
           ],
-          "version": "0.3.2"
+          "version": "0.3.5"
         }
       }
     }
@@ -4193,8 +4243,8 @@
       "kubernetes-cluster-config": {
         "name": "Kubernetes Cluster Config",
         "slug": "kubernetes-cluster-config",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/2d0b896006ad463b49c28aaac14f31e00e32cfab-250x250.png",
-        "documentation_url": "https://docs.prefect.io/integrations/prefect-kubernetes",
+        "logo_url": "https://raw.githubusercontent.com/PrefectHQ/prefect/420d0d6a78bb6df1fc18bcf188fdad43c1d22ea9/assets/block-logos/kubernetes.png",
+        "documentation_url": "https://www.prefect.io/docs/integrations/prefect-kubernetes",
         "description": "Stores configuration for interaction with Kubernetes clusters.\n\nSee `from_file` for creation. This block is part of the prefect-kubernetes collection. Install prefect-kubernetes with `pip install prefect-kubernetes` to use this block.",
         "code_example": "Load a saved Kubernetes cluster config:\n```python\nfrom prefect_kubernetes.credentials import import KubernetesClusterConfig\n\ncluster_config_block = KubernetesClusterConfig.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
@@ -4226,14 +4276,14 @@
             "type": "object"
           },
           "capabilities": [],
-          "version": "0.7.9"
+          "version": "0.8.1"
         }
       },
       "kubernetes-credentials": {
         "name": "Kubernetes Credentials",
         "slug": "kubernetes-credentials",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/2d0b896006ad463b49c28aaac14f31e00e32cfab-250x250.png",
-        "documentation_url": "https://docs.prefect.io/integrations/prefect-kubernetes",
+        "logo_url": "https://raw.githubusercontent.com/PrefectHQ/prefect/420d0d6a78bb6df1fc18bcf188fdad43c1d22ea9/assets/block-logos/kubernetes.png",
+        "documentation_url": "https://www.prefect.io/docs/integrations/prefect-kubernetes",
         "description": "Credentials block for generating configured Kubernetes API clients. This block is part of the prefect-kubernetes collection. Install prefect-kubernetes with `pip install prefect-kubernetes` to use this block.",
         "code_example": "Load stored Kubernetes credentials:\n```python\nfrom prefect_kubernetes.credentials import KubernetesCredentials\n\nkubernetes_credentials = KubernetesCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
@@ -4294,13 +4344,138 @@
             }
           },
           "capabilities": [],
-          "version": "0.7.9"
+          "version": "0.8.1"
         }
       }
     }
   },
   "prefect-ray": {
     "block_types": {}
+  },
+  "prefect-redis": {
+    "block_types": {
+      "redis-database": {
+        "name": "Redis Database",
+        "slug": "redis-database",
+        "logo_url": "https://raw.githubusercontent.com/PrefectHQ/prefect/420d0d6a78bb6df1fc18bcf188fdad43c1d22ea9/assets/block-logos/redis.png",
+        "documentation_url": null,
+        "description": "Block used to manage authentication with a Redis database This block is part of the prefect-redis collection. Install prefect-redis with `pip install prefect-redis` to use this block.",
+        "code_example": "Create a new block from hostname, username and password:\n    ```python\n    from prefect_redis import RedisDatabase\n\n    block = RedisDatabase(\n        host=\"myredishost.com\", username=\"redis\", password=\"SuperSecret\")\n    block.save(\"BLOCK_NAME\")\n    ```\n\nCreate a new block from a connection string\n    ```python\n    from prefect_redis import RedisBlock\n    block = RedisBlock.from_url(\"\"redis://redis:SuperSecret@myredishost.com:6379\")\n    block.save(\"BLOCK_NAME\")\n    ```\n\nGet Redis client in order to interact directly with Redis\n    ```python\n    from prefect_redis import RedisBlock\n    block = RedisBlock.load(\"BLOCK_NAME\")\n    redis_client = block.get_client()\n    ```",
+        "block_schema": {
+          "checksum": "sha256:510d4c0c1785313e85afc04caa2259402cd639742649eb0a830f7bfc53d45df8",
+          "fields": {
+            "block_schema_references": {},
+            "block_type_slug": "redis-database",
+            "description": "Block used to manage authentication with a Redis database",
+            "properties": {
+              "host": {
+                "default": "localhost",
+                "description": "Redis hostname",
+                "title": "Host",
+                "type": "string",
+                "position": 0
+              },
+              "port": {
+                "default": 6379,
+                "description": "Redis port",
+                "title": "Port",
+                "type": "integer",
+                "position": 1
+              },
+              "db": {
+                "default": 0,
+                "description": "Redis DB index",
+                "title": "Db",
+                "type": "integer",
+                "position": 2
+              },
+              "username": {
+                "anyOf": [
+                  {
+                    "format": "password",
+                    "type": "string",
+                    "writeOnly": true
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Redis username",
+                "title": "Username",
+                "position": 3
+              },
+              "password": {
+                "anyOf": [
+                  {
+                    "format": "password",
+                    "type": "string",
+                    "writeOnly": true
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Redis password",
+                "title": "Password",
+                "position": 4
+              },
+              "ssl": {
+                "default": false,
+                "description": "Whether to use SSL",
+                "title": "Ssl",
+                "type": "boolean",
+                "position": 5
+              },
+              "key_ttl": {
+                "anyOf": [
+                  {
+                    "exclusiveMinimum": 0,
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Optional per-key time-to-live in seconds, applied to every written key (Redis `SET ... EX`). Must be positive; when `None` (the default) keys never expire. Useful when using the block as `result_storage`/cache on a Redis with a `maxmemory` + `volatile-lru` eviction policy.",
+                "title": "Key Ttl",
+                "position": 6
+              },
+              "connection_url": {
+                "anyOf": [
+                  {
+                    "format": "password",
+                    "type": "string",
+                    "writeOnly": true
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Full Redis connection URL, authoritative over the scalar connection fields when set. Supports the redis://, rediss://, redis+sentinel:// and rediss+sentinel:// schemes; the Sentinel schemes resolve the current master through the listed Sentinel daemons and follow failover automatically, e.g. redis+sentinel://sentinel-a:26379,sentinel-b:26379/mymaster.",
+                "title": "Connection Url",
+                "position": 7
+              }
+            },
+            "secret_fields": [
+              "username",
+              "password",
+              "connection_url"
+            ],
+            "title": "RedisDatabase",
+            "type": "object"
+          },
+          "capabilities": [
+            "read-path",
+            "write-path"
+          ],
+          "version": "0.3.2"
+        }
+      }
+    }
   },
   "prefect-shell": {
     "block_types": {
@@ -4376,11 +4551,11 @@
         "name": "Slack Credentials",
         "slug": "slack-credentials",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/c1965ecbf8704ee1ea20d77786de9a41ce1087d1-500x500.png",
-        "documentation_url": "https://prefecthq.github.io/prefect-slack/credentials/#prefect_slack.credentials.SlackCredentials",
+        "documentation_url": "https://docs.prefect.io/integrations/prefect-slack",
         "description": "Block holding Slack credentials for use in tasks and flows. This block is part of the prefect-slack collection. Install prefect-slack with `pip install prefect-slack` to use this block.",
         "code_example": "Load stored Slack credentials:\n```python\nfrom prefect_slack import SlackCredentials\nslack_credentials_block = SlackCredentials.load(\"BLOCK_NAME\")\n```\n\nGet a Slack client:\n```python\nfrom prefect_slack import SlackCredentials\nslack_credentials_block = SlackCredentials.load(\"BLOCK_NAME\")\nclient = slack_credentials_block.get_client()\n```",
         "block_schema": {
-          "checksum": "sha256:f79058d8fcf22ed575f824b27daa68a52fedaa0e40f7a8a542d4ac9cf3ee8317",
+          "checksum": "sha256:a3fff6f40e32ae0ac691c5aef8c97181dd551ce577788d2439f6ffe9886ddedd",
           "fields": {
             "block_schema_references": {},
             "block_type_slug": "slack-credentials",
@@ -4391,7 +4566,8 @@
                 "format": "password",
                 "title": "Token",
                 "type": "string",
-                "writeOnly": true
+                "writeOnly": true,
+                "position": 0
               }
             },
             "required": [
@@ -4404,7 +4580,7 @@
             "type": "object"
           },
           "capabilities": [],
-          "version": "0.3.1"
+          "version": "0.4.0"
         }
       }
     }
