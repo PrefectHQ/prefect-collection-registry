@@ -3852,11 +3852,11 @@
         "name": "dbt Cloud Credentials",
         "slug": "dbt-cloud-credentials",
         "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5zE9lxfzBHjw3tnEup4wWL/9a001902ed43a84c6c96d23b24622e19/dbt-bit_tm.png?h=250",
-        "documentation_url": "https://docs.prefect.io/integrations/prefect-dbt",
+        "documentation_url": "https://www.prefect.io/docs/integrations/prefect-dbt",
         "description": "Credentials block for credential use across dbt Cloud tasks and flows. This block is part of the prefect-dbt collection. Install prefect-dbt with `pip install prefect-dbt` to use this block.",
         "code_example": "Load stored dbt Cloud credentials:\n```python\nfrom prefect_dbt.cloud import DbtCloudCredentials\n\ndbt_cloud_credentials = DbtCloudCredentials.load(\"BLOCK_NAME\")\n```\n\nUse DbtCloudCredentials instance to trigger a job run:\n```python\nfrom prefect_dbt.cloud import DbtCloudCredentials\n\ncredentials = DbtCloudCredentials(api_key=\"my_api_key\", account_id=123456789)\n\nasync with dbt_cloud_credentials.get_administrative_client() as client:\n    client.trigger_job_run(job_id=1)\n```\n\nLoad saved dbt Cloud credentials within a flow:\n```python\nfrom prefect import flow\n\nfrom prefect_dbt.cloud import DbtCloudCredentials\nfrom prefect_dbt.cloud.jobs import trigger_dbt_cloud_job_run\n\n\n@flow\ndef trigger_dbt_cloud_job_run_flow():\n    credentials = DbtCloudCredentials.load(\"my-dbt-credentials\")\n    trigger_dbt_cloud_job_run(dbt_cloud_credentials=credentials, job_id=1)\n\ntrigger_dbt_cloud_job_run_flow()\n```",
         "block_schema": {
-          "checksum": "sha256:0e1b2e94e09041e7d732822354503e87b99ddb31422d9d2c83c671be249aa231",
+          "checksum": "sha256:d72a145df1fd6e780b7c6f03a7ef5f10dbe112126e8461e43e2b311aabbe3b9b",
           "fields": {
             "block_schema_references": {},
             "block_type_slug": "dbt-cloud-credentials",
@@ -3867,18 +3867,21 @@
                 "format": "password",
                 "title": "API Key",
                 "type": "string",
-                "writeOnly": true
+                "writeOnly": true,
+                "position": 0
               },
               "account_id": {
                 "description": "The ID of your dbt Cloud account.",
                 "title": "Account ID",
-                "type": "integer"
+                "type": "integer",
+                "position": 1
               },
               "domain": {
                 "default": "cloud.getdbt.com",
                 "description": "The base domain of your dbt Cloud instance.",
                 "title": "Domain",
-                "type": "string"
+                "type": "string",
+                "position": 2
               }
             },
             "required": [
@@ -3892,22 +3895,22 @@
             "type": "object"
           },
           "capabilities": [],
-          "version": "0.7.9"
+          "version": "0.8.0"
         }
       },
       "dbt-cloud-job": {
         "name": "dbt Cloud Job",
         "slug": "dbt-cloud-job",
         "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/5zE9lxfzBHjw3tnEup4wWL/9a001902ed43a84c6c96d23b24622e19/dbt-bit_tm.png?h=250",
-        "documentation_url": "https://docs.prefect.io/integrations/prefect-dbt",
+        "documentation_url": "https://www.prefect.io/docs/integrations/prefect-dbt",
         "description": "Block that holds the information and methods to interact with a dbt Cloud job. This block is part of the prefect-dbt collection. Install prefect-dbt with `pip install prefect-dbt` to use this block.",
         "code_example": "Load a configured dbt Cloud job block.\n```python\nfrom prefect_dbt.cloud import DbtCloudJob\n\ndbt_cloud_job = DbtCloudJob.load(\"BLOCK_NAME\")\n```\n\nTriggers a dbt Cloud job, waits for completion, and fetches the results.\n```python\nfrom prefect import flow\nfrom prefect_dbt.cloud import DbtCloudCredentials, DbtCloudJob\n\n@flow\ndef dbt_cloud_job_flow():\n    dbt_cloud_credentials = DbtCloudCredentials.load(\"dbt-token\")\n    dbt_cloud_job = DbtCloudJob.load(\n        dbt_cloud_credentials=dbt_cloud_credentials,\n        job_id=154217\n    )\n    dbt_cloud_job_run = dbt_cloud_job.trigger()\n    dbt_cloud_job_run.wait_for_completion()\n    dbt_cloud_job_run.fetch_result()\n    return dbt_cloud_job_run\n\ndbt_cloud_job_flow()\n```",
         "block_schema": {
-          "checksum": "sha256:3aac5884b6efe2d85628c67c47518a329bdd1e4b3b84ca95fd7ee93a326a11d2",
+          "checksum": "sha256:78a59d31e0a927a5bc13b08f499151e0715adfcc0a41020c9282245e58b6af8f",
           "fields": {
             "block_schema_references": {
               "dbt_cloud_credentials": {
-                "block_schema_checksum": "sha256:0e1b2e94e09041e7d732822354503e87b99ddb31422d9d2c83c671be249aa231",
+                "block_schema_checksum": "sha256:d72a145df1fd6e780b7c6f03a7ef5f10dbe112126e8461e43e2b311aabbe3b9b",
                 "block_type_slug": "dbt-cloud-credentials"
               }
             },
@@ -3916,28 +3919,33 @@
             "properties": {
               "dbt_cloud_credentials": {
                 "$ref": "#/definitions/DbtCloudCredentials",
-                "description": "The dbt Cloud credentials to use to authenticate with dbt Cloud."
+                "description": "The dbt Cloud credentials to use to authenticate with dbt Cloud.",
+                "position": 0
               },
               "job_id": {
                 "description": "The id of the dbt Cloud job.",
                 "title": "Job ID",
-                "type": "integer"
+                "type": "integer",
+                "position": 1
               },
               "timeout_seconds": {
                 "default": 900,
                 "description": "The number of seconds to wait for the job to complete.",
                 "title": "Timeout Seconds",
-                "type": "integer"
+                "type": "integer",
+                "position": 2
               },
               "interval_seconds": {
                 "default": 10,
                 "description": "The number of seconds to wait between polling for job completion.",
                 "title": "Interval Seconds",
-                "type": "integer"
+                "type": "integer",
+                "position": 3
               },
               "trigger_job_run_options": {
                 "$ref": "#/definitions/TriggerJobRunOptions",
-                "description": "The options to use when triggering a job run."
+                "description": "The options to use when triggering a job run.",
+                "position": 4
               }
             },
             "required": [
@@ -3960,18 +3968,21 @@
                     "format": "password",
                     "title": "API Key",
                     "type": "string",
-                    "writeOnly": true
+                    "writeOnly": true,
+                    "position": 0
                   },
                   "account_id": {
                     "description": "The ID of your dbt Cloud account.",
                     "title": "Account ID",
-                    "type": "integer"
+                    "type": "integer",
+                    "position": 1
                   },
                   "domain": {
                     "default": "cloud.getdbt.com",
                     "description": "The base domain of your dbt Cloud instance.",
                     "title": "Domain",
-                    "type": "string"
+                    "type": "string",
+                    "position": 2
                   }
                 },
                 "required": [
@@ -4119,7 +4130,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.7.9"
+          "version": "0.8.0"
         }
       }
     }
