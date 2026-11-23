@@ -2781,49 +2781,88 @@
         "description": "Store BitBucket credentials to interact with private BitBucket repositories. This block is part of the prefect-bitbucket collection. Install prefect-bitbucket with `pip install prefect-bitbucket` to use this block.",
         "code_example": "Load stored BitBucket credentials:\n```python\nfrom prefect_bitbucket import BitBucketCredentials\nbitbucket_credentials_block = BitBucketCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:ef96bdc56cde651f152e3f8938018d53d725b25b5ae98777872c0962250ba0fc",
+          "checksum": "sha256:e861b52450aad2705a3ee6af76e75c3c81bb1fe4ee8d186c6f7ce7f2aab7774c",
           "fields": {
-            "title": "BitBucketCredentials",
+            "block_schema_references": {},
+            "block_type_slug": "bitbucket-credentials",
             "description": "Store BitBucket credentials to interact with private BitBucket repositories.",
-            "type": "object",
             "properties": {
               "token": {
-                "title": "Token",
+                "anyOf": [
+                  {
+                    "format": "password",
+                    "type": "string",
+                    "writeOnly": true
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "A BitBucket Personal Access Token - required for private repositories.",
-                "name": "Personal Access Token",
-                "example": "x-token-auth:my-token",
-                "type": "string",
-                "writeOnly": true,
-                "format": "password"
+                "examples": [
+                  "x-token-auth:my-token"
+                ],
+                "title": "Personal Access Token",
+                "position": 0
               },
               "username": {
-                "title": "Username",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "Identification name unique across entire BitBucket site.",
-                "type": "string"
+                "title": "Username",
+                "position": 1
               },
               "password": {
-                "title": "Password",
+                "anyOf": [
+                  {
+                    "format": "password",
+                    "type": "string",
+                    "writeOnly": true
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "The password to authenticate to BitBucket.",
-                "type": "string",
-                "writeOnly": true,
-                "format": "password"
+                "title": "Password",
+                "position": 2
               },
               "url": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "The base URL of a BitBucket instance. Leave blank for BitBucket Cloud.",
+                "examples": [
+                  "https://api.bitbucket.org/"
+                ],
                 "title": "URL",
-                "description": "The base URL of your BitBucket instance.",
-                "default": "https://api.bitbucket.org/",
-                "type": "string"
+                "position": 3
               }
             },
-            "block_type_slug": "bitbucket-credentials",
             "secret_fields": [
               "token",
               "password"
             ],
-            "block_schema_references": {}
+            "title": "BitBucketCredentials",
+            "type": "object"
           },
           "capabilities": [],
-          "version": "0.2.2"
+          "version": "0.3.7"
         }
       },
       "bitbucket-repository": {
@@ -2834,93 +2873,146 @@
         "description": "Interact with files stored in BitBucket repositories. This block is part of the prefect-bitbucket collection. Install prefect-bitbucket with `pip install prefect-bitbucket` to use this block.",
         "code_example": "```python\nfrom prefect_bitbucket.repository import BitBucketRepository\n\nbitbucket_repository_block = BitBucketRepository.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:b159a8f21358b694f13fb67b73f20bf3f8b74138940fc0f16ab08107e78d5237",
+          "checksum": "sha256:9eaa875b406fa93660d3e16be997369f5316f19eab86acffce604ff86e2c7218",
           "fields": {
-            "title": "BitBucketRepository",
+            "block_schema_references": {
+              "bitbucket_credentials": {
+                "block_schema_checksum": "sha256:e861b52450aad2705a3ee6af76e75c3c81bb1fe4ee8d186c6f7ce7f2aab7774c",
+                "block_type_slug": "bitbucket-credentials"
+              }
+            },
+            "block_type_slug": "bitbucket-repository",
             "description": "Interact with files stored in BitBucket repositories.",
-            "type": "object",
             "properties": {
               "repository": {
-                "title": "Repository",
                 "description": "The URL of a BitBucket repository to read from in HTTPS format",
-                "type": "string"
+                "title": "Repository",
+                "type": "string",
+                "position": 0
               },
               "reference": {
-                "title": "Reference",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "An optional reference to pin to; can be a branch or tag.",
-                "type": "string"
+                "title": "Reference",
+                "position": 1
               },
               "bitbucket_credentials": {
-                "title": "Bitbucket Credentials",
-                "description": "An optional BitBucketCredentials block for authenticating with private BitBucket repos.",
-                "allOf": [
+                "anyOf": [
                   {
                     "$ref": "#/definitions/BitBucketCredentials"
+                  },
+                  {
+                    "type": "null"
                   }
-                ]
+                ],
+                "default": null,
+                "description": "An optional BitBucketCredentials block for authenticating with private BitBucket repos.",
+                "position": 2
               }
             },
             "required": [
               "repository"
             ],
-            "block_type_slug": "bitbucket-repository",
             "secret_fields": [
               "bitbucket_credentials.token",
               "bitbucket_credentials.password"
             ],
-            "block_schema_references": {
-              "bitbucket_credentials": {
-                "block_type_slug": "bitbucket-credentials",
-                "block_schema_checksum": "sha256:ef96bdc56cde651f152e3f8938018d53d725b25b5ae98777872c0962250ba0fc"
-              }
-            },
+            "title": "BitBucketRepository",
+            "type": "object",
             "definitions": {
               "BitBucketCredentials": {
-                "title": "BitBucketCredentials",
+                "block_schema_references": {},
+                "block_type_slug": "bitbucket-credentials",
                 "description": "Store BitBucket credentials to interact with private BitBucket repositories.",
-                "type": "object",
                 "properties": {
                   "token": {
-                    "title": "Token",
+                    "anyOf": [
+                      {
+                        "format": "password",
+                        "type": "string",
+                        "writeOnly": true
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
                     "description": "A BitBucket Personal Access Token - required for private repositories.",
-                    "name": "Personal Access Token",
-                    "example": "x-token-auth:my-token",
-                    "type": "string",
-                    "writeOnly": true,
-                    "format": "password"
+                    "examples": [
+                      "x-token-auth:my-token"
+                    ],
+                    "title": "Personal Access Token",
+                    "position": 0
                   },
                   "username": {
-                    "title": "Username",
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
                     "description": "Identification name unique across entire BitBucket site.",
-                    "type": "string"
+                    "title": "Username",
+                    "position": 1
                   },
                   "password": {
-                    "title": "Password",
+                    "anyOf": [
+                      {
+                        "format": "password",
+                        "type": "string",
+                        "writeOnly": true
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
                     "description": "The password to authenticate to BitBucket.",
-                    "type": "string",
-                    "writeOnly": true,
-                    "format": "password"
+                    "title": "Password",
+                    "position": 2
                   },
                   "url": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The base URL of a BitBucket instance. Leave blank for BitBucket Cloud.",
+                    "examples": [
+                      "https://api.bitbucket.org/"
+                    ],
                     "title": "URL",
-                    "description": "The base URL of your BitBucket instance.",
-                    "default": "https://api.bitbucket.org/",
-                    "type": "string"
+                    "position": 3
                   }
                 },
-                "block_type_slug": "bitbucket-credentials",
                 "secret_fields": [
                   "token",
                   "password"
                 ],
-                "block_schema_references": {}
+                "title": "BitBucketCredentials",
+                "type": "object"
               }
             }
           },
           "capabilities": [
             "get-directory"
           ],
-          "version": "0.2.2"
+          "version": "0.3.7"
         }
       }
     }
