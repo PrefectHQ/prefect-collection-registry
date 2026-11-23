@@ -4433,11 +4433,11 @@
         "description": "Perform data operations against a Snowflake database. This block is part of the prefect-snowflake collection. Install prefect-snowflake with `pip install prefect-snowflake` to use this block.",
         "code_example": "Load stored Snowflake connector as a context manager:\n```python\nfrom prefect_snowflake.database import SnowflakeConnector\n\nsnowflake_connector = SnowflakeConnector.load(\"BLOCK_NAME\")\n```\n\nInsert data into database and fetch results.\n```python\nfrom prefect_snowflake.database import SnowflakeConnector\n\nwith SnowflakeConnector.load(\"BLOCK_NAME\") as conn:\n    conn.execute(\n        \"CREATE TABLE IF NOT EXISTS customers (name varchar, address varchar);\"\n    )\n    conn.execute_many(\n        \"INSERT INTO customers (name, address) VALUES (%(name)s, %(address)s);\",\n        seq_of_parameters=[\n            {\"name\": \"Ford\", \"address\": \"Highway 42\"},\n            {\"name\": \"Unknown\", \"address\": \"Space\"},\n            {\"name\": \"Me\", \"address\": \"Myway 88\"},\n        ],\n    )\n    results = conn.fetch_all(\n        \"SELECT * FROM customers WHERE address = %(address)s\",\n        parameters={\"address\": \"Space\"}\n    )\n    print(results)\n```",
         "block_schema": {
-          "checksum": "sha256:dafc66fe14b29627ad6ced19d164a0add2eae50fd1e2a2439e0b8cbd5de64b02",
+          "checksum": "sha256:bac27abb89879b64345332c1420f917df5811d0fbd7858bc907e465d58f46736",
           "fields": {
             "block_schema_references": {
               "credentials": {
-                "block_schema_checksum": "sha256:8eb6e58337723bb199a897e9ac3e224748c43dbf782f3daaeafe2f2568657058",
+                "block_schema_checksum": "sha256:9a391b338f87c6f1dd6e5d5d1a8998c71dcb9540f7101ed5bea779b481d6eb88",
                 "block_type_slug": "snowflake-credentials"
               }
             },
@@ -4446,34 +4446,40 @@
             "properties": {
               "credentials": {
                 "$ref": "#/definitions/SnowflakeCredentials",
-                "description": "The credentials to authenticate with Snowflake."
+                "description": "The credentials to authenticate with Snowflake.",
+                "position": 0
               },
               "database": {
                 "description": "The name of the default database to use.",
                 "title": "Database",
-                "type": "string"
+                "type": "string",
+                "position": 1
               },
               "warehouse": {
                 "description": "The name of the default warehouse to use.",
                 "title": "Warehouse",
-                "type": "string"
+                "type": "string",
+                "position": 2
               },
               "schema_": {
                 "description": "The name of the default schema to use.",
                 "title": "Schema",
-                "type": "string"
+                "type": "string",
+                "position": 3
               },
               "fetch_size": {
                 "default": 1,
                 "description": "The default number of rows to fetch at a time.",
                 "title": "Fetch Size",
-                "type": "integer"
+                "type": "integer",
+                "position": 4
               },
               "poll_frequency_s": {
                 "default": 1,
                 "description": "The number of seconds between checking query status for long running queries.",
                 "title": "Poll Frequency [seconds]",
-                "type": "integer"
+                "type": "integer",
+                "position": 5
               }
             },
             "required": [
@@ -4502,7 +4508,8 @@
                       "nh12345.us-east-2.aws"
                     ],
                     "title": "Account",
-                    "type": "string"
+                    "type": "string",
+                    "position": 0
                   },
                   "user": {
                     "anyOf": [
@@ -4515,7 +4522,8 @@
                     ],
                     "default": null,
                     "description": "The user name used to authenticate.",
-                    "title": "User"
+                    "title": "User",
+                    "position": 1
                   },
                   "password": {
                     "anyOf": [
@@ -4530,7 +4538,8 @@
                     ],
                     "default": null,
                     "description": "The password used to authenticate.",
-                    "title": "Password"
+                    "title": "Password",
+                    "position": 2
                   },
                   "private_key": {
                     "anyOf": [
@@ -4545,7 +4554,8 @@
                     ],
                     "default": null,
                     "description": "The PEM used to authenticate.",
-                    "title": "Private Key"
+                    "title": "Private Key",
+                    "position": 3
                   },
                   "private_key_path": {
                     "anyOf": [
@@ -4559,7 +4569,8 @@
                     ],
                     "default": null,
                     "description": "The path to the private key.",
-                    "title": "Private Key Path"
+                    "title": "Private Key Path",
+                    "position": 4
                   },
                   "private_key_passphrase": {
                     "anyOf": [
@@ -4574,7 +4585,8 @@
                     ],
                     "default": null,
                     "description": "The password to use for the private key.",
-                    "title": "Private Key Passphrase"
+                    "title": "Private Key Passphrase",
+                    "position": 5
                   },
                   "authenticator": {
                     "default": "snowflake",
@@ -4589,7 +4601,8 @@
                       "workload_identity"
                     ],
                     "title": "Authenticator",
-                    "type": "string"
+                    "type": "string",
+                    "position": 6
                   },
                   "workload_identity_provider": {
                     "anyOf": [
@@ -4608,7 +4621,8 @@
                     ],
                     "default": null,
                     "description": "The workload identity provider to use for initializing the connection.",
-                    "title": "Workload Identity Provider"
+                    "title": "Workload Identity Provider",
+                    "position": 7
                   },
                   "token": {
                     "anyOf": [
@@ -4623,7 +4637,8 @@
                     ],
                     "default": null,
                     "description": "The OAuth or JWT Token to provide when authenticator is set to `oauth`.",
-                    "title": "Token"
+                    "title": "Token",
+                    "position": 8
                   },
                   "endpoint": {
                     "anyOf": [
@@ -4636,7 +4651,8 @@
                     ],
                     "default": null,
                     "description": "The Okta endpoint to use when authenticator is set to `okta_endpoint`.",
-                    "title": "Endpoint"
+                    "title": "Endpoint",
+                    "position": 9
                   },
                   "role": {
                     "anyOf": [
@@ -4649,7 +4665,8 @@
                     ],
                     "default": null,
                     "description": "The name of the default role to use.",
-                    "title": "Role"
+                    "title": "Role",
+                    "position": 10
                   },
                   "autocommit": {
                     "anyOf": [
@@ -4662,7 +4679,8 @@
                     ],
                     "default": null,
                     "description": "Whether to automatically commit.",
-                    "title": "Autocommit"
+                    "title": "Autocommit",
+                    "position": 11
                   }
                 },
                 "required": [
@@ -4680,7 +4698,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.28.7"
+          "version": "0.28.9"
         }
       },
       "snowflake-credentials": {
@@ -4691,7 +4709,7 @@
         "description": "Block used to manage authentication with Snowflake. This block is part of the prefect-snowflake collection. Install prefect-snowflake with `pip install prefect-snowflake` to use this block.",
         "code_example": "Load stored Snowflake credentials:\n```python\nfrom prefect_snowflake import SnowflakeCredentials\n\nsnowflake_credentials_block = SnowflakeCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:8eb6e58337723bb199a897e9ac3e224748c43dbf782f3daaeafe2f2568657058",
+          "checksum": "sha256:9a391b338f87c6f1dd6e5d5d1a8998c71dcb9540f7101ed5bea779b481d6eb88",
           "fields": {
             "block_schema_references": {},
             "block_type_slug": "snowflake-credentials",
@@ -4703,7 +4721,8 @@
                   "nh12345.us-east-2.aws"
                 ],
                 "title": "Account",
-                "type": "string"
+                "type": "string",
+                "position": 0
               },
               "user": {
                 "anyOf": [
@@ -4716,7 +4735,8 @@
                 ],
                 "default": null,
                 "description": "The user name used to authenticate.",
-                "title": "User"
+                "title": "User",
+                "position": 1
               },
               "password": {
                 "anyOf": [
@@ -4731,7 +4751,8 @@
                 ],
                 "default": null,
                 "description": "The password used to authenticate.",
-                "title": "Password"
+                "title": "Password",
+                "position": 2
               },
               "private_key": {
                 "anyOf": [
@@ -4746,7 +4767,8 @@
                 ],
                 "default": null,
                 "description": "The PEM used to authenticate.",
-                "title": "Private Key"
+                "title": "Private Key",
+                "position": 3
               },
               "private_key_path": {
                 "anyOf": [
@@ -4760,7 +4782,8 @@
                 ],
                 "default": null,
                 "description": "The path to the private key.",
-                "title": "Private Key Path"
+                "title": "Private Key Path",
+                "position": 4
               },
               "private_key_passphrase": {
                 "anyOf": [
@@ -4775,7 +4798,8 @@
                 ],
                 "default": null,
                 "description": "The password to use for the private key.",
-                "title": "Private Key Passphrase"
+                "title": "Private Key Passphrase",
+                "position": 5
               },
               "authenticator": {
                 "default": "snowflake",
@@ -4790,7 +4814,8 @@
                   "workload_identity"
                 ],
                 "title": "Authenticator",
-                "type": "string"
+                "type": "string",
+                "position": 6
               },
               "workload_identity_provider": {
                 "anyOf": [
@@ -4809,7 +4834,8 @@
                 ],
                 "default": null,
                 "description": "The workload identity provider to use for initializing the connection.",
-                "title": "Workload Identity Provider"
+                "title": "Workload Identity Provider",
+                "position": 7
               },
               "token": {
                 "anyOf": [
@@ -4824,7 +4850,8 @@
                 ],
                 "default": null,
                 "description": "The OAuth or JWT Token to provide when authenticator is set to `oauth`.",
-                "title": "Token"
+                "title": "Token",
+                "position": 8
               },
               "endpoint": {
                 "anyOf": [
@@ -4837,7 +4864,8 @@
                 ],
                 "default": null,
                 "description": "The Okta endpoint to use when authenticator is set to `okta_endpoint`.",
-                "title": "Endpoint"
+                "title": "Endpoint",
+                "position": 9
               },
               "role": {
                 "anyOf": [
@@ -4850,7 +4878,8 @@
                 ],
                 "default": null,
                 "description": "The name of the default role to use.",
-                "title": "Role"
+                "title": "Role",
+                "position": 10
               },
               "autocommit": {
                 "anyOf": [
@@ -4863,7 +4892,8 @@
                 ],
                 "default": null,
                 "description": "Whether to automatically commit.",
-                "title": "Autocommit"
+                "title": "Autocommit",
+                "position": 11
               }
             },
             "required": [
@@ -4879,7 +4909,7 @@
             "type": "object"
           },
           "capabilities": [],
-          "version": "0.28.7"
+          "version": "0.28.9"
         }
       }
     }
