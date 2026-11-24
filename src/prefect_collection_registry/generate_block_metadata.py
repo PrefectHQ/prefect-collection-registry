@@ -16,6 +16,8 @@ from prefect_collection_registry.metadata_schemas import block_schema
 
 # Some collection blocks share names with core blocks. We exclude them
 # from the registry for now to avoid confusion.
+logger = logging.getLogger(__name__)
+
 BLOCKS_BLOCKLIST: set[str] = {
     "k8s-job",
     "custom-webhook",
@@ -120,7 +122,7 @@ def generate_block_metadata_for_collection(collection_name: str) -> dict[str, An
     output_dict: dict[str, Any] = {}
     for ep_name, module in collections.items():
         if isinstance(module, Exception):
-            logging.warning(f"Error loading collection entrypoint {ep_name} - skipping")
+            logger.warning(f"Error loading collection entrypoint {ep_name} - skipping")
             continue
         discovered_collection_name = module.__name__.split(".")[0].replace("_", "-")
         if collection_name != discovered_collection_name:
@@ -137,7 +139,7 @@ def generate_block_metadata_for_collection(collection_name: str) -> dict[str, An
             f"Install {collection_name} with `pip install {collection_name}` "
             "to use this block."
         )
-        for block_type in output_dict["block_types"].keys():
+        for block_type in output_dict["block_types"]:
             output_dict["block_types"][block_type]["description"] += added_description
 
     return output_dict

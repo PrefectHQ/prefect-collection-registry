@@ -18,6 +18,8 @@ from prefect import Flow, task
 from prefect.utilities.importtools import load_module, to_qualified_name
 from pydantic_core import from_json
 
+logger = logging.getLogger(__name__)
+
 CollectionViewVariety = Literal["block", "flow", "worker"]
 
 # Create a lock file in a location accessible to all processes
@@ -298,7 +300,7 @@ async def get_collection_names(
         try:
             collections.append(validate_collection_name(entry["name"]))
         except ValueError:
-            logging.warning(
+            logger.warning(
                 f"Skipping {path}/{entry['name']}: {entry['name']!r} is not a valid collection name"
             )
     collections.append("prefect")

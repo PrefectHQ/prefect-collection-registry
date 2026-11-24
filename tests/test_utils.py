@@ -1,6 +1,6 @@
 import asyncio
 from pathlib import Path
-from typing import Any
+from typing import Any, Self
 
 import fastjsonschema
 import pytest
@@ -87,7 +87,7 @@ class TestGetCollectionNames:
                 return entries
 
         class FakeClient:
-            async def __aenter__(self) -> "FakeClient":
+            async def __aenter__(self) -> Self:
                 return self
 
             async def __aexit__(self, *exc_info: object) -> None:
