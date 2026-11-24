@@ -3531,11 +3531,11 @@
         "description": "A block for querying a database with BigQuery.\n\nUpon instantiating, a connection to BigQuery is established\nand maintained for the life of the object until the close method is called.\n\nIt is recommended to use this block as a context manager, which will automatically\nclose the connection and its cursors when the context is exited.\n\nIt is also recommended that this block is loaded and consumed within a single task\nor flow because if the block is passed across separate tasks and flows,\nthe state of the block's connection and cursor could be lost. This block is part of the prefect-gcp collection. Install prefect-gcp with `pip install prefect-gcp` to use this block.",
         "code_example": "```python\nfrom prefect_gcp.bigquery import BigQueryWarehouse\n\nbigquery_warehouse_block = BigQueryWarehouse.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:ffbbd565d1027e3fc525170ce00fbba69441e7cac03e0c30fcdd25f4095f0230",
+          "checksum": "sha256:352dc854bb81de379e1df11d5dcad89cd080a231761a64a6658c19155b767b6d",
           "fields": {
             "block_schema_references": {
               "gcp_credentials": {
-                "block_schema_checksum": "sha256:83df44a8efc90e1a5d9e2c7a98b7e15b14ad4eede9f0459b0258a732f5070dc4",
+                "block_schema_checksum": "sha256:5e8a10b87d7e7bbd4acc1d83b498e8577bb01dfd2b6b518e1400bdb41da97886",
                 "block_type_slug": "gcp-credentials"
               }
             },
@@ -3543,13 +3543,15 @@
             "description": "A block for querying a database with BigQuery.\n\nUpon instantiating, a connection to BigQuery is established\nand maintained for the life of the object until the close method is called.\n\nIt is recommended to use this block as a context manager, which will automatically\nclose the connection and its cursors when the context is exited.\n\nIt is also recommended that this block is loaded and consumed within a single task\nor flow because if the block is passed across separate tasks and flows,\nthe state of the block's connection and cursor could be lost.",
             "properties": {
               "gcp_credentials": {
-                "$ref": "#/definitions/GcpCredentials"
+                "$ref": "#/definitions/GcpCredentials",
+                "position": 0
               },
               "fetch_size": {
                 "default": 1,
                 "description": "The number of rows to fetch at a time.",
                 "title": "Fetch Size",
-                "type": "integer"
+                "type": "integer",
+                "position": 1
               }
             },
             "required": [
@@ -3578,7 +3580,8 @@
                     ],
                     "default": null,
                     "description": "Path to the service account JSON keyfile.",
-                    "title": "Service Account File"
+                    "title": "Service Account File",
+                    "position": 0
                   },
                   "service_account_info": {
                     "anyOf": [
@@ -3592,7 +3595,8 @@
                     ],
                     "default": null,
                     "description": "The contents of the keyfile as a dict.",
-                    "title": "Service Account Info"
+                    "title": "Service Account Info",
+                    "position": 1
                   },
                   "project": {
                     "anyOf": [
@@ -3605,7 +3609,8 @@
                     ],
                     "default": null,
                     "description": "The GCP project to use for the client.",
-                    "title": "Project"
+                    "title": "Project",
+                    "position": 2
                   }
                 },
                 "secret_fields": [
@@ -3617,7 +3622,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.6.12"
+          "version": "0.6.22"
         }
       },
       "gcp-credentials": {
@@ -3628,7 +3633,7 @@
         "description": "Block used to manage authentication with GCP. Google authentication is\nhandled via the `google.oauth2` module or through the CLI.\nSpecify either one of service `account_file` or `service_account_info`; if both\nare not specified, the client will try to detect the credentials following Google's\n[Application Default Credentials](https://cloud.google.com/docs/authentication/application-default-credentials).\nSee Google's [Authentication documentation](https://cloud.google.com/docs/authentication#service-accounts)\nfor details on inference and recommended authentication patterns. This block is part of the prefect-gcp collection. Install prefect-gcp with `pip install prefect-gcp` to use this block.",
         "code_example": "Load GCP credentials stored in a `GCP Credentials` Block:\n```python\nfrom prefect_gcp import GcpCredentials\ngcp_credentials_block = GcpCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:83df44a8efc90e1a5d9e2c7a98b7e15b14ad4eede9f0459b0258a732f5070dc4",
+          "checksum": "sha256:5e8a10b87d7e7bbd4acc1d83b498e8577bb01dfd2b6b518e1400bdb41da97886",
           "fields": {
             "block_schema_references": {},
             "block_type_slug": "gcp-credentials",
@@ -3646,7 +3651,8 @@
                 ],
                 "default": null,
                 "description": "Path to the service account JSON keyfile.",
-                "title": "Service Account File"
+                "title": "Service Account File",
+                "position": 0
               },
               "service_account_info": {
                 "anyOf": [
@@ -3660,7 +3666,8 @@
                 ],
                 "default": null,
                 "description": "The contents of the keyfile as a dict.",
-                "title": "Service Account Info"
+                "title": "Service Account Info",
+                "position": 1
               },
               "project": {
                 "anyOf": [
@@ -3673,7 +3680,8 @@
                 ],
                 "default": null,
                 "description": "The GCP project to use for the client.",
-                "title": "Project"
+                "title": "Project",
+                "position": 2
               }
             },
             "secret_fields": [
@@ -3683,7 +3691,7 @@
             "type": "object"
           },
           "capabilities": [],
-          "version": "0.6.12"
+          "version": "0.6.22"
         }
       },
       "gcpsecret": {
@@ -3694,11 +3702,11 @@
         "description": "Manages a secret in Google Cloud Platform's Secret Manager. This block is part of the prefect-gcp collection. Install prefect-gcp with `pip install prefect-gcp` to use this block.",
         "code_example": "```python\nfrom prefect_gcp.secret_manager import GcpSecret\n\ngcpsecret_block = GcpSecret.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:4f53b0779d06fd4985d57e246ed773b54b92f629dacd1c7cd9191dff9cdc11a2",
+          "checksum": "sha256:de134b8bf5a931ecdf30453221e6c01b1f10cfb564b1f0f69349c9204d775b00",
           "fields": {
             "block_schema_references": {
               "gcp_credentials": {
-                "block_schema_checksum": "sha256:83df44a8efc90e1a5d9e2c7a98b7e15b14ad4eede9f0459b0258a732f5070dc4",
+                "block_schema_checksum": "sha256:5e8a10b87d7e7bbd4acc1d83b498e8577bb01dfd2b6b518e1400bdb41da97886",
                 "block_type_slug": "gcp-credentials"
               }
             },
@@ -3706,18 +3714,21 @@
             "description": "Manages a secret in Google Cloud Platform's Secret Manager.",
             "properties": {
               "gcp_credentials": {
-                "$ref": "#/definitions/GcpCredentials"
+                "$ref": "#/definitions/GcpCredentials",
+                "position": 0
               },
               "secret_name": {
                 "description": "Name of the secret to manage.",
                 "title": "Secret Name",
-                "type": "string"
+                "type": "string",
+                "position": 1
               },
               "secret_version": {
                 "default": "latest",
                 "description": "Version number of the secret to use.",
                 "title": "Secret Version",
-                "type": "string"
+                "type": "string",
+                "position": 2
               }
             },
             "required": [
@@ -3747,7 +3758,8 @@
                     ],
                     "default": null,
                     "description": "Path to the service account JSON keyfile.",
-                    "title": "Service Account File"
+                    "title": "Service Account File",
+                    "position": 0
                   },
                   "service_account_info": {
                     "anyOf": [
@@ -3761,7 +3773,8 @@
                     ],
                     "default": null,
                     "description": "The contents of the keyfile as a dict.",
-                    "title": "Service Account Info"
+                    "title": "Service Account Info",
+                    "position": 1
                   },
                   "project": {
                     "anyOf": [
@@ -3774,7 +3787,8 @@
                     ],
                     "default": null,
                     "description": "The GCP project to use for the client.",
-                    "title": "Project"
+                    "title": "Project",
+                    "position": 2
                   }
                 },
                 "secret_fields": [
@@ -3786,7 +3800,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.6.12"
+          "version": "0.6.22"
         }
       },
       "gcs-bucket": {
@@ -3797,11 +3811,11 @@
         "description": "Block used to store data using GCP Cloud Storage Buckets.\n\nNote! `GcsBucket` in `prefect-gcp` is a unique block, separate from `GCS`\nin core Prefect. `GcsBucket` does not use `gcsfs` under the hood,\ninstead using the `google-cloud-storage` package, and offers more configuration\nand functionality. This block is part of the prefect-gcp collection. Install prefect-gcp with `pip install prefect-gcp` to use this block.",
         "code_example": "Load stored GCP Cloud Storage Bucket:\n```python\nfrom prefect_gcp.cloud_storage import GcsBucket\ngcp_cloud_storage_bucket_block = GcsBucket.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:5e0b7d06f3cc9a2757f1284a1e7be7f3efc00cfaf9af8e1cbbeda0c699a49d61",
+          "checksum": "sha256:d85725d2d729e079228cea21a25f61f073681a6c590a074c99985d3a9274a225",
           "fields": {
             "block_schema_references": {
               "gcp_credentials": {
-                "block_schema_checksum": "sha256:83df44a8efc90e1a5d9e2c7a98b7e15b14ad4eede9f0459b0258a732f5070dc4",
+                "block_schema_checksum": "sha256:5e8a10b87d7e7bbd4acc1d83b498e8577bb01dfd2b6b518e1400bdb41da97886",
                 "block_type_slug": "gcp-credentials"
               }
             },
@@ -3811,17 +3825,20 @@
               "bucket": {
                 "description": "Name of the bucket.",
                 "title": "Bucket",
-                "type": "string"
+                "type": "string",
+                "position": 0
               },
               "gcp_credentials": {
                 "$ref": "#/definitions/GcpCredentials",
-                "description": "The credentials to authenticate with GCP."
+                "description": "The credentials to authenticate with GCP.",
+                "position": 1
               },
               "bucket_folder": {
                 "default": "",
                 "description": "A default path to a folder within the GCS bucket to use for reading and writing objects.",
                 "title": "Bucket Folder",
-                "type": "string"
+                "type": "string",
+                "position": 2
               }
             },
             "required": [
@@ -3850,7 +3867,8 @@
                     ],
                     "default": null,
                     "description": "Path to the service account JSON keyfile.",
-                    "title": "Service Account File"
+                    "title": "Service Account File",
+                    "position": 0
                   },
                   "service_account_info": {
                     "anyOf": [
@@ -3864,7 +3882,8 @@
                     ],
                     "default": null,
                     "description": "The contents of the keyfile as a dict.",
-                    "title": "Service Account Info"
+                    "title": "Service Account Info",
+                    "position": 1
                   },
                   "project": {
                     "anyOf": [
@@ -3877,7 +3896,8 @@
                     ],
                     "default": null,
                     "description": "The GCP project to use for the client.",
-                    "title": "Project"
+                    "title": "Project",
+                    "position": 2
                   }
                 },
                 "secret_fields": [
@@ -3894,7 +3914,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "0.6.12"
+          "version": "0.6.22"
         }
       }
     }
