@@ -87,9 +87,9 @@ async def collection_needs_update(
         if not registry_contents:
             return collection_name, True
 
-        latest_recorded_release = sorted(
-            [content["name"] for content in registry_contents]
-        )[-1].replace(".json", "")
+        latest_recorded_release = max(
+            content["name"] for content in registry_contents
+        ).replace(".json", "")
 
         latest_release = await get_latest_pypi_release(
             collection_name, prefect_contents_token=prefect_contents_token
@@ -274,7 +274,7 @@ async def update_all_collections(
         branch_name, registry_contents_token=registry_writer_token
     )
 
-    collections_to_update = set(
+    collections_to_update = {
         collection_name
         for collection_name, needs_update in await asyncio.gather(
             *[
@@ -289,7 +289,7 @@ async def update_all_collections(
             ]
         )
         if needs_update
-    )
+    }
 
     if include_collections:
         collections_to_update = collections_to_update.intersection(include_collections)
@@ -308,11 +308,11 @@ async def update_all_collections(
 
     succeeded_collections: set[str] = set()
     for state in states:
-        try:
-            collection = state.result()  # type: ignore
+        collection = state.result(raise_on_failure=False)  # type: ignore
+        if isinstance(collection, BaseException):
+            print(f"Failed to update collection: {collection}")
+        else:
             succeeded_collections.add(collection)  # type: ignore
-        except Exception as e:
-            print(f"Failed to update collection: {e}")
 
     # Create PR regardless of failures - we'll mention failures in the PR description
     flow_run_url = prefect.runtime.flow_run.ui_url

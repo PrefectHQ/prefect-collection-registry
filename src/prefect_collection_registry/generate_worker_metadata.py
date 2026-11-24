@@ -16,6 +16,8 @@ from prefect_collection_registry.utils import submit_updates
 
 # `block` work pool types should only be created via
 # `Infrastructure.publish_as_work_pool`
+logger = logging.getLogger(__name__)
+
 # See https://github.com/PrefectHQ/prefect/pull/11180 for more details
 WORKERS_BLOCKLIST: set[str] = {"BaseWorker", "BlockWorker"}
 
@@ -95,7 +97,7 @@ def get_worker_metadata_from_collection(collection_name: str) -> dict[str, Any]:
     output: dict[str, Any] = {}
     for ep_name, module in collections.items():
         if isinstance(module, Exception):
-            logging.warning(f"Error loading collection entrypoint {ep_name} - skipping")
+            logger.warning(f"Error loading collection entrypoint {ep_name} - skipping")
             continue
         discovered_collection_name = module.__name__.split(".")[0].replace("_", "-")
         if collection_name != discovered_collection_name:
