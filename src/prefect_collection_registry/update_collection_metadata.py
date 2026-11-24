@@ -308,11 +308,11 @@ async def update_all_collections(
 
     succeeded_collections: set[str] = set()
     for state in states:
-        try:
-            collection = state.result()  # type: ignore
+        collection = state.result(raise_on_failure=False)  # type: ignore
+        if isinstance(collection, BaseException):
+            print(f"Failed to update collection: {collection}")
+        else:
             succeeded_collections.add(collection)  # type: ignore
-        except Exception as e:
-            print(f"Failed to update collection: {e}")
 
     # Create PR regardless of failures - we'll mention failures in the PR description
     flow_run_url = prefect.runtime.flow_run.ui_url
