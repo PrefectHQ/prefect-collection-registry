@@ -3531,11 +3531,11 @@
         "description": "A block for querying a database with BigQuery.\n\nUpon instantiating, a connection to BigQuery is established\nand maintained for the life of the object until the close method is called.\n\nIt is recommended to use this block as a context manager, which will automatically\nclose the connection and its cursors when the context is exited.\n\nIt is also recommended that this block is loaded and consumed within a single task\nor flow because if the block is passed across separate tasks and flows,\nthe state of the block's connection and cursor could be lost. This block is part of the prefect-gcp collection. Install prefect-gcp with `pip install prefect-gcp` to use this block.",
         "code_example": "```python\nfrom prefect_gcp.bigquery import BigQueryWarehouse\n\nbigquery_warehouse_block = BigQueryWarehouse.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:ffbbd565d1027e3fc525170ce00fbba69441e7cac03e0c30fcdd25f4095f0230",
+          "checksum": "sha256:352dc854bb81de379e1df11d5dcad89cd080a231761a64a6658c19155b767b6d",
           "fields": {
             "block_schema_references": {
               "gcp_credentials": {
-                "block_schema_checksum": "sha256:83df44a8efc90e1a5d9e2c7a98b7e15b14ad4eede9f0459b0258a732f5070dc4",
+                "block_schema_checksum": "sha256:5e8a10b87d7e7bbd4acc1d83b498e8577bb01dfd2b6b518e1400bdb41da97886",
                 "block_type_slug": "gcp-credentials"
               }
             },
@@ -3543,13 +3543,15 @@
             "description": "A block for querying a database with BigQuery.\n\nUpon instantiating, a connection to BigQuery is established\nand maintained for the life of the object until the close method is called.\n\nIt is recommended to use this block as a context manager, which will automatically\nclose the connection and its cursors when the context is exited.\n\nIt is also recommended that this block is loaded and consumed within a single task\nor flow because if the block is passed across separate tasks and flows,\nthe state of the block's connection and cursor could be lost.",
             "properties": {
               "gcp_credentials": {
-                "$ref": "#/definitions/GcpCredentials"
+                "$ref": "#/definitions/GcpCredentials",
+                "position": 0
               },
               "fetch_size": {
                 "default": 1,
                 "description": "The number of rows to fetch at a time.",
                 "title": "Fetch Size",
-                "type": "integer"
+                "type": "integer",
+                "position": 1
               }
             },
             "required": [
@@ -3578,7 +3580,8 @@
                     ],
                     "default": null,
                     "description": "Path to the service account JSON keyfile.",
-                    "title": "Service Account File"
+                    "title": "Service Account File",
+                    "position": 0
                   },
                   "service_account_info": {
                     "anyOf": [
@@ -3592,7 +3595,8 @@
                     ],
                     "default": null,
                     "description": "The contents of the keyfile as a dict.",
-                    "title": "Service Account Info"
+                    "title": "Service Account Info",
+                    "position": 1
                   },
                   "project": {
                     "anyOf": [
@@ -3605,7 +3609,8 @@
                     ],
                     "default": null,
                     "description": "The GCP project to use for the client.",
-                    "title": "Project"
+                    "title": "Project",
+                    "position": 2
                   }
                 },
                 "secret_fields": [
@@ -3617,7 +3622,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.6.12"
+          "version": "0.6.22"
         }
       },
       "gcp-credentials": {
@@ -3628,7 +3633,7 @@
         "description": "Block used to manage authentication with GCP. Google authentication is\nhandled via the `google.oauth2` module or through the CLI.\nSpecify either one of service `account_file` or `service_account_info`; if both\nare not specified, the client will try to detect the credentials following Google's\n[Application Default Credentials](https://cloud.google.com/docs/authentication/application-default-credentials).\nSee Google's [Authentication documentation](https://cloud.google.com/docs/authentication#service-accounts)\nfor details on inference and recommended authentication patterns. This block is part of the prefect-gcp collection. Install prefect-gcp with `pip install prefect-gcp` to use this block.",
         "code_example": "Load GCP credentials stored in a `GCP Credentials` Block:\n```python\nfrom prefect_gcp import GcpCredentials\ngcp_credentials_block = GcpCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:83df44a8efc90e1a5d9e2c7a98b7e15b14ad4eede9f0459b0258a732f5070dc4",
+          "checksum": "sha256:5e8a10b87d7e7bbd4acc1d83b498e8577bb01dfd2b6b518e1400bdb41da97886",
           "fields": {
             "block_schema_references": {},
             "block_type_slug": "gcp-credentials",
@@ -3646,7 +3651,8 @@
                 ],
                 "default": null,
                 "description": "Path to the service account JSON keyfile.",
-                "title": "Service Account File"
+                "title": "Service Account File",
+                "position": 0
               },
               "service_account_info": {
                 "anyOf": [
@@ -3660,7 +3666,8 @@
                 ],
                 "default": null,
                 "description": "The contents of the keyfile as a dict.",
-                "title": "Service Account Info"
+                "title": "Service Account Info",
+                "position": 1
               },
               "project": {
                 "anyOf": [
@@ -3673,7 +3680,8 @@
                 ],
                 "default": null,
                 "description": "The GCP project to use for the client.",
-                "title": "Project"
+                "title": "Project",
+                "position": 2
               }
             },
             "secret_fields": [
@@ -3683,7 +3691,7 @@
             "type": "object"
           },
           "capabilities": [],
-          "version": "0.6.12"
+          "version": "0.6.22"
         }
       },
       "gcpsecret": {
@@ -3694,11 +3702,11 @@
         "description": "Manages a secret in Google Cloud Platform's Secret Manager. This block is part of the prefect-gcp collection. Install prefect-gcp with `pip install prefect-gcp` to use this block.",
         "code_example": "```python\nfrom prefect_gcp.secret_manager import GcpSecret\n\ngcpsecret_block = GcpSecret.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:4f53b0779d06fd4985d57e246ed773b54b92f629dacd1c7cd9191dff9cdc11a2",
+          "checksum": "sha256:de134b8bf5a931ecdf30453221e6c01b1f10cfb564b1f0f69349c9204d775b00",
           "fields": {
             "block_schema_references": {
               "gcp_credentials": {
-                "block_schema_checksum": "sha256:83df44a8efc90e1a5d9e2c7a98b7e15b14ad4eede9f0459b0258a732f5070dc4",
+                "block_schema_checksum": "sha256:5e8a10b87d7e7bbd4acc1d83b498e8577bb01dfd2b6b518e1400bdb41da97886",
                 "block_type_slug": "gcp-credentials"
               }
             },
@@ -3706,18 +3714,21 @@
             "description": "Manages a secret in Google Cloud Platform's Secret Manager.",
             "properties": {
               "gcp_credentials": {
-                "$ref": "#/definitions/GcpCredentials"
+                "$ref": "#/definitions/GcpCredentials",
+                "position": 0
               },
               "secret_name": {
                 "description": "Name of the secret to manage.",
                 "title": "Secret Name",
-                "type": "string"
+                "type": "string",
+                "position": 1
               },
               "secret_version": {
                 "default": "latest",
                 "description": "Version number of the secret to use.",
                 "title": "Secret Version",
-                "type": "string"
+                "type": "string",
+                "position": 2
               }
             },
             "required": [
@@ -3747,7 +3758,8 @@
                     ],
                     "default": null,
                     "description": "Path to the service account JSON keyfile.",
-                    "title": "Service Account File"
+                    "title": "Service Account File",
+                    "position": 0
                   },
                   "service_account_info": {
                     "anyOf": [
@@ -3761,7 +3773,8 @@
                     ],
                     "default": null,
                     "description": "The contents of the keyfile as a dict.",
-                    "title": "Service Account Info"
+                    "title": "Service Account Info",
+                    "position": 1
                   },
                   "project": {
                     "anyOf": [
@@ -3774,7 +3787,8 @@
                     ],
                     "default": null,
                     "description": "The GCP project to use for the client.",
-                    "title": "Project"
+                    "title": "Project",
+                    "position": 2
                   }
                 },
                 "secret_fields": [
@@ -3786,7 +3800,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.6.12"
+          "version": "0.6.22"
         }
       },
       "gcs-bucket": {
@@ -3797,11 +3811,11 @@
         "description": "Block used to store data using GCP Cloud Storage Buckets.\n\nNote! `GcsBucket` in `prefect-gcp` is a unique block, separate from `GCS`\nin core Prefect. `GcsBucket` does not use `gcsfs` under the hood,\ninstead using the `google-cloud-storage` package, and offers more configuration\nand functionality. This block is part of the prefect-gcp collection. Install prefect-gcp with `pip install prefect-gcp` to use this block.",
         "code_example": "Load stored GCP Cloud Storage Bucket:\n```python\nfrom prefect_gcp.cloud_storage import GcsBucket\ngcp_cloud_storage_bucket_block = GcsBucket.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:5e0b7d06f3cc9a2757f1284a1e7be7f3efc00cfaf9af8e1cbbeda0c699a49d61",
+          "checksum": "sha256:d85725d2d729e079228cea21a25f61f073681a6c590a074c99985d3a9274a225",
           "fields": {
             "block_schema_references": {
               "gcp_credentials": {
-                "block_schema_checksum": "sha256:83df44a8efc90e1a5d9e2c7a98b7e15b14ad4eede9f0459b0258a732f5070dc4",
+                "block_schema_checksum": "sha256:5e8a10b87d7e7bbd4acc1d83b498e8577bb01dfd2b6b518e1400bdb41da97886",
                 "block_type_slug": "gcp-credentials"
               }
             },
@@ -3811,17 +3825,20 @@
               "bucket": {
                 "description": "Name of the bucket.",
                 "title": "Bucket",
-                "type": "string"
+                "type": "string",
+                "position": 0
               },
               "gcp_credentials": {
                 "$ref": "#/definitions/GcpCredentials",
-                "description": "The credentials to authenticate with GCP."
+                "description": "The credentials to authenticate with GCP.",
+                "position": 1
               },
               "bucket_folder": {
                 "default": "",
                 "description": "A default path to a folder within the GCS bucket to use for reading and writing objects.",
                 "title": "Bucket Folder",
-                "type": "string"
+                "type": "string",
+                "position": 2
               }
             },
             "required": [
@@ -3850,7 +3867,8 @@
                     ],
                     "default": null,
                     "description": "Path to the service account JSON keyfile.",
-                    "title": "Service Account File"
+                    "title": "Service Account File",
+                    "position": 0
                   },
                   "service_account_info": {
                     "anyOf": [
@@ -3864,7 +3882,8 @@
                     ],
                     "default": null,
                     "description": "The contents of the keyfile as a dict.",
-                    "title": "Service Account Info"
+                    "title": "Service Account Info",
+                    "position": 1
                   },
                   "project": {
                     "anyOf": [
@@ -3877,7 +3896,8 @@
                     ],
                     "default": null,
                     "description": "The GCP project to use for the client.",
-                    "title": "Project"
+                    "title": "Project",
+                    "position": 2
                   }
                 },
                 "secret_fields": [
@@ -3894,7 +3914,7 @@
             "read-path",
             "write-path"
           ],
-          "version": "0.6.12"
+          "version": "0.6.22"
         }
       }
     }
@@ -3905,107 +3925,139 @@
         "name": "GitHub Credentials",
         "slug": "github-credentials",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/41971cfecfea5f79ff334164f06ecb34d1038dd4-250x250.png",
-        "documentation_url": "https://prefecthq.github.io/prefect-github/credentials/#prefect_github.credentials.GitHubCredentials",
+        "documentation_url": "https://docs.prefect.io/integrations/prefect-github",
         "description": "Block used to manage GitHub authentication. This block is part of the prefect-github collection. Install prefect-github with `pip install prefect-github` to use this block.",
         "code_example": "Load stored GitHub credentials:\n```python\nfrom prefect_github import GitHubCredentials\ngithub_credentials_block = GitHubCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:74a34b668838ba661d9160ab127053dd44a22dd04e89562839645791e70d046a",
+          "checksum": "sha256:7e65d38f509290e143be94b9bdbc56d6591ed6962afee4c1abac25c7bddc2bf1",
           "fields": {
-            "title": "GitHubCredentials",
+            "block_schema_references": {},
+            "block_type_slug": "github-credentials",
             "description": "Block used to manage GitHub authentication.",
-            "type": "object",
             "properties": {
               "token": {
-                "title": "Token",
+                "anyOf": [
+                  {
+                    "format": "password",
+                    "type": "string",
+                    "writeOnly": true
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "A GitHub personal access token (PAT).",
-                "type": "string",
-                "writeOnly": true,
-                "format": "password"
+                "title": "Token",
+                "position": 0
               }
             },
-            "block_type_slug": "github-credentials",
             "secret_fields": [
               "token"
             ],
-            "block_schema_references": {}
+            "title": "GitHubCredentials",
+            "type": "object"
           },
           "capabilities": [],
-          "version": "0.2.2"
+          "version": "0.4.4"
         }
       },
       "github-repository": {
         "name": "GitHub Repository",
         "slug": "github-repository",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/41971cfecfea5f79ff334164f06ecb34d1038dd4-250x250.png",
-        "documentation_url": "https://prefecthq.github.io/prefect-github/repository/#prefect_github.repository.GitHubRepository",
+        "documentation_url": "https://docs.prefect.io/integrations/prefect-github",
         "description": "Interact with files stored on GitHub repositories. This block is part of the prefect-github collection. Install prefect-github with `pip install prefect-github` to use this block.",
         "code_example": "```python\nfrom prefect_github.repository import GitHubRepository\n\ngithub_repository_block = GitHubRepository.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:3d2b2de1cd9336264ccc73f7078264d9053dc956941136516e18050c9953abf0",
+          "checksum": "sha256:4b0bed1d8b2991230d2870cfc2108f1f752d655dc0e4024ad90b78f2d7653747",
           "fields": {
-            "title": "GitHubRepository",
+            "block_schema_references": {
+              "credentials": {
+                "block_schema_checksum": "sha256:7e65d38f509290e143be94b9bdbc56d6591ed6962afee4c1abac25c7bddc2bf1",
+                "block_type_slug": "github-credentials"
+              }
+            },
+            "block_type_slug": "github-repository",
             "description": "Interact with files stored on GitHub repositories.",
-            "type": "object",
             "properties": {
               "repository_url": {
-                "title": "Repository URL",
                 "description": "The URL of a GitHub repository to read from, in either HTTPS or SSH format. If you are using a private repo, it must be in the HTTPS format.",
-                "type": "string"
+                "title": "Repository URL",
+                "type": "string",
+                "position": 0
               },
               "reference": {
-                "title": "Reference",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "An optional reference to pin to; can be a branch name or tag.",
-                "type": "string"
+                "title": "Reference",
+                "position": 1
               },
               "credentials": {
-                "title": "Credentials",
-                "description": "An optional GitHubCredentials block for using private GitHub repos.",
-                "allOf": [
+                "anyOf": [
                   {
                     "$ref": "#/definitions/GitHubCredentials"
+                  },
+                  {
+                    "type": "null"
                   }
-                ]
+                ],
+                "default": null,
+                "description": "An optional GitHubCredentials block for using private GitHub repos.",
+                "position": 2
               }
             },
             "required": [
               "repository_url"
             ],
-            "block_type_slug": "github-repository",
             "secret_fields": [
               "credentials.token"
             ],
-            "block_schema_references": {
-              "credentials": {
-                "block_type_slug": "github-credentials",
-                "block_schema_checksum": "sha256:74a34b668838ba661d9160ab127053dd44a22dd04e89562839645791e70d046a"
-              }
-            },
+            "title": "GitHubRepository",
+            "type": "object",
             "definitions": {
               "GitHubCredentials": {
-                "title": "GitHubCredentials",
+                "block_schema_references": {},
+                "block_type_slug": "github-credentials",
                 "description": "Block used to manage GitHub authentication.",
-                "type": "object",
                 "properties": {
                   "token": {
-                    "title": "Token",
+                    "anyOf": [
+                      {
+                        "format": "password",
+                        "type": "string",
+                        "writeOnly": true
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
                     "description": "A GitHub personal access token (PAT).",
-                    "type": "string",
-                    "writeOnly": true,
-                    "format": "password"
+                    "title": "Token",
+                    "position": 0
                   }
                 },
-                "block_type_slug": "github-credentials",
                 "secret_fields": [
                   "token"
                 ],
-                "block_schema_references": {}
+                "title": "GitHubCredentials",
+                "type": "object"
               }
             }
           },
           "capabilities": [
             "get-directory"
           ],
-          "version": "0.2.2"
+          "version": "0.4.4"
         }
       }
     }
@@ -4020,7 +4072,7 @@
         "description": "Store a GitLab personal access token to interact with private GitLab\nrepositories. This block is part of the prefect-gitlab collection. Install prefect-gitlab with `pip install prefect-gitlab` to use this block.",
         "code_example": "Load stored GitLab credentials:\n```python\nfrom prefect_gitlab import GitLabCredentials\ngitlab_credentials_block = GitLabCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:95ec4ee25e796c17a02bf8938b7a6fea1266b4a8e06596a695a318638d53ccf2",
+          "checksum": "sha256:0d2670df2523869c2b22443a37fd038bc991e3b19826b270103e68881726801b",
           "fields": {
             "block_schema_references": {},
             "block_type_slug": "gitlab-credentials",
@@ -4039,7 +4091,8 @@
                 ],
                 "default": null,
                 "description": "A GitLab Personal Access Token with read_repository scope.",
-                "title": "Personal Access Token"
+                "title": "Personal Access Token",
+                "position": 0
               },
               "url": {
                 "anyOf": [
@@ -4052,7 +4105,8 @@
                 ],
                 "default": null,
                 "description": "URL to self-hosted GitLab instances.",
-                "title": "URL"
+                "title": "URL",
+                "position": 1
               }
             },
             "secret_fields": [
@@ -4062,7 +4116,7 @@
             "type": "object"
           },
           "capabilities": [],
-          "version": "0.3.2"
+          "version": "0.3.5"
         }
       },
       "gitlab-repository": {
@@ -4073,11 +4127,11 @@
         "description": "Interact with files stored in GitLab repositories. This block is part of the prefect-gitlab collection. Install prefect-gitlab with `pip install prefect-gitlab` to use this block.",
         "code_example": "```python\nfrom prefect_gitlab.repositories import GitLabRepository\n\ngitlab_repository_block = GitLabRepository.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:09346e2c824226dee42de0d2f054cf8b0a4fed779c98d1afb27cddf196f5b9e5",
+          "checksum": "sha256:7d84a6f22312faf94ad4c429928040d0525fabf3ec975aa8740103bc5335257f",
           "fields": {
             "block_schema_references": {
               "credentials": {
-                "block_schema_checksum": "sha256:95ec4ee25e796c17a02bf8938b7a6fea1266b4a8e06596a695a318638d53ccf2",
+                "block_schema_checksum": "sha256:0d2670df2523869c2b22443a37fd038bc991e3b19826b270103e68881726801b",
                 "block_type_slug": "gitlab-credentials"
               }
             },
@@ -4087,7 +4141,8 @@
               "repository": {
                 "description": "The URL of a GitLab repository to read from, in either HTTP/HTTPS or SSH format.",
                 "title": "Repository",
-                "type": "string"
+                "type": "string",
+                "position": 0
               },
               "reference": {
                 "anyOf": [
@@ -4100,7 +4155,8 @@
                 ],
                 "default": null,
                 "description": "An optional reference to pin to; can be a branch name or tag.",
-                "title": "Reference"
+                "title": "Reference",
+                "position": 1
               },
               "git_depth": {
                 "anyOf": [
@@ -4114,7 +4170,8 @@
                 "default": 1,
                 "description": "The number of commits that Git history is truncated to during cloning. Set to None to fetch the entire history.",
                 "gte": 1,
-                "title": "Git Depth"
+                "title": "Git Depth",
+                "position": 2
               },
               "credentials": {
                 "anyOf": [
@@ -4126,7 +4183,8 @@
                   }
                 ],
                 "default": null,
-                "description": "An optional GitLab Credentials block for authenticating with private GitLab repos."
+                "description": "An optional GitLab Credentials block for authenticating with private GitLab repos.",
+                "position": 3
               }
             },
             "required": [
@@ -4156,7 +4214,8 @@
                     ],
                     "default": null,
                     "description": "A GitLab Personal Access Token with read_repository scope.",
-                    "title": "Personal Access Token"
+                    "title": "Personal Access Token",
+                    "position": 0
                   },
                   "url": {
                     "anyOf": [
@@ -4169,7 +4228,8 @@
                     ],
                     "default": null,
                     "description": "URL to self-hosted GitLab instances.",
-                    "title": "URL"
+                    "title": "URL",
+                    "position": 1
                   }
                 },
                 "secret_fields": [
@@ -4183,7 +4243,7 @@
           "capabilities": [
             "get-directory"
           ],
-          "version": "0.3.2"
+          "version": "0.3.5"
         }
       }
     }
@@ -4193,8 +4253,8 @@
       "kubernetes-cluster-config": {
         "name": "Kubernetes Cluster Config",
         "slug": "kubernetes-cluster-config",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/2d0b896006ad463b49c28aaac14f31e00e32cfab-250x250.png",
-        "documentation_url": "https://docs.prefect.io/integrations/prefect-kubernetes",
+        "logo_url": "https://raw.githubusercontent.com/PrefectHQ/prefect/420d0d6a78bb6df1fc18bcf188fdad43c1d22ea9/assets/block-logos/kubernetes.png",
+        "documentation_url": "https://www.prefect.io/docs/integrations/prefect-kubernetes",
         "description": "Stores configuration for interaction with Kubernetes clusters.\n\nSee `from_file` for creation. This block is part of the prefect-kubernetes collection. Install prefect-kubernetes with `pip install prefect-kubernetes` to use this block.",
         "code_example": "Load a saved Kubernetes cluster config:\n```python\nfrom prefect_kubernetes.credentials import import KubernetesClusterConfig\n\ncluster_config_block = KubernetesClusterConfig.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
@@ -4226,14 +4286,14 @@
             "type": "object"
           },
           "capabilities": [],
-          "version": "0.7.9"
+          "version": "0.8.2"
         }
       },
       "kubernetes-credentials": {
         "name": "Kubernetes Credentials",
         "slug": "kubernetes-credentials",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/2d0b896006ad463b49c28aaac14f31e00e32cfab-250x250.png",
-        "documentation_url": "https://docs.prefect.io/integrations/prefect-kubernetes",
+        "logo_url": "https://raw.githubusercontent.com/PrefectHQ/prefect/420d0d6a78bb6df1fc18bcf188fdad43c1d22ea9/assets/block-logos/kubernetes.png",
+        "documentation_url": "https://www.prefect.io/docs/integrations/prefect-kubernetes",
         "description": "Credentials block for generating configured Kubernetes API clients. This block is part of the prefect-kubernetes collection. Install prefect-kubernetes with `pip install prefect-kubernetes` to use this block.",
         "code_example": "Load stored Kubernetes credentials:\n```python\nfrom prefect_kubernetes.credentials import KubernetesCredentials\n\nkubernetes_credentials = KubernetesCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
@@ -4294,7 +4354,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.7.9"
+          "version": "0.8.2"
         }
       }
     }
@@ -4307,65 +4367,106 @@
       "shell-operation": {
         "name": "Shell Operation",
         "slug": "shell-operation",
-        "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/0b47a017e1b40381de770c17647c49cdf6388d1c-250x250.png",
-        "documentation_url": "https://prefecthq.github.io/prefect-shell/commands/#prefect_shell.commands.ShellOperation",
+        "logo_url": "https://raw.githubusercontent.com/PrefectHQ/prefect/420d0d6a78bb6df1fc18bcf188fdad43c1d22ea9/assets/block-logos/terminal.png",
+        "documentation_url": "https://docs.prefect.io/integrations/prefect-shell",
         "description": "A block representing a shell operation, containing multiple commands.\n\nFor long-lasting operations, use the trigger method and utilize the block as a\ncontext manager for automatic closure of processes when context is exited.\nIf not, manually call the close method to close processes.\n\nFor short-lasting operations, use the run method. Context is automatically managed\nwith this method. This block is part of the prefect-shell collection. Install prefect-shell with `pip install prefect-shell` to use this block.",
         "code_example": "Load a configured block:\n```python\nfrom prefect_shell import ShellOperation\n\nshell_operation = ShellOperation.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:9525e2fd40af302916ff7a4c33ec9c0e20d8970b09243ca010d729fac144811d",
+          "checksum": "sha256:c184833f16fe2655fb8bad3e306365f931430834fc25cd7dd694fc75ad18485a",
           "fields": {
-            "title": "ShellOperation",
+            "block_schema_references": {},
+            "block_type_slug": "shell-operation",
             "description": "A block representing a shell operation, containing multiple commands.\n\nFor long-lasting operations, use the trigger method and utilize the block as a\ncontext manager for automatic closure of processes when context is exited.\nIf not, manually call the close method to close processes.\n\nFor short-lasting operations, use the run method. Context is automatically managed\nwith this method.",
-            "type": "object",
             "properties": {
               "commands": {
-                "title": "Commands",
                 "description": "A list of commands to execute sequentially.",
-                "type": "array",
                 "items": {
                   "type": "string"
-                }
+                },
+                "title": "Commands",
+                "type": "array",
+                "position": 0
               },
               "stream_output": {
-                "title": "Stream Output",
-                "description": "Whether to stream output.",
                 "default": true,
-                "type": "boolean"
+                "description": "Whether to stream output.",
+                "title": "Stream Output",
+                "type": "boolean",
+                "position": 1
+              },
+              "log_prefix": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": "PID {pid} {label}:\n",
+                "description": "Template prepended to each streamed output log record. Supports the `{pid}` and `{label}` placeholders (label is `stream output` for stdout and `stderr` for stderr); newlines are written as the platform line separator. Set to `None` to log the raw output only.",
+                "title": "Log Prefix",
+                "position": 2
               },
               "env": {
-                "title": "Environment Variables",
                 "description": "Environment variables to use for the subprocess.",
+                "title": "Environment Variables",
                 "type": "object",
-                "additionalProperties": {
-                  "type": "string"
-                }
+                "position": 3
               },
               "working_dir": {
-                "title": "Working Directory",
+                "anyOf": [
+                  {
+                    "format": "directory-path",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "The absolute path to the working directory the command will be executed within.",
-                "format": "directory-path",
-                "type": "string"
+                "title": "Working Directory",
+                "position": 4
               },
               "shell": {
-                "title": "Shell",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "The shell to run the command with; if unset, defaults to `powershell` on Windows and `bash` on other platforms.",
-                "type": "string"
+                "title": "Shell",
+                "position": 5
               },
               "extension": {
-                "title": "Extension",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
                 "description": "The extension to use for the temporary file; if unset, defaults to `.ps1` on Windows and `.sh` on other platforms.",
-                "type": "string"
+                "title": "Extension",
+                "position": 6
               }
             },
             "required": [
               "commands"
             ],
-            "block_type_slug": "shell-operation",
             "secret_fields": [],
-            "block_schema_references": {}
+            "title": "ShellOperation",
+            "type": "object"
           },
           "capabilities": [],
-          "version": "0.2.2"
+          "version": "0.3.7"
         }
       }
     }
@@ -4376,11 +4477,11 @@
         "name": "Slack Credentials",
         "slug": "slack-credentials",
         "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/c1965ecbf8704ee1ea20d77786de9a41ce1087d1-500x500.png",
-        "documentation_url": "https://prefecthq.github.io/prefect-slack/credentials/#prefect_slack.credentials.SlackCredentials",
+        "documentation_url": "https://docs.prefect.io/integrations/prefect-slack",
         "description": "Block holding Slack credentials for use in tasks and flows. This block is part of the prefect-slack collection. Install prefect-slack with `pip install prefect-slack` to use this block.",
         "code_example": "Load stored Slack credentials:\n```python\nfrom prefect_slack import SlackCredentials\nslack_credentials_block = SlackCredentials.load(\"BLOCK_NAME\")\n```\n\nGet a Slack client:\n```python\nfrom prefect_slack import SlackCredentials\nslack_credentials_block = SlackCredentials.load(\"BLOCK_NAME\")\nclient = slack_credentials_block.get_client()\n```",
         "block_schema": {
-          "checksum": "sha256:f79058d8fcf22ed575f824b27daa68a52fedaa0e40f7a8a542d4ac9cf3ee8317",
+          "checksum": "sha256:a3fff6f40e32ae0ac691c5aef8c97181dd551ce577788d2439f6ffe9886ddedd",
           "fields": {
             "block_schema_references": {},
             "block_type_slug": "slack-credentials",
@@ -4391,7 +4492,8 @@
                 "format": "password",
                 "title": "Token",
                 "type": "string",
-                "writeOnly": true
+                "writeOnly": true,
+                "position": 0
               }
             },
             "required": [
@@ -4404,7 +4506,7 @@
             "type": "object"
           },
           "capabilities": [],
-          "version": "0.3.1"
+          "version": "0.4.0"
         }
       }
     }
@@ -4419,11 +4521,11 @@
         "description": "Perform data operations against a Snowflake database. This block is part of the prefect-snowflake collection. Install prefect-snowflake with `pip install prefect-snowflake` to use this block.",
         "code_example": "Load stored Snowflake connector as a context manager:\n```python\nfrom prefect_snowflake.database import SnowflakeConnector\n\nsnowflake_connector = SnowflakeConnector.load(\"BLOCK_NAME\")\n```\n\nInsert data into database and fetch results.\n```python\nfrom prefect_snowflake.database import SnowflakeConnector\n\nwith SnowflakeConnector.load(\"BLOCK_NAME\") as conn:\n    conn.execute(\n        \"CREATE TABLE IF NOT EXISTS customers (name varchar, address varchar);\"\n    )\n    conn.execute_many(\n        \"INSERT INTO customers (name, address) VALUES (%(name)s, %(address)s);\",\n        seq_of_parameters=[\n            {\"name\": \"Ford\", \"address\": \"Highway 42\"},\n            {\"name\": \"Unknown\", \"address\": \"Space\"},\n            {\"name\": \"Me\", \"address\": \"Myway 88\"},\n        ],\n    )\n    results = conn.fetch_all(\n        \"SELECT * FROM customers WHERE address = %(address)s\",\n        parameters={\"address\": \"Space\"}\n    )\n    print(results)\n```",
         "block_schema": {
-          "checksum": "sha256:dafc66fe14b29627ad6ced19d164a0add2eae50fd1e2a2439e0b8cbd5de64b02",
+          "checksum": "sha256:bac27abb89879b64345332c1420f917df5811d0fbd7858bc907e465d58f46736",
           "fields": {
             "block_schema_references": {
               "credentials": {
-                "block_schema_checksum": "sha256:8eb6e58337723bb199a897e9ac3e224748c43dbf782f3daaeafe2f2568657058",
+                "block_schema_checksum": "sha256:9a391b338f87c6f1dd6e5d5d1a8998c71dcb9540f7101ed5bea779b481d6eb88",
                 "block_type_slug": "snowflake-credentials"
               }
             },
@@ -4432,34 +4534,40 @@
             "properties": {
               "credentials": {
                 "$ref": "#/definitions/SnowflakeCredentials",
-                "description": "The credentials to authenticate with Snowflake."
+                "description": "The credentials to authenticate with Snowflake.",
+                "position": 0
               },
               "database": {
                 "description": "The name of the default database to use.",
                 "title": "Database",
-                "type": "string"
+                "type": "string",
+                "position": 1
               },
               "warehouse": {
                 "description": "The name of the default warehouse to use.",
                 "title": "Warehouse",
-                "type": "string"
+                "type": "string",
+                "position": 2
               },
               "schema_": {
                 "description": "The name of the default schema to use.",
                 "title": "Schema",
-                "type": "string"
+                "type": "string",
+                "position": 3
               },
               "fetch_size": {
                 "default": 1,
                 "description": "The default number of rows to fetch at a time.",
                 "title": "Fetch Size",
-                "type": "integer"
+                "type": "integer",
+                "position": 4
               },
               "poll_frequency_s": {
                 "default": 1,
                 "description": "The number of seconds between checking query status for long running queries.",
                 "title": "Poll Frequency [seconds]",
-                "type": "integer"
+                "type": "integer",
+                "position": 5
               }
             },
             "required": [
@@ -4488,7 +4596,8 @@
                       "nh12345.us-east-2.aws"
                     ],
                     "title": "Account",
-                    "type": "string"
+                    "type": "string",
+                    "position": 0
                   },
                   "user": {
                     "anyOf": [
@@ -4501,7 +4610,8 @@
                     ],
                     "default": null,
                     "description": "The user name used to authenticate.",
-                    "title": "User"
+                    "title": "User",
+                    "position": 1
                   },
                   "password": {
                     "anyOf": [
@@ -4516,7 +4626,8 @@
                     ],
                     "default": null,
                     "description": "The password used to authenticate.",
-                    "title": "Password"
+                    "title": "Password",
+                    "position": 2
                   },
                   "private_key": {
                     "anyOf": [
@@ -4531,7 +4642,8 @@
                     ],
                     "default": null,
                     "description": "The PEM used to authenticate.",
-                    "title": "Private Key"
+                    "title": "Private Key",
+                    "position": 3
                   },
                   "private_key_path": {
                     "anyOf": [
@@ -4545,7 +4657,8 @@
                     ],
                     "default": null,
                     "description": "The path to the private key.",
-                    "title": "Private Key Path"
+                    "title": "Private Key Path",
+                    "position": 4
                   },
                   "private_key_passphrase": {
                     "anyOf": [
@@ -4560,7 +4673,8 @@
                     ],
                     "default": null,
                     "description": "The password to use for the private key.",
-                    "title": "Private Key Passphrase"
+                    "title": "Private Key Passphrase",
+                    "position": 5
                   },
                   "authenticator": {
                     "default": "snowflake",
@@ -4575,7 +4689,8 @@
                       "workload_identity"
                     ],
                     "title": "Authenticator",
-                    "type": "string"
+                    "type": "string",
+                    "position": 6
                   },
                   "workload_identity_provider": {
                     "anyOf": [
@@ -4594,7 +4709,8 @@
                     ],
                     "default": null,
                     "description": "The workload identity provider to use for initializing the connection.",
-                    "title": "Workload Identity Provider"
+                    "title": "Workload Identity Provider",
+                    "position": 7
                   },
                   "token": {
                     "anyOf": [
@@ -4609,7 +4725,8 @@
                     ],
                     "default": null,
                     "description": "The OAuth or JWT Token to provide when authenticator is set to `oauth`.",
-                    "title": "Token"
+                    "title": "Token",
+                    "position": 8
                   },
                   "endpoint": {
                     "anyOf": [
@@ -4622,7 +4739,8 @@
                     ],
                     "default": null,
                     "description": "The Okta endpoint to use when authenticator is set to `okta_endpoint`.",
-                    "title": "Endpoint"
+                    "title": "Endpoint",
+                    "position": 9
                   },
                   "role": {
                     "anyOf": [
@@ -4635,7 +4753,8 @@
                     ],
                     "default": null,
                     "description": "The name of the default role to use.",
-                    "title": "Role"
+                    "title": "Role",
+                    "position": 10
                   },
                   "autocommit": {
                     "anyOf": [
@@ -4648,7 +4767,8 @@
                     ],
                     "default": null,
                     "description": "Whether to automatically commit.",
-                    "title": "Autocommit"
+                    "title": "Autocommit",
+                    "position": 11
                   }
                 },
                 "required": [
@@ -4666,7 +4786,7 @@
             }
           },
           "capabilities": [],
-          "version": "0.28.7"
+          "version": "0.28.9"
         }
       },
       "snowflake-credentials": {
@@ -4677,7 +4797,7 @@
         "description": "Block used to manage authentication with Snowflake. This block is part of the prefect-snowflake collection. Install prefect-snowflake with `pip install prefect-snowflake` to use this block.",
         "code_example": "Load stored Snowflake credentials:\n```python\nfrom prefect_snowflake import SnowflakeCredentials\n\nsnowflake_credentials_block = SnowflakeCredentials.load(\"BLOCK_NAME\")\n```",
         "block_schema": {
-          "checksum": "sha256:8eb6e58337723bb199a897e9ac3e224748c43dbf782f3daaeafe2f2568657058",
+          "checksum": "sha256:9a391b338f87c6f1dd6e5d5d1a8998c71dcb9540f7101ed5bea779b481d6eb88",
           "fields": {
             "block_schema_references": {},
             "block_type_slug": "snowflake-credentials",
@@ -4689,7 +4809,8 @@
                   "nh12345.us-east-2.aws"
                 ],
                 "title": "Account",
-                "type": "string"
+                "type": "string",
+                "position": 0
               },
               "user": {
                 "anyOf": [
@@ -4702,7 +4823,8 @@
                 ],
                 "default": null,
                 "description": "The user name used to authenticate.",
-                "title": "User"
+                "title": "User",
+                "position": 1
               },
               "password": {
                 "anyOf": [
@@ -4717,7 +4839,8 @@
                 ],
                 "default": null,
                 "description": "The password used to authenticate.",
-                "title": "Password"
+                "title": "Password",
+                "position": 2
               },
               "private_key": {
                 "anyOf": [
@@ -4732,7 +4855,8 @@
                 ],
                 "default": null,
                 "description": "The PEM used to authenticate.",
-                "title": "Private Key"
+                "title": "Private Key",
+                "position": 3
               },
               "private_key_path": {
                 "anyOf": [
@@ -4746,7 +4870,8 @@
                 ],
                 "default": null,
                 "description": "The path to the private key.",
-                "title": "Private Key Path"
+                "title": "Private Key Path",
+                "position": 4
               },
               "private_key_passphrase": {
                 "anyOf": [
@@ -4761,7 +4886,8 @@
                 ],
                 "default": null,
                 "description": "The password to use for the private key.",
-                "title": "Private Key Passphrase"
+                "title": "Private Key Passphrase",
+                "position": 5
               },
               "authenticator": {
                 "default": "snowflake",
@@ -4776,7 +4902,8 @@
                   "workload_identity"
                 ],
                 "title": "Authenticator",
-                "type": "string"
+                "type": "string",
+                "position": 6
               },
               "workload_identity_provider": {
                 "anyOf": [
@@ -4795,7 +4922,8 @@
                 ],
                 "default": null,
                 "description": "The workload identity provider to use for initializing the connection.",
-                "title": "Workload Identity Provider"
+                "title": "Workload Identity Provider",
+                "position": 7
               },
               "token": {
                 "anyOf": [
@@ -4810,7 +4938,8 @@
                 ],
                 "default": null,
                 "description": "The OAuth or JWT Token to provide when authenticator is set to `oauth`.",
-                "title": "Token"
+                "title": "Token",
+                "position": 8
               },
               "endpoint": {
                 "anyOf": [
@@ -4823,7 +4952,8 @@
                 ],
                 "default": null,
                 "description": "The Okta endpoint to use when authenticator is set to `okta_endpoint`.",
-                "title": "Endpoint"
+                "title": "Endpoint",
+                "position": 9
               },
               "role": {
                 "anyOf": [
@@ -4836,7 +4966,8 @@
                 ],
                 "default": null,
                 "description": "The name of the default role to use.",
-                "title": "Role"
+                "title": "Role",
+                "position": 10
               },
               "autocommit": {
                 "anyOf": [
@@ -4849,7 +4980,8 @@
                 ],
                 "default": null,
                 "description": "Whether to automatically commit.",
-                "title": "Autocommit"
+                "title": "Autocommit",
+                "position": 11
               }
             },
             "required": [
@@ -4865,7 +4997,7 @@
             "type": "object"
           },
           "capabilities": [],
-          "version": "0.28.7"
+          "version": "0.28.9"
         }
       }
     }
