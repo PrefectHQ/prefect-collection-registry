@@ -96,10 +96,10 @@
       },
       "description": "Execute flow runs as subprocesses on a worker. Works well for local execution when first getting started.",
       "display_name": "Process",
-      "documentation_url": "https://docs.prefect.io/latest/get-started/quickstart",
+      "documentation_url": "https://www.prefect.io/docs/latest/get-started/quickstart",
       "install_command": "pip install prefect",
       "is_beta": false,
-      "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/356e6766a91baf20e1d08bbe16e8b5aaef4d8643-48x48.png",
+      "logo_url": "https://raw.githubusercontent.com/PrefectHQ/prefect/420d0d6a78bb6df1fc18bcf188fdad43c1d22ea9/assets/block-logos/process.png",
       "type": "process"
     }
   },
@@ -430,7 +430,7 @@
             },
             "network_configuration": {
               "additionalProperties": true,
-              "description": "When `network_configuration` is supplied it will override ECS Worker'sawsvpcConfiguration that defined in the ECS task executing your workload. See the [AWS documentation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-ecs-service-awsvpcconfiguration.html) for available options.",
+              "description": "Override the ECS worker's `awsvpcConfiguration`. Use the case-sensitive boto3 keys `subnets`, `securityGroups`, and `assignPublicIp`, for example `{\"subnets\": [\"subnet-...\"], \"securityGroups\": [\"sg-...\"], \"assignPublicIp\": \"DISABLED\"}`. Supply these keys directly, without a surrounding `networkConfiguration` or `awsvpcConfiguration` object. Requires `vpc_id`. See the [boto3 documentation](https://docs.aws.amazon.com/boto3/latest/reference/services/ecs/client/run_task.html) for available options.",
               "title": "Network Configuration",
               "type": "object"
             },
@@ -449,8 +449,179 @@
           },
           "type": "object",
           "definitions": {
+            "AssumeRoleParameters": {
+              "description": "Model used to manage parameters for the AWS STS assume_role call.\nRefer to the\n[boto3 STS assume_role docs](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/sts/client/assume_role.html)\nfor more information about the possible assume role configurations.\n\nAttributes:\n    RoleSessionName: An identifier for the assumed role session.\n        This value is used to uniquely identify a session when the same role\n        is assumed by different principals or for different reasons.\n        If not provided, a default will be generated.\n    DurationSeconds: The duration, in seconds, of the role session.\n        The value can range from 900 seconds (15 minutes) to 43,200 seconds (12 hours).\n    Policy: An IAM policy in JSON format that you want to use as an inline session policy.\n    PolicyArns: The ARNs of the IAM managed policies to use as managed session policies.\n        Each item should be a dict with an 'arn' key.\n    Tags: A list of session tags. Each tag should be a dict with 'Key' and 'Value' keys.\n    TransitiveTagKeys: A list of keys for session tags that you want to set as transitive.\n        Transitive tags persist during role chaining.\n    ExternalId: A unique identifier that is used by third parties to assume a role\n        in their customers' accounts.\n    SerialNumber: The identification number of the MFA device that is associated\n        with the user who is making the AssumeRole call.\n    TokenCode: The value provided by the MFA device, if MFA authentication is required.\n    SourceIdentity: The source identity specified by the principal that is calling\n        the AssumeRole operation.\n    ProvidedContexts: A list of context information. Each context should be a dict\n        with 'ProviderArn' and 'ContextAssertion' keys.",
+              "properties": {
+                "RoleSessionName": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "default": null,
+                  "description": "An identifier for the assumed role session. If not provided, a default will be generated.",
+                  "title": "Role Session Name"
+                },
+                "DurationSeconds": {
+                  "anyOf": [
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "default": null,
+                  "description": "The duration, in seconds, of the role session. The value can range from 900 seconds (15 minutes) to 43,200 seconds (12 hours).",
+                  "title": "Duration Seconds"
+                },
+                "Policy": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "default": null,
+                  "description": "An IAM policy in JSON format that you want to use as an inline session policy.",
+                  "title": "Policy"
+                },
+                "PolicyArns": {
+                  "anyOf": [
+                    {
+                      "items": {
+                        "additionalProperties": {
+                          "type": "string"
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "default": null,
+                  "description": "The ARNs of the IAM managed policies to use as managed session policies. Each item should be a dict with an 'arn' key.",
+                  "title": "Policy ARNs"
+                },
+                "Tags": {
+                  "anyOf": [
+                    {
+                      "items": {
+                        "additionalProperties": {
+                          "type": "string"
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "default": null,
+                  "description": "A list of session tags. Each tag should be a dict with 'Key' and 'Value' keys.",
+                  "title": "Tags"
+                },
+                "TransitiveTagKeys": {
+                  "anyOf": [
+                    {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "default": null,
+                  "description": "A list of keys for session tags that you want to set as transitive. Transitive tags persist during role chaining.",
+                  "title": "Transitive Tag Keys"
+                },
+                "ExternalId": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "default": null,
+                  "description": "A unique identifier that is used by third parties to assume a role in their customers' accounts.",
+                  "title": "External ID"
+                },
+                "SerialNumber": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "default": null,
+                  "description": "The identification number of the MFA device that is associated with the user who is making the AssumeRole call.",
+                  "title": "Serial Number"
+                },
+                "TokenCode": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "default": null,
+                  "description": "The value provided by the MFA device, if MFA authentication is required.",
+                  "title": "Token Code"
+                },
+                "SourceIdentity": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "default": null,
+                  "description": "The source identity specified by the principal that is calling the AssumeRole operation.",
+                  "title": "Source Identity"
+                },
+                "ProvidedContexts": {
+                  "anyOf": [
+                    {
+                      "items": {
+                        "additionalProperties": {
+                          "type": "string"
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "default": null,
+                  "description": "A list of context information. Each context should be a dict with 'ProviderArn' and 'ContextAssertion' keys.",
+                  "title": "Provided Contexts"
+                }
+              },
+              "title": "AssumeRoleParameters",
+              "type": "object"
+            },
             "AwsClientParameters": {
-              "description": "Model used to manage extra parameters that you can pass when you initialize\nthe Client. If you want to find more information, see\n[boto3 docs](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/core/session.html)\nfor more info about the possible client configurations.\n\nAttributes:\n    api_version: The API version to use. By default, botocore will\n        use the latest API version when creating a client. You only need\n        to specify this parameter if you want to use a previous API version\n        of the client.\n    use_ssl: Whether or not to use SSL. By default, SSL is used.\n        Note that not all services support non-ssl connections.\n    verify: Whether or not to verify SSL certificates. By default\n        SSL certificates are verified. If False, SSL will still be used\n        (unless use_ssl is False), but SSL certificates\n        will not be verified. Passing a file path to this is deprecated.\n    verify_cert_path: A filename of the CA cert bundle to\n        use. You can specify this argument if you want to use a\n        different CA cert bundle than the one used by botocore.\n    endpoint_url: The complete URL to use for the constructed\n        client. Normally, botocore will automatically construct the\n        appropriate URL to use when communicating with a service. You\n        can specify a complete URL (including the \"http/https\" scheme)\n        to override this behavior. If this value is provided,\n        then ``use_ssl`` is ignored.\n    config: Advanced configuration for Botocore clients. See\n        [botocore docs](https://botocore.amazonaws.com/v1/documentation/api/latest/reference/config.html)\n        for more details.",
+              "description": "Model used to manage extra parameters that you can pass when you initialize\nthe Client. If you want to find more information, see\n[boto3 docs](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/core/session.html)\nfor more info about the possible client configurations.\n\nAttributes:\n    api_version: The API version to use. By default, botocore will\n        use the latest API version when creating a client. You only need\n        to specify this parameter if you want to use a previous API version\n        of the client.\n    use_ssl: Whether or not to use SSL. By default, SSL is used.\n        Note that not all services support non-ssl connections.\n    verify: Whether or not to verify SSL certificates. By default\n        SSL certificates are verified. If False, SSL will still be used\n        (unless use_ssl is False), but SSL certificates\n        will not be verified. Passing a file path to this is deprecated.\n    verify_cert_path: A filename of the CA cert bundle to\n        use. You can specify this argument if you want to use a\n        different CA cert bundle than the one used by botocore.\n    endpoint_url: The complete URL to use for the constructed\n        client. Normally, botocore will automatically construct the\n        appropriate URL to use when communicating with a service. You\n        can specify a complete URL (including the \"http/https\" scheme)\n        to override this behavior. If this value is provided,\n        then `use_ssl` is ignored.\n    config: Advanced configuration for Botocore clients. See\n        [botocore docs](https://botocore.amazonaws.com/v1/documentation/api/latest/reference/config.html)\n        for more details.",
               "properties": {
                 "api_version": {
                   "anyOf": [
@@ -609,6 +780,24 @@
                   "$ref": "#/definitions/AwsClientParameters",
                   "description": "Extra parameters to initialize the Client.",
                   "title": "AWS Client Parameters"
+                },
+                "assume_role_arn": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "default": null,
+                  "description": "The ARN of the IAM role to assume.",
+                  "title": "Assume Role ARN"
+                },
+                "assume_role_kwargs": {
+                  "$ref": "#/definitions/AssumeRoleParameters",
+                  "description": "Additional parameters for the assume_role call.",
+                  "title": "Assume Role Parameters"
                 }
               },
               "secret_fields": [
@@ -646,10 +835,10 @@
       },
       "description": "Execute flow runs within containers on AWS ECS. Works with EC2 and Fargate clusters. Requires an AWS account.",
       "display_name": "AWS Elastic Container Service",
-      "documentation_url": "https://docs.prefect.io/integrations/prefect-aws/",
+      "documentation_url": "https://www.prefect.io/docs/integrations/prefect-aws/",
       "install_command": "pip install prefect-aws",
       "is_beta": false,
-      "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/d74b16fe84ce626345adf235a47008fea2869a60-225x225.png",
+      "logo_url": "https://raw.githubusercontent.com/PrefectHQ/prefect/420d0d6a78bb6df1fc18bcf188fdad43c1d22ea9/assets/block-logos/aws.png",
       "type": "ecs"
     }
   },
@@ -1104,13 +1293,14 @@
           "auto_remove": "{{ auto_remove }}",
           "volumes": "{{ volumes }}",
           "stream_output": "{{ stream_output }}",
+          "container_wait_timeout": "{{ container_wait_timeout }}",
           "mem_limit": "{{ mem_limit }}",
           "memswap_limit": "{{ memswap_limit }}",
           "privileged": "{{ privileged }}",
           "container_create_kwargs": "{{ container_create_kwargs }}"
         },
         "variables": {
-          "definitions": {
+          "$defs": {
             "DockerRegistryCredentials": {
               "additionalProperties": true,
               "block_schema_references": {},
@@ -1156,7 +1346,7 @@
               "type": "object"
             }
           },
-          "description": "Configuration class used by the Docker worker.\n\nAn instance of this class is passed to the Docker worker's `run` method\nfor each flow run. It contains all the information necessary to execute the\nflow run as a Docker container.\n\nAttributes:\n    name: The name to give to created Docker containers.\n    command: The command executed in created Docker containers to kick off\n        flow run execution.\n    env: The environment variables to set in created Docker containers.\n    labels: The labels to set on created Docker containers.\n    image: The image reference of a container image to use for created jobs.\n        If not set, the latest Prefect image will be used.\n    image_pull_policy: The image pull policy to use when pulling images.\n    networks: Docker networks that created containers should be connected to.\n    network_mode: The network mode for the created containers (e.g. host, bridge).\n        If 'networks' is set, this cannot be set.\n    auto_remove: If set, containers will be deleted on completion.\n    volumes: Docker volumes that should be mounted in created containers.\n    stream_output: If set, the output from created containers will be streamed\n        to local standard output.\n    mem_limit: Memory limit of created containers. Accepts a value\n        with a unit identifier (e.g. 100000b, 1000k, 128m, 1g.) If a value is\n        given without a unit, bytes are assumed.\n    memswap_limit: Total memory (memory + swap), -1 to disable swap. Should only be\n        set if `mem_limit` is also set. If `mem_limit` is set, this defaults to\n        allowing the container to use as much swap as memory. For example, if\n        `mem_limit` is 300m and `memswap_limit` is not set, containers can use\n        600m in total of memory and swap.\n    privileged: Give extended privileges to created containers.\n    container_create_kwargs: Extra args for docker py when creating container.",
+          "description": "Configuration class used by the Docker worker.\n\nAn instance of this class is passed to the Docker worker's `run` method\nfor each flow run. It contains all the information necessary to execute the\nflow run as a Docker container.\n\nAttributes:\n    name: The name to give to created Docker containers.\n    command: The command executed in created Docker containers to kick off\n        flow run execution.\n    env: The environment variables to set in created Docker containers.\n    labels: The labels to set on created Docker containers.\n    image: The image reference of a container image to use for created jobs.\n        If not set, the latest Prefect image will be used.\n    image_pull_policy: The image pull policy to use when pulling images.\n    networks: Docker networks that created containers should be connected to.\n    network_mode: The network mode for the created containers (e.g. host, bridge).\n        If 'networks' is set, this cannot be set.\n    auto_remove: If set, containers will be deleted on completion.\n    volumes: Docker volumes that should be mounted in created containers.\n        Relative bind-mount sources (e.g. `.` or `./data`) are resolved\n        against the worker's current working directory.\n    stream_output: If set, the output from created containers will be streamed\n        to local standard output.\n    container_wait_timeout: Maximum number of seconds to wait for a created\n        container to exit. If not set, the worker waits indefinitely.\n    mem_limit: Memory limit of created containers. Accepts a value\n        with a unit identifier (e.g. 100000b, 1000k, 128m, 1g.) If a value is\n        given without a unit, bytes are assumed.\n    memswap_limit: Total memory (memory + swap), -1 to disable swap. Should only be\n        set if `mem_limit` is also set. If `mem_limit` is set, this defaults to\n        allowing the container to use as much swap as memory. For example, if\n        `mem_limit` is 300m and `memswap_limit` is not set, containers can use\n        600m in total of memory and swap.\n    privileged: Give extended privileges to created containers.\n    container_create_kwargs: Extra args for docker py when creating container.",
           "properties": {
             "command": {
               "anyOf": [
@@ -1204,7 +1394,7 @@
                 }
               ],
               "default": null,
-              "description": "Name given to infrastructure created by the worker using this job configuration.",
+              "description": "Name given to infrastructure created by the worker using this job configuration. Supports templates using {{ ctx.flow.* }} and {{ ctx.flow_run.* }} when prepared for a flow run.",
               "title": "Name"
             },
             "image": {
@@ -1218,7 +1408,7 @@
             "registry_credentials": {
               "anyOf": [
                 {
-                  "$ref": "#/definitions/DockerRegistryCredentials"
+                  "$ref": "#/$defs/DockerRegistryCredentials"
                 },
                 {
                   "type": "null"
@@ -1233,6 +1423,7 @@
                   "enum": [
                     "IfNotPresent",
                     "Always",
+                    "IfPossible",
                     "Never"
                   ],
                   "type": "string"
@@ -1273,9 +1464,10 @@
               "type": "boolean"
             },
             "volumes": {
-              "description": "A list of volume to mount into created containers.",
+              "description": "A list of volumes to mount into created containers. Relative bind-mount sources (e.g. '.' or './data') are resolved against the worker's current working directory.",
               "examples": [
-                "/my/local/path:/path/in/container"
+                "/my/local/path:/path/in/container",
+                "./data:/path/in/container"
               ],
               "items": {
                 "type": "string"
@@ -1288,6 +1480,20 @@
               "description": "If set, the output from created containers will be streamed to local standard output.",
               "title": "Stream Output",
               "type": "boolean"
+            },
+            "container_wait_timeout": {
+              "anyOf": [
+                {
+                  "exclusiveMinimum": 0,
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "description": "Maximum number of seconds the worker waits for a created container to exit. If the container has not exited within this time, the worker stops watching it; the container itself is not stopped. If not set, the worker waits indefinitely.",
+              "title": "Container Wait Timeout"
             },
             "mem_limit": {
               "anyOf": [
@@ -1341,7 +1547,7 @@
       },
       "description": "Execute flow runs within Docker containers. Works well for managing flow execution environments via Docker images. Requires access to a running Docker daemon.",
       "display_name": "Docker",
-      "documentation_url": "https://docs.prefect.io/integrations/prefect-docker",
+      "documentation_url": "https://www.prefect.io/docs/integrations/prefect-docker",
       "install_command": "pip install prefect-docker",
       "is_beta": false,
       "logo_url": "https://images.ctfassets.net/gm98wzqotmnx/2IfXXfMq66mrzJBDFFCHTp/6d8f320d9e4fc4393f045673d61ab612/Moby-logo.png?h=250",
@@ -1944,9 +2150,9 @@
             },
             "timeout": {
               "default": 600,
-              "description": "Max allowed time duration the Job may be active before Cloud Run will  actively try to mark it failed and kill associated containers (maximum of 86400 seconds, 1 day).",
+              "description": "Max allowed time duration the Job may be active before Cloud Run will  actively try to mark it failed and kill associated containers (maximum of 604800 seconds, 7 days).",
               "exclusiveMinimum": 0,
-              "maximum": 86400,
+              "maximum": 604800,
               "title": "Job Timeout",
               "type": "integer"
             },
@@ -2454,7 +2660,8 @@
           "cluster_config": "{{ cluster_config }}",
           "job_watch_timeout_seconds": "{{ job_watch_timeout_seconds }}",
           "pod_watch_timeout_seconds": "{{ pod_watch_timeout_seconds }}",
-          "stream_output": "{{ stream_output }}"
+          "stream_output": "{{ stream_output }}",
+          "registry_credentials": "{{ registry_credentials }}"
         },
         "variables": {
           "description": "Default variables for the Kubernetes worker.\n\nThe schema for this class is used to populate the `variables` section of the default\nbase job template.",
@@ -2564,7 +2771,7 @@
             },
             "backoff_limit": {
               "default": 0,
-              "description": "The number of times Kubernetes will retry a job after pod eviction. If set to 0, Prefect will reschedule the flow run when the pod is evicted unless PREFECT_FLOW_RUN_EXECUTE_SIGTERM_BEHAVIOR is set to value different from 'reschedule'.",
+              "description": "The number of times Kubernetes will retry a job after pod eviction. If set to 0, Prefect will reschedule the flow run when the pod is evicted unless PREFECT_FLOW_RUN_EXECUTE_SIGTERM_BEHAVIOR is already set. Otherwise Kubernetes retries the Job and Prefect relinquishes the run.",
               "minimum": 0,
               "title": "Backoff Limit",
               "type": "integer"
@@ -2618,6 +2825,18 @@
               ],
               "default": null,
               "description": "The Kubernetes cluster config to use for job creation."
+            },
+            "registry_credentials": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/KubernetesRegistryCredentials"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "description": "Credentials for pulling the job's image from a private registry, such as a DockerRegistryCredentials block. The worker stores them in an image pull Secret for each job, which is deleted together with the job. The worker needs permission to create, patch and delete Secrets."
             },
             "cpu_request": {
               "anyOf": [
@@ -2698,16 +2917,53 @@
               "secret_fields": [],
               "title": "KubernetesClusterConfig",
               "type": "object"
+            },
+            "KubernetesRegistryCredentials": {
+              "block_schema_references": {},
+              "block_type_slug": "docker-registry-credentials",
+              "description": "Credentials for pulling a flow run's image from a private registry.\n\nThe fields match `prefect_docker.credentials.DockerRegistryCredentials`, and the\nJSON schema carries that block type's slug, so a reference to an existing\n`DockerRegistryCredentials` block can be selected for the `registry_credentials`\njob variable without installing `prefect-docker` alongside the worker.",
+              "properties": {
+                "username": {
+                  "description": "The username to log into the registry with.",
+                  "title": "Username",
+                  "type": "string"
+                },
+                "password": {
+                  "description": "The password to log into the registry with.",
+                  "format": "password",
+                  "title": "Password",
+                  "type": "string",
+                  "writeOnly": true
+                },
+                "registry_url": {
+                  "description": "The URL to the registry, as passed to `docker login`. Generally, \"http\" or \"https\" can be omitted.",
+                  "examples": [
+                    "index.docker.io"
+                  ],
+                  "title": "Registry Url",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "username",
+                "password",
+                "registry_url"
+              ],
+              "secret_fields": [
+                "password"
+              ],
+              "title": "KubernetesRegistryCredentials",
+              "type": "object"
             }
           }
         }
       },
       "description": "Execute flow runs within jobs scheduled on a Kubernetes cluster. Requires a Kubernetes cluster.",
       "display_name": "Kubernetes",
-      "documentation_url": "https://docs.prefect.io/integrations/prefect-kubernetes",
+      "documentation_url": "https://www.prefect.io/docs/integrations/prefect-kubernetes",
       "install_command": "pip install prefect-kubernetes",
       "is_beta": false,
-      "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/2d0b896006ad463b49c28aaac14f31e00e32cfab-250x250.png",
+      "logo_url": "https://raw.githubusercontent.com/PrefectHQ/prefect/420d0d6a78bb6df1fc18bcf188fdad43c1d22ea9/assets/block-logos/kubernetes.png",
       "type": "kubernetes"
     }
   }
