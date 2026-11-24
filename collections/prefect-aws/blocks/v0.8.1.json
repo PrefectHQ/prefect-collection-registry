@@ -1,0 +1,1858 @@
+{
+  "prefect-aws": {
+    "block_types": {
+      "aws-credentials": {
+        "name": "AWS Credentials",
+        "slug": "aws-credentials",
+        "logo_url": "https://raw.githubusercontent.com/PrefectHQ/prefect/420d0d6a78bb6df1fc18bcf188fdad43c1d22ea9/assets/block-logos/aws.png",
+        "documentation_url": "https://www.prefect.io/docs/integrations/prefect-aws",
+        "description": "Block used to manage authentication with AWS. AWS authentication is\nhandled via the `boto3` module. Refer to the\n[boto3 docs](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html)\nfor more info about the possible credential configurations. This block is part of the prefect-aws collection. Install prefect-aws with `pip install prefect-aws` to use this block.",
+        "code_example": "Load stored AWS credentials:\n```python\nfrom prefect_aws import AwsCredentials\n\naws_credentials_block = AwsCredentials.load(\"BLOCK_NAME\")\n```",
+        "block_schema": {
+          "checksum": "sha256:c45e6bbf862f533edf08cd94a22228976c2782163c68a7c089473c630a4c319f",
+          "fields": {
+            "block_schema_references": {},
+            "block_type_slug": "aws-credentials",
+            "description": "Block used to manage authentication with AWS. AWS authentication is\nhandled via the `boto3` module. Refer to the\n[boto3 docs](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html)\nfor more info about the possible credential configurations.",
+            "properties": {
+              "aws_access_key_id": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "A specific AWS access key ID.",
+                "title": "AWS Access Key ID",
+                "position": 0
+              },
+              "aws_secret_access_key": {
+                "anyOf": [
+                  {
+                    "format": "password",
+                    "type": "string",
+                    "writeOnly": true
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "A specific AWS secret access key.",
+                "title": "AWS Access Key Secret",
+                "position": 1
+              },
+              "aws_session_token": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "The session key for your AWS account. This is only needed when you are using temporary credentials.",
+                "title": "AWS Session Token",
+                "position": 2
+              },
+              "profile_name": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "The profile to use when creating your session.",
+                "title": "Profile Name",
+                "position": 3
+              },
+              "region_name": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "The AWS Region where you want to create new connections.",
+                "title": "Region Name",
+                "position": 4
+              },
+              "aws_client_parameters": {
+                "$ref": "#/definitions/AwsClientParameters",
+                "description": "Extra parameters to initialize the Client.",
+                "title": "AWS Client Parameters",
+                "position": 5
+              },
+              "assume_role_arn": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "The ARN of the IAM role to assume.",
+                "title": "Assume Role ARN",
+                "position": 6
+              },
+              "assume_role_kwargs": {
+                "$ref": "#/definitions/AssumeRoleParameters",
+                "description": "Additional parameters for the assume_role call.",
+                "title": "Assume Role Parameters",
+                "position": 7
+              }
+            },
+            "secret_fields": [
+              "aws_secret_access_key"
+            ],
+            "title": "AwsCredentials",
+            "type": "object",
+            "definitions": {
+              "AssumeRoleParameters": {
+                "description": "Model used to manage parameters for the AWS STS assume_role call.\nRefer to the\n[boto3 STS assume_role docs](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/sts/client/assume_role.html)\nfor more information about the possible assume role configurations.\n\nAttributes:\n    RoleSessionName: An identifier for the assumed role session.\n        This value is used to uniquely identify a session when the same role\n        is assumed by different principals or for different reasons.\n        If not provided, a default will be generated.\n    DurationSeconds: The duration, in seconds, of the role session.\n        The value can range from 900 seconds (15 minutes) to 43,200 seconds (12 hours).\n    Policy: An IAM policy in JSON format that you want to use as an inline session policy.\n    PolicyArns: The ARNs of the IAM managed policies to use as managed session policies.\n        Each item should be a dict with an 'arn' key.\n    Tags: A list of session tags. Each tag should be a dict with 'Key' and 'Value' keys.\n    TransitiveTagKeys: A list of keys for session tags that you want to set as transitive.\n        Transitive tags persist during role chaining.\n    ExternalId: A unique identifier that is used by third parties to assume a role\n        in their customers' accounts.\n    SerialNumber: The identification number of the MFA device that is associated\n        with the user who is making the AssumeRole call.\n    TokenCode: The value provided by the MFA device, if MFA authentication is required.\n    SourceIdentity: The source identity specified by the principal that is calling\n        the AssumeRole operation.\n    ProvidedContexts: A list of context information. Each context should be a dict\n        with 'ProviderArn' and 'ContextAssertion' keys.",
+                "properties": {
+                  "RoleSessionName": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "An identifier for the assumed role session. If not provided, a default will be generated.",
+                    "title": "Role Session Name"
+                  },
+                  "DurationSeconds": {
+                    "anyOf": [
+                      {
+                        "type": "integer"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The duration, in seconds, of the role session. The value can range from 900 seconds (15 minutes) to 43,200 seconds (12 hours).",
+                    "title": "Duration Seconds"
+                  },
+                  "Policy": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "An IAM policy in JSON format that you want to use as an inline session policy.",
+                    "title": "Policy"
+                  },
+                  "PolicyArns": {
+                    "anyOf": [
+                      {
+                        "items": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "type": "object"
+                        },
+                        "type": "array"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The ARNs of the IAM managed policies to use as managed session policies. Each item should be a dict with an 'arn' key.",
+                    "title": "Policy ARNs"
+                  },
+                  "Tags": {
+                    "anyOf": [
+                      {
+                        "items": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "type": "object"
+                        },
+                        "type": "array"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "A list of session tags. Each tag should be a dict with 'Key' and 'Value' keys.",
+                    "title": "Tags"
+                  },
+                  "TransitiveTagKeys": {
+                    "anyOf": [
+                      {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "A list of keys for session tags that you want to set as transitive. Transitive tags persist during role chaining.",
+                    "title": "Transitive Tag Keys"
+                  },
+                  "ExternalId": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "A unique identifier that is used by third parties to assume a role in their customers' accounts.",
+                    "title": "External ID"
+                  },
+                  "SerialNumber": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The identification number of the MFA device that is associated with the user who is making the AssumeRole call.",
+                    "title": "Serial Number"
+                  },
+                  "TokenCode": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The value provided by the MFA device, if MFA authentication is required.",
+                    "title": "Token Code"
+                  },
+                  "SourceIdentity": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The source identity specified by the principal that is calling the AssumeRole operation.",
+                    "title": "Source Identity"
+                  },
+                  "ProvidedContexts": {
+                    "anyOf": [
+                      {
+                        "items": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "type": "object"
+                        },
+                        "type": "array"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "A list of context information. Each context should be a dict with 'ProviderArn' and 'ContextAssertion' keys.",
+                    "title": "Provided Contexts"
+                  }
+                },
+                "title": "AssumeRoleParameters",
+                "type": "object"
+              },
+              "AwsClientParameters": {
+                "description": "Model used to manage extra parameters that you can pass when you initialize\nthe Client. If you want to find more information, see\n[boto3 docs](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/core/session.html)\nfor more info about the possible client configurations.\n\nAttributes:\n    api_version: The API version to use. By default, botocore will\n        use the latest API version when creating a client. You only need\n        to specify this parameter if you want to use a previous API version\n        of the client.\n    use_ssl: Whether or not to use SSL. By default, SSL is used.\n        Note that not all services support non-ssl connections.\n    verify: Whether or not to verify SSL certificates. By default\n        SSL certificates are verified. If False, SSL will still be used\n        (unless use_ssl is False), but SSL certificates\n        will not be verified. Passing a file path to this is deprecated.\n    verify_cert_path: A filename of the CA cert bundle to\n        use. You can specify this argument if you want to use a\n        different CA cert bundle than the one used by botocore.\n    endpoint_url: The complete URL to use for the constructed\n        client. Normally, botocore will automatically construct the\n        appropriate URL to use when communicating with a service. You\n        can specify a complete URL (including the \"http/https\" scheme)\n        to override this behavior. If this value is provided,\n        then `use_ssl` is ignored.\n    config: Advanced configuration for Botocore clients. See\n        [botocore docs](https://botocore.amazonaws.com/v1/documentation/api/latest/reference/config.html)\n        for more details.",
+                "properties": {
+                  "api_version": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The API version to use.",
+                    "title": "API Version"
+                  },
+                  "use_ssl": {
+                    "default": true,
+                    "description": "Whether or not to use SSL.",
+                    "title": "Use SSL",
+                    "type": "boolean"
+                  },
+                  "verify": {
+                    "anyOf": [
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "format": "file-path",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Whether or not to verify SSL certificates.",
+                    "title": "Verify"
+                  },
+                  "verify_cert_path": {
+                    "anyOf": [
+                      {
+                        "format": "file-path",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Path to the CA cert bundle to use.",
+                    "title": "Certificate Authority Bundle File Path"
+                  },
+                  "endpoint_url": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The complete URL to use for the constructed client.",
+                    "title": "Endpoint URL"
+                  },
+                  "config": {
+                    "anyOf": [
+                      {
+                        "additionalProperties": true,
+                        "type": "object"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Advanced configuration for Botocore clients.",
+                    "title": "Botocore Config"
+                  }
+                },
+                "title": "AwsClientParameters",
+                "type": "object"
+              }
+            }
+          },
+          "capabilities": [],
+          "version": "0.8.1"
+        }
+      },
+      "aws-secret": {
+        "name": "AWS Secret",
+        "slug": "aws-secret",
+        "logo_url": "https://raw.githubusercontent.com/PrefectHQ/prefect/420d0d6a78bb6df1fc18bcf188fdad43c1d22ea9/assets/block-logos/aws.png",
+        "documentation_url": "https://www.prefect.io/docs/integrations/prefect-aws",
+        "description": "Manages a secret in AWS's Secrets Manager. This block is part of the prefect-aws collection. Install prefect-aws with `pip install prefect-aws` to use this block.",
+        "code_example": "```python\nfrom prefect_aws.secrets_manager import AwsSecret\n\naws_secret_block = AwsSecret.load(\"BLOCK_NAME\")\n```",
+        "block_schema": {
+          "checksum": "sha256:fc7ade5fc7bc4f0580e5c7e7b059b1199814117ece34369a8ab5916d9c1b932b",
+          "fields": {
+            "block_schema_references": {
+              "aws_credentials": {
+                "block_schema_checksum": "sha256:c45e6bbf862f533edf08cd94a22228976c2782163c68a7c089473c630a4c319f",
+                "block_type_slug": "aws-credentials"
+              }
+            },
+            "block_type_slug": "aws-secret",
+            "description": "Manages a secret in AWS's Secrets Manager.",
+            "properties": {
+              "aws_credentials": {
+                "$ref": "#/definitions/AwsCredentials",
+                "position": 0
+              },
+              "secret_name": {
+                "description": "The name of the secret.",
+                "title": "Secret Name",
+                "type": "string",
+                "position": 1
+              }
+            },
+            "required": [
+              "aws_credentials",
+              "secret_name"
+            ],
+            "secret_fields": [
+              "aws_credentials.aws_secret_access_key"
+            ],
+            "title": "AwsSecret",
+            "type": "object",
+            "definitions": {
+              "AssumeRoleParameters": {
+                "description": "Model used to manage parameters for the AWS STS assume_role call.\nRefer to the\n[boto3 STS assume_role docs](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/sts/client/assume_role.html)\nfor more information about the possible assume role configurations.\n\nAttributes:\n    RoleSessionName: An identifier for the assumed role session.\n        This value is used to uniquely identify a session when the same role\n        is assumed by different principals or for different reasons.\n        If not provided, a default will be generated.\n    DurationSeconds: The duration, in seconds, of the role session.\n        The value can range from 900 seconds (15 minutes) to 43,200 seconds (12 hours).\n    Policy: An IAM policy in JSON format that you want to use as an inline session policy.\n    PolicyArns: The ARNs of the IAM managed policies to use as managed session policies.\n        Each item should be a dict with an 'arn' key.\n    Tags: A list of session tags. Each tag should be a dict with 'Key' and 'Value' keys.\n    TransitiveTagKeys: A list of keys for session tags that you want to set as transitive.\n        Transitive tags persist during role chaining.\n    ExternalId: A unique identifier that is used by third parties to assume a role\n        in their customers' accounts.\n    SerialNumber: The identification number of the MFA device that is associated\n        with the user who is making the AssumeRole call.\n    TokenCode: The value provided by the MFA device, if MFA authentication is required.\n    SourceIdentity: The source identity specified by the principal that is calling\n        the AssumeRole operation.\n    ProvidedContexts: A list of context information. Each context should be a dict\n        with 'ProviderArn' and 'ContextAssertion' keys.",
+                "properties": {
+                  "RoleSessionName": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "An identifier for the assumed role session. If not provided, a default will be generated.",
+                    "title": "Role Session Name"
+                  },
+                  "DurationSeconds": {
+                    "anyOf": [
+                      {
+                        "type": "integer"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The duration, in seconds, of the role session. The value can range from 900 seconds (15 minutes) to 43,200 seconds (12 hours).",
+                    "title": "Duration Seconds"
+                  },
+                  "Policy": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "An IAM policy in JSON format that you want to use as an inline session policy.",
+                    "title": "Policy"
+                  },
+                  "PolicyArns": {
+                    "anyOf": [
+                      {
+                        "items": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "type": "object"
+                        },
+                        "type": "array"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The ARNs of the IAM managed policies to use as managed session policies. Each item should be a dict with an 'arn' key.",
+                    "title": "Policy ARNs"
+                  },
+                  "Tags": {
+                    "anyOf": [
+                      {
+                        "items": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "type": "object"
+                        },
+                        "type": "array"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "A list of session tags. Each tag should be a dict with 'Key' and 'Value' keys.",
+                    "title": "Tags"
+                  },
+                  "TransitiveTagKeys": {
+                    "anyOf": [
+                      {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "A list of keys for session tags that you want to set as transitive. Transitive tags persist during role chaining.",
+                    "title": "Transitive Tag Keys"
+                  },
+                  "ExternalId": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "A unique identifier that is used by third parties to assume a role in their customers' accounts.",
+                    "title": "External ID"
+                  },
+                  "SerialNumber": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The identification number of the MFA device that is associated with the user who is making the AssumeRole call.",
+                    "title": "Serial Number"
+                  },
+                  "TokenCode": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The value provided by the MFA device, if MFA authentication is required.",
+                    "title": "Token Code"
+                  },
+                  "SourceIdentity": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The source identity specified by the principal that is calling the AssumeRole operation.",
+                    "title": "Source Identity"
+                  },
+                  "ProvidedContexts": {
+                    "anyOf": [
+                      {
+                        "items": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "type": "object"
+                        },
+                        "type": "array"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "A list of context information. Each context should be a dict with 'ProviderArn' and 'ContextAssertion' keys.",
+                    "title": "Provided Contexts"
+                  }
+                },
+                "title": "AssumeRoleParameters",
+                "type": "object"
+              },
+              "AwsClientParameters": {
+                "description": "Model used to manage extra parameters that you can pass when you initialize\nthe Client. If you want to find more information, see\n[boto3 docs](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/core/session.html)\nfor more info about the possible client configurations.\n\nAttributes:\n    api_version: The API version to use. By default, botocore will\n        use the latest API version when creating a client. You only need\n        to specify this parameter if you want to use a previous API version\n        of the client.\n    use_ssl: Whether or not to use SSL. By default, SSL is used.\n        Note that not all services support non-ssl connections.\n    verify: Whether or not to verify SSL certificates. By default\n        SSL certificates are verified. If False, SSL will still be used\n        (unless use_ssl is False), but SSL certificates\n        will not be verified. Passing a file path to this is deprecated.\n    verify_cert_path: A filename of the CA cert bundle to\n        use. You can specify this argument if you want to use a\n        different CA cert bundle than the one used by botocore.\n    endpoint_url: The complete URL to use for the constructed\n        client. Normally, botocore will automatically construct the\n        appropriate URL to use when communicating with a service. You\n        can specify a complete URL (including the \"http/https\" scheme)\n        to override this behavior. If this value is provided,\n        then `use_ssl` is ignored.\n    config: Advanced configuration for Botocore clients. See\n        [botocore docs](https://botocore.amazonaws.com/v1/documentation/api/latest/reference/config.html)\n        for more details.",
+                "properties": {
+                  "api_version": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The API version to use.",
+                    "title": "API Version"
+                  },
+                  "use_ssl": {
+                    "default": true,
+                    "description": "Whether or not to use SSL.",
+                    "title": "Use SSL",
+                    "type": "boolean"
+                  },
+                  "verify": {
+                    "anyOf": [
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "format": "file-path",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Whether or not to verify SSL certificates.",
+                    "title": "Verify"
+                  },
+                  "verify_cert_path": {
+                    "anyOf": [
+                      {
+                        "format": "file-path",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Path to the CA cert bundle to use.",
+                    "title": "Certificate Authority Bundle File Path"
+                  },
+                  "endpoint_url": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The complete URL to use for the constructed client.",
+                    "title": "Endpoint URL"
+                  },
+                  "config": {
+                    "anyOf": [
+                      {
+                        "additionalProperties": true,
+                        "type": "object"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Advanced configuration for Botocore clients.",
+                    "title": "Botocore Config"
+                  }
+                },
+                "title": "AwsClientParameters",
+                "type": "object"
+              },
+              "AwsCredentials": {
+                "block_schema_references": {},
+                "block_type_slug": "aws-credentials",
+                "description": "Block used to manage authentication with AWS. AWS authentication is\nhandled via the `boto3` module. Refer to the\n[boto3 docs](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html)\nfor more info about the possible credential configurations.",
+                "properties": {
+                  "aws_access_key_id": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "A specific AWS access key ID.",
+                    "title": "AWS Access Key ID",
+                    "position": 0
+                  },
+                  "aws_secret_access_key": {
+                    "anyOf": [
+                      {
+                        "format": "password",
+                        "type": "string",
+                        "writeOnly": true
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "A specific AWS secret access key.",
+                    "title": "AWS Access Key Secret",
+                    "position": 1
+                  },
+                  "aws_session_token": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The session key for your AWS account. This is only needed when you are using temporary credentials.",
+                    "title": "AWS Session Token",
+                    "position": 2
+                  },
+                  "profile_name": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The profile to use when creating your session.",
+                    "title": "Profile Name",
+                    "position": 3
+                  },
+                  "region_name": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The AWS Region where you want to create new connections.",
+                    "title": "Region Name",
+                    "position": 4
+                  },
+                  "aws_client_parameters": {
+                    "$ref": "#/definitions/AwsClientParameters",
+                    "description": "Extra parameters to initialize the Client.",
+                    "title": "AWS Client Parameters",
+                    "position": 5
+                  },
+                  "assume_role_arn": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The ARN of the IAM role to assume.",
+                    "title": "Assume Role ARN",
+                    "position": 6
+                  },
+                  "assume_role_kwargs": {
+                    "$ref": "#/definitions/AssumeRoleParameters",
+                    "description": "Additional parameters for the assume_role call.",
+                    "title": "Assume Role Parameters",
+                    "position": 7
+                  }
+                },
+                "secret_fields": [
+                  "aws_secret_access_key"
+                ],
+                "title": "AwsCredentials",
+                "type": "object"
+              }
+            }
+          },
+          "capabilities": [],
+          "version": "0.8.1"
+        }
+      },
+      "lambda-function": {
+        "name": "Lambda Function",
+        "slug": "lambda-function",
+        "logo_url": "https://raw.githubusercontent.com/PrefectHQ/prefect/420d0d6a78bb6df1fc18bcf188fdad43c1d22ea9/assets/block-logos/aws.png",
+        "documentation_url": "https://www.prefect.io/docs/integrations/prefect-aws",
+        "description": "Invoke a Lambda function. This block is part of the prefect-aws\ncollection. Install prefect-aws with `pip install prefect-aws` to use this\nblock. This block is part of the prefect-aws collection. Install prefect-aws with `pip install prefect-aws` to use this block.",
+        "code_example": "```python\nfrom prefect_aws.lambda_function import LambdaFunction\n\nlambda_function_block = LambdaFunction.load(\"BLOCK_NAME\")\n```",
+        "block_schema": {
+          "checksum": "sha256:e718d21ac72281df98676cddfdd0d8285e4ff259dcdc35296e5b433756295aa1",
+          "fields": {
+            "block_schema_references": {
+              "aws_credentials": {
+                "block_schema_checksum": "sha256:c45e6bbf862f533edf08cd94a22228976c2782163c68a7c089473c630a4c319f",
+                "block_type_slug": "aws-credentials"
+              }
+            },
+            "block_type_slug": "lambda-function",
+            "description": "Invoke a Lambda function. This block is part of the prefect-aws\ncollection. Install prefect-aws with `pip install prefect-aws` to use this\nblock.",
+            "properties": {
+              "function_name": {
+                "description": "The name, ARN, or partial ARN of the Lambda function to run. This must be the name of a function that is already deployed to AWS Lambda.",
+                "title": "Function Name",
+                "type": "string",
+                "position": 0
+              },
+              "qualifier": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "The version or alias of the Lambda function to use when invoked. If not specified, the latest (unqualified) version of the Lambda function will be used.",
+                "title": "Qualifier",
+                "position": 1
+              },
+              "aws_credentials": {
+                "$ref": "#/definitions/AwsCredentials",
+                "description": "The AWS credentials to invoke the Lambda with.",
+                "title": "AWS Credentials",
+                "position": 2
+              }
+            },
+            "required": [
+              "function_name"
+            ],
+            "secret_fields": [
+              "aws_credentials.aws_secret_access_key"
+            ],
+            "title": "LambdaFunction",
+            "type": "object",
+            "definitions": {
+              "AssumeRoleParameters": {
+                "description": "Model used to manage parameters for the AWS STS assume_role call.\nRefer to the\n[boto3 STS assume_role docs](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/sts/client/assume_role.html)\nfor more information about the possible assume role configurations.\n\nAttributes:\n    RoleSessionName: An identifier for the assumed role session.\n        This value is used to uniquely identify a session when the same role\n        is assumed by different principals or for different reasons.\n        If not provided, a default will be generated.\n    DurationSeconds: The duration, in seconds, of the role session.\n        The value can range from 900 seconds (15 minutes) to 43,200 seconds (12 hours).\n    Policy: An IAM policy in JSON format that you want to use as an inline session policy.\n    PolicyArns: The ARNs of the IAM managed policies to use as managed session policies.\n        Each item should be a dict with an 'arn' key.\n    Tags: A list of session tags. Each tag should be a dict with 'Key' and 'Value' keys.\n    TransitiveTagKeys: A list of keys for session tags that you want to set as transitive.\n        Transitive tags persist during role chaining.\n    ExternalId: A unique identifier that is used by third parties to assume a role\n        in their customers' accounts.\n    SerialNumber: The identification number of the MFA device that is associated\n        with the user who is making the AssumeRole call.\n    TokenCode: The value provided by the MFA device, if MFA authentication is required.\n    SourceIdentity: The source identity specified by the principal that is calling\n        the AssumeRole operation.\n    ProvidedContexts: A list of context information. Each context should be a dict\n        with 'ProviderArn' and 'ContextAssertion' keys.",
+                "properties": {
+                  "RoleSessionName": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "An identifier for the assumed role session. If not provided, a default will be generated.",
+                    "title": "Role Session Name"
+                  },
+                  "DurationSeconds": {
+                    "anyOf": [
+                      {
+                        "type": "integer"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The duration, in seconds, of the role session. The value can range from 900 seconds (15 minutes) to 43,200 seconds (12 hours).",
+                    "title": "Duration Seconds"
+                  },
+                  "Policy": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "An IAM policy in JSON format that you want to use as an inline session policy.",
+                    "title": "Policy"
+                  },
+                  "PolicyArns": {
+                    "anyOf": [
+                      {
+                        "items": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "type": "object"
+                        },
+                        "type": "array"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The ARNs of the IAM managed policies to use as managed session policies. Each item should be a dict with an 'arn' key.",
+                    "title": "Policy ARNs"
+                  },
+                  "Tags": {
+                    "anyOf": [
+                      {
+                        "items": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "type": "object"
+                        },
+                        "type": "array"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "A list of session tags. Each tag should be a dict with 'Key' and 'Value' keys.",
+                    "title": "Tags"
+                  },
+                  "TransitiveTagKeys": {
+                    "anyOf": [
+                      {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "A list of keys for session tags that you want to set as transitive. Transitive tags persist during role chaining.",
+                    "title": "Transitive Tag Keys"
+                  },
+                  "ExternalId": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "A unique identifier that is used by third parties to assume a role in their customers' accounts.",
+                    "title": "External ID"
+                  },
+                  "SerialNumber": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The identification number of the MFA device that is associated with the user who is making the AssumeRole call.",
+                    "title": "Serial Number"
+                  },
+                  "TokenCode": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The value provided by the MFA device, if MFA authentication is required.",
+                    "title": "Token Code"
+                  },
+                  "SourceIdentity": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The source identity specified by the principal that is calling the AssumeRole operation.",
+                    "title": "Source Identity"
+                  },
+                  "ProvidedContexts": {
+                    "anyOf": [
+                      {
+                        "items": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "type": "object"
+                        },
+                        "type": "array"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "A list of context information. Each context should be a dict with 'ProviderArn' and 'ContextAssertion' keys.",
+                    "title": "Provided Contexts"
+                  }
+                },
+                "title": "AssumeRoleParameters",
+                "type": "object"
+              },
+              "AwsClientParameters": {
+                "description": "Model used to manage extra parameters that you can pass when you initialize\nthe Client. If you want to find more information, see\n[boto3 docs](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/core/session.html)\nfor more info about the possible client configurations.\n\nAttributes:\n    api_version: The API version to use. By default, botocore will\n        use the latest API version when creating a client. You only need\n        to specify this parameter if you want to use a previous API version\n        of the client.\n    use_ssl: Whether or not to use SSL. By default, SSL is used.\n        Note that not all services support non-ssl connections.\n    verify: Whether or not to verify SSL certificates. By default\n        SSL certificates are verified. If False, SSL will still be used\n        (unless use_ssl is False), but SSL certificates\n        will not be verified. Passing a file path to this is deprecated.\n    verify_cert_path: A filename of the CA cert bundle to\n        use. You can specify this argument if you want to use a\n        different CA cert bundle than the one used by botocore.\n    endpoint_url: The complete URL to use for the constructed\n        client. Normally, botocore will automatically construct the\n        appropriate URL to use when communicating with a service. You\n        can specify a complete URL (including the \"http/https\" scheme)\n        to override this behavior. If this value is provided,\n        then `use_ssl` is ignored.\n    config: Advanced configuration for Botocore clients. See\n        [botocore docs](https://botocore.amazonaws.com/v1/documentation/api/latest/reference/config.html)\n        for more details.",
+                "properties": {
+                  "api_version": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The API version to use.",
+                    "title": "API Version"
+                  },
+                  "use_ssl": {
+                    "default": true,
+                    "description": "Whether or not to use SSL.",
+                    "title": "Use SSL",
+                    "type": "boolean"
+                  },
+                  "verify": {
+                    "anyOf": [
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "format": "file-path",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Whether or not to verify SSL certificates.",
+                    "title": "Verify"
+                  },
+                  "verify_cert_path": {
+                    "anyOf": [
+                      {
+                        "format": "file-path",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Path to the CA cert bundle to use.",
+                    "title": "Certificate Authority Bundle File Path"
+                  },
+                  "endpoint_url": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The complete URL to use for the constructed client.",
+                    "title": "Endpoint URL"
+                  },
+                  "config": {
+                    "anyOf": [
+                      {
+                        "additionalProperties": true,
+                        "type": "object"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Advanced configuration for Botocore clients.",
+                    "title": "Botocore Config"
+                  }
+                },
+                "title": "AwsClientParameters",
+                "type": "object"
+              },
+              "AwsCredentials": {
+                "block_schema_references": {},
+                "block_type_slug": "aws-credentials",
+                "description": "Block used to manage authentication with AWS. AWS authentication is\nhandled via the `boto3` module. Refer to the\n[boto3 docs](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html)\nfor more info about the possible credential configurations.",
+                "properties": {
+                  "aws_access_key_id": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "A specific AWS access key ID.",
+                    "title": "AWS Access Key ID",
+                    "position": 0
+                  },
+                  "aws_secret_access_key": {
+                    "anyOf": [
+                      {
+                        "format": "password",
+                        "type": "string",
+                        "writeOnly": true
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "A specific AWS secret access key.",
+                    "title": "AWS Access Key Secret",
+                    "position": 1
+                  },
+                  "aws_session_token": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The session key for your AWS account. This is only needed when you are using temporary credentials.",
+                    "title": "AWS Session Token",
+                    "position": 2
+                  },
+                  "profile_name": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The profile to use when creating your session.",
+                    "title": "Profile Name",
+                    "position": 3
+                  },
+                  "region_name": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The AWS Region where you want to create new connections.",
+                    "title": "Region Name",
+                    "position": 4
+                  },
+                  "aws_client_parameters": {
+                    "$ref": "#/definitions/AwsClientParameters",
+                    "description": "Extra parameters to initialize the Client.",
+                    "title": "AWS Client Parameters",
+                    "position": 5
+                  },
+                  "assume_role_arn": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The ARN of the IAM role to assume.",
+                    "title": "Assume Role ARN",
+                    "position": 6
+                  },
+                  "assume_role_kwargs": {
+                    "$ref": "#/definitions/AssumeRoleParameters",
+                    "description": "Additional parameters for the assume_role call.",
+                    "title": "Assume Role Parameters",
+                    "position": 7
+                  }
+                },
+                "secret_fields": [
+                  "aws_secret_access_key"
+                ],
+                "title": "AwsCredentials",
+                "type": "object"
+              }
+            }
+          },
+          "capabilities": [],
+          "version": "0.8.1"
+        }
+      },
+      "minio-credentials": {
+        "name": "MinIO Credentials",
+        "slug": "minio-credentials",
+        "logo_url": "https://raw.githubusercontent.com/PrefectHQ/prefect/420d0d6a78bb6df1fc18bcf188fdad43c1d22ea9/assets/block-logos/minio.png",
+        "documentation_url": "https://www.prefect.io/docs/integrations/prefect-aws",
+        "description": "Block used to manage authentication with MinIO. Refer to the MinIO docs: https://docs.min.io/docs/minio-server-configuration-guide.html for more info about the possible credential configurations. This block is part of the prefect-aws collection. Install prefect-aws with `pip install prefect-aws` to use this block.",
+        "code_example": "Load stored MinIO credentials:\n```python\nfrom prefect_aws import MinIOCredentials\n\nminio_credentials_block = MinIOCredentials.load(\"BLOCK_NAME\")\n```",
+        "block_schema": {
+          "checksum": "sha256:871fdc62bf3af9e148c2654700411598860db735add291a8238adeef814767a8",
+          "fields": {
+            "block_schema_references": {},
+            "block_type_slug": "minio-credentials",
+            "description": "Block used to manage authentication with MinIO. Refer to the MinIO docs: https://docs.min.io/docs/minio-server-configuration-guide.html for more info about the possible credential configurations.",
+            "properties": {
+              "minio_root_user": {
+                "description": "Admin or root user.",
+                "title": "Minio Root User",
+                "type": "string",
+                "position": 0
+              },
+              "minio_root_password": {
+                "description": "Admin or root password.",
+                "format": "password",
+                "title": "Minio Root Password",
+                "type": "string",
+                "writeOnly": true,
+                "position": 1
+              },
+              "region_name": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "The AWS Region where you want to create new connections.",
+                "title": "Region Name",
+                "position": 2
+              },
+              "aws_client_parameters": {
+                "$ref": "#/definitions/AwsClientParameters",
+                "description": "Extra parameters to initialize the Client.",
+                "position": 3
+              }
+            },
+            "required": [
+              "minio_root_user",
+              "minio_root_password"
+            ],
+            "secret_fields": [
+              "minio_root_password"
+            ],
+            "title": "MinIOCredentials",
+            "type": "object",
+            "definitions": {
+              "AwsClientParameters": {
+                "description": "Model used to manage extra parameters that you can pass when you initialize\nthe Client. If you want to find more information, see\n[boto3 docs](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/core/session.html)\nfor more info about the possible client configurations.\n\nAttributes:\n    api_version: The API version to use. By default, botocore will\n        use the latest API version when creating a client. You only need\n        to specify this parameter if you want to use a previous API version\n        of the client.\n    use_ssl: Whether or not to use SSL. By default, SSL is used.\n        Note that not all services support non-ssl connections.\n    verify: Whether or not to verify SSL certificates. By default\n        SSL certificates are verified. If False, SSL will still be used\n        (unless use_ssl is False), but SSL certificates\n        will not be verified. Passing a file path to this is deprecated.\n    verify_cert_path: A filename of the CA cert bundle to\n        use. You can specify this argument if you want to use a\n        different CA cert bundle than the one used by botocore.\n    endpoint_url: The complete URL to use for the constructed\n        client. Normally, botocore will automatically construct the\n        appropriate URL to use when communicating with a service. You\n        can specify a complete URL (including the \"http/https\" scheme)\n        to override this behavior. If this value is provided,\n        then `use_ssl` is ignored.\n    config: Advanced configuration for Botocore clients. See\n        [botocore docs](https://botocore.amazonaws.com/v1/documentation/api/latest/reference/config.html)\n        for more details.",
+                "properties": {
+                  "api_version": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The API version to use.",
+                    "title": "API Version"
+                  },
+                  "use_ssl": {
+                    "default": true,
+                    "description": "Whether or not to use SSL.",
+                    "title": "Use SSL",
+                    "type": "boolean"
+                  },
+                  "verify": {
+                    "anyOf": [
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "format": "file-path",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Whether or not to verify SSL certificates.",
+                    "title": "Verify"
+                  },
+                  "verify_cert_path": {
+                    "anyOf": [
+                      {
+                        "format": "file-path",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Path to the CA cert bundle to use.",
+                    "title": "Certificate Authority Bundle File Path"
+                  },
+                  "endpoint_url": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The complete URL to use for the constructed client.",
+                    "title": "Endpoint URL"
+                  },
+                  "config": {
+                    "anyOf": [
+                      {
+                        "additionalProperties": true,
+                        "type": "object"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Advanced configuration for Botocore clients.",
+                    "title": "Botocore Config"
+                  }
+                },
+                "title": "AwsClientParameters",
+                "type": "object"
+              }
+            }
+          },
+          "capabilities": [],
+          "version": "0.8.1"
+        }
+      },
+      "s3-bucket": {
+        "name": "S3 Bucket",
+        "slug": "s3-bucket",
+        "logo_url": "https://raw.githubusercontent.com/PrefectHQ/prefect/420d0d6a78bb6df1fc18bcf188fdad43c1d22ea9/assets/block-logos/aws.png",
+        "documentation_url": "https://www.prefect.io/docs/integrations/prefect-aws",
+        "description": "Block used to store data using AWS S3 or S3-compatible object storage like MinIO. This block is part of the prefect-aws collection. Install prefect-aws with `pip install prefect-aws` to use this block.",
+        "code_example": "```python\nfrom prefect_aws.s3 import S3Bucket\n\ns3_bucket_block = S3Bucket.load(\"BLOCK_NAME\")\n```",
+        "block_schema": {
+          "checksum": "sha256:b64f6c8c35de83a40fec217bab4237d9689e4ae29004324d0ab409ce22fb25f0",
+          "fields": {
+            "block_schema_references": {
+              "credentials": [
+                {
+                  "block_schema_checksum": "sha256:871fdc62bf3af9e148c2654700411598860db735add291a8238adeef814767a8",
+                  "block_type_slug": "minio-credentials"
+                },
+                {
+                  "block_schema_checksum": "sha256:c45e6bbf862f533edf08cd94a22228976c2782163c68a7c089473c630a4c319f",
+                  "block_type_slug": "aws-credentials"
+                }
+              ]
+            },
+            "block_type_slug": "s3-bucket",
+            "description": "Block used to store data using AWS S3 or S3-compatible object storage like MinIO.",
+            "properties": {
+              "bucket_name": {
+                "description": "Name of your bucket.",
+                "title": "Bucket Name",
+                "type": "string",
+                "position": 0
+              },
+              "credentials": {
+                "anyOf": [
+                  {
+                    "$ref": "#/definitions/MinIOCredentials"
+                  },
+                  {
+                    "$ref": "#/definitions/AwsCredentials"
+                  }
+                ],
+                "description": "A block containing your credentials to AWS or MinIO.",
+                "title": "Credentials",
+                "position": 1
+              },
+              "bucket_folder": {
+                "default": "",
+                "description": "A default path to a folder within the S3 bucket to use for reading and writing objects.",
+                "title": "Bucket Folder",
+                "type": "string",
+                "position": 2
+              }
+            },
+            "required": [
+              "bucket_name"
+            ],
+            "secret_fields": [
+              "credentials.minio_root_password",
+              "credentials.aws_secret_access_key"
+            ],
+            "title": "S3Bucket",
+            "type": "object",
+            "definitions": {
+              "AssumeRoleParameters": {
+                "description": "Model used to manage parameters for the AWS STS assume_role call.\nRefer to the\n[boto3 STS assume_role docs](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/sts/client/assume_role.html)\nfor more information about the possible assume role configurations.\n\nAttributes:\n    RoleSessionName: An identifier for the assumed role session.\n        This value is used to uniquely identify a session when the same role\n        is assumed by different principals or for different reasons.\n        If not provided, a default will be generated.\n    DurationSeconds: The duration, in seconds, of the role session.\n        The value can range from 900 seconds (15 minutes) to 43,200 seconds (12 hours).\n    Policy: An IAM policy in JSON format that you want to use as an inline session policy.\n    PolicyArns: The ARNs of the IAM managed policies to use as managed session policies.\n        Each item should be a dict with an 'arn' key.\n    Tags: A list of session tags. Each tag should be a dict with 'Key' and 'Value' keys.\n    TransitiveTagKeys: A list of keys for session tags that you want to set as transitive.\n        Transitive tags persist during role chaining.\n    ExternalId: A unique identifier that is used by third parties to assume a role\n        in their customers' accounts.\n    SerialNumber: The identification number of the MFA device that is associated\n        with the user who is making the AssumeRole call.\n    TokenCode: The value provided by the MFA device, if MFA authentication is required.\n    SourceIdentity: The source identity specified by the principal that is calling\n        the AssumeRole operation.\n    ProvidedContexts: A list of context information. Each context should be a dict\n        with 'ProviderArn' and 'ContextAssertion' keys.",
+                "properties": {
+                  "RoleSessionName": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "An identifier for the assumed role session. If not provided, a default will be generated.",
+                    "title": "Role Session Name"
+                  },
+                  "DurationSeconds": {
+                    "anyOf": [
+                      {
+                        "type": "integer"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The duration, in seconds, of the role session. The value can range from 900 seconds (15 minutes) to 43,200 seconds (12 hours).",
+                    "title": "Duration Seconds"
+                  },
+                  "Policy": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "An IAM policy in JSON format that you want to use as an inline session policy.",
+                    "title": "Policy"
+                  },
+                  "PolicyArns": {
+                    "anyOf": [
+                      {
+                        "items": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "type": "object"
+                        },
+                        "type": "array"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The ARNs of the IAM managed policies to use as managed session policies. Each item should be a dict with an 'arn' key.",
+                    "title": "Policy ARNs"
+                  },
+                  "Tags": {
+                    "anyOf": [
+                      {
+                        "items": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "type": "object"
+                        },
+                        "type": "array"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "A list of session tags. Each tag should be a dict with 'Key' and 'Value' keys.",
+                    "title": "Tags"
+                  },
+                  "TransitiveTagKeys": {
+                    "anyOf": [
+                      {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "A list of keys for session tags that you want to set as transitive. Transitive tags persist during role chaining.",
+                    "title": "Transitive Tag Keys"
+                  },
+                  "ExternalId": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "A unique identifier that is used by third parties to assume a role in their customers' accounts.",
+                    "title": "External ID"
+                  },
+                  "SerialNumber": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The identification number of the MFA device that is associated with the user who is making the AssumeRole call.",
+                    "title": "Serial Number"
+                  },
+                  "TokenCode": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The value provided by the MFA device, if MFA authentication is required.",
+                    "title": "Token Code"
+                  },
+                  "SourceIdentity": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The source identity specified by the principal that is calling the AssumeRole operation.",
+                    "title": "Source Identity"
+                  },
+                  "ProvidedContexts": {
+                    "anyOf": [
+                      {
+                        "items": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "type": "object"
+                        },
+                        "type": "array"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "A list of context information. Each context should be a dict with 'ProviderArn' and 'ContextAssertion' keys.",
+                    "title": "Provided Contexts"
+                  }
+                },
+                "title": "AssumeRoleParameters",
+                "type": "object"
+              },
+              "AwsClientParameters": {
+                "description": "Model used to manage extra parameters that you can pass when you initialize\nthe Client. If you want to find more information, see\n[boto3 docs](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/core/session.html)\nfor more info about the possible client configurations.\n\nAttributes:\n    api_version: The API version to use. By default, botocore will\n        use the latest API version when creating a client. You only need\n        to specify this parameter if you want to use a previous API version\n        of the client.\n    use_ssl: Whether or not to use SSL. By default, SSL is used.\n        Note that not all services support non-ssl connections.\n    verify: Whether or not to verify SSL certificates. By default\n        SSL certificates are verified. If False, SSL will still be used\n        (unless use_ssl is False), but SSL certificates\n        will not be verified. Passing a file path to this is deprecated.\n    verify_cert_path: A filename of the CA cert bundle to\n        use. You can specify this argument if you want to use a\n        different CA cert bundle than the one used by botocore.\n    endpoint_url: The complete URL to use for the constructed\n        client. Normally, botocore will automatically construct the\n        appropriate URL to use when communicating with a service. You\n        can specify a complete URL (including the \"http/https\" scheme)\n        to override this behavior. If this value is provided,\n        then `use_ssl` is ignored.\n    config: Advanced configuration for Botocore clients. See\n        [botocore docs](https://botocore.amazonaws.com/v1/documentation/api/latest/reference/config.html)\n        for more details.",
+                "properties": {
+                  "api_version": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The API version to use.",
+                    "title": "API Version"
+                  },
+                  "use_ssl": {
+                    "default": true,
+                    "description": "Whether or not to use SSL.",
+                    "title": "Use SSL",
+                    "type": "boolean"
+                  },
+                  "verify": {
+                    "anyOf": [
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "format": "file-path",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Whether or not to verify SSL certificates.",
+                    "title": "Verify"
+                  },
+                  "verify_cert_path": {
+                    "anyOf": [
+                      {
+                        "format": "file-path",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Path to the CA cert bundle to use.",
+                    "title": "Certificate Authority Bundle File Path"
+                  },
+                  "endpoint_url": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The complete URL to use for the constructed client.",
+                    "title": "Endpoint URL"
+                  },
+                  "config": {
+                    "anyOf": [
+                      {
+                        "additionalProperties": true,
+                        "type": "object"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Advanced configuration for Botocore clients.",
+                    "title": "Botocore Config"
+                  }
+                },
+                "title": "AwsClientParameters",
+                "type": "object"
+              },
+              "AwsCredentials": {
+                "block_schema_references": {},
+                "block_type_slug": "aws-credentials",
+                "description": "Block used to manage authentication with AWS. AWS authentication is\nhandled via the `boto3` module. Refer to the\n[boto3 docs](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html)\nfor more info about the possible credential configurations.",
+                "properties": {
+                  "aws_access_key_id": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "A specific AWS access key ID.",
+                    "title": "AWS Access Key ID",
+                    "position": 0
+                  },
+                  "aws_secret_access_key": {
+                    "anyOf": [
+                      {
+                        "format": "password",
+                        "type": "string",
+                        "writeOnly": true
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "A specific AWS secret access key.",
+                    "title": "AWS Access Key Secret",
+                    "position": 1
+                  },
+                  "aws_session_token": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The session key for your AWS account. This is only needed when you are using temporary credentials.",
+                    "title": "AWS Session Token",
+                    "position": 2
+                  },
+                  "profile_name": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The profile to use when creating your session.",
+                    "title": "Profile Name",
+                    "position": 3
+                  },
+                  "region_name": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The AWS Region where you want to create new connections.",
+                    "title": "Region Name",
+                    "position": 4
+                  },
+                  "aws_client_parameters": {
+                    "$ref": "#/definitions/AwsClientParameters",
+                    "description": "Extra parameters to initialize the Client.",
+                    "title": "AWS Client Parameters",
+                    "position": 5
+                  },
+                  "assume_role_arn": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The ARN of the IAM role to assume.",
+                    "title": "Assume Role ARN",
+                    "position": 6
+                  },
+                  "assume_role_kwargs": {
+                    "$ref": "#/definitions/AssumeRoleParameters",
+                    "description": "Additional parameters for the assume_role call.",
+                    "title": "Assume Role Parameters",
+                    "position": 7
+                  }
+                },
+                "secret_fields": [
+                  "aws_secret_access_key"
+                ],
+                "title": "AwsCredentials",
+                "type": "object"
+              },
+              "MinIOCredentials": {
+                "block_schema_references": {},
+                "block_type_slug": "minio-credentials",
+                "description": "Block used to manage authentication with MinIO. Refer to the MinIO docs: https://docs.min.io/docs/minio-server-configuration-guide.html for more info about the possible credential configurations.",
+                "properties": {
+                  "minio_root_user": {
+                    "description": "Admin or root user.",
+                    "title": "Minio Root User",
+                    "type": "string",
+                    "position": 0
+                  },
+                  "minio_root_password": {
+                    "description": "Admin or root password.",
+                    "format": "password",
+                    "title": "Minio Root Password",
+                    "type": "string",
+                    "writeOnly": true,
+                    "position": 1
+                  },
+                  "region_name": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The AWS Region where you want to create new connections.",
+                    "title": "Region Name",
+                    "position": 2
+                  },
+                  "aws_client_parameters": {
+                    "$ref": "#/definitions/AwsClientParameters",
+                    "description": "Extra parameters to initialize the Client.",
+                    "position": 3
+                  }
+                },
+                "required": [
+                  "minio_root_user",
+                  "minio_root_password"
+                ],
+                "secret_fields": [
+                  "minio_root_password"
+                ],
+                "title": "MinIOCredentials",
+                "type": "object"
+              }
+            }
+          },
+          "capabilities": [
+            "get-directory",
+            "put-directory",
+            "read-path",
+            "write-path"
+          ],
+          "version": "0.8.1"
+        }
+      }
+    }
+  }
+}
