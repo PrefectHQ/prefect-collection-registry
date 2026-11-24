@@ -2454,7 +2454,8 @@
           "cluster_config": "{{ cluster_config }}",
           "job_watch_timeout_seconds": "{{ job_watch_timeout_seconds }}",
           "pod_watch_timeout_seconds": "{{ pod_watch_timeout_seconds }}",
-          "stream_output": "{{ stream_output }}"
+          "stream_output": "{{ stream_output }}",
+          "registry_credentials": "{{ registry_credentials }}"
         },
         "variables": {
           "description": "Default variables for the Kubernetes worker.\n\nThe schema for this class is used to populate the `variables` section of the default\nbase job template.",
@@ -2564,7 +2565,7 @@
             },
             "backoff_limit": {
               "default": 0,
-              "description": "The number of times Kubernetes will retry a job after pod eviction. If set to 0, Prefect will reschedule the flow run when the pod is evicted unless PREFECT_FLOW_RUN_EXECUTE_SIGTERM_BEHAVIOR is set to value different from 'reschedule'.",
+              "description": "The number of times Kubernetes will retry a job after pod eviction. If set to 0, Prefect will reschedule the flow run when the pod is evicted unless PREFECT_FLOW_RUN_EXECUTE_SIGTERM_BEHAVIOR is already set. Otherwise Kubernetes retries the Job and Prefect relinquishes the run.",
               "minimum": 0,
               "title": "Backoff Limit",
               "type": "integer"
@@ -2618,6 +2619,18 @@
               ],
               "default": null,
               "description": "The Kubernetes cluster config to use for job creation."
+            },
+            "registry_credentials": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/KubernetesRegistryCredentials"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "description": "Credentials for pulling the job's image from a private registry, such as a DockerRegistryCredentials block. The worker stores them in an image pull Secret for each job, which is deleted together with the job. The worker needs permission to create, patch and delete Secrets."
             },
             "cpu_request": {
               "anyOf": [
@@ -2698,16 +2711,53 @@
               "secret_fields": [],
               "title": "KubernetesClusterConfig",
               "type": "object"
+            },
+            "KubernetesRegistryCredentials": {
+              "block_schema_references": {},
+              "block_type_slug": "docker-registry-credentials",
+              "description": "Credentials for pulling a flow run's image from a private registry.\n\nThe fields match `prefect_docker.credentials.DockerRegistryCredentials`, and the\nJSON schema carries that block type's slug, so a reference to an existing\n`DockerRegistryCredentials` block can be selected for the `registry_credentials`\njob variable without installing `prefect-docker` alongside the worker.",
+              "properties": {
+                "username": {
+                  "description": "The username to log into the registry with.",
+                  "title": "Username",
+                  "type": "string"
+                },
+                "password": {
+                  "description": "The password to log into the registry with.",
+                  "format": "password",
+                  "title": "Password",
+                  "type": "string",
+                  "writeOnly": true
+                },
+                "registry_url": {
+                  "description": "The URL to the registry, as passed to `docker login`. Generally, \"http\" or \"https\" can be omitted.",
+                  "examples": [
+                    "index.docker.io"
+                  ],
+                  "title": "Registry Url",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "username",
+                "password",
+                "registry_url"
+              ],
+              "secret_fields": [
+                "password"
+              ],
+              "title": "KubernetesRegistryCredentials",
+              "type": "object"
             }
           }
         }
       },
       "description": "Execute flow runs within jobs scheduled on a Kubernetes cluster. Requires a Kubernetes cluster.",
       "display_name": "Kubernetes",
-      "documentation_url": "https://docs.prefect.io/integrations/prefect-kubernetes",
+      "documentation_url": "https://www.prefect.io/docs/integrations/prefect-kubernetes",
       "install_command": "pip install prefect-kubernetes",
       "is_beta": false,
-      "logo_url": "https://cdn.sanity.io/images/3ugk85nk/production/2d0b896006ad463b49c28aaac14f31e00e32cfab-250x250.png",
+      "logo_url": "https://raw.githubusercontent.com/PrefectHQ/prefect/420d0d6a78bb6df1fc18bcf188fdad43c1d22ea9/assets/block-logos/kubernetes.png",
       "type": "kubernetes"
     }
   }
