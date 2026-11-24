@@ -5,7 +5,7 @@ definitions:
     kubernetes_prd_internal_tools: &kubernetes_prd_internal_tools
       name: kubernetes-prd-internal-tools
       job_variables:
-        image: prefecthq/prefect:3.9.2-python3.12@sha256:34080b3a85b853455772641b98d083be570529fe67d6bcdcbb9a9e207d3187bf
+        image: prefecthq/prefect:3.9.4-python3.12@sha256:28ed47097956f14a5280076afa69b4553eee05351cc929ee706bb44f5f85409a
         command: uv run --with git+https://github.com/PrefectHQ/prefect-collection-registry.git@main python -m prefect.engine
 build:
 
